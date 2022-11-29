@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- Translator: amoledwatchfaces -->
+<!-- Translated by: amoledwatchfaces -->
 <resources lang="en" country="US">
     <!-- Do not translate translatable="false" lines -->
     <string name="app_name">Complications Suite</string> <!-- Does not need to be translated, but it's recommended -->
