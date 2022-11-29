@@ -14,6 +14,14 @@ Day/Week of Year, Seconds, World Clock/UTC, Moon phase complications for Wear OS
 
 Download the package (.apk) to side-load from <a href="https://github.com/amoledwatchfaces/Complications-Suite-Wear-OS/releases">HERE</a>
 
+## Help us with translations:
+
+<a href="https://github.com/amoledwatchfaces/Complications-Suite-Wear-OS/tree/master/Store-listings">STORE LISTINGS</a>
+
+<a href="https://github.com/amoledwatchfaces/Complications-Suite-Wear-OS/tree/master/mobile/src/main/res">MOBILE APP</a>
+
+<a href="https://github.com/amoledwatchfaces/Complications-Suite-Wear-OS/tree/master/wear/src/main/res">WEAR APP</a>
+
 ## License
 
     Complications Suite - Wear OS
