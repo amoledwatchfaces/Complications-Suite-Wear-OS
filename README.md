@@ -4,9 +4,8 @@ Day/Week of Year, Seconds, World Clock/UTC, Moon phase complications for Wear OS
 
 ## Preview
 
-![SCR-5](https://user-images.githubusercontent.com/92080649/204492143-a0ebfaed-f6d7-40a8-aa9c-6ede10d5b154.jpg)
-![V10](https://user-images.githubusercontent.com/92080649/204492113-a4cdc6e1-1d0d-4243-9ecb-d03ce13fdea5.png)
-![SCR-6](https://user-images.githubusercontent.com/92080649/204492196-036ed833-b3fb-41bb-87f6-2b3fe671167d.jpg)
+![A12,50%](https://user-images.githubusercontent.com/92080649/204492537-64148eb7-8d5a-4876-b7f3-66a07a0d25e0.png)
+![ico,50%](https://user-images.githubusercontent.com/92080649/204493263-49ba4a52-9946-468d-9ce9-5f14497bdf8e.png)
 
 ## Release
 
