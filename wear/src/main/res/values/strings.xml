@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Translator: amoledwatchfaces -->
+<resources lang="en" country="US">
+    <!-- Do not translate translatable="false" lines -->
+    <string name="app_name">Complications Suite</string> <!-- Does not need to be translated, but it's recommended -->
+    <string name="settings">Settings</string>
+
+    <!-- Alarm Complication Preferences -->
+    <string name="alarm_comp_name">Alarm</string>
+
+    <!-- Assist Complication Preferences -->
+    <string name="assist_comp_name">Assistant</string>
+    <string name="assist_missing">Assistant app not installed</string>
+
+    <!-- AWF Logo Complication Preferences -->
+    <string name="awf_comp_name">AWF Logo</string>
+
+    <!-- Date Complication Preferences -->
+    <string name="date_comp_name">Date</string>
+    <string name="date_setting_preference_category_title">Date Complication</string>
+    <string name="date_long_text_key" translatable="false">date_format</string>
+    <string name="date_short_text_key" translatable="false">short_text_format</string>
+    <string name="date_short_title_key" translatable="false">short_title_format</string>
+    <string name="date_long_text_format">Long Text Format</string>
+    <string name="date_short_text_format">Short Text Format</string>
+    <string name="date_short_title_format">Short Title Format</string>
+
+    <!-- Day of Year Complication Preferences -->
+    <string name="doy_comp_name">Day of Year</string>
+    <string name="doy_short_title">Day</string>
+
+    <!-- Logo Complication Preferences -->
+    <string name="logo_comp_name">Wear OS logo</string>
+
+    <!-- Moon Phase Complication Preferences -->
+    <string name="moon_comp_name">Moon Phase</string>
+    <string name="moon_setting_preference_category_title">Moon Phase Complication</string>
+    <string name="moon_setting_hemi_key" translatable="false">is_northern</string>
+    <string name="moon_setting_hemi_title">Northern Hemisphere</string>
+    <string name="moon_setting_hemi_on">Yes</string>
+    <string name="moon_setting_hemi_off">No</string>
+    <string name="key_pref_phase_icon" translatable="false">R.drawable.moon0</string>
+    <string name="key_pref_moon_visibility" translatable="false">0.0</string>
+
+    <!-- Pay Complication -->
+    <string name="pay_comp_name">Pay</string>
+
+    <!-- Sec Complication -->
+    <string name="sec_comp_name">Seconds</string>
+    <string name="sec_short_title">Sec</string>
+
+    <!-- Time Complication Preferences -->
+    <string name="time_comp_name">Time</string>
+    <string name="time_comp_desc">Current Time</string>
+    <string name="time_setting_leading_zero_key" translatable="false">leading_zero_time</string>
+    <string name="time_setting_leading_zero_title">Show leading zero</string>
+    <string name="time_setting_leading_zero_summary_on" translatable="false">09:00</string>
+    <string name="time_setting_leading_zero_summary_off" translatable="false">9:00</string>
+
+    <string name="time_ampm_setting_preference_category_title">Time Complication</string>
+    <string name="time_ampm_setting_key" translatable="false">is_military_time</string>
+    <string name="time_ampm_setting_title">Military Time</string>
+    <string name="time_ampm_setting_on">ON / 24h</string>
+    <string name="time_ampm_setting_off">OFF / 12h</string>
+
+    <!-- World Clock Complication Preferences -->
+    <string name="wc_comp_name_1">World Clock / UTC</string>
+    <string name="wc_comp_name_2">World Clock 2</string>
+    <string name="wc_setting_preference_category_title">UTC / World Clock Complication</string>
+    <string name="wc_setting_leading_zero_key" translatable="false">leading_zero</string>
+    <string name="wc_setting_leading_zero_title">Show leading zero</string>
+    <string name="wc_setting_leading_zero_summary_on" translatable="false">09:00</string>
+    <string name="wc_setting_leading_zero_summary_off" translatable="false">9:00</string>
+
+    <string name="wc_ampm_setting_key" translatable="false">is_military</string>
+    <string name="wc_ampm_setting_title">Military Time</string>
+    <string name="wc_ampm_setting_on">ON / 24h</string>
+    <string name="wc_ampm_setting_off">OFF / 12h</string>
+
+    <string name="wc_setting_key" translatable="false">citiesid</string>
+    <string name="wc2_setting_key" translatable="false">citiesid2</string>
+    <string name="wc_setting_title">Timezone ID</string>
+    <string name="wc2_setting_title">Timezone 2 ID</string>
+
+    <!-- WOY Complication Preferences -->
+    <string name="week_complication_name">Week of Year</string>
+    <string name="woy_complication_text">Week</string>
+    <string name="woy_complication_description">Week of Year</string>
+    <string name="woy_setting_preference_category_title">Week of Year Complication</string>
+    <string name="woy_setting_key" translatable="false">is_iso_week</string>
+    <string name="woy_setting_title">Force ISO format</string>
+    <string name="woy_setting_on" translatable="false">ISO</string>
+    <string name="woy_setting_off" translatable="false">US</string>
+</resources>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Translator: amoledwatchfaces -->
+<resources lang="sk" country="SK">
+    <!-- Do not translate translatable="false" lines -->
+    <string name="app_name">Complications Suite</string> <!-- Does not need to be translated, but it's recommended -->
+
+    <!-- Make sure \n\n is in the same position -->
+    <string name="message_checking">Táto sprievodná aplikácia pre telefón bola vytvorená, aby ste mohli ľahko nájsť a stiahnuť aplikáciu do svojho Wear OS zariadenia. Podporované sú zariadenia Wear OS API 27+.\n\nKontrolujú sa zariadenia Wear OS…\n\nZapnite pripojenie Bluetooth, pripojte svoje zariadenie Wear OS a obnovte túto aplikáciu.</string>
+    <string name="message_no_devices">Táto sprievodná aplikácia pre telefón bola vytvorená, aby ste mohli jednoducho nájsť a stiahnuť aplikáciu do svojho Wear OS zariadenia. Podporované sú zariadenia Wear OS API 27+.\n\nMomentálne nemáte k telefónu pripojené žiadne zariadenia Wear OS…\n\nZapnite pripojenie Bluetooth, pripojte svoje zariadenie Wear OS a obnovte túto aplikáciu.</string>
+    <string name="message_missing_all">Táto sprievodná aplikácia pre telefón bola vytvorená, aby ste mohli jednoducho nájsť a stiahnuť aplikáciu do svojho Wear OS zariadenia. Podporované sú zariadenia Wear OS API 27+.\n\nKliknutím na tlačidlo nižšie nainštalujete aplikáciu na svoje Wear OS zariadenie. Túto mobilnú aplikáciu si môžete odinštalovať :)</string>
+    <string name="message_some_installed">Táto sprievodná aplikácia pre telefón bola vytvorená, aby ste mohli jednoducho nájsť a stiahnuť aplikáciu do svojho Wear OS zariadenia. Podporované sú zariadenia Wear OS API 27+.\n\nKliknutím na tlačidlo nižšie nainštalujete aplikáciu na svoje Wear OS zariadenie. Túto mobilnú aplikáciu si môžete odinštalovať :)</string>
+    <string name="message_all_installed">Táto sprievodná aplikácia pre telefón bola vytvorená, aby ste mohli jednoducho nájsť a stiahnuť aplikáciu do svojho Wear OS zariadenia. Podporované sú zariadenia Wear OS API 27+.\n\nKliknutím na tlačidlo nižšie nainštalujete aplikáciu na svoje Wear OS zariadenie. Túto mobilnú aplikáciu si môžete odinštalovať :)</string>
+
+    <string name="store_request_unsuccessful">Požiadavka Obchodu Play zlyhala. Vaše zariadenie Wear OS môže mať API nižšie ako 27 (staršie zariadenia).</string>
+    <string name="store_request_successful">Prosím prejdite na vaše Wear OS zariadenie.</string>
+
+    <string name="contact">POZNÁMKA:\n\nAk ste si aplikáciu stiahli omylom alebo z nejakého iného dôvodu nie je možné nainštalovať Wear OS aplikáciu, kontaktujte nás na:</string>
+    <string name="support_amoledwatchfaces_com" translatable="false">support@amoledwatchfaces.com</string>
+
+    <string name="you_can_check_our_full_watch_face_portfolio_here">Naše celé portfólio si môžte pozrieť tu:</string>
+    <string name="play_google_com" translatable="false">amoledwatchfaces™ - dev page</string>
+
+    <string name="rate_app_now">Hodnotiť aplikáciu</string>
+    <string name="install_app">Inštalovať na Wear OS zariadenie</string>
+    <string name="refresh">Obnoviť</string>
+</resources>

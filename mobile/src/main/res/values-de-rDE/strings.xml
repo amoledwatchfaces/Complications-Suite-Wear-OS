@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Translator: Develeon64 -->
+<resources lang="de" country="DE">
+    <!-- Do not translate translatable="false" lines -->
+    <string name="app_name">Komplikationen-Suite</string> <!-- Does not need to be translated, but it's recommended -->
+
+    <!-- Make sure \n\n is in the same position -->
+    <string name="message_checking">Diese Smartphone Begleitapp wurde erstellt, um Ihnen das Finden und Installieren der App auf ihrer Smartwatch zu erleichtern. Unterstützt werden Wear OS API 27+ Geräte.\n\nSuche Wear OS Geräte…\n\nBitte schalten Sie Ihr Bluetooth ein, verbinden Ihr Wear OS Gerät und aktualisieren diese App.</string>
+    <string name="message_no_devices">Diese Smartphone Begleitapp wurde erstellt, um Ihnen das Finden und Installieren der App auf ihrer Smartwatch zu erleichtern. Unterstützt werden Wear OS API 27+ Geräte.\n\nSie haben momentan keine Wear OS Geräte zu Ihrem Smartphone verbunden…\n\nBitte schalten Sie Ihr Bluetooth ein, verbinden Ihr Wear OS Gerät und aktualisieren diese App.</string>
+
+    <string name="message_missing_all">Diese Smartphone Begleitapp wurde erstellt, um Ihnen das Finden und Installieren der App auf ihrer Smartwatch zu erleichtern. Unterstützt werden Wear OS API 27+ Geräte.\n\nBenutzen Sie den unteren Button, um die App auf ihrer Smartwatch zu installieren.\n\nSie können die App von Ihrem Smartphone deinstallieren.</string>
+    <string name="message_some_installed">Diese Smartphone Begleitapp wurde erstellt, um Ihnen das Finden und Installieren der App auf ihrer Smartwatch zu erleichtern. Unterstützt werden Wear OS API 27+ Geräte.\n\nBenutzen Sie den unteren Button, um die App auf ihrer Smartwatch zu installieren.\n\nSie können die App von Ihrem Smartphone deinstallieren.</string>
+    <string name="message_all_installed">Diese Smartphone Begleitapp wurde erstellt, um Ihnen das Finden und Installieren der App auf ihrer Smartwatch zu erleichtern. Unterstützt werden Wear OS API 27+ Geräte.\n\nBenutzen Sie den unteren Button, um die App auf ihrer Smartwatch zu installieren.\n\nSie können die App von Ihrem Smartphone deinstallieren.</string>
+
+    <string name="store_request_successful">Fahren Sie auf Ihrer Smartwatch fort.</string>
+    <string name="store_request_unsuccessful">PlayStore Fehler. Ihr Wear OS Gerät hat möglicherweise eine API-Version älter as 27 (ätere Geräte).</string>
+
+    <string name="contact">HINWEIS:\n\nWenn Sie die App aus Versehen heruntergeladen haben oder es aus irgendeinem Grund nicht möglich ist die App auf Ihrer Smartwatch zu installieren, kontaktieren Sie uns unter:</string>
+    <string name="support_amoledwatchfaces_com" translatable="false">support@amoledwatchfaces.com</string>
+
+    <string name="you_can_check_our_full_watch_face_portfolio_here">Sehen Sie sich hier all unsere Apps an:</string>
+    <string name="play_google_com" translatable="false">amoledwatchfaces™ - dev page</string>
+
+    <string name="rate_app_now">App bewerten</string>
+    <string name="install_app">App auf Smartwatch installieren</string>
+    <string name="refresh">Aktualisieren</string>
+</resources>

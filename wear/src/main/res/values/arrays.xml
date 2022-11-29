@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="cities">
+        <item>UTC</item>
+        <item>ACC</item>
+        <item>ADK</item>
+        <item>ADD</item>
+        <item>ADL</item>
+        <item>ALG</item>
+        <item>AMM</item>
+        <item>AMS</item>
+        <item>ANC</item>
+        <item>ASM</item>
+        <item>ASU</item>
+        <item>ATH</item>
+        <item>ATL</item>
+        <item>AKL</item>
+        <item>AUS</item>
+        <item>BGW</item>
+        <item>BAH</item>
+        <item>BAK</item>
+        <item>BKK</item>
+        <item>BKO</item>
+        <item>BGF</item>
+        <item>BEY</item>
+        <item>BEG</item>
+        <item>BER</item>
+        <item>BOG</item>
+        <item>BOS</item>
+        <item>BSB</item>
+        <item>BNE</item>
+        <item>BWN</item>
+        <item>BRU</item>
+        <item>BUD</item>
+        <item>BUE</item>
+        <item>BUH</item>
+        <item>CAI</item>
+        <item>CCU</item>
+        <item>CAL</item>
+        <item>CBR</item>
+        <item>CPT</item>
+        <item>CCS</item>
+        <item>CDF</item>
+        <item>CAY</item>
+        <item>CMB</item>
+        <item>CMH</item>
+        <item>CKY</item>
+        <item>CPH</item>
+        <item>ORK</item>
+        <item>CUO</item>
+        <item>DKR</item>
+        <item>DAL</item>
+        <item>DAR</item>
+        <item>DRW</item>
+        <item>DEN</item>
+        <item>DET</item>
+        <item>DAC</item>
+        <item>JIB</item>
+        <item>DOH</item>
+        <item>DLA</item>
+        <item>DXB</item>
+        <item>DUB</item>
+        <item>EDI</item>
+        <item>FNA</item>
+        <item>GVA</item>
+        <item>GEO</item>
+        <item>SGS</item>
+        <item>GUM</item>
+        <item>GUA</item>
+        <item>HAL</item>
+        <item>HRE</item>
+        <item>HAV</item>
+        <item>HEL</item>
+        <item>SGN</item>
+        <item>HBA</item>
+        <item>HKG</item>
+        <item>HNL</item>
+        <item>CHI</item>
+        <item>IND</item>
+        <item>IST</item>
+        <item>JER</item>
+        <item>KBL</item>
+        <item>PKC</item>
+        <item>KLA</item>
+        <item>KHI</item>
+        <item>KTM</item>
+        <item>KRT</item>
+        <item>IEV</item>
+        <item>FIH</item>
+        <item>TYS</item>
+        <item>KUL</item>
+        <item>KWI</item>
+        <item>LPB</item>
+        <item>LOS</item>
+        <item>LIM</item>
+        <item>LIS</item>
+        <item>LJU</item>
+        <item>LON</item>
+        <item>LAX</item>
+        <item>LAD</item>
+        <item>LUN</item>
+        <item>MAD</item>
+        <item>MGA</item>
+        <item>MHT</item>
+        <item>MNL</item>
+        <item>MPM</item>
+        <item>MEL</item>
+        <item>MEM</item>
+        <item>DFL</item>
+        <item>MIA</item>
+        <item>MES</item>
+        <item>MGQ</item>
+        <item>MLW</item>
+        <item>MVD</item>
+        <item>MTR</item>
+        <item>MOW</item>
+        <item>MUC</item>
+        <item>NBO</item>
+        <item>NDJ</item>
+        <item>NYC</item>
+        <item>NKC</item>
+        <item>NOU</item>
+        <item>GOH</item>
+        <item>OSL</item>
+        <item>OTT</item>
+        <item>OUA</item>
+        <item>PPG</item>
+        <item>PTY</item>
+        <item>PBM</item>
+        <item>PAR</item>
+        <item>PER</item>
+        <item>PHL</item>
+        <item>PHX</item>
+        <item>PDL</item>
+        <item>PAP</item>
+        <item>PDX</item>
+        <item>PRG</item>
+        <item>UIO</item>
+        <item>RBA</item>
+        <item>RGN</item>
+        <item>REC</item>
+        <item>SAK</item>
+        <item>REY</item>
+        <item>RIO</item>
+        <item>RUH</item>
+        <item>ROM</item>
+        <item>SLC</item>
+        <item>SAN</item>
+        <item>SFO</item>
+        <item>SJC</item>
+        <item>SJU</item>
+        <item>SAL</item>
+        <item>SCL</item>
+        <item>SDQ</item>
+        <item>SAO</item>
+        <item>SEA</item>
+        <item>SEL</item>
+        <item>SGH</item>
+        <item>SIN</item>
+        <item>SOF</item>
+        <item>SEK</item>
+        <item>SYT</item>
+        <item>LED</item>
+        <item>STO</item>
+        <item>SYD</item>
+        <item>TPE</item>
+        <item>TAS</item>
+        <item>TGU</item>
+        <item>THR</item>
+        <item>TAV</item>
+        <item>TYO</item>
+        <item>TOR</item>
+        <item>TIP</item>
+        <item>TUN</item>
+        <item>VAN</item>
+        <item>VIE</item>
+        <item>VVO</item>
+        <item>VOG</item>
+        <item>WAW</item>
+        <item>WAS</item>
+        <item>WNP</item>
+        <item>ZAG</item>
+        <item>ZRH</item>
+    </string-array>
+
+    <string-array name="cities_zone">
+        <item>UTC</item>
+        <item>Accra (ACC)</item>
+        <item>Adak (ADK)</item>
+        <item>Addis Ababa (ADD)</item>
+        <item>Adelaide (ADL)</item>
+        <item>Algiers (ALG)</item>
+        <item>Amman (AMM)</item>
+        <item>Amsterdam (AMS)</item>
+        <item>Anchorage (ANC)</item>
+        <item>Asmara (ASM)</item>
+        <item>Asuncion (ASU)</item>
+        <item>Athens (ATH)</item>
+        <item>Atlanta (ATL)</item>
+        <item>Auckland (AKL)</item>
+        <item>Austin (AUS)</item>
+        <item>Baghdad (BGW)</item>
+        <item>Bahrain (BAH)</item>
+        <item>Baku (BAK)</item>
+        <item>Bangkok (BKK)</item>
+        <item>Bamako (BKO)</item>
+        <item>Bangui (BGF)</item>
+        <item>Beirut (BEY)</item>
+        <item>Belgrade (BEG)</item>
+        <item>Berlin (BER)</item>
+        <item>Bogota (BOG)</item>
+        <item>Boston (BOS)</item>
+        <item>Brasilia (BSB)</item>
+        <item>Brisbane (BNE)</item>
+        <item>Brunei (BWN)</item>
+        <item>Brussels (BRU)</item>
+        <item>Budapest (BUD)</item>
+        <item>Buenos Aires (BUE)</item>
+        <item>Bucharest (BUH)</item>
+        <item>Cairo (CAI)</item>
+        <item>Calcutta (CCU)</item>
+        <item>Calgary (CAL)</item>
+        <item>Canberra (CBR)</item>
+        <item>Cape Town (CPT)</item>
+        <item>Caracas (CCS)</item>
+        <item>Cardiff (CDF)</item>
+        <item>Cayenne (CAY)</item>
+        <item>Colombo (CMB)</item>
+        <item>Columbus (CMH)</item>
+        <item>Conakry (CKY)</item>
+        <item>Copenhagen (CPH)</item>
+        <item>Cork (ORK)</item>
+        <item>Cupertino (CUO)</item>
+        <item>Dakar (DKR)</item>
+        <item>Dallas (DAL)</item>
+        <item>Dar es Salaam (DAR)</item>
+        <item>Darwin (DRW)</item>
+        <item>Denver (DEN)</item>
+        <item>Detroit (DET)</item>
+        <item>Dhaka (DAC)</item>
+        <item>Djibouti (JIB)</item>
+        <item>Doha (DOH)</item>
+        <item>Douala (DLA)</item>
+        <item>Dubai (DXB)</item>
+        <item>Dublin (DUB)</item>
+        <item>Edinburgh (EDI)</item>
+        <item>Freetown (FNA)</item>
+        <item>Geneva (GVA)</item>
+        <item>Georgetown (GEO)</item>
+        <item>Grytviken (SGS)</item>
+        <item>Guam (GUM)</item>
+        <item>Guatemala (GUA)</item>
+        <item>Halifax (HAL)</item>
+        <item>Harare (HRE)</item>
+        <item>Havana (HAV)</item>
+        <item>Helsinki (HEL)</item>
+        <item>Ho Chi Ming (SGN)</item>
+        <item>Hobart (HBA)</item>
+        <item>Hong Kong (HKG)</item>
+        <item>Honolulu (HNL)</item>
+        <item>Chicago (CHI)</item>
+        <item>Indianapolis (IND)</item>
+        <item>Istanbul (IST)</item>
+        <item>Jerusalem (JER)</item>
+        <item>Kabul (KBL)</item>
+        <item>Kamchatka (PKC)</item>
+        <item>Kampala (KLA)</item>
+        <item>Karachi (KHI)</item>
+        <item>Kathmandu (KTM)</item>
+        <item>Khartoum (KRT)</item>
+        <item>Kiev (IEV)</item>
+        <item>Kinshasa (FIH)</item>
+        <item>Knoxville (TYS)</item>
+        <item>Kuala Lumpur (KUL)</item>
+        <item>Kuwait (KWI)</item>
+        <item>La Paz (LPB)</item>
+        <item>Lagos (LOS)</item>
+        <item>Lima (LIM)</item>
+        <item>Lisbon (LIS)</item>
+        <item>Ljubljana (LJU)</item>
+        <item>London (LON)</item>
+        <item>Los Angeles (LAX)</item>
+        <item>Luanda (LAD)</item>
+        <item>Lusaka (LUN)</item>
+        <item>Madrid (MAD)</item>
+        <item>Managua (MGA)</item>
+        <item>Manchester (MHT)</item>
+        <item>Manila (MNL)</item>
+        <item>Maputo (MPM)</item>
+        <item>Melbourne (MEL)</item>
+        <item>Memphis (MEM)</item>
+        <item>Mexico City (DFL)</item>
+        <item>Miami (MIA)</item>
+        <item>Minneapolis (MES)</item>
+        <item>Mogadishu (MGQ)</item>
+        <item>Monrovia (MLW)</item>
+        <item>Montevideo (MVD)</item>
+        <item>Montreal (MTR)</item>
+        <item>Moscow (MOW)</item>
+        <item>Munich (MUC)</item>
+        <item>Nairobi (NBO)</item>
+        <item>Ndjamena (NDJ)</item>
+        <item>New York (NYC)</item>
+        <item>Nouakchott (NKC)</item>
+        <item>Noumea (NOU)</item>
+        <item>Nuuk (GOH)</item>
+        <item>Oslo (OSL)</item>
+        <item>Ottawa (OTT)</item>
+        <item>Ouagadougou (OUA)</item>
+        <item>Pago Pago (PPG)</item>
+        <item>Panama (PTY)</item>
+        <item>Paramaribo (PBM)</item>
+        <item>Paris (PAR)</item>
+        <item>Perth (PER)</item>
+        <item>Philadelphia (PHL)</item>
+        <item>Phoenix (PHX)</item>
+        <item>Ponta Delgada (PDL)</item>
+        <item>Port-au-Prince (PAP)</item>
+        <item>Portland (PDX)</item>
+        <item>Prague (PRG)</item>
+        <item>Quito (UIO)</item>
+        <item>Rabat (RBA)</item>
+        <item>Rangoon (RGN)</item>
+        <item>Recife (REC)</item>
+        <item>Regina (SAK)</item>
+        <item>Reykjavik (REY)</item>
+        <item>Rio de Janeiro (RIO)</item>
+        <item>Riyadh (RUH)</item>
+        <item>Rome (ROM)</item>
+        <item>Salt Lake City (SLC)</item>
+        <item>San Diego (SAN)</item>
+        <item>San Francisco (SFO)</item>
+        <item>San Jose (SJC)</item>
+        <item>San Juan (SJU)</item>
+        <item>San Salvador (SAL)</item>
+        <item>Santiago (SCL)</item>
+        <item>Santo Domingo (SDQ)</item>
+        <item>Sao Paulo (SAO)</item>
+        <item>Seattle (SEA)</item>
+        <item>Seoul (SEL)</item>
+        <item>Shanghai (SGH)</item>
+        <item>Singapore (SIN)</item>
+        <item>Sofia (SOF)</item>
+        <item>Srednekolymsk (SEK)</item>
+        <item>St. Louis (SYT)</item>
+        <item>St. Petersburg (LED)</item>
+        <item>Stockholm (STO)</item>
+        <item>Sydney (SYD)</item>
+        <item>Taipei (TPE)</item>
+        <item>Tashkent (TAS)</item>
+        <item>Tegucigalpa (TGU)</item>
+        <item>Tehran (THR)</item>
+        <item>Tel Aviv (TAV)</item>
+        <item>Tokyo (TYO)</item>
+        <item>Toronto (TOR)</item>
+        <item>Tripoli (TIP)</item>
+        <item>Tunis (TUN)</item>
+        <item>Vancouver (VAN)</item>
+        <item>Vienna (VIE)</item>
+        <item>Vladivostok (VVO)</item>
+        <item>Volgograd (VOG)</item>
+        <item>Warsaw (WAW)</item>
+        <item>Washington (WAS)</item>
+        <item>Winnipeg (WNP)</item>
+        <item>Zagreb (ZAG)</item>
+        <item>Zurich (ZRH)</item>
+    </string-array>
+
+    <string-array name="zoneids">
+        <item>Etc/UTC</item>
+        <item>Africa/Accra</item>
+        <item>America/Adak</item>
+        <item>Africa/Addis_Ababa</item>
+        <item>Australia/Adelaide</item>
+        <item>Africa/Algiers</item>
+        <item>Asia/Amman</item>
+        <item>Europe/Amsterdam</item>
+        <item>America/Anchorage</item>
+        <item>Africa/Asmara</item>
+        <item>America/Asuncion</item>
+        <item>Europe/Athens</item>
+        <item>America/New_York</item>
+        <item>Pacific/Auckland</item>
+        <item>America/Chicago</item>
+        <item>Asia/Baghdad</item>
+        <item>Asia/Bahrain</item>
+        <item>Asia/Baku</item>
+        <item>Asia/Bangkok</item>
+        <item>Africa/Bamako</item>
+        <item>Africa/Bangui</item>
+        <item>Asia/Beirut</item>
+        <item>Europe/Belgrade</item>
+        <item>Europe/Berlin</item>
+        <item>America/Bogota</item>
+        <item>America/New_York</item>
+        <item>America/Sao_Paulo</item>
+        <item>Australia/Brisbane</item>
+        <item>Asia/Brunei</item>
+        <item>Europe/Brussels</item>
+        <item>Europe/Budapest</item>
+        <item>America/Buenos_Aires</item>
+        <item>Europe/Bucharest</item>
+        <item>Africa/Cairo</item>
+        <item>Asia/Calcutta</item>
+        <item>America/Edmonton</item>
+        <item>Australia/Canberra</item>
+        <item>Africa/Johannesburg</item>
+        <item>America/Caracas</item>
+        <item>Europe/London</item>
+        <item>America/Cayenne</item>
+        <item>Asia/Colombo</item>
+        <item>America/New_York</item>
+        <item>Africa/Conakry</item>
+        <item>Europe/Copenhagen</item>
+        <item>Europe/Dublin</item>
+        <item>America/Los_Angeles</item>
+        <item>Africa/Dakar</item>
+        <item>America/Chicago</item>
+        <item>Africa/Dar_es_Salaam</item>
+        <item>Australia/Darwin</item>
+        <item>America/Denver</item>
+        <item>America/Detroit</item>
+        <item>Asia/Dhaka</item>
+        <item>Africa/Djibouti</item>
+        <item>Asia/Qatar</item>
+        <item>Africa/Douala</item>
+        <item>Asia/Dubai</item>
+        <item>Europe/Dublin</item>
+        <item>Europe/London</item>
+        <item>Africa/Freetown</item>
+        <item>Europe/Zurich</item>
+        <item>America/Guyana</item>
+        <item>Atlantic/South_Georgia</item>
+        <item>Pacific/Guam</item>
+        <item>America/Guatemala</item>
+        <item>America/Halifax</item>
+        <item>Africa/Harare</item>
+        <item>America/Havana</item>
+        <item>Europe/Helsinki</item>
+        <item>Asia/Ho_Chi_Minh</item>
+        <item>Australia/Hobart</item>
+        <item>Asia/Hong_Kong</item>
+        <item>Pacific/Honolulu</item>
+        <item>America/Chicago</item>
+        <item>America/Indianapolis</item>
+        <item>Asia/Istanbul</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Kabul</item>
+        <item>Asia/Kamchatka</item>
+        <item>Africa/Kampala</item>
+        <item>Asia/Karachi</item>
+        <item>Asia/Kathmandu</item>
+        <item>Africa/Khartoum</item>
+        <item>Europe/Kiev</item>
+        <item>Africa/Kinshasa</item>
+        <item>America/New_York</item>
+        <item>Asia/Kuala_Lumpur</item>
+        <item>Asia/Kuwait</item>
+        <item>America/La_Paz</item>
+        <item>Africa/Lagos</item>
+        <item>America/Lima</item>
+        <item>Europe/Lisbon</item>
+        <item>Europe/Ljubljana</item>
+        <item>Europe/London</item>
+        <item>America/Los_Angeles</item>
+        <item>Africa/Luanda</item>
+        <item>Africa/Lusaka</item>
+        <item>Europe/Madrid</item>
+        <item>America/Managua</item>
+        <item>America/New_York</item>
+        <item>Asia/Manila</item>
+        <item>Africa/Maputo</item>
+        <item>Australia/Melbourne</item>
+        <item>America/Chicago</item>
+        <item>America/Mexico_City</item>
+        <item>America/New_York</item>
+        <item>America/Chicago</item>
+        <item>Africa/Mogadishu</item>
+        <item>Africa/Monrovia</item>
+        <item>America/Montevideo</item>
+        <item>America/Montreal</item>
+        <item>Europe/Moscow</item>
+        <item>Europe/Berlin</item>
+        <item>Africa/Nairobi</item>
+        <item>Africa/Ndjamena</item>
+        <item>America/New_York</item>
+        <item>Africa/Nouakchott</item>
+        <item>Pacific/Noumea</item>
+        <item>America/Godthab</item>
+        <item>Europe/Oslo</item>
+        <item>America/Toronto</item>
+        <item>Africa/Ouagadougou</item>
+        <item>Pacific/Pago_Pago</item>
+        <item>America/Panama</item>
+        <item>America/Paramaribo</item>
+        <item>Europe/Paris</item>
+        <item>Australia/Perth</item>
+        <item>America/New_York</item>
+        <item>America/Phoenix</item>
+        <item>Atlantic/Azores</item>
+        <item>America/Port-au-Prince</item>
+        <item>America/Los_Angeles</item>
+        <item>Europe/Prague</item>
+        <item>America/Guayaquil</item>
+        <item>Africa/Casablanca</item>
+        <item>Asia/Rangoon</item>
+        <item>America/Recife</item>
+        <item>America/Regina</item>
+        <item>Atlantic/Reykjavik</item>
+        <item>America/Sao_Paulo</item>
+        <item>Asia/Riyadh</item>
+        <item>Europe/Rome</item>
+        <item>US/Mountain</item>
+        <item>US/Pacific</item>
+        <item>US/Pacific</item>
+        <item>America/Costa_Rica</item>
+        <item>America/Puerto_Rico</item>
+        <item>America/El_Salvador</item>
+        <item>America/Santiago</item>
+        <item>America/Santo_Domingo</item>
+        <item>America/Sao_Paulo</item>
+        <item>US/Pacific</item>
+        <item>Asia/Seoul</item>
+        <item>Asia/Shanghai</item>
+        <item>Asia/Singapore</item>
+        <item>Europe/Sofia</item>
+        <item>Asia/Srednekolymsk</item>
+        <item>US/Central</item>
+        <item>Europe/Moscow</item>
+        <item>Europe/Stockholm</item>
+        <item>Australia/Sydney</item>
+        <item>Asia/Taipei</item>
+        <item>Asia/Tashkent</item>
+        <item>America/Tegucigalpa</item>
+        <item>Asia/Tehran</item>
+        <item>Asia/Tel_Aviv</item>
+        <item>Asia/Tokyo</item>
+        <item>America/Toronto</item>
+        <item>Africa/Tripoli</item>
+        <item>Africa/Tunis</item>
+        <item>America/Vancouver</item>
+        <item>Europe/Vienna</item>
+        <item>Asia/Vladivostok</item>
+        <item>Europe/Volgograd</item>
+        <item>Europe/Warsaw</item>
+        <item>US/Eastern</item>
+        <item>America/Winnipeg</item>
+        <item>Europe/Zagreb</item>
+        <item>Europe/Zurich</item>
+    </string-array>
+    <string-array name="dateformats">
+        <item>EEE, d MMM</item>
+        <item>MM/dd/YYYY</item>
+        <item>dd/MM/YYYY</item>
+    </string-array>
+    <string-array name="shortformats">
+        <item>d</item>
+        <item>dd</item>
+        <item>M</item>
+        <item>MM</item>
+        <item>MMM</item>
+        <item>a</item>
+        <item>dd/MM</item>
+        <item>MM/dd</item>
+        <item>dd.MM</item>
+        <item>MM.dd</item>
+        <item>M.d</item>
+        <item>d.M</item>
+        <item>M/d</item>
+        <item>d/M</item>
+        <item>d/M</item>
+        <item>EEE</item>
+        <item>d MMM</item>
+        <item>MMM d</item>
+        <item>d. MMM</item>
+    </string-array>
+</resources>
