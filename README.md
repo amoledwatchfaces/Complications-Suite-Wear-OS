@@ -16,11 +16,11 @@ Download the package (.apk) to side-load from <a href="https://github.com/amoled
 
 ## Help us with translations:
 
-Store listings: <a href="https://github.com/amoledwatchfaces/Complications-Suite-Wear-OS/tree/master/Store-listings">DIR</a>
+<a href="https://github.com/amoledwatchfaces/Complications-Suite-Wear-OS/tree/master/Store-listings">STORE LISTINGS</a>
 
-Mobile companion app: <a href="https://github.com/amoledwatchfaces/Complications-Suite-Wear-OS/tree/master/mobile/src/main/res">DIR</a>
+<a href="https://github.com/amoledwatchfaces/Complications-Suite-Wear-OS/tree/master/mobile/src/main/res">MOBILE APP</a>
 
-Wear app: <a href="https://github.com/amoledwatchfaces/Complications-Suite-Wear-OS/tree/master/wear/src/main/res">DIR</a>
+<a href="https://github.com/amoledwatchfaces/Complications-Suite-Wear-OS/tree/master/wear/src/main/res">WEAR APP</a>
 
 ## License
 
