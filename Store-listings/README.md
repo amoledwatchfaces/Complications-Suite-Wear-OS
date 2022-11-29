@@ -1,5 +1,5 @@
-# amoledwatchfaces™-Translations
-## Complications-Suite-Translations
+# amoledwatchfaces™
+## Complications-Suite-Store-Listings-Translations
 Here you'll find the translations for the PlayStore-Page of the *[Complications-Suite](https://play.google.com/store/apps/details?id=com.weartools.weekdayutccomp "Playstore Page")* from **[amoledwatchfaces™](https://play.google.com/store/apps/dev?id=5591589606735981545 "Playstore Page")**.
 
 ### Contribution
