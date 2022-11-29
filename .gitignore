@@ -9,12 +9,16 @@
 /.idea/assetWizardSettings.xml
 .DS_Store
 /build
+/release
 /captures
 .externalNativeBuild
 .cxx
 local.properties
 
 # Project exclude paths
+/mobile/release/
+/wear/release/
 /mobile/build/
+/wear/build/
 /mobile/build/release
 /mobile/build/intermediates/javac/debug/classes/
