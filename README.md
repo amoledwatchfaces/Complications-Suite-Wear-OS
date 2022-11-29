@@ -8,6 +8,11 @@ Day/Week of Year, Seconds, World Clock/UTC, Moon phase complications for Wear OS
 
 ## Release
 
+## Help us with translations:
+Store listings:
+Mobile companion app: <a href='https://github.com/amoledwatchfaces/Complications-Suite-Wear-OS/tree/master/Store-listings' Mobile app/><a/>
+Wear app:
+
 <a href='https://play.google.com/store/apps/details?id=com.weartools.weekdayutccomp'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' width=300/></a>
 
 <b>OR</b>
