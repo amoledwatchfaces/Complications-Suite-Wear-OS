@@ -1,4 +1,4 @@
-# Complications Suite
+# Complications Suite - Wear OS
 
 Day/Week of Year, Seconds, World Clock/UTC, Moon phase complications for Wear OS
 
@@ -10,6 +10,9 @@ Day/Week of Year, Seconds, World Clock/UTC, Moon phase complications for Wear OS
 
 <a href='https://play.google.com/store/apps/details?id=com.weartools.weekdayutccomp'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' width=300/></a>
 
+<b>OR</b>
+
+Download the package (.apk) to sideload from <a href="https://github.com/amoledwatchfaces/Complications-Suite/releases">HERE</a
 
 ## License
 
