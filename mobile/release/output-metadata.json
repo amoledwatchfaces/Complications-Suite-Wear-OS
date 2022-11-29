@@ -11,9 +11,9 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 35,
-      "versionName": "1.3.5",
-      "outputFile": "wear-release.apk"
+      "versionCode": 36,
+      "versionName": "1.3.6",
+      "outputFile": "mobile-release.apk"
     }
   ],
   "elementType": "File"
