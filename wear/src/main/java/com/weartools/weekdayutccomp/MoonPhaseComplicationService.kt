@@ -51,19 +51,56 @@ private fun openScreen(): PendingIntent? {
     )
 }
 
-override fun getPreviewData(type: ComplicationType): ComplicationData {
-    return ShortTextComplicationData.Builder(
-        text = PlainComplicationText.Builder(text = "100%").build(),
-        contentDescription = PlainComplicationText.Builder(text = "100%")
-            .build()
-    )
-        .setMonochromaticImage(
-            MonochromaticImage.Builder(
-                image = createWithResource(this, drawable.moon15),
-            ).build()
+override fun getPreviewData(type: ComplicationType): ComplicationData? {
+    return when (type) {
+        ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
+            text = PlainComplicationText.Builder(text = "100%").build(),
+            contentDescription = PlainComplicationText.Builder(text = "100%")
+                .build()
         )
-        .setTapAction(null)
-        .build()
+            .setMonochromaticImage(
+                MonochromaticImage.Builder(
+                    image = createWithResource(this, drawable.moon15),
+                ).build()
+            )
+            .setTapAction(null)
+            .build()
+
+        ComplicationType.RANGED_VALUE -> RangedValueComplicationData.Builder(
+            value = 43f,
+            min = 0f,
+            max =  100f,
+            contentDescription = PlainComplicationText.Builder(text = "Visibility").build()
+            )
+            .setMonochromaticImage(
+                MonochromaticImage.Builder(createWithResource(this, drawable.moon6)).build()
+            )
+            .setTapAction(null)
+            .build()
+
+        ComplicationType.MONOCHROMATIC_IMAGE -> MonochromaticImageComplicationData.Builder(
+            monochromaticImage = MonochromaticImage.Builder(
+                createWithResource(this, drawable.moon15)
+            )
+                .build(),
+            contentDescription = PlainComplicationText.Builder(text = "MONO_IMG.").build()
+        )
+            .setTapAction(null)
+            .build()
+
+
+        ComplicationType.SMALL_IMAGE -> SmallImageComplicationData.Builder(
+            smallImage = SmallImage.Builder(
+                image = createWithResource(this, drawable.moon15),
+                type = SmallImageType.ICON
+            ).build(),
+            contentDescription = PlainComplicationText.Builder(text = "SMALL_IMAGE.").build()
+        )
+            .setTapAction(null)
+            .build()
+
+        else -> {null}
+    }
 }
 
 override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {

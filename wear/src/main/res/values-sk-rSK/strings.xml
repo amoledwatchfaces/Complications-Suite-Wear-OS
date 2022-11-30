@@ -36,6 +36,7 @@
     <string name="moon_setting_hemi_title">Severná hemisféra</string>
     <string name="moon_setting_hemi_on">Áno</string>
     <string name="moon_setting_hemi_off">Nie</string>
+    <string name="moon_setting_simple_icon_title">Jednoduchá Ikona</string>
 
     <!-- Pay Complication -->
     <string name="pay_comp_name">Pay</string>

@@ -29,7 +29,6 @@ import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
 import com.weartools.weekdayutccomp.R.drawable
 
-
 class PayComplicationService : SuspendingComplicationDataSourceService() {
 
     override fun onComplicationActivated(
@@ -38,7 +37,6 @@ class PayComplicationService : SuspendingComplicationDataSourceService() {
     ) {
         Log.d(TAG, "onComplicationActivated(): $complicationInstanceId")
     }
-
 
 private fun openScreen(): PendingIntent? {
 
@@ -49,7 +47,6 @@ private fun openScreen(): PendingIntent? {
         Uri.parse("market://details?id=com.google.android.apps.walletnfcrel")
     )
     i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-
 
     if (intent1!=null)
     {
@@ -71,8 +68,9 @@ private fun openScreen(): PendingIntent? {
         )}
 }
 
-override fun getPreviewData(type: ComplicationType): ComplicationData {
-    return MonochromaticImageComplicationData.Builder(
+override fun getPreviewData(type: ComplicationType): ComplicationData? {
+    return when (type) {
+        ComplicationType.MONOCHROMATIC_IMAGE -> MonochromaticImageComplicationData.Builder(
         monochromaticImage = MonochromaticImage.Builder(
             createWithResource(this, drawable.ic_pay)
         )
@@ -82,6 +80,17 @@ override fun getPreviewData(type: ComplicationType): ComplicationData {
     )
         .setTapAction(null)
         .build()
+        ComplicationType.SMALL_IMAGE -> SmallImageComplicationData.Builder(
+            smallImage = SmallImage.Builder(
+                image = createWithResource(this, drawable.ic_pay),
+                type = SmallImageType.ICON
+            ).build(),
+            contentDescription = PlainComplicationText.Builder(text = "SMALL_IMAGE.").build()
+        )
+            .setTapAction(null)
+            .build()
+        else -> {null}
+    }
 }
 
 override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
@@ -100,7 +109,6 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
             .setTapAction(openScreen())
             .build()
 
-
         ComplicationType.SMALL_IMAGE -> SmallImageComplicationData.Builder(
             smallImage = SmallImage.Builder(
                 image = createWithResource(this, drawable.ic_pay),
@@ -117,7 +125,6 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
             }
             null
         }
-
     }
 }
 

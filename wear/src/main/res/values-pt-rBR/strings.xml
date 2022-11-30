@@ -42,6 +42,7 @@
     <string name="moon_setting_hemi_off">Não</string>
     <string name="key_pref_phase_icon" translatable="false">R.drawable.moon0</string>
     <string name="key_pref_moon_visibility" translatable="false">0.0</string>
+    <string name="moon_setting_simple_icon_title">Ícone simples</string>
 
     <!-- Pay Complication -->
     <string name="pay_comp_name">Pay</string>

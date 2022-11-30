@@ -40,14 +40,14 @@
             android:id="@+id/settings_fragment"
             android:name="com.weartools.weekdayutccomp.MainActivity$UTCPreferenceFragment"
             android:layout_width="match_parent"
-            android:layout_height="1020dp"
+            android:layout_height="1080dp"
             tools:context="com.weartools.weekdayutccomp.MainActivity" />
 
         <View
             android:layout_width="8dp"
             android:layout_gravity="end"
             android:background="#000000"
-            android:layout_height="1020dp"/>
+            android:layout_height="1080dp"/>
     </FrameLayout>
 
 </androidx.core.widget.NestedScrollView>

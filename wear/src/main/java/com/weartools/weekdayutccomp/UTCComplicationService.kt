@@ -24,7 +24,6 @@ import androidx.wear.watchface.complications.data.*
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
 
-
 class UTCComplicationService : SuspendingComplicationDataSourceService() {
 
     override fun onComplicationActivated(
@@ -44,20 +43,36 @@ class UTCComplicationService : SuspendingComplicationDataSourceService() {
         )
     }
 
-override fun getPreviewData(type: ComplicationType): ComplicationData {
-    return ShortTextComplicationData.Builder(
-        text = PlainComplicationText.Builder(text = "10:00").build(),
-        contentDescription = PlainComplicationText.Builder(text = getString(R.string.wc_comp_name_1))
-            .build()
-    )
-        .setTitle(
-            PlainComplicationText.Builder(
-                text = "UTC"
-            ).build()
-        )
-        .setTapAction(null)
-        .build()
-}
+    override fun getPreviewData(type: ComplicationType): ComplicationData? {
+        return when (type) {
+            ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
+                text = PlainComplicationText.Builder(text = "10:00").build(),
+                contentDescription = PlainComplicationText.Builder(text = getString(R.string.wc_comp_name_1))
+                    .build()
+            )
+                .setTitle(
+                    PlainComplicationText.Builder(
+                        text = "UTC"
+                    ).build()
+                )
+                .setTapAction(null)
+                .build()
+            ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
+                text = PlainComplicationText.Builder(text = "10:00").build(),
+                contentDescription = PlainComplicationText
+                    .Builder(text = getString(R.string.wc_comp_name_1))
+                    .build()
+            )
+                .setTitle(
+                    PlainComplicationText.Builder(
+                        text = "UTC"
+                    ).build()
+                )
+                .setTapAction(null)
+                .build()
+            else -> {null}
+        }
+    }
 
 override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
     Log.d(TAG, "onComplicationRequest() id: ${request.complicationInstanceId}")
@@ -68,19 +83,17 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
     val leadingzero = prefs.getBoolean(getString(R.string.wc_setting_leading_zero_key), true)
 
     val fmt = if (ismilitary && leadingzero) "HH:mm"
-    else if (!ismilitary && leadingzero) "hh:mm a"
-    else if (ismilitary && !leadingzero) "H:mm"
-    else "h:mm a"
+    else if (!ismilitary && !leadingzero) "h:mm a"
+    else if (ismilitary) "H:mm"
+    else "hh:mm a"
 
     val city = prefs.getString(getString(R.string.wc_setting_key), "UTC").toString()
     val zonearray = resources.getStringArray(R.array.cities).indexOf(city)
     val timezone = resources.getStringArray(R.array.zoneids)[zonearray]
 
-
     val text = TimeFormatComplicationText.Builder(format = fmt)
         .setTimeZone(TimeZone.getTimeZone(timezone))
         .build()
-
 
     return when (request.complicationType) {
 

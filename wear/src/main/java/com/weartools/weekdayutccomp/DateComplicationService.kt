@@ -45,18 +45,26 @@ private fun openScreen(): PendingIntent? {
     )
 }
 
-override fun getPreviewData(type: ComplicationType): ComplicationData {
-    return ShortTextComplicationData.Builder(
+override fun getPreviewData(type: ComplicationType): ComplicationData? {
+    return when (type) {
+        ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
         text = PlainComplicationText.Builder(text = "1").build(),
         contentDescription = PlainComplicationText
             .Builder(text = getString(R.string.date_comp_name))
-            .build()
-    )
-        .setTitle(
-            PlainComplicationText.Builder(text = "Jan").build()
-        )
+            .build())
+        .setTitle(PlainComplicationText.Builder(text = "Jan").build())
         .setTapAction(null)
         .build()
+        ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
+            text = PlainComplicationText.Builder(text = "01/01/2025").build(),
+            contentDescription = PlainComplicationText
+                .Builder(text = getString(R.string.date_comp_name))
+                .build()
+        )
+            .setTapAction(openScreen())
+            .build()
+        else -> {null}
+    }
 }
 
 override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {

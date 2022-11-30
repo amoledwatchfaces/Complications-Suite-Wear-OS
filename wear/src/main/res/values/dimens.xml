@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <dimen name="box_inset_layout_padding">0dp</dimen>
-    <dimen name="inner_frame_layout_padding">0dp</dimen>
-</resources>

@@ -32,7 +32,6 @@ import java.time.temporal.IsoFields
 import java.time.temporal.WeekFields
 import java.util.*
 
-
 class WeekOfYearComplicationService : SuspendingComplicationDataSourceService() {
 
     override fun onComplicationActivated(
@@ -41,7 +40,6 @@ class WeekOfYearComplicationService : SuspendingComplicationDataSourceService() 
     ) {
         Log.d(TAG, "onComplicationActivated(): $complicationInstanceId")
     }
-
 
 private fun openScreen(): PendingIntent? {
 
@@ -55,12 +53,14 @@ private fun openScreen(): PendingIntent? {
     )
 }
 
-override fun getPreviewData(type: ComplicationType): ComplicationData {
-    return ShortTextComplicationData.Builder(
-        text = PlainComplicationText.Builder(text = getString(R.string.woy_complication_text)).build(),
+override fun getPreviewData(type: ComplicationType): ComplicationData? {
+    return when (type) {
+        ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
+        text = PlainComplicationText.Builder(text = "32").build(),
         contentDescription = PlainComplicationText.Builder(text = getString(R.string.woy_complication_text))
             .build()
     )
+            .setTitle(PlainComplicationText.Builder(text = getString(R.string.woy_complication_text)).build())
         .setMonochromaticImage(
             MonochromaticImage.Builder(
                 image = createWithResource(this, drawable.ic_week),
@@ -68,11 +68,47 @@ override fun getPreviewData(type: ComplicationType): ComplicationData {
         )
         .setTapAction(null)
         .build()
+        ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
+            text = PlainComplicationText.Builder(text = "32").build(),
+            contentDescription = PlainComplicationText
+                .Builder(text = getString(R.string.woy_complication_description))
+                .build()
+        )
+            .setMonochromaticImage(
+                MonochromaticImage.Builder(
+                    image = createWithResource(this, drawable.ic_week),
+                ).build()
+            )
+
+            .setTitle(
+                PlainComplicationText.Builder(
+                    text = getString(R.string.woy_complication_text)
+                ).build()
+            )
+            .setTapAction(null)
+            .build()
+
+        ComplicationType.RANGED_VALUE -> RangedValueComplicationData.Builder(
+            value = 32f,
+            min = 1f,
+            max =  52f,
+            contentDescription = PlainComplicationText
+                .Builder(text = getString(R.string.woy_complication_description)).build()
+        )
+            .setText(PlainComplicationText.Builder(text = "32").build())
+            .setTitle(
+                PlainComplicationText.Builder(
+                    text = getString(R.string.woy_complication_text)
+                ).build()
+            )
+            .setTapAction(null)
+            .build()
+        else -> {null}
+    }
 }
 
 override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
     Log.d(TAG, "onComplicationRequest() id: ${request.complicationInstanceId}")
-
 
     val prefs = PreferenceManager.getDefaultSharedPreferences(this)
     val isiso = prefs.getBoolean(getString(R.string.woy_setting_key), true)
@@ -86,7 +122,6 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
 
     val week = if (!isiso) fmt.format(date).toInt().toString() else date.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR).toString()
     val maxweek : Float = if (week == "53") 53F else 52F
-
 
     return when (request.complicationType) {
 
@@ -124,7 +159,6 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
             .setTapAction(openScreen())
             .build()
 
-
         ComplicationType.RANGED_VALUE -> RangedValueComplicationData.Builder(
             value = week.toFloat(),
             min = 1f,
@@ -141,20 +175,15 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
             .setTapAction(openScreen())
             .build()
 
-
         else -> {
             if (Log.isLoggable(TAG, Log.WARN)) {
                 Log.w(TAG, "Unexpected complication type ${request.complicationType}")
             }
             null
         }
-
     }
 }
 
-/*
- * Called when the complication has been deactivated.
- */
 override fun onComplicationDeactivated(complicationInstanceId: Int) {
     Log.d(TAG, "onComplicationDeactivated(): $complicationInstanceId")
 }

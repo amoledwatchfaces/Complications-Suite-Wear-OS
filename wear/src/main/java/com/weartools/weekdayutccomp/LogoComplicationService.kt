@@ -26,7 +26,6 @@ import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
 import com.weartools.weekdayutccomp.R.drawable
 
-
 class LogoComplicationService : SuspendingComplicationDataSourceService() {
 
     override fun onComplicationActivated(
@@ -35,7 +34,6 @@ class LogoComplicationService : SuspendingComplicationDataSourceService() {
     ) {
         Log.d(TAG, "onComplicationActivated(): $complicationInstanceId")
     }
-
 
 private fun openScreen(): PendingIntent? {
 
@@ -47,8 +45,9 @@ private fun openScreen(): PendingIntent? {
     )
 }
 
-override fun getPreviewData(type: ComplicationType): ComplicationData {
-    return MonochromaticImageComplicationData.Builder(
+override fun getPreviewData(type: ComplicationType): ComplicationData? {
+    return when (type) {
+        ComplicationType.MONOCHROMATIC_IMAGE -> MonochromaticImageComplicationData.Builder(
         monochromaticImage = MonochromaticImage.Builder(
             createWithResource(this, drawable.ic_wear_os_icon)
         )
@@ -58,6 +57,17 @@ override fun getPreviewData(type: ComplicationType): ComplicationData {
     )
         .setTapAction(null)
         .build()
+        ComplicationType.SMALL_IMAGE -> SmallImageComplicationData.Builder(
+            smallImage = SmallImage.Builder(
+                image = createWithResource(this, drawable.ic_wear_os_icon),
+                type = SmallImageType.ICON
+            ).build(),
+            contentDescription = PlainComplicationText.Builder(text = "SMALL_IMAGE.").build()
+        )
+            .setTapAction(null)
+            .build()
+        else -> {null}
+    }
 }
 
 override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
@@ -76,7 +86,6 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
             .setTapAction(openScreen())
             .build()
 
-
         ComplicationType.SMALL_IMAGE -> SmallImageComplicationData.Builder(
             smallImage = SmallImage.Builder(
                 image = createWithResource(this, drawable.ic_wear_os_icon),
@@ -93,8 +102,6 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
             }
             null
         }
-
-
     }
 }
 

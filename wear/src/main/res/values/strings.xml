@@ -39,6 +39,8 @@
     <string name="moon_setting_hemi_title">Northern Hemisphere</string>
     <string name="moon_setting_hemi_on">Yes</string>
     <string name="moon_setting_hemi_off">No</string>
+    <string name="moon_setting_simple_icon_key" translatable="false">is_simple_icon</string>
+    <string name="moon_setting_simple_icon_title">Simple Icon</string>
     <string name="key_pref_phase_icon" translatable="false">R.drawable.moon0</string>
     <string name="key_pref_moon_visibility" translatable="false">0.0</string>
 

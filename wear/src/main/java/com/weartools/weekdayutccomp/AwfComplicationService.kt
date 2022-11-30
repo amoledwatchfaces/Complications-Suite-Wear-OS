@@ -50,8 +50,10 @@ private fun openScreen(): PendingIntent? {
 
 }
 
-override fun getPreviewData(type: ComplicationType): ComplicationData {
-    return MonochromaticImageComplicationData.Builder(
+override fun getPreviewData(type: ComplicationType): ComplicationData? {
+    return when (type) {
+        ComplicationType.MONOCHROMATIC_IMAGE ->
+        return MonochromaticImageComplicationData.Builder(
         monochromaticImage = MonochromaticImage.Builder(
             createWithResource(this, drawable.ic_awf)
         )
@@ -61,6 +63,18 @@ override fun getPreviewData(type: ComplicationType): ComplicationData {
     )
         .setTapAction(null)
         .build()
+
+        ComplicationType.SMALL_IMAGE -> SmallImageComplicationData.Builder(
+            smallImage = SmallImage.Builder(
+                image = createWithResource(this, drawable.ic_awf),
+                type = SmallImageType.ICON
+            ).build(),
+            contentDescription = PlainComplicationText.Builder(text = "SMALL_IMAGE.").build()
+        )
+            .setTapAction(null)
+            .build()
+    else -> {null}
+}
 }
 
 override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {

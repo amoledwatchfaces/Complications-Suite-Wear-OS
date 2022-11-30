@@ -48,19 +48,58 @@ private fun openScreen(): PendingIntent? {
     )
 }
 
-override fun getPreviewData(type: ComplicationType): ComplicationData {
-    return ShortTextComplicationData.Builder(
-        text = PlainComplicationText.Builder(text = "Day").build(),
-        contentDescription = PlainComplicationText.Builder(text = getString(R.string.doy_comp_name))
-            .build()
-    )
-        .setMonochromaticImage(
-            MonochromaticImage.Builder(
-                image = createWithResource(this, drawable.ic_day),
-            ).build()
+override fun getPreviewData(type: ComplicationType): ComplicationData? {
+    return when (type) {
+        ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
+            text = PlainComplicationText.Builder(text = "165").build(),
+            contentDescription = PlainComplicationText
+                .Builder(text = getString(R.string.doy_comp_name))
+                .build()
         )
-        .setTapAction(null)
-        .build()
+            .setTitle(PlainComplicationText.Builder(text = getString(R.string.doy_short_title)).build()
+            )
+            .setMonochromaticImage(
+                MonochromaticImage.Builder(
+                    image = createWithResource(this, drawable.ic_day),
+                ).build()
+            )
+            .setTapAction(null)
+            .build()
+        ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
+            text = PlainComplicationText.Builder(text = getString(R.string.doy_short_title)+": 165").build(),
+            contentDescription = PlainComplicationText
+                .Builder(text = getString(R.string.doy_comp_name))
+                .build()
+        )
+            .setMonochromaticImage(
+                MonochromaticImage.Builder(
+                    image = createWithResource(this, drawable.ic_day),
+                ).build()
+            )
+            .setTitle(
+                PlainComplicationText.Builder(
+                    text = getString(R.string.doy_comp_name)
+                ).build()
+            )
+            .setTapAction(null)
+            .build()
+        ComplicationType.RANGED_VALUE -> RangedValueComplicationData.Builder(
+            value = 165f,
+            min = 1f,
+            max = 365f,
+            contentDescription = PlainComplicationText
+                .Builder(text = getString(R.string.doy_comp_name)).build()
+        )
+            .setText(PlainComplicationText.Builder(text = "165").build())
+            .setTitle(
+                PlainComplicationText.Builder(
+                    text = getString(R.string.doy_short_title)
+                ).build()
+            )
+            .setTapAction(null)
+            .build()
+        else -> {null}
+    }
 }
 
 override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
@@ -92,7 +131,7 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
             .build()
 
         ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
-            text = TimeFormatComplicationText.Builder(format = "D").build(),
+            text = PlainComplicationText.Builder(text = getString(R.string.doy_short_title)+": ${dayOfYear.toInt()}").build(),
             contentDescription = PlainComplicationText
                 .Builder(text = getString(R.string.doy_comp_name))
                 .build()
@@ -115,7 +154,7 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
         ComplicationType.RANGED_VALUE -> RangedValueComplicationData.Builder(
             value = dayOfYear,
             min = 1f,
-            max =  dayscount,
+            max = dayscount,
             contentDescription = PlainComplicationText
                 .Builder(text = getString(R.string.doy_comp_name)).build()
         )

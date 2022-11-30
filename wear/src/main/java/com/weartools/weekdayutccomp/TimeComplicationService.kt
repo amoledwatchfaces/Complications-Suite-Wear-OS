@@ -48,8 +48,9 @@ class TimeComplicationService : SuspendingComplicationDataSourceService() {
         )
     }
 
-override fun getPreviewData(type: ComplicationType): ComplicationData {
-    return ShortTextComplicationData.Builder(
+override fun getPreviewData(type: ComplicationType): ComplicationData? {
+    return when (type) {
+        ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
         text = PlainComplicationText.Builder(text = "10:08").build(),
         contentDescription = PlainComplicationText.Builder(text = getString(R.string.time_comp_desc))
             .build()
@@ -61,6 +62,24 @@ override fun getPreviewData(type: ComplicationType): ComplicationData {
         )
         .setTapAction(null)
         .build()
+        ComplicationType.RANGED_VALUE -> RangedValueComplicationData.Builder(
+            value = 608f,
+            min = 0f,
+            max =  1440f,
+            contentDescription = PlainComplicationText
+                .Builder(text = getString(R.string.time_comp_desc)).build()
+        )
+            .setText(PlainComplicationText.Builder(text = "10:08").build())
+            .setTitle(PlainComplicationText.Builder(text = "AM").build())
+            .setMonochromaticImage(
+                MonochromaticImage.Builder(
+                    image = createWithResource(this, drawable.ic_clock),
+                ).build()
+            )
+            .setTapAction(null)
+            .build()
+        else -> {null}
+    }
 }
 
 override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
@@ -71,18 +90,16 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
     val min = LocalDateTime.now().minute
     val progressvariable = hour*60+min.toFloat()
 
-
     val prefs = PreferenceManager.getDefaultSharedPreferences(this)
     val ismilitary = prefs.getBoolean(getString(R.string.time_ampm_setting_key), false)
     val leadingzero = prefs.getBoolean(getString(R.string.time_setting_leading_zero_key), true)
 
     val fmt = if (ismilitary && leadingzero) "HH:mm"
-    else if (!ismilitary && leadingzero) "hh:mm"
-    else if (ismilitary && !leadingzero) "H:mm"
-    else "h:mm"
+    else if (!ismilitary && !leadingzero) "h:mm"
+    else if (ismilitary) "H:mm"
+    else "hh:mm"
 
     val text = TimeFormatComplicationText.Builder(format = fmt).build()
-
 
     return when (request.complicationType) {
 
@@ -131,7 +148,6 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
             }
             null
         }
-
     }
 }
 

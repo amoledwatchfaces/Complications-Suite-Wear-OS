@@ -23,21 +23,21 @@
 
     <uses-feature android:name="android.hardware.type.watch" />
 
-       <queries>
-           <package android:name="com.google.android.apps.walletnfcrel" />
-           <package android:name="com.samsung.android.samsungpay.gear"/>
-           <package android:name="com.google.android.wearable.assistant"/>
-       </queries>
+    <queries>
+        <package android:name="com.google.android.apps.walletnfcrel" />
+        <package android:name="com.samsung.android.samsungpay.gear"/>
+        <package android:name="com.google.android.wearable.assistant"/>
+    </queries>
 
-       <application
-           android:allowBackup="true"
-           android:icon="@mipmap/ic_launcher"
-           android:label="@string/app_name"
-           android:supportsRtl="true"
-           android:theme="@android:style/Theme.DeviceDefault">
-           <uses-library
-               android:name="com.google.android.wearable"
-               android:required="true" />
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@android:style/Theme.DeviceDefault">
+        <uses-library
+            android:name="com.google.android.wearable"
+            android:required="true" />
 
         <meta-data
             android:name="com.google.android.wearable.standalone"
@@ -68,180 +68,180 @@
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
                 android:value="SHORT_TEXT,RANGED_VALUE,LONG_TEXT" />
         </service>
-           <service
-               android:name="com.weartools.weekdayutccomp.DateComplicationService"
-               android:exported="true"
-               android:icon="@drawable/ic_date"
-               android:label="@string/date_comp_name"
-               android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
-               <intent-filter>
-                   <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
-               </intent-filter>
-               <meta-data android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS" android:value="3600"/>
+        <service
+            android:name="com.weartools.weekdayutccomp.DateComplicationService"
+            android:exported="true"
+            android:icon="@drawable/ic_date"
+            android:label="@string/date_comp_name"
+            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
+            <meta-data android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS" android:value="3600"/>
 
-               <meta-data
-                   android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-                   android:value="SHORT_TEXT,LONG_TEXT" />
-           </service>
+            <meta-data
+                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+                android:value="SHORT_TEXT,LONG_TEXT" />
+        </service>
 
-           <service
-               android:name="com.weartools.weekdayutccomp.TimeComplicationService"
-               android:exported="true"
-               android:icon="@drawable/ic_clock"
-               android:label="@string/time_comp_name"
-               android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
-               <intent-filter>
-                   <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
-               </intent-filter>
-               <meta-data android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS" android:value="3600"/>
+        <service
+            android:name="com.weartools.weekdayutccomp.TimeComplicationService"
+            android:exported="true"
+            android:icon="@drawable/ic_clock"
+            android:label="@string/time_comp_name"
+            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
+            <meta-data android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS" android:value="3600"/>
 
-               <meta-data
-                   android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-                   android:value="SHORT_TEXT,RANGED_VALUE,LONG_TEXT" />
-           </service>
+            <meta-data
+                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+                android:value="SHORT_TEXT,RANGED_VALUE,LONG_TEXT" />
+        </service>
 
-           <service
-               android:name="com.weartools.weekdayutccomp.DayOfYearComplicationService"
-               android:exported="true"
-               android:icon="@drawable/ic_day"
-               android:label="@string/doy_comp_name"
-               android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
-               <intent-filter>
-                   <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
-               </intent-filter>
+        <service
+            android:name="com.weartools.weekdayutccomp.DayOfYearComplicationService"
+            android:exported="true"
+            android:icon="@drawable/ic_day"
+            android:label="@string/doy_comp_name"
+            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
 
-               <meta-data
-                   android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-                   android:value="SHORT_TEXT,RANGED_VALUE,LONG_TEXT" />
-           </service>
-           <service
-               android:name="com.weartools.weekdayutccomp.UTCComplicationService"
-               android:exported="true"
-               android:icon="@drawable/ic_utc"
-               android:label="@string/wc_comp_name_1"
-               android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
-               <intent-filter>
-                   <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
-               </intent-filter>
+            <meta-data
+                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+                android:value="SHORT_TEXT,RANGED_VALUE,LONG_TEXT" />
+        </service>
+        <service
+            android:name="com.weartools.weekdayutccomp.UTCComplicationService"
+            android:exported="true"
+            android:icon="@drawable/ic_utc"
+            android:label="@string/wc_comp_name_1"
+            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
 
-               <meta-data
-                   android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-                   android:value="SHORT_TEXT,LONG_TEXT" />
-           </service>
-           <service
-               android:name="com.weartools.weekdayutccomp.UTC2ComplicationService"
-               android:exported="true"
-               android:icon="@drawable/ic_utc"
-               android:label="@string/wc_comp_name_2"
-               android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
-               <intent-filter>
-                   <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
-               </intent-filter>
+            <meta-data
+                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+                android:value="SHORT_TEXT,LONG_TEXT" />
+        </service>
+        <service
+            android:name="com.weartools.weekdayutccomp.UTC2ComplicationService"
+            android:exported="true"
+            android:icon="@drawable/ic_utc"
+            android:label="@string/wc_comp_name_2"
+            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
 
-               <meta-data
-                   android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-                   android:value="SHORT_TEXT,LONG_TEXT" />
-           </service>
+            <meta-data
+                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+                android:value="SHORT_TEXT,LONG_TEXT" />
+        </service>
 
-           <service
-               android:name="com.weartools.weekdayutccomp.SecondsComplicationService"
-               android:exported="true"
-               android:icon="@drawable/ic_seconds"
-               android:label="@string/sec_comp_name"
-               android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
-               <intent-filter>
-                   <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
-               </intent-filter>
+        <service
+            android:name="com.weartools.weekdayutccomp.SecondsComplicationService"
+            android:exported="true"
+            android:icon="@drawable/ic_seconds"
+            android:label="@string/sec_comp_name"
+            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
 
-               <meta-data
-                   android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-                   android:value="SHORT_TEXT,LONG_TEXT" />
-           </service>
-           <service
-               android:name="com.weartools.weekdayutccomp.PayComplicationService"
-               android:exported="true"
-               android:icon="@drawable/ic_pay"
-               android:label="@string/pay_comp_name"
-               android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
-               <intent-filter>
-                   <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
-               </intent-filter>
+            <meta-data
+                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+                android:value="SHORT_TEXT,LONG_TEXT" />
+        </service>
+        <service
+            android:name="com.weartools.weekdayutccomp.PayComplicationService"
+            android:exported="true"
+            android:icon="@drawable/ic_pay"
+            android:label="@string/pay_comp_name"
+            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
 
-               <meta-data
-                   android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-                   android:value="ICON,SMALL_IMAGE" />
-           </service>
-           <service
-               android:name="com.weartools.weekdayutccomp.AlarmComplicationService"
-               android:exported="true"
-               android:icon="@drawable/ic_alarm"
-               android:label="@string/alarm_comp_name"
-               android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
-               <intent-filter>
-                   <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
-               </intent-filter>
+            <meta-data
+                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+                android:value="ICON,SMALL_IMAGE" />
+        </service>
+        <service
+            android:name="com.weartools.weekdayutccomp.AlarmComplicationService"
+            android:exported="true"
+            android:icon="@drawable/ic_alarm"
+            android:label="@string/alarm_comp_name"
+            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
 
-               <meta-data
-                   android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-                   android:value="ICON,SMALL_IMAGE" />
-           </service>
-           <service
-               android:name="com.weartools.weekdayutccomp.AssistComplicationService"
-               android:exported="true"
-               android:icon="@drawable/ic_assist"
-               android:label="@string/assist_comp_name"
-               android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
-               <intent-filter>
-                   <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
-               </intent-filter>
+            <meta-data
+                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+                android:value="ICON,SMALL_IMAGE" />
+        </service>
+        <service
+            android:name="com.weartools.weekdayutccomp.AssistComplicationService"
+            android:exported="true"
+            android:icon="@drawable/ic_assist"
+            android:label="@string/assist_comp_name"
+            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
 
-               <meta-data
-                   android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-                   android:value="ICON,SMALL_IMAGE" />
-           </service>
-           <service
-               android:name="com.weartools.weekdayutccomp.LogoComplicationService"
-               android:exported="true"
-               android:icon="@drawable/ic_wear_os_icon"
-               android:label="@string/logo_comp_name"
-               android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
-               <intent-filter>
-                   <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
-               </intent-filter>
+            <meta-data
+                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+                android:value="ICON,SMALL_IMAGE" />
+        </service>
+        <service
+            android:name="com.weartools.weekdayutccomp.LogoComplicationService"
+            android:exported="true"
+            android:icon="@drawable/ic_wear_os_icon"
+            android:label="@string/logo_comp_name"
+            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
 
-               <meta-data
-                   android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-                   android:value="ICON,SMALL_IMAGE" />
-           </service>
-           <service
-               android:name="com.weartools.weekdayutccomp.AwfComplicationService"
-               android:exported="true"
-               android:icon="@drawable/ic_awf"
-               android:label="@string/awf_comp_name"
-               android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
-               <intent-filter>
-                   <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
-               </intent-filter>
+            <meta-data
+                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+                android:value="ICON,SMALL_IMAGE" />
+        </service>
+        <service
+            android:name="com.weartools.weekdayutccomp.AwfComplicationService"
+            android:exported="true"
+            android:icon="@drawable/ic_awf"
+            android:label="@string/awf_comp_name"
+            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
 
-               <meta-data
-                   android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-                   android:value="ICON,SMALL_IMAGE" />
-           </service>
+            <meta-data
+                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+                android:value="ICON,SMALL_IMAGE" />
+        </service>
 
-           <service
-               android:name="com.weartools.weekdayutccomp.MoonPhaseComplicationService"
-               android:exported="true"
-               android:icon="@drawable/moon15"
-               android:label="@string/moon_comp_name"
-               android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
-               <intent-filter>
-                   <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
-               </intent-filter>
-               <meta-data android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS" android:value="3600"/>
-               <meta-data
-                   android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-                   android:value="SHORT_TEXT,ICON,SMALL_IMAGE,RANGED_VALUE" />
-           </service>
+        <service
+            android:name="com.weartools.weekdayutccomp.MoonPhaseComplicationService"
+            android:exported="true"
+            android:icon="@drawable/moon15"
+            android:label="@string/moon_comp_name"
+            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
+            <meta-data android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS" android:value="3600"/>
+            <meta-data
+                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+                android:value="SHORT_TEXT,ICON,SMALL_IMAGE,RANGED_VALUE" />
+        </service>
 
     </application>
 </manifest>

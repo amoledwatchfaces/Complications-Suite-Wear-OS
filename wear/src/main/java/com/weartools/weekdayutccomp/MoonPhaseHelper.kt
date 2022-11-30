@@ -22,7 +22,6 @@ import androidx.preference.PreferenceManager
 import java.util.*
 import kotlin.math.floor
 
-
 class MoonPhaseHelper{
   companion object {
 
@@ -38,6 +37,17 @@ class MoonPhaseHelper{
       Log.i(TAG, "Computed moon phase: $phase")
       val phaseValue = floor(phase).toInt() % 30
       Log.i(TAG, "Discrete phase value: $phaseValue")
+      val simplePhaseValue: Int = when (phaseValue) {
+          in 1..6 -> 1
+          7 -> 2
+          in 8..14 -> 3
+          15 -> 4
+          in 16..22 -> 5
+          23 -> 6
+          in 24..30 -> 7
+          else -> 0
+      }
+      Log.i(TAG, "Simple phase value: $simplePhaseValue")
 
       //val visibility = (phase / 14.7652944265 * 100).toFloat()
 
@@ -46,14 +56,17 @@ class MoonPhaseHelper{
 
       Log.i(TAG, "Visibility value: $newvisibility")
       val isnorthernhemi = preferences.getBoolean(context.getString(R.string.moon_setting_hemi_key), true)
+      val simpleIcon = preferences.getBoolean(context.getString(R.string.moon_setting_simple_icon_key), false)
 
-      if (phaseValue == 0) { editor.putInt(context.getString(R.string.key_pref_phase_icon),(IMAGE_LOOKUP[phaseValue])).apply() }
+      if (phaseValue==0 && simpleIcon) { editor.putInt(context.getString(R.string.key_pref_phase_icon),R.drawable.x_moon_new).apply() }
+      else if (phaseValue==0) { editor.putInt(context.getString(R.string.key_pref_phase_icon),R.drawable.moon0).apply() }
+      else if (simpleIcon && isnorthernhemi) { editor.putInt(context.getString(R.string.key_pref_phase_icon),(SIMPLE_IMAGE_LOOKUP[simplePhaseValue])).apply()}
+      else if (simpleIcon) { editor.putInt(context.getString(R.string.key_pref_phase_icon),(SIMPLE_IMAGE_LOOKUP[8 -simplePhaseValue])).apply()}
       else if (isnorthernhemi){ editor.putInt(context.getString(R.string.key_pref_phase_icon),(IMAGE_LOOKUP[phaseValue])).apply() }
       else { editor.putInt(context.getString(R.string.key_pref_phase_icon),(IMAGE_LOOKUP[30 - phaseValue])).apply() }
 
       editor.putFloat(context.getString(R.string.key_pref_moon_visibility), newvisibility).apply()
     }
-
 
     // Computes moon phase based upon Bradley E. Schaefer's moon phase algorithm.
     private fun computeMoonPhase(): Double {
@@ -126,6 +139,17 @@ class MoonPhaseHelper{
       R.drawable.moon27,
       R.drawable.moon28,
       R.drawable.moon29
+    )
+
+    private val SIMPLE_IMAGE_LOOKUP = intArrayOf(
+      R.drawable.x_moon_new,
+      R.drawable.x_moon_waxing_crescent,
+      R.drawable.x_moon_first_quarter,
+      R.drawable.x_moon_waxing_gibbous,
+      R.drawable.x_moon_full,
+      R.drawable.x_moon_waning_gibbous,
+      R.drawable.x_moon_last_quarter,
+      R.drawable.x_moon_waning_crescent,
     )
   }
 }

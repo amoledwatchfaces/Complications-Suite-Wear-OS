@@ -56,7 +56,14 @@
         android:key="@string/moon_setting_hemi_key"
         android:summaryOff="@string/moon_setting_hemi_off"
         android:summaryOn="@string/moon_setting_hemi_on"
-        android:title="@string/moon_setting_hemi_title" />
+        android:title="@string/moon_setting_hemi_title"/>
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="@string/moon_setting_simple_icon_key"
+        android:summaryOff="@string/moon_setting_hemi_off"
+        android:summaryOn="@string/moon_setting_hemi_on"
+        android:title="@string/moon_setting_simple_icon_title" />
 
     <PreferenceCategory android:title="@string/time_ampm_setting_preference_category_title" />
 
