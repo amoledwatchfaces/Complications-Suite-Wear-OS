@@ -7,7 +7,7 @@ You can contribute given translations or add your own ones.\
 *(Please don't use a machine translator.)*
 
 To add a translation just follow the folder structure and extend it with your language. Best way is to copy given translations and just edit the values.\
-This way you can make shure, that the format is correct.
+This way you can make sure, that the format is correct.
 
 ---
 > #### NOTE
