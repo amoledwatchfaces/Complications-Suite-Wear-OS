@@ -27,6 +27,7 @@ import androidx.wear.watchface.complications.datasource.ComplicationDataSourceSe
 import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUpdateRequester
 import com.weartools.weekdayutccomp.databinding.ActivityMainBinding
 
+
 class MainActivity : Activity(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     private lateinit var binding: ActivityMainBinding

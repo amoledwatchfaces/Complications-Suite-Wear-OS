@@ -55,9 +55,9 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
         ComplicationType.MONOCHROMATIC_IMAGE ->
         return MonochromaticImageComplicationData.Builder(
         monochromaticImage = MonochromaticImage.Builder(
-            createWithResource(this, drawable.ic_awf)
+            createWithResource(this, drawable.ic_awf2023)
         )
-            .setAmbientImage(createWithResource(this, drawable.ic_awf))
+            .setAmbientImage(createWithResource(this, drawable.ic_awf2023))
             .build(),
         contentDescription = PlainComplicationText.Builder(text = "MONO_IMG.").build()
     )
@@ -66,7 +66,7 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
 
         ComplicationType.SMALL_IMAGE -> SmallImageComplicationData.Builder(
             smallImage = SmallImage.Builder(
-                image = createWithResource(this, drawable.ic_awf),
+                image = createWithResource(this, drawable.ic_awf2023),
                 type = SmallImageType.ICON
             ).build(),
             contentDescription = PlainComplicationText.Builder(text = "SMALL_IMAGE.").build()
@@ -84,9 +84,9 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
 
         ComplicationType.MONOCHROMATIC_IMAGE -> MonochromaticImageComplicationData.Builder(
             monochromaticImage = MonochromaticImage.Builder(
-                createWithResource(this, drawable.ic_awf)
+                createWithResource(this, drawable.ic_awf2023)
             )
-                .setAmbientImage(createWithResource(this, drawable.ic_awf))
+                .setAmbientImage(createWithResource(this, drawable.ic_awf2023))
                 .build(),
             contentDescription = PlainComplicationText.Builder(text = "MONO_IMG.").build()
         )
@@ -96,7 +96,7 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
 
         ComplicationType.SMALL_IMAGE -> SmallImageComplicationData.Builder(
             smallImage = SmallImage.Builder(
-                image = createWithResource(this, drawable.ic_awf),
+                image = createWithResource(this, drawable.ic_awf2023),
                 type = SmallImageType.ICON
             ).build(),
             contentDescription = PlainComplicationText.Builder(text = "SMALL_IMAGE.").build()

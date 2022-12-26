@@ -217,7 +217,7 @@
         <service
             android:name="com.weartools.weekdayutccomp.AwfComplicationService"
             android:exported="true"
-            android:icon="@drawable/ic_awf"
+            android:icon="@drawable/ic_awf2023"
             android:label="@string/awf_comp_name"
             android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
             <intent-filter>
