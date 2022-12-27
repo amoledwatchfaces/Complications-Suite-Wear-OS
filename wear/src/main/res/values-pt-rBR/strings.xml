@@ -13,9 +13,6 @@
     <string name="assist_comp_name">Auxiliar</string>
     <string name="assist_missing">App auxiliar não instalado</string>
 
-    <!-- AWF Logo Complication Preferences -->
-    <string name="awf_comp_name">Logo AWF</string>
-
     <!-- Date Complication Preferences -->
     <string name="date_comp_name">Data</string>
     <string name="date_setting_preference_category_title">Complicação de data</string>

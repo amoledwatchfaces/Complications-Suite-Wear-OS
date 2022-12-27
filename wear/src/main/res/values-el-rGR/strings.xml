@@ -13,9 +13,6 @@
     <string name="assist_comp_name">Google Assistant</string>
     <string name="assist_missing">Η εφαρμογή Google Assistant δεν είναι εγκατεστημένη</string>
 
-    <!-- Προτημήσεις Complication AWF Logo -->
-    <string name="awf_comp_name">AWF Logo</string>
-
     <!-- Προτημήσεις Complication Ημέρας -->
     <string name="date_comp_name">Ημέρα</string>
     <string name="date_setting_preference_category_title">Complication Ημέρας</string>
