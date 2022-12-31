@@ -574,5 +574,7 @@
         <item>d MMM</item>
         <item>MMM d</item>
         <item>d. MMM</item>
+        <item>EEE, d MMM</item>
+        <item> </item>
     </string-array>
 </resources>
