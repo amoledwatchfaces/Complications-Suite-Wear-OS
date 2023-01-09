@@ -52,6 +52,7 @@
         <item>DAL</item>
         <item>DAR</item>
         <item>DRW</item>
+        <item>DPS</item>
         <item>DEN</item>
         <item>DET</item>
         <item>DAC</item>
@@ -78,6 +79,7 @@
         <item>CHI</item>
         <item>IND</item>
         <item>IST</item>
+        <item>JKT</item>
         <item>JER</item>
         <item>KBL</item>
         <item>PKC</item>
@@ -235,6 +237,7 @@
         <item>Dallas (DAL)</item>
         <item>Dar es Salaam (DAR)</item>
         <item>Darwin (DRW)</item>
+        <item>Denpasar (DPS)</item>
         <item>Denver (DEN)</item>
         <item>Detroit (DET)</item>
         <item>Dhaka (DAC)</item>
@@ -261,6 +264,7 @@
         <item>Chicago (CHI)</item>
         <item>Indianapolis (IND)</item>
         <item>Istanbul (IST)</item>
+        <item>Jakarta (JKT)</item>
         <item>Jerusalem (JER)</item>
         <item>Kabul (KBL)</item>
         <item>Kamchatka (PKC)</item>
@@ -418,6 +422,7 @@
         <item>America/Chicago</item>
         <item>Africa/Dar_es_Salaam</item>
         <item>Australia/Darwin</item>
+        <item>Asia/Ujung_Pandang</item>
         <item>America/Denver</item>
         <item>America/Detroit</item>
         <item>Asia/Dhaka</item>
@@ -444,6 +449,7 @@
         <item>America/Chicago</item>
         <item>America/Indianapolis</item>
         <item>Asia/Istanbul</item>
+        <item>Asia/Jakarta</item>
         <item>Asia/Jerusalem</item>
         <item>Asia/Kabul</item>
         <item>Asia/Kamchatka</item>
