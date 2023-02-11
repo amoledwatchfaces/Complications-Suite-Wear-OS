@@ -6,6 +6,9 @@
     <string name="app_name">Complications Suite</string> <!-- Does not need to be translated, but it's recommended -->
     <string name="settings">Nastavenia</string>
 
+    <!-- Flashlight Complication -->
+    <string name="flashlight_comp_name">Svietidlo</string>
+
     <!-- Alarm Complication Preferences -->
     <string name="alarm_comp_name">Budík</string>
 
@@ -52,7 +55,7 @@
     <string name="time_ampm_setting_off">12h</string>
 
     <!-- World Clock Complication Preferences -->
-    <string name="wc_comp_name_1">Svetový čas / UTC</string>
+    <string name="wc_comp_name_1">Svetový čas 1</string>
     <string name="wc_comp_name_2">Svetový čas 2</string>
     <string name="wc_setting_preference_category_title">UTC / Svetový čas - Komplikácia</string>
     <string name="wc_setting_leading_zero_title" translatable="false">Vedúca nula</string>

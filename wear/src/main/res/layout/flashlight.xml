@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    android:id="@id/flashlight_container"
+    android:background="@drawable/bg_white"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView android:layout_gravity="center"
+        android:id="@id/flashlight_image"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:src="@drawable/ic_flashlight_on_1"
+        android:scaleType="center" />
+</FrameLayout>

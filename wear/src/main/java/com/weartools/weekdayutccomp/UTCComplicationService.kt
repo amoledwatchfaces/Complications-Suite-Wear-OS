@@ -17,6 +17,7 @@
 package com.weartools.weekdayutccomp
 
 import android.app.PendingIntent
+import android.content.Intent
 import android.icu.util.TimeZone
 import android.util.Log
 import androidx.preference.PreferenceManager
@@ -35,7 +36,8 @@ class UTCComplicationService : SuspendingComplicationDataSourceService() {
 
     private fun openScreen(): PendingIntent? {
 
-        val intent = packageManager.getLaunchIntentForPackage("com.weartools.weekdayutccomp")
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
 
         return PendingIntent.getActivity(
             this, 0, intent,

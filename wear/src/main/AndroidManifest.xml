@@ -15,8 +15,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.weartools.weekdayutccomp">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
@@ -227,6 +226,27 @@
             <meta-data
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
                 android:value="SHORT_TEXT,ICON,SMALL_IMAGE,RANGED_VALUE" />
+        </service>
+
+
+        <activity
+            android:name=".FlashlightActivity"
+            android:exported="true">
+        </activity>
+
+        <service
+            android:name="com.weartools.weekdayutccomp.FlashlightComplicationService"
+            android:exported="true"
+            android:icon="@drawable/ic_flashlight"
+            android:label="@string/flashlight_comp_name"
+            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+                android:value="ICON,SMALL_IMAGE" />
         </service>
 
     </application>

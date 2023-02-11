@@ -43,7 +43,7 @@
         android:title="@string/wc_setting_leading_zero_title" />
 
     <SwitchPreference
-        android:defaultValue="false"
+        android:defaultValue="true"
         android:key="@string/wc_ampm_setting_key"
         android:summaryOff="@string/wc_ampm_setting_off"
         android:summaryOn="@string/wc_ampm_setting_on"
