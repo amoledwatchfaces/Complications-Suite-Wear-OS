@@ -81,7 +81,7 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
 
     // TODO: TU IDU VARIABILNE
     val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-    val ismilitary = prefs.getBoolean(getString(R.string.wc_ampm_setting_key), false)
+    val ismilitary = prefs.getBoolean(getString(R.string.wc_ampm_setting_key), true)
     val leadingzero = prefs.getBoolean(getString(R.string.wc_setting_leading_zero_key), true)
 
     val fmt = if (ismilitary && leadingzero) "HH:mm"
