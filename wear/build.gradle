@@ -10,8 +10,8 @@ android {
         applicationId "com.weartools.weekdayutccomp"
         minSdk 27
         targetSdk 33
-        versionCode 46
-        versionName "1.4.6"
+        versionCode 48
+        versionName "1.4.8"
 
     }
 
@@ -39,4 +39,5 @@ dependencies {
     implementation 'androidx.wear.watchface:watchface-complications-data-source-ktx:1.1.1'
     implementation 'androidx.preference:preference-ktx:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation("org.shredzone.commons:commons-suncalc:3.5")
 }

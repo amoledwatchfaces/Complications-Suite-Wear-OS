@@ -27,7 +27,6 @@ import androidx.wear.watchface.complications.datasource.SuspendingComplicationDa
 import com.weartools.weekdayutccomp.R.drawable
 import java.math.RoundingMode
 import java.text.DecimalFormat
-import java.util.*
 
 class MoonPhaseComplicationService : SuspendingComplicationDataSourceService() {
 
@@ -106,7 +105,7 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
 override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
     Log.d(TAG, "onComplicationRequest() id: ${request.complicationInstanceId}")
 
-    MoonPhaseHelper.update(calendar = Calendar.getInstance(), context = this)
+    MoonPhaseHelper.update(context = this)
 
     val preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
     val phaseicon = preferences.getInt(getString(R.string.key_pref_phase_icon), drawable.moon15)
