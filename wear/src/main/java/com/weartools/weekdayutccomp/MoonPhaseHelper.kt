@@ -22,7 +22,6 @@ import androidx.preference.PreferenceManager
 import org.shredzone.commons.suncalc.MoonIllumination
 import kotlin.math.floor
 
-
 class MoonPhaseHelper{
   companion object {
 

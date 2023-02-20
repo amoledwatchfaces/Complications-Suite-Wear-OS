@@ -41,12 +41,14 @@ class MainActivity : Activity(), SharedPreferences.OnSharedPreferenceChangeListe
     }
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         // update complications for new settings
-        updateComplication(this, UTCComplicationService::class.java)
-        updateComplication(this, UTC2ComplicationService::class.java)
-        updateComplication(this, MoonPhaseComplicationService::class.java)
-        updateComplication(this, TimeComplicationService::class.java)
-        updateComplication(this, WeekOfYearComplicationService::class.java)
-        updateComplication(this, DateComplicationService::class.java)
+        if (key == "leading_zero" || key == "is_military" || key == "citiesid" || key == "citiesid2"){
+            updateComplication(this, UTCComplicationService::class.java)
+            updateComplication(this, UTC2ComplicationService::class.java)
+        }
+        if (key == "is_northern" || key == "is_simple_icon"){updateComplication(this, MoonPhaseComplicationService::class.java)}
+        if (key == "leading_zero_time" || key == "is_military_time"){updateComplication(this, TimeComplicationService::class.java)}
+        if (key == "is_iso_week"){updateComplication(this, WeekOfYearComplicationService::class.java)}
+        if (key == "date_format" || key == "short_text_format" || key == "short_title_format"){updateComplication(this, DateComplicationService::class.java)}
     }
 
     override fun onResume() {

@@ -19,6 +19,7 @@
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <uses-feature android:name="android.hardware.type.watch" />
 
@@ -228,6 +229,35 @@
                 android:value="SHORT_TEXT,ICON,SMALL_IMAGE,RANGED_VALUE" />
         </service>
 
+        <service
+            android:name="com.weartools.weekdayutccomp.BitcoinPriceComplicationService"
+            android:exported="true"
+            android:icon="@drawable/ic_btc"
+            android:label="@string/crypto_name_1"
+            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
+            <meta-data android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS" android:value="600"/>
+            <meta-data
+                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+                android:value="SHORT_TEXT,RANGED_VALUE" />
+        </service>
+        <service
+            android:name="com.weartools.weekdayutccomp.EthereumPriceComplicationService"
+            android:exported="true"
+            android:icon="@drawable/ic_ethereum"
+            android:label="@string/crypto_name_2"
+            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
+            <meta-data android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS" android:value="600"/>
+            <meta-data
+                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+                android:value="SHORT_TEXT,RANGED_VALUE" />
+        </service>
+        <receiver android:name=".CryptoTapBroadcastReceiver" />
 
         <activity
             android:name=".FlashlightActivity"

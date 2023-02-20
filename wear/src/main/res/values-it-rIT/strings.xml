@@ -5,6 +5,10 @@
     <string name="app_name">Complications Suite</string> <!-- Does not need to be translated, but it's recommended -->
     <string name="settings">Impostazioni</string>
 
+    <!-- Crypto Complication -->
+    <string name="crypto_name_1" translatable="true">BTC il prezzo $</string>
+    <string name="crypto_name_2" translatable="true">ETH il prezzo $</string>
+
     <!-- Flashlight Complication -->
     <string name="flashlight_comp_name">Torcia elettrica</string>
 
