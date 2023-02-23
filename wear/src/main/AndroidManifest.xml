@@ -45,7 +45,8 @@
 
         <activity
             android:name="com.weartools.weekdayutccomp.MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@android:style/Theme.DeviceDefault">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -54,7 +55,7 @@
         </activity>
 
         <service
-            android:name="com.weartools.weekdayutccomp.WeekOfYearComplicationService"
+            android:name="com.weartools.weekdayutccomp.complication.WeekOfYearComplicationService"
             android:exported="true"
             android:icon="@drawable/ic_week"
             android:label="@string/week_complication_name"
@@ -69,7 +70,7 @@
                 android:value="SHORT_TEXT,RANGED_VALUE,LONG_TEXT" />
         </service>
         <service
-            android:name="com.weartools.weekdayutccomp.DateComplicationService"
+            android:name="com.weartools.weekdayutccomp.complication.DateComplicationService"
             android:exported="true"
             android:icon="@drawable/ic_date"
             android:label="@string/date_comp_name"
@@ -85,7 +86,7 @@
         </service>
 
         <service
-            android:name="com.weartools.weekdayutccomp.TimeComplicationService"
+            android:name="com.weartools.weekdayutccomp.complication.TimeComplicationService"
             android:exported="true"
             android:icon="@drawable/ic_clock"
             android:label="@string/time_comp_name"
@@ -101,7 +102,7 @@
         </service>
 
         <service
-            android:name="com.weartools.weekdayutccomp.DayOfYearComplicationService"
+            android:name="com.weartools.weekdayutccomp.complication.DayOfYearComplicationService"
             android:exported="true"
             android:icon="@drawable/ic_day"
             android:label="@string/doy_comp_name"
@@ -116,7 +117,7 @@
                 android:value="SHORT_TEXT,RANGED_VALUE,LONG_TEXT" />
         </service>
         <service
-            android:name="com.weartools.weekdayutccomp.UTCComplicationService"
+            android:name="com.weartools.weekdayutccomp.complication.WorldClock1ComplicationService"
             android:exported="true"
             android:icon="@drawable/ic_utc"
             android:label="@string/wc_comp_name_1"
@@ -130,7 +131,7 @@
                 android:value="SHORT_TEXT,LONG_TEXT" />
         </service>
         <service
-            android:name="com.weartools.weekdayutccomp.UTC2ComplicationService"
+            android:name="com.weartools.weekdayutccomp.complication.WorldClock2ComplicationService"
             android:exported="true"
             android:icon="@drawable/ic_utc"
             android:label="@string/wc_comp_name_2"
@@ -145,7 +146,7 @@
         </service>
 
         <service
-            android:name="com.weartools.weekdayutccomp.SecondsComplicationService"
+            android:name="com.weartools.weekdayutccomp.complication.SecondsComplicationService"
             android:exported="true"
             android:icon="@drawable/ic_seconds"
             android:label="@string/sec_comp_name"
@@ -159,7 +160,7 @@
                 android:value="SHORT_TEXT,LONG_TEXT" />
         </service>
         <service
-            android:name="com.weartools.weekdayutccomp.PayComplicationService"
+            android:name="com.weartools.weekdayutccomp.complication.PayComplicationService"
             android:exported="true"
             android:icon="@drawable/ic_pay"
             android:label="@string/pay_comp_name"
@@ -173,7 +174,7 @@
                 android:value="ICON,SMALL_IMAGE" />
         </service>
         <service
-            android:name="com.weartools.weekdayutccomp.AlarmComplicationService"
+            android:name="com.weartools.weekdayutccomp.complication.AlarmComplicationService"
             android:exported="true"
             android:icon="@drawable/ic_alarm"
             android:label="@string/alarm_comp_name"
@@ -187,7 +188,7 @@
                 android:value="ICON,SMALL_IMAGE" />
         </service>
         <service
-            android:name="com.weartools.weekdayutccomp.AssistComplicationService"
+            android:name="com.weartools.weekdayutccomp.complication.AssistComplicationService"
             android:exported="true"
             android:icon="@drawable/ic_assist"
             android:label="@string/assist_comp_name"
@@ -201,7 +202,7 @@
                 android:value="ICON,SMALL_IMAGE" />
         </service>
         <service
-            android:name="com.weartools.weekdayutccomp.LogoComplicationService"
+            android:name="com.weartools.weekdayutccomp.complication.LogoComplicationService"
             android:exported="true"
             android:icon="@drawable/ic_wear_os_icon"
             android:label="@string/logo_comp_name"
@@ -215,7 +216,7 @@
                 android:value="ICON,SMALL_IMAGE" />
         </service>
         <service
-            android:name="com.weartools.weekdayutccomp.MoonPhaseComplicationService"
+            android:name="com.weartools.weekdayutccomp.complication.MoonPhaseComplicationService"
             android:exported="true"
             android:icon="@drawable/moon15"
             android:label="@string/moon_comp_name"
@@ -230,7 +231,7 @@
         </service>
 
         <service
-            android:name="com.weartools.weekdayutccomp.BitcoinPriceComplicationService"
+            android:name="com.weartools.weekdayutccomp.complication.BitcoinPriceComplicationService"
             android:exported="true"
             android:icon="@drawable/ic_btc"
             android:label="@string/crypto_name_1"
@@ -244,7 +245,7 @@
                 android:value="SHORT_TEXT,RANGED_VALUE" />
         </service>
         <service
-            android:name="com.weartools.weekdayutccomp.EthereumPriceComplicationService"
+            android:name="com.weartools.weekdayutccomp.complication.EthereumPriceComplicationService"
             android:exported="true"
             android:icon="@drawable/ic_ethereum"
             android:label="@string/crypto_name_2"
@@ -257,7 +258,7 @@
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
                 android:value="SHORT_TEXT,RANGED_VALUE" />
         </service>
-        <receiver android:name=".CryptoTapBroadcastReceiver" />
+        <receiver android:name=".complication.CryptoComplicationTapBroadcastReceiver" />
 
         <activity
             android:name=".FlashlightActivity"
@@ -265,7 +266,7 @@
         </activity>
 
         <service
-            android:name="com.weartools.weekdayutccomp.FlashlightComplicationService"
+            android:name="com.weartools.weekdayutccomp.complication.FlashlightComplicationService"
             android:exported="true"
             android:icon="@drawable/ic_flashlight"
             android:label="@string/flashlight_comp_name"

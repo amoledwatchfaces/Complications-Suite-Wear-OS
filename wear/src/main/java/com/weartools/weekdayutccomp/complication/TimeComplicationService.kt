@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.weartools.weekdayutccomp
+package com.weartools.weekdayutccomp.complication
 
 import android.app.PendingIntent
 import android.content.Intent
@@ -25,6 +25,7 @@ import androidx.preference.PreferenceManager
 import androidx.wear.watchface.complications.data.*
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
+import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.R.drawable
 import java.time.LocalDateTime
 

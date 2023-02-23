@@ -16,18 +16,58 @@
  */
 package com.weartools.weekdayutccomp
 
-import android.app.Activity
-import android.content.ComponentName
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.preference.PreferenceFragment
-import androidx.preference.PreferenceManager
-import androidx.wear.watchface.complications.datasource.ComplicationDataSourceService
-import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUpdateRequester
-import com.weartools.weekdayutccomp.databinding.ActivityMainBinding
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Devices
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.wear.compose.material.*
+import com.weartools.weekdayutccomp.presentation.ComplicationsSuiteScreen
+import com.weartools.weekdayutccomp.presentation.ComplicationsSuiteViewModel
+import com.weartools.weekdayutccomp.presentation.ComplicationsSuiteViewModelFactory
+import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme
 
 
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            ComplicationsSuiteApp()
+        }
+    }
+}
+
+@Composable
+fun ComplicationsSuiteApp() {
+    ComplicationsSuiteTheme {
+        val listState = rememberScalingLazyListState()
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
+            timeText = { TimeText(modifier = Modifier.scrollAway(listState)) },
+            positionIndicator = { PositionIndicator(scalingLazyListState = listState) }
+        ) {
+            val viewModel: ComplicationsSuiteViewModel = viewModel(
+                factory = ComplicationsSuiteViewModelFactory()
+            )
+            ComplicationsSuiteScreen(
+                onEnableClick = { viewModel.toggleEnabled() },
+                listState = listState
+            )
+        }
+    }
+}
+
+@Preview(device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
+@Composable
+fun DefaultPreview() {
+    ComplicationsSuiteApp()
+}
+
+/*
 class MainActivity : Activity(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     private lateinit var binding: ActivityMainBinding
@@ -42,8 +82,8 @@ class MainActivity : Activity(), SharedPreferences.OnSharedPreferenceChangeListe
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         // update complications for new settings
         if (key == "leading_zero" || key == "is_military" || key == "citiesid" || key == "citiesid2"){
-            updateComplication(this, UTCComplicationService::class.java)
-            updateComplication(this, UTC2ComplicationService::class.java)
+            updateComplication(this, WorldClock1ComplicationService::class.java)
+            updateComplication(this, WorldClock2ComplicationService::class.java)
         }
         if (key == "is_northern" || key == "is_simple_icon"){updateComplication(this, MoonPhaseComplicationService::class.java)}
         if (key == "leading_zero_time" || key == "is_military_time"){updateComplication(this, TimeComplicationService::class.java)}
@@ -80,3 +120,4 @@ class MainActivity : Activity(), SharedPreferences.OnSharedPreferenceChangeListe
         }
     }
 }
+*/

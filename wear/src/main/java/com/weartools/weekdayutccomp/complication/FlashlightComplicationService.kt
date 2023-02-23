@@ -14,23 +14,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.weartools.weekdayutccomp
+package com.weartools.weekdayutccomp.complication
 
 import android.app.PendingIntent
-import android.content.ComponentName
-import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Icon.createWithResource
-import android.net.Uri
 import android.util.Log
-import android.widget.Toast
 import androidx.wear.watchface.complications.data.*
-import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUpdateRequester
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
+import com.weartools.weekdayutccomp.FlashlightActivity
 import com.weartools.weekdayutccomp.R.drawable
 
-class AssistComplicationService : SuspendingComplicationDataSourceService() {
+class FlashlightComplicationService : SuspendingComplicationDataSourceService() {
 
     override fun onComplicationActivated(
         complicationInstanceId: Int,
@@ -39,53 +35,40 @@ class AssistComplicationService : SuspendingComplicationDataSourceService() {
         Log.d(TAG, "onComplicationActivated(): $complicationInstanceId")
     }
 
+    private fun openScreen(): PendingIntent? {
 
-private fun openScreen(): PendingIntent? {
+        val intent = Intent(this, FlashlightActivity::class.java)
+        //
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
 
-    val intent = packageManager.getLaunchIntentForPackage("com.google.android.wearable.assistant")
-    val i = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.google.android.wearable.assistant"))
-    //intent?.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-
-    return if (intent!=null)
-    {
-        PendingIntent.getActivity(
+        return PendingIntent.getActivity(
             this, 0, intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+
         )
     }
-    else {
-        Toast.makeText(this, this.getString(R.string.assist_missing), Toast.LENGTH_LONG).show()
-        updateComplication(context = this)
-        PendingIntent.getActivity(
-            this, 0, i,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
-    }
-}
 
 override fun getPreviewData(type: ComplicationType): ComplicationData? {
     return when (type) {
-
         ComplicationType.MONOCHROMATIC_IMAGE -> MonochromaticImageComplicationData.Builder(
-        monochromaticImage = MonochromaticImage.Builder(
-            createWithResource(this, drawable.ic_assist)
-        )
-            .setAmbientImage(createWithResource(this, drawable.ic_assist))
-            .build(),
-        contentDescription = PlainComplicationText.Builder(text = "MONO_IMG.").build()
-    )
-        .setTapAction(null)
-        .build()
-
-        ComplicationType.SMALL_IMAGE -> SmallImageComplicationData.Builder(
-            smallImage = SmallImage.Builder(
-                image = createWithResource(this, drawable.ic_assist),
-                type = SmallImageType.ICON
-            ).build(),
-            contentDescription = PlainComplicationText.Builder(text = "SMALL_IMAGE.").build()
+            monochromaticImage = MonochromaticImage.Builder(
+                createWithResource(this, drawable.ic_flashlight)
+            )
+                .setAmbientImage(createWithResource(this, drawable.ic_flashlight))
+                .build(),
+            contentDescription = PlainComplicationText.Builder(text = "Flashlight").build()
         )
             .setTapAction(null)
             .build()
-
+        ComplicationType.SMALL_IMAGE -> SmallImageComplicationData.Builder(
+            smallImage = SmallImage.Builder(
+                image = createWithResource(this, drawable.ic_flashlight),
+                type = SmallImageType.ICON
+            ).build(),
+            contentDescription = PlainComplicationText.Builder(text = "Flashlight").build()
+        )
+            .setTapAction(null)
+            .build()
         else -> {null}
     }
 }
@@ -97,11 +80,11 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
 
         ComplicationType.MONOCHROMATIC_IMAGE -> MonochromaticImageComplicationData.Builder(
             monochromaticImage = MonochromaticImage.Builder(
-                createWithResource(this, drawable.ic_assist)
+                createWithResource(this, drawable.ic_flashlight)
             )
-                .setAmbientImage(createWithResource(this, drawable.ic_assist))
+                .setAmbientImage(createWithResource(this, drawable.ic_flashlight))
                 .build(),
-            contentDescription = PlainComplicationText.Builder(text = "MONO_IMG.").build()
+            contentDescription = PlainComplicationText.Builder(text = "Flashlight").build()
         )
             .setTapAction(openScreen())
             .build()
@@ -109,10 +92,10 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
 
         ComplicationType.SMALL_IMAGE -> SmallImageComplicationData.Builder(
             smallImage = SmallImage.Builder(
-                image = createWithResource(this, drawable.ic_assist),
+                image = createWithResource(this, drawable.ic_flashlight),
                 type = SmallImageType.ICON
             ).build(),
-            contentDescription = PlainComplicationText.Builder(text = "SMALL_IMAGE.").build()
+            contentDescription = PlainComplicationText.Builder(text = "Flashlight").build()
         )
             .setTapAction(openScreen())
             .build()
@@ -132,14 +115,7 @@ override fun onComplicationDeactivated(complicationInstanceId: Int) {
 }
 
 companion object {
-    private const val TAG = "CompDataSourceService"
-    }
-
-    private fun updateComplication(context: Context?) {
-        Log.d(TAG, "Updating Assist Complication")
-        val componentName = ComponentName(context!!, AssistComplicationService::class.java)
-        val req = ComplicationDataSourceUpdateRequester.create(context,componentName)
-        req.requestUpdateAll()
-    }
+    private const val TAG = "FlashlightComplication"
+}
 }
 

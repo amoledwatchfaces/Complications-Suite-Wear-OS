@@ -14,19 +14,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.weartools.weekdayutccomp
+package com.weartools.weekdayutccomp.complication
 
 import android.app.PendingIntent
 import android.content.Intent
 import android.graphics.drawable.Icon.createWithResource
-import android.provider.Settings
+import android.provider.AlarmClock
 import android.util.Log
 import androidx.wear.watchface.complications.data.*
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
 import com.weartools.weekdayutccomp.R.drawable
 
-class LogoComplicationService : SuspendingComplicationDataSourceService() {
+class AlarmComplicationService : SuspendingComplicationDataSourceService() {
 
     override fun onComplicationActivated(
         complicationInstanceId: Int,
@@ -35,31 +35,32 @@ class LogoComplicationService : SuspendingComplicationDataSourceService() {
         Log.d(TAG, "onComplicationActivated(): $complicationInstanceId")
     }
 
-private fun openScreen(): PendingIntent? {
+    private fun openScreen(): PendingIntent? {
 
-    val intent = Intent(Settings.ACTION_DEVICE_INFO_SETTINGS)
+        val mClockIntent = Intent(AlarmClock.ACTION_SHOW_ALARMS)
+        mClockIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
 
-    return PendingIntent.getActivity(
-        this, 0, intent,
-        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-    )
-}
+        return PendingIntent.getActivity(
+            this, 0, mClockIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+    }
 
 override fun getPreviewData(type: ComplicationType): ComplicationData? {
     return when (type) {
         ComplicationType.MONOCHROMATIC_IMAGE -> MonochromaticImageComplicationData.Builder(
-        monochromaticImage = MonochromaticImage.Builder(
-            createWithResource(this, drawable.ic_wear_os_icon)
+            monochromaticImage = MonochromaticImage.Builder(
+                createWithResource(this, drawable.ic_alarm)
+            )
+                .setAmbientImage(createWithResource(this, drawable.ic_alarm))
+                .build(),
+            contentDescription = PlainComplicationText.Builder(text = "MONO_IMG.").build()
         )
-            .setAmbientImage(createWithResource(this, drawable.ic_wear_os_icon))
-            .build(),
-        contentDescription = PlainComplicationText.Builder(text = "MONO_IMG.").build()
-    )
-        .setTapAction(null)
-        .build()
+            .setTapAction(null)
+            .build()
         ComplicationType.SMALL_IMAGE -> SmallImageComplicationData.Builder(
             smallImage = SmallImage.Builder(
-                image = createWithResource(this, drawable.ic_wear_os_icon),
+                image = createWithResource(this, drawable.ic_alarm),
                 type = SmallImageType.ICON
             ).build(),
             contentDescription = PlainComplicationText.Builder(text = "SMALL_IMAGE.").build()
@@ -77,18 +78,19 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
 
         ComplicationType.MONOCHROMATIC_IMAGE -> MonochromaticImageComplicationData.Builder(
             monochromaticImage = MonochromaticImage.Builder(
-                createWithResource(this, drawable.ic_wear_os_icon)
+                createWithResource(this, drawable.ic_alarm)
             )
-                .setAmbientImage(createWithResource(this, drawable.ic_wear_os_icon))
+                .setAmbientImage(createWithResource(this, drawable.ic_alarm))
                 .build(),
             contentDescription = PlainComplicationText.Builder(text = "MONO_IMG.").build()
         )
             .setTapAction(openScreen())
             .build()
 
+
         ComplicationType.SMALL_IMAGE -> SmallImageComplicationData.Builder(
             smallImage = SmallImage.Builder(
-                image = createWithResource(this, drawable.ic_wear_os_icon),
+                image = createWithResource(this, drawable.ic_alarm),
                 type = SmallImageType.ICON
             ).build(),
             contentDescription = PlainComplicationText.Builder(text = "SMALL_IMAGE.").build()
@@ -102,6 +104,7 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
             }
             null
         }
+
     }
 }
 

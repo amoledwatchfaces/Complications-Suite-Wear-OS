@@ -1,0 +1,66 @@
+package com.weartools.weekdayutccomp.presentation
+
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.wear.compose.material.*
+import com.weartools.weekdayutccomp.theme.wearColorPalette
+
+@Composable
+fun DialogChip(
+    modifier: Modifier = Modifier,
+    text: String,
+    title: String
+) {
+    Chip(
+        modifier = modifier,
+        onClick = { /* ... */ },
+        colors = ChipDefaults.gradientBackgroundChipColors(
+            startBackgroundColor = Color(0xff2c2c2d),
+            endBackgroundColor = Color(0xff2c2c2d)
+        ),
+        label = {
+            Text(
+                text = text,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+        },
+        secondaryLabel = {
+            Text(text = title, color = Color.LightGray)
+        },
+    )
+}
+
+@Composable
+fun ToggleChip(
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+    label: String,
+    secondaryLabelOn: String,
+    secondaryLabelOff: String,
+    modifier: Modifier = Modifier
+) {
+    ToggleChip(
+        modifier = modifier,
+        checked = checked,
+        colors = ToggleChipDefaults.toggleChipColors(
+            //checkedStartBackgroundColor = wearColorPalette.primaryVariant,
+            checkedEndBackgroundColor = wearColorPalette.primaryVariant,
+        ),
+        onCheckedChange = { enabled -> onCheckedChange(enabled) },
+        label = { Text(label) },
+        secondaryLabel = {
+            if (checked){Text(secondaryLabelOn)}
+            else Text(secondaryLabelOff)
+        },
+        toggleControl = {
+            Icon(
+                imageVector = ToggleChipDefaults.switchIcon(checked),
+                contentDescription = stringResource(id = com.weartools.weekdayutccomp.R.string.compose_toggle)
+            )
+        }
+    )
+}

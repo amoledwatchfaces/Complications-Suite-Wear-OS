@@ -5,6 +5,12 @@
     <string name="app_name">Complications Suite</string> <!-- Does not need to be translated, but it's recommended -->
     <string name="settings">Settings</string>
 
+
+
+    <string name="compose_toggle" translatable="false">Toggle</string>
+
+
+
     <!-- Crypto Complication -->
     <string name="crypto_name_1" translatable="true">BTC Price $</string>
     <string name="price_1" translatable="false">0.0</string>

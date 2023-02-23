@@ -14,18 +14,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.weartools.weekdayutccomp
+package com.weartools.weekdayutccomp.complication
 
 import android.app.PendingIntent
 import android.content.Intent
 import android.graphics.drawable.Icon.createWithResource
+import android.provider.Settings
 import android.util.Log
 import androidx.wear.watchface.complications.data.*
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
 import com.weartools.weekdayutccomp.R.drawable
 
-class FlashlightComplicationService : SuspendingComplicationDataSourceService() {
+class LogoComplicationService : SuspendingComplicationDataSourceService() {
 
     override fun onComplicationActivated(
         complicationInstanceId: Int,
@@ -34,37 +35,34 @@ class FlashlightComplicationService : SuspendingComplicationDataSourceService() 
         Log.d(TAG, "onComplicationActivated(): $complicationInstanceId")
     }
 
-    private fun openScreen(): PendingIntent? {
+private fun openScreen(): PendingIntent? {
 
-        val intent = Intent(this, FlashlightActivity::class.java)
-        //
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+    val intent = Intent(Settings.ACTION_DEVICE_INFO_SETTINGS)
 
-        return PendingIntent.getActivity(
-            this, 0, intent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-
-        )
-    }
+    return PendingIntent.getActivity(
+        this, 0, intent,
+        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+    )
+}
 
 override fun getPreviewData(type: ComplicationType): ComplicationData? {
     return when (type) {
         ComplicationType.MONOCHROMATIC_IMAGE -> MonochromaticImageComplicationData.Builder(
-            monochromaticImage = MonochromaticImage.Builder(
-                createWithResource(this, drawable.ic_flashlight)
-            )
-                .setAmbientImage(createWithResource(this, drawable.ic_flashlight))
-                .build(),
-            contentDescription = PlainComplicationText.Builder(text = "Flashlight").build()
+        monochromaticImage = MonochromaticImage.Builder(
+            createWithResource(this, drawable.ic_wear_os_icon)
         )
-            .setTapAction(null)
-            .build()
+            .setAmbientImage(createWithResource(this, drawable.ic_wear_os_icon))
+            .build(),
+        contentDescription = PlainComplicationText.Builder(text = "MONO_IMG.").build()
+    )
+        .setTapAction(null)
+        .build()
         ComplicationType.SMALL_IMAGE -> SmallImageComplicationData.Builder(
             smallImage = SmallImage.Builder(
-                image = createWithResource(this, drawable.ic_flashlight),
+                image = createWithResource(this, drawable.ic_wear_os_icon),
                 type = SmallImageType.ICON
             ).build(),
-            contentDescription = PlainComplicationText.Builder(text = "Flashlight").build()
+            contentDescription = PlainComplicationText.Builder(text = "SMALL_IMAGE.").build()
         )
             .setTapAction(null)
             .build()
@@ -79,22 +77,21 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
 
         ComplicationType.MONOCHROMATIC_IMAGE -> MonochromaticImageComplicationData.Builder(
             monochromaticImage = MonochromaticImage.Builder(
-                createWithResource(this, drawable.ic_flashlight)
+                createWithResource(this, drawable.ic_wear_os_icon)
             )
-                .setAmbientImage(createWithResource(this, drawable.ic_flashlight))
+                .setAmbientImage(createWithResource(this, drawable.ic_wear_os_icon))
                 .build(),
-            contentDescription = PlainComplicationText.Builder(text = "Flashlight").build()
+            contentDescription = PlainComplicationText.Builder(text = "MONO_IMG.").build()
         )
             .setTapAction(openScreen())
             .build()
 
-
         ComplicationType.SMALL_IMAGE -> SmallImageComplicationData.Builder(
             smallImage = SmallImage.Builder(
-                image = createWithResource(this, drawable.ic_flashlight),
+                image = createWithResource(this, drawable.ic_wear_os_icon),
                 type = SmallImageType.ICON
             ).build(),
-            contentDescription = PlainComplicationText.Builder(text = "Flashlight").build()
+            contentDescription = PlainComplicationText.Builder(text = "SMALL_IMAGE.").build()
         )
             .setTapAction(openScreen())
             .build()
@@ -105,7 +102,6 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
             }
             null
         }
-
     }
 }
 
@@ -114,7 +110,7 @@ override fun onComplicationDeactivated(complicationInstanceId: Int) {
 }
 
 companion object {
-    private const val TAG = "FlashlightComplication"
+    private const val TAG = "CompDataSourceService"
 }
 }
 

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.weartools.weekdayutccomp
+package com.weartools.weekdayutccomp.complication
 
 import android.content.ComponentName
 import android.graphics.drawable.Icon.createWithResource
@@ -23,6 +23,7 @@ import androidx.preference.PreferenceManager
 import androidx.wear.watchface.complications.data.*
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
+import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.R.drawable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -74,7 +75,8 @@ class EthereumPriceComplicationService : SuspendingComplicationDataSourceService
 
     override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
         val args = ComplicationToggleArgs(providerComponent = ComponentName(this, javaClass), complicationInstanceId = request.complicationInstanceId)
-        val complicationPendingIntent = CryptoTapBroadcastReceiver.getToggleIntent(context = this, args = args)
+        val complicationPendingIntent =
+            CryptoComplicationTapBroadcastReceiver.getToggleIntent(context = this, args = args)
 
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         val ticker2: String = preferences.getString(getString(R.string.ticker_2), "ETHBUSD").toString()

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.weartools.weekdayutccomp
+package com.weartools.weekdayutccomp.complication
 
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
@@ -26,7 +26,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
-class CryptoTapBroadcastReceiver : BroadcastReceiver() {
+class CryptoComplicationTapBroadcastReceiver : BroadcastReceiver() {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
     override fun onReceive(context: Context, intent: Intent) {
@@ -50,7 +50,7 @@ class CryptoTapBroadcastReceiver : BroadcastReceiver() {
             context: Context,
             args: ComplicationToggleArgs
         ): PendingIntent {
-            val intent = Intent(context, CryptoTapBroadcastReceiver::class.java).apply {
+            val intent = Intent(context, CryptoComplicationTapBroadcastReceiver::class.java).apply {
                 putExtra(EXTRA_ARGS, args)
             }
 

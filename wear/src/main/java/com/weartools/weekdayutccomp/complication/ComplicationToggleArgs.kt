@@ -1,4 +1,4 @@
-package com.weartools.weekdayutccomp
+package com.weartools.weekdayutccomp.complication
 
 import android.content.ComponentName
 import android.os.Parcelable
