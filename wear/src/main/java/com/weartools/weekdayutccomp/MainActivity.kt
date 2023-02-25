@@ -16,23 +16,32 @@
  */
 package com.weartools.weekdayutccomp
 
+import android.content.ComponentName
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCompositionContext
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.preference.PreferenceManager
 import androidx.wear.compose.material.*
+import androidx.wear.watchface.complications.datasource.ComplicationDataSourceService
+import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUpdateRequester
+import com.weartools.weekdayutccomp.complication.*
 import com.weartools.weekdayutccomp.presentation.ComplicationsSuiteScreen
 import com.weartools.weekdayutccomp.presentation.ComplicationsSuiteViewModel
 import com.weartools.weekdayutccomp.presentation.ComplicationsSuiteViewModelFactory
 import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme
 
 
-class MainActivity : ComponentActivity() {
+class MainActivity : ComponentActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -54,7 +63,9 @@ fun ComplicationsSuiteApp() {
                 factory = ComplicationsSuiteViewModelFactory()
             )
             ComplicationsSuiteScreen(
-                onEnableClick = { viewModel.toggleEnabled() },
+                onEnableClick = { key, active ->
+                    viewModel.toggleEnabled()
+                },
                 listState = listState
             )
         }

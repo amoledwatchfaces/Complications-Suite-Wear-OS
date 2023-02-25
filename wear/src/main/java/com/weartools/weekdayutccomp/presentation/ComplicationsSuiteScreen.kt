@@ -17,25 +17,59 @@ package com.weartools.weekdayutccomp.presentation
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.*
+import com.weartools.weekdayutccomp.Pref
+import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme
+import java.util.concurrent.Flow
 
 @Composable
 fun ComplicationsSuiteScreen(
     listState: ScalingLazyListState = rememberScalingLazyListState(),
-            onEnableClick: (Boolean) -> Unit,
+            onEnableClick: (String,Boolean) -> Unit,
 ) {
+    val pref= Pref(LocalContext.current)
+
+    var leadingZero = remember {
+        mutableStateOf(pref.getIsLeadingZero())
+    }
+    var militaryTime = remember {
+        mutableStateOf(pref.getIsMilitary())
+    }
+    var hemisphere = remember {
+        mutableStateOf(pref.getIsHemisphere())
+    }
+    var simpleIcon = remember {
+        mutableStateOf(pref.getIsSimpleIcon())
+    }
+
+    var leadingZero2 = remember {
+        mutableStateOf(pref.getIsLeadingZeroTime())
+    }
+    var militaryTime2 = remember {
+        mutableStateOf(pref.getIsMilitaryTime())
+    }
+    var forceISO = remember {
+        mutableStateOf(pref.getIsISO())
+    }
+
+    val list = stringArrayResource(id = R.array.cities_zone).toList()
+
     ScalingLazyColumn(
         modifier = Modifier.fillMaxSize(),
         autoCentering = AutoCenteringParams(itemIndex = 1),
         state = listState,
 
     ) {
-
         //SETTINGS TEST
         item { SettingsText() }
 
@@ -48,6 +82,7 @@ fun ComplicationsSuiteScreen(
                 .fillMaxWidth()
                 .padding(vertical = 2.dp, horizontal = 10.dp),
         )}
+
         item { DialogChip(
             text = "Timezone 2 ID",
             title = "UTC",
@@ -63,8 +98,10 @@ fun ComplicationsSuiteScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 2.dp, horizontal = 10.dp),
-                checked = true,
-                onCheckedChange = onEnableClick
+                checked = leadingZero.value,
+                onCheckedChange = {it->
+                    leadingZero.value=it
+                }
             )
         }
         item {
@@ -75,8 +112,10 @@ fun ComplicationsSuiteScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 2.dp, horizontal = 10.dp),
-                checked = true,
-                onCheckedChange = onEnableClick
+                checked = militaryTime.value,
+                onCheckedChange = {it->
+                    militaryTime.value=it
+                }
             )
         }
 
@@ -90,8 +129,10 @@ fun ComplicationsSuiteScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 2.dp, horizontal = 10.dp),
-                checked = true,
-                onCheckedChange = onEnableClick
+                checked = hemisphere.value,
+                onCheckedChange = {it->
+                    hemisphere.value=it
+                }
             )
         }
         item {
@@ -102,8 +143,10 @@ fun ComplicationsSuiteScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 2.dp, horizontal = 10.dp),
-                checked = true,
-                onCheckedChange = onEnableClick
+                checked = simpleIcon.value,
+                onCheckedChange = {it->
+                    simpleIcon.value=it
+                }
             )
         }
 
@@ -118,8 +161,10 @@ fun ComplicationsSuiteScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 2.dp, horizontal = 10.dp),
-                checked = true,
-                onCheckedChange = onEnableClick
+                checked = leadingZero2.value,
+                onCheckedChange = {it->
+                    leadingZero2.value=it
+                }
             )
         }
         item {
@@ -130,8 +175,10 @@ fun ComplicationsSuiteScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 2.dp, horizontal = 10.dp),
-                checked = true,
-                onCheckedChange = onEnableClick
+                checked = militaryTime2.value,
+                onCheckedChange = {it->
+                    militaryTime2.value=it
+                }
             )
         }
 
@@ -145,8 +192,10 @@ fun ComplicationsSuiteScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 2.dp, horizontal = 10.dp),
-                checked = true,
-                onCheckedChange = onEnableClick
+                checked = forceISO.value,
+                onCheckedChange = {it->
+                    forceISO.value=it
+                }
             )
         }
 
@@ -205,7 +254,7 @@ fun ComplicationsSuiteScreen(
 fun ComplicationsSuiteScreenPreview() {
     ComplicationsSuiteTheme {
         ComplicationsSuiteScreen(
-            onEnableClick = {},
+            onEnableClick = {key,active->},
         )
     }
 }

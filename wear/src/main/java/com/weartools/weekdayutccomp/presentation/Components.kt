@@ -1,10 +1,15 @@
 package com.weartools.weekdayutccomp.presentation
 
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.*
 import com.weartools.weekdayutccomp.theme.wearColorPalette
 
@@ -12,11 +17,12 @@ import com.weartools.weekdayutccomp.theme.wearColorPalette
 fun DialogChip(
     modifier: Modifier = Modifier,
     text: String,
-    title: String
+    title: String,
+    onClick:(()->Unit)?=null,
 ) {
     Chip(
         modifier = modifier,
-        onClick = { /* ... */ },
+        onClick = {  onClick?.invoke()},
         colors = ChipDefaults.gradientBackgroundChipColors(
             startBackgroundColor = Color(0xff2c2c2d),
             endBackgroundColor = Color(0xff2c2c2d)
@@ -35,6 +41,23 @@ fun DialogChip(
 }
 
 @Composable
+fun ListItemsWidget(items:List<String>,callback:(Int)->Unit){
+    ScalingLazyColumn(
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        item { ListHeader { Text("World Clock") } }
+
+        itemsIndexed(items) {index,i->
+            Chip(
+                onClick = {callback(index) },
+                label = { Text(i) },
+                colors = ChipDefaults.secondaryChipColors()
+            )
+        }
+    }
+}
+
+@Composable
 fun ToggleChip(
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
@@ -50,11 +73,14 @@ fun ToggleChip(
             //checkedStartBackgroundColor = wearColorPalette.primaryVariant,
             checkedEndBackgroundColor = wearColorPalette.primaryVariant,
         ),
-        onCheckedChange = { enabled -> onCheckedChange(enabled) },
+        onCheckedChange = { enabled ->
+            onCheckedChange(enabled)
+        },
         label = { Text(label) },
         secondaryLabel = {
-            if (checked){Text(secondaryLabelOn)}
-            else Text(secondaryLabelOff)
+            if (checked) {
+                Text(secondaryLabelOn)
+            } else Text(secondaryLabelOff)
         },
         toggleControl = {
             Icon(
@@ -64,3 +90,4 @@ fun ToggleChip(
         }
     )
 }
+
