@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringArrayResource
@@ -38,31 +39,70 @@ fun ComplicationsSuiteScreen(
             onEnableClick: (String,Boolean) -> Unit,
 ) {
     val pref= Pref(LocalContext.current)
+    val listcity = stringArrayResource(id = R.array.cities_zone).toList()
+    val listcityID = stringArrayResource(id = R.array.cities).toList()
 
-    var leadingZero = remember {
+
+    var getCity1 by remember{
+        mutableStateOf(listcity[listcityID.indexOf(pref.getCity())])
+    }
+
+    var getCity2 by remember {
+        mutableStateOf(listcity[listcityID.indexOf(pref.getCity2())])
+    }
+
+    var getLongText by remember {
+        mutableStateOf(pref.getLongText())
+    }
+
+    var getShortText by remember {
+        mutableStateOf(pref.getShortText())
+    }
+
+    var getShortTitle by remember {
+        mutableStateOf(pref.getShortTitle())
+    }
+
+    var leadingZero by remember {
         mutableStateOf(pref.getIsLeadingZero())
     }
-    var militaryTime = remember {
+    var militaryTime by remember {
         mutableStateOf(pref.getIsMilitary())
     }
-    var hemisphere = remember {
+    var hemisphere by remember {
         mutableStateOf(pref.getIsHemisphere())
     }
-    var simpleIcon = remember {
+    var simpleIcon by remember {
         mutableStateOf(pref.getIsSimpleIcon())
     }
 
-    var leadingZero2 = remember {
+    var leadingZero2 by remember {
         mutableStateOf(pref.getIsLeadingZeroTime())
     }
-    var militaryTime2 = remember {
+    var militaryTime2 by remember {
         mutableStateOf(pref.getIsMilitaryTime())
     }
-    var forceISO = remember {
+    var forceISO by remember {
         mutableStateOf(pref.getIsISO())
     }
 
-    val list = stringArrayResource(id = R.array.cities_zone).toList()
+
+    var isTImeZOnClick by remember {
+        mutableStateOf(false)
+    }
+    var isTImeZOnClick2 by remember {
+        mutableStateOf(false)
+    }
+
+    var longTextFormat by remember {
+        mutableStateOf(false)
+    }
+    var shortTextFormat by remember {
+        mutableStateOf(false)
+    }
+    var shortTitleFormat by remember {
+        mutableStateOf(false)
+    }
 
     ScalingLazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -77,18 +117,26 @@ fun ComplicationsSuiteScreen(
         item { PreferenceCategory(title = "World Clock Complication") }
         item { DialogChip(
             text = "Timezone 1 ID",
-            title = "Adelaide (ADL)", //STRING FROM STRINGS.XML BASED ON PICK FROM THE LIST
+            title = getCity1, //STRING FROM STRINGS.XML BASED ON PICK FROM THE LIST
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 2.dp, horizontal = 10.dp),
+            onClick = {
+                      isTImeZOnClick=isTImeZOnClick.not()
+            },
         )}
+
+
 
         item { DialogChip(
             text = "Timezone 2 ID",
-            title = "UTC",
+            title = getCity2,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 2.dp, horizontal = 10.dp),
+            onClick = {
+                isTImeZOnClick2=isTImeZOnClick2.not()
+            }
         )}
         item {
             ToggleChip(
@@ -98,9 +146,10 @@ fun ComplicationsSuiteScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 2.dp, horizontal = 10.dp),
-                checked = leadingZero.value,
+                checked = leadingZero,
                 onCheckedChange = {it->
-                    leadingZero.value=it
+                    leadingZero=it
+                    pref.setIsLeadingZero(it)
                 }
             )
         }
@@ -112,9 +161,10 @@ fun ComplicationsSuiteScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 2.dp, horizontal = 10.dp),
-                checked = militaryTime.value,
+                checked = militaryTime,
                 onCheckedChange = {it->
-                    militaryTime.value=it
+                    militaryTime=it
+                    pref.setIsMilitary(it)
                 }
             )
         }
@@ -129,9 +179,10 @@ fun ComplicationsSuiteScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 2.dp, horizontal = 10.dp),
-                checked = hemisphere.value,
+                checked = hemisphere,
                 onCheckedChange = {it->
-                    hemisphere.value=it
+                    hemisphere=it
+                    pref.setIsHemisphere(it)
                 }
             )
         }
@@ -143,9 +194,10 @@ fun ComplicationsSuiteScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 2.dp, horizontal = 10.dp),
-                checked = simpleIcon.value,
+                checked = simpleIcon,
                 onCheckedChange = {it->
-                    simpleIcon.value=it
+                    simpleIcon=it
+                    pref.setIsSimpleIcon(it)
                 }
             )
         }
@@ -161,9 +213,10 @@ fun ComplicationsSuiteScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 2.dp, horizontal = 10.dp),
-                checked = leadingZero2.value,
+                checked = leadingZero2,
                 onCheckedChange = {it->
-                    leadingZero2.value=it
+                    leadingZero2=it
+                    pref.setIsLeadingZeroTime(it)
                 }
             )
         }
@@ -175,9 +228,10 @@ fun ComplicationsSuiteScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 2.dp, horizontal = 10.dp),
-                checked = militaryTime2.value,
+                checked = militaryTime2,
                 onCheckedChange = {it->
-                    militaryTime2.value=it
+                    militaryTime2=it
+                    pref.setIsMilitaryTime(it)
                 }
             )
         }
@@ -192,9 +246,10 @@ fun ComplicationsSuiteScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 2.dp, horizontal = 10.dp),
-                checked = forceISO.value,
+                checked = forceISO,
                 onCheckedChange = {it->
-                    forceISO.value=it
+                    forceISO=it
+                    pref.setIsISO(it)
                 }
             )
         }
@@ -203,24 +258,33 @@ fun ComplicationsSuiteScreen(
         item { PreferenceCategory(title = "Date Complication") }
         item { DialogChip(
             text = "Long Text Format",
-            title = "EEE, d MMM",
+            title = getLongText,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 2.dp, horizontal = 10.dp),
+            onClick = {
+                longTextFormat=longTextFormat.not()
+            }
         )}
         item { DialogChip(
             text = "Short Text Format",
-            title = "d",
+            title = getShortText,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 2.dp, horizontal = 10.dp),
+            onClick = {
+                shortTextFormat=shortTextFormat.not()
+            }
         )}
         item { DialogChip(
             text = "Short Title Format",
-            title = "MMM",
+            title = getShortTitle,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 2.dp, horizontal = 10.dp),
+            onClick = {
+                shortTitleFormat=shortTitleFormat.not()
+            }
         )}
 
 

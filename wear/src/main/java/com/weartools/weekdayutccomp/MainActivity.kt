@@ -41,12 +41,43 @@ import com.weartools.weekdayutccomp.presentation.ComplicationsSuiteViewModelFact
 import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme
 
 
-class MainActivity : ComponentActivity(){
+class MainActivity : ComponentActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             ComplicationsSuiteApp()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        PreferenceManager
+            .getDefaultSharedPreferences(this)
+            .registerOnSharedPreferenceChangeListener(this)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        PreferenceManager
+            .getDefaultSharedPreferences(this)
+            .unregisterOnSharedPreferenceChangeListener(this)
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        if (key == "leading_zero" || key == "is_military" || key == "citiesid" || key == "citiesid2"){
+            updateComplication(this, WorldClock1ComplicationService::class.java)
+            updateComplication(this, WorldClock2ComplicationService::class.java)
+        }
+        if (key == "is_northern" || key == "is_simple_icon"){updateComplication(this, MoonPhaseComplicationService::class.java)}
+        if (key == "leading_zero_time" || key == "is_military_time"){updateComplication(this, TimeComplicationService::class.java)}
+        if (key == "is_iso_week"){updateComplication(this, WeekOfYearComplicationService::class.java)}
+        if (key == "date_format" || key == "short_text_format" || key == "short_title_format"){updateComplication(this, DateComplicationService::class.java)}
+    }
+
+    fun updateComplication(context: Context, cls: Class<out ComplicationDataSourceService>) {
+        val component = ComponentName(context, cls)
+        val req = ComplicationDataSourceUpdateRequester.create(context,component)
+        req.requestUpdateAll()
     }
 }
 
@@ -65,12 +96,17 @@ fun ComplicationsSuiteApp() {
             ComplicationsSuiteScreen(
                 onEnableClick = { key, active ->
                     viewModel.toggleEnabled()
+
+
                 },
                 listState = listState
             )
+
         }
     }
 }
+
+
 
 @Preview(device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
 @Composable
