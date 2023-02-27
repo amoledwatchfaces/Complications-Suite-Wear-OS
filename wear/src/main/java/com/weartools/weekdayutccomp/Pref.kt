@@ -117,11 +117,11 @@ class Pref(val context: Context) {
     }
 
     fun getCity():String {
-        return getInstance(context).getString("citiesid","UTC")?:""
+        return getInstance(context).getString("citiesid","UTC")?:"UTC"
     }
 
     fun getCity2():String {
-        return getInstance(context).getString("citiesid2","UTC")?:""
+        return getInstance(context).getString("citiesid2","UTC")?:"UTC"
     }
 
     fun getLongText():String{

@@ -93,8 +93,8 @@ fun ToggleChip(
         label = { Text(label) },
         secondaryLabel = {
             if (checked) {
-                Text(secondaryLabelOn)
-            } else Text(secondaryLabelOff)
+                Text(text = secondaryLabelOn, color = Color.LightGray)
+            } else Text(text = secondaryLabelOff, color = Color.LightGray)
         },
         toggleControl = {
             Icon(
