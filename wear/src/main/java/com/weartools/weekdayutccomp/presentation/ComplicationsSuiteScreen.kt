@@ -309,7 +309,9 @@ fun ComplicationsSuiteScreen(
     }
     if (isTImeZOnClick || isTImeZOnClick2){
         val title= if (isTImeZOnClick) "Timezone 1 ID" else "Timezone 2 ID"
-        ListItemsWidget(titles = title, items = listcity, callback = {
+        val prValue= if (isTImeZOnClick) getCity1
+        else getCity2
+        ListItemsWidget(titles = title, preValue = prValue, items = listcity, callback = {
             if (it==-1){
                 isTImeZOnClick=false
                 isTImeZOnClick2=false
@@ -337,7 +339,10 @@ fun ComplicationsSuiteScreen(
         val title = if (longTextFormat) "Long Text Format"
         else if (shortTextFormat) "Short Text Format"
         else "Short Title Format"
-        ListItemsWidget(titles = title, items = if (longTextFormat) listLongFormat else listShortFormat, callback = {
+        val prValue=if (longTextFormat) getLongText
+        else if (shortTextFormat) getShortText
+        else  getShortTitle
+        ListItemsWidget(titles = title, preValue =  prValue,items = if (longTextFormat) listLongFormat else listShortFormat, callback = {
             if (it==-1) {
                 longTextFormat = false
                 shortTextFormat=false

@@ -47,7 +47,7 @@ fun DialogChip(
 }
 
 @Composable
-fun ListItemsWidget(titles: String, items: List<String>, callback: (Int) -> Unit) {
+fun ListItemsWidget(titles: String, items: List<String>,preValue:String, callback: (Int) -> Unit) {
     val state = remember {
         mutableStateOf(true)
     }
@@ -55,13 +55,23 @@ fun ListItemsWidget(titles: String, items: List<String>, callback: (Int) -> Unit
         Dialog(showDialog = state.value, onDismissRequest = { callback.invoke(-1)}) {
             Alert(title = { PreferenceCategory(title = titles) }, content = {
                 itemsIndexed(items) { index, i ->
-                    Chip(
-                        onClick = {
+                    ToggleChip(
+                        checked = preValue== items[index],
+                        colors = ToggleChipDefaults.toggleChipColors(
+                            //checkedStartBackgroundColor = wearColorPalette.primaryVariant,
+                            checkedEndBackgroundColor = wearColorPalette.primaryVariant,
+                        ),
+                        toggleControl = {
+                            Icon(
+                                imageVector = ToggleChipDefaults .radioIcon(preValue== items[index]),
+                                contentDescription = stringResource(id = com.weartools.weekdayutccomp.R.string.compose_toggle)
+                            )
+                        },
+                        onCheckedChange = { enabled ->
                             callback(index)
                             state.value = false
                         },
                         label = { Text(i) },
-                        colors = ChipDefaults.secondaryChipColors()
                     )
                 }
             })
