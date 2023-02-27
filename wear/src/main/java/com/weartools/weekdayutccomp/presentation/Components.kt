@@ -48,14 +48,26 @@ fun DialogChip(
 
 @Composable
 fun ListItemsWidget(titles: String, items: List<String>,preValue:String, callback: (Int) -> Unit) {
-    val state = remember {
-        mutableStateOf(true)
-    }
+    val state = remember { mutableStateOf(true) }
     ComplicationsSuiteTheme {
-        Dialog(showDialog = state.value, onDismissRequest = { callback.invoke(-1)}) {
-            Alert(title = { PreferenceCategory(title = titles) }, content = {
+        val listState = rememberScalingLazyListState(0)
+        Dialog(
+            showDialog = state.value,
+            scrollState = listState,
+            onDismissRequest = { callback.invoke(-1)})
+        {
+            Alert(
+                scrollState = listState,
+                title = { PreferenceCategory(title = titles) },
+                verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.Top),
+                contentPadding = PaddingValues(start = 10.dp, end = 10.dp, top = 24.dp, bottom = 52.dp),
+                content = {
+
                 itemsIndexed(items) { index, i ->
                     ToggleChip(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 2.dp, horizontal = 10.dp),
                         checked = preValue== items[index],
                         colors = ToggleChipDefaults.toggleChipColors(
                             //checkedStartBackgroundColor = wearColorPalette.primaryVariant,
