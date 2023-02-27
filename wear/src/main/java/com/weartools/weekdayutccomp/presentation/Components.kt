@@ -46,6 +46,30 @@ fun DialogChip(
     )
 }
 
+@Composable
+fun ListItemsWidget(titles: String, items: List<String>, callback: (Int) -> Unit) {
+    val state = remember {
+        mutableStateOf(true)
+    }
+    ComplicationsSuiteTheme {
+        Dialog(showDialog = state.value, onDismissRequest = { callback.invoke(-1)}) {
+            Alert(title = { PreferenceCategory(title = titles) }, content = {
+                itemsIndexed(items) { index, i ->
+                    Chip(
+                        onClick = {
+                            callback(index)
+                            state.value = false
+                        },
+                        label = { Text(i) },
+                        colors = ChipDefaults.secondaryChipColors()
+                    )
+                }
+            })
+        }
+    }
+
+
+}
 
 @Composable
 fun ToggleChip(

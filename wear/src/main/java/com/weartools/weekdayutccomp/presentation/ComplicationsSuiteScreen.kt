@@ -41,7 +41,8 @@ fun ComplicationsSuiteScreen(
     val pref= Pref(LocalContext.current)
     val listcity = stringArrayResource(id = R.array.cities_zone).toList()
     val listcityID = stringArrayResource(id = R.array.cities).toList()
-
+    val listLongFormat = stringArrayResource(id = R.array.dateformats).toList()
+    val listShortFormat = stringArrayResource(id = R.array.shortformats).toList()
 
     var getCity1 by remember{
         mutableStateOf(listcity[listcityID.indexOf(pref.getCity())])
@@ -305,6 +306,64 @@ fun ComplicationsSuiteScreen(
         )
         }
 
+    }
+    if (isTImeZOnClick || isTImeZOnClick2){
+        val title= if (isTImeZOnClick) "Timezone 1 ID" else "Timezone 2 ID"
+        ListItemsWidget(titles = title, items = listcity, callback = {
+            if (it==-1){
+                isTImeZOnClick=false
+                isTImeZOnClick2=false
+                return@ListItemsWidget
+            }
+            if (isTImeZOnClick){
+                val city=listcity[it]
+                getCity1=city
+                val cityId=listcityID[it]
+                pref.setCity(cityId)
+                isTImeZOnClick=isTImeZOnClick.not()
+            }else{
+                val city=listcity[it]
+                getCity2=city
+                val cityId=listcityID[it]
+                pref.setCity2(cityId)
+                isTImeZOnClick2=isTImeZOnClick2.not()
+            }
+
+
+        })
+    }
+
+    if (longTextFormat || shortTextFormat ||shortTitleFormat){
+        val title = if (longTextFormat) "Long Text Format"
+        else if (shortTextFormat) "Short Text Format"
+        else "Short Title Format"
+        ListItemsWidget(titles = title, items = if (longTextFormat) listLongFormat else listShortFormat, callback = {
+            if (it==-1) {
+                longTextFormat = false
+                shortTextFormat=false
+                shortTitleFormat=false
+                return@ListItemsWidget
+            }
+            if (longTextFormat){
+                val format=listLongFormat[it]
+                getLongText=format
+                pref.setLongText(format)
+                longTextFormat=longTextFormat.not()
+            }else{
+                val format=listShortFormat[it]
+                if (shortTextFormat) {
+                    getShortText = format
+                    shortTextFormat=false
+                    pref.setShortText(format)
+                }else {
+                    getShortTitle = format
+                    shortTitleFormat=shortTitleFormat.not()
+                    pref.setShortTitle(format)
+                }
+            }
+
+
+        })
     }
 }
 
