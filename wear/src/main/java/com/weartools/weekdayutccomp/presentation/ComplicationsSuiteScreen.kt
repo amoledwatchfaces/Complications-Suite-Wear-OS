@@ -119,20 +119,15 @@ fun ComplicationsSuiteScreen(
         item { DialogChip(
             text = "Timezone 1 ID",
             title = getCity1, //STRING FROM STRINGS.XML BASED ON PICK FROM THE LIST
-            onClick = {
-                      isTImeZOnClick=isTImeZOnClick.not()
-            },
+            onClick = { isTImeZOnClick=isTImeZOnClick.not() }
         )}
-
-
 
         item { DialogChip(
             text = "Timezone 2 ID",
             title = getCity2,
-            onClick = {
-                isTImeZOnClick2=isTImeZOnClick2.not()
-            }
+            onClick = { isTImeZOnClick2=isTImeZOnClick2.not() }
         )}
+
         item {
             ToggleChip(
                 label = "Leading zero",
