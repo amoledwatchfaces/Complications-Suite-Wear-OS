@@ -1,8 +1,10 @@
 package com.weartools.weekdayutccomp.presentation
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -50,13 +52,16 @@ fun DialogChip(
 fun ListItemsWidget(titles: String, items: List<String>,preValue:String, callback: (Int) -> Unit) {
     val state = remember { mutableStateOf(true) }
     ComplicationsSuiteTheme {
-        val listState = rememberScalingLazyListState(0)
+        val listState = rememberScalingLazyListState()
         Dialog(
+
             showDialog = state.value,
             scrollState = listState,
-            onDismissRequest = { callback.invoke(-1)})
+            onDismissRequest = { callback.invoke(-1)}
+        )
         {
             Alert(
+                backgroundColor = Color.Black,
                 scrollState = listState,
                 title = { PreferenceCategory(title = titles) },
                 verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.Top),
@@ -86,7 +91,9 @@ fun ListItemsWidget(titles: String, items: List<String>,preValue:String, callbac
                         label = { Text(i) },
                     )
                 }
-            })
+            }
+            )
+
         }
     }
 
