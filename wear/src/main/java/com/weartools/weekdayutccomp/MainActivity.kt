@@ -24,9 +24,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCompositionContext
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -113,58 +111,3 @@ fun ComplicationsSuiteApp() {
 fun DefaultPreview() {
     ComplicationsSuiteApp()
 }
-
-/*
-class MainActivity : Activity(), SharedPreferences.OnSharedPreferenceChangeListener {
-
-    private lateinit var binding: ActivityMainBinding
-
-    companion object {
-        fun updateComplication(context: Context, cls: Class<out ComplicationDataSourceService>) {
-            val component = ComponentName(context, cls)
-            val req = ComplicationDataSourceUpdateRequester.create(context,component)
-            req.requestUpdateAll()
-        }
-    }
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        // update complications for new settings
-        if (key == "leading_zero" || key == "is_military" || key == "citiesid" || key == "citiesid2"){
-            updateComplication(this, WorldClock1ComplicationService::class.java)
-            updateComplication(this, WorldClock2ComplicationService::class.java)
-        }
-        if (key == "is_northern" || key == "is_simple_icon"){updateComplication(this, MoonPhaseComplicationService::class.java)}
-        if (key == "leading_zero_time" || key == "is_military_time"){updateComplication(this, TimeComplicationService::class.java)}
-        if (key == "is_iso_week"){updateComplication(this, WeekOfYearComplicationService::class.java)}
-        if (key == "date_format" || key == "short_text_format" || key == "short_title_format"){updateComplication(this, DateComplicationService::class.java)}
-    }
-
-    override fun onResume() {
-        super.onResume()
-        PreferenceManager
-            .getDefaultSharedPreferences(this)
-            .registerOnSharedPreferenceChangeListener(this)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        PreferenceManager
-            .getDefaultSharedPreferences(this)
-            .unregisterOnSharedPreferenceChangeListener(this)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-    }
-
-    class UTCPreferenceFragment : PreferenceFragment() {
-        override fun onCreate(savedInstanceState: Bundle?) {
-            super.onCreate(savedInstanceState)
-            addPreferencesFromResource(R.xml.settings)
-        }
-    }
-}
-*/

@@ -110,7 +110,6 @@ fun ComplicationsSuiteScreen(
         modifier = Modifier.fillMaxSize(),
         autoCentering = AutoCenteringParams(itemIndex = 1),
         state = listState,
-
     ) {
         //SETTINGS TEST
         item { SettingsText() }
@@ -120,9 +119,6 @@ fun ComplicationsSuiteScreen(
         item { DialogChip(
             text = "Timezone 1 ID",
             title = getCity1, //STRING FROM STRINGS.XML BASED ON PICK FROM THE LIST
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 2.dp, horizontal = 10.dp),
             onClick = {
                       isTImeZOnClick=isTImeZOnClick.not()
             },
@@ -133,9 +129,6 @@ fun ComplicationsSuiteScreen(
         item { DialogChip(
             text = "Timezone 2 ID",
             title = getCity2,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 2.dp, horizontal = 10.dp),
             onClick = {
                 isTImeZOnClick2=isTImeZOnClick2.not()
             }
@@ -145,9 +138,6 @@ fun ComplicationsSuiteScreen(
                 label = "Leading zero",
                 secondaryLabelOn = "09:00", // STRING FROM STRINGS.XML BASED ON KEY ON / OFF
                 secondaryLabelOff = "9:00",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 2.dp, horizontal = 10.dp),
                 checked = leadingZero,
                 onCheckedChange = {it->
                     leadingZero=it
@@ -160,9 +150,6 @@ fun ComplicationsSuiteScreen(
                 label = "Military Time",
                 secondaryLabelOn = "ON / 24h",
                 secondaryLabelOff = "OFF / 12h",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 2.dp, horizontal = 10.dp),
                 checked = militaryTime,
                 onCheckedChange = {it->
                     militaryTime=it
@@ -178,9 +165,6 @@ fun ComplicationsSuiteScreen(
                 label = "Hemisphere",
                 secondaryLabelOn = "Northern",
                 secondaryLabelOff = "Southern",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 2.dp, horizontal = 10.dp),
                 checked = hemisphere,
                 onCheckedChange = {it->
                     hemisphere=it
@@ -193,9 +177,6 @@ fun ComplicationsSuiteScreen(
                 label = stringResource(id = R.string.moon_setting_simple_icon_title),
                 secondaryLabelOn = "Yes",
                 secondaryLabelOff = "No",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 2.dp, horizontal = 10.dp),
                 checked = simpleIcon,
                 onCheckedChange = {it->
                     simpleIcon=it
@@ -212,9 +193,6 @@ fun ComplicationsSuiteScreen(
                 label = "Leading Zero",
                 secondaryLabelOn = "09:00",
                 secondaryLabelOff = "9:00",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 2.dp, horizontal = 10.dp),
                 checked = leadingZero2,
                 onCheckedChange = {it->
                     leadingZero2=it
@@ -227,9 +205,6 @@ fun ComplicationsSuiteScreen(
                 label = "Military Time",
                 secondaryLabelOn = "ON / 24h",
                 secondaryLabelOff = "OFF / 12h",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 2.dp, horizontal = 10.dp),
                 checked = militaryTime2,
                 onCheckedChange = {it->
                     militaryTime2=it
@@ -245,9 +220,6 @@ fun ComplicationsSuiteScreen(
                 label = "Force ISO",
                 secondaryLabelOn = "ISO",
                 secondaryLabelOff = "US",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 2.dp, horizontal = 10.dp),
                 checked = forceISO,
                 onCheckedChange = {it->
                     forceISO=it
@@ -261,9 +233,6 @@ fun ComplicationsSuiteScreen(
         item { DialogChip(
             text = "Long Text Format",
             title = getLongText,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 2.dp, horizontal = 10.dp),
             onClick = {
                 longTextFormat=longTextFormat.not()
             }
@@ -271,9 +240,6 @@ fun ComplicationsSuiteScreen(
         item { DialogChip(
             text = "Short Text Format",
             title = getShortText,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 2.dp, horizontal = 10.dp),
             onClick = {
                 shortTextFormat=shortTextFormat.not()
             }
@@ -281,9 +247,6 @@ fun ComplicationsSuiteScreen(
         item { DialogChip(
             text = "Short Title Format",
             title = getShortTitle,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 2.dp, horizontal = 10.dp),
             onClick = {
                 shortTitleFormat=shortTitleFormat.not()
             }
@@ -295,9 +258,6 @@ fun ComplicationsSuiteScreen(
         item { DialogChip(
             text = "Version",
             title = "v1.4.5",
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 2.dp, horizontal = 10.dp),
         )}
         item { SectionText(
             text = "amoledwatchfaces.com",

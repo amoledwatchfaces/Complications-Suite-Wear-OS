@@ -21,13 +21,14 @@ import com.weartools.weekdayutccomp.theme.wearColorPalette
 
 @Composable
 fun DialogChip(
-    modifier: Modifier = Modifier,
     text: String,
     title: String,
     onClick: (() -> Unit)? = null,
 ) {
     Chip(
-        modifier = modifier,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 2.dp, horizontal = 10.dp),
         onClick = {
             onClick?.invoke()
         },
@@ -107,13 +108,13 @@ fun ToggleChip(
     label: String,
     secondaryLabelOn: String,
     secondaryLabelOff: String,
-    modifier: Modifier = Modifier
 ) {
     ToggleChip(
-        modifier = modifier,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 2.dp, horizontal = 10.dp),
         checked = checked,
         colors = ToggleChipDefaults.toggleChipColors(
-            //checkedStartBackgroundColor = wearColorPalette.primaryVariant,
             checkedEndBackgroundColor = wearColorPalette.primaryVariant,
         ),
         onCheckedChange = { enabled ->
