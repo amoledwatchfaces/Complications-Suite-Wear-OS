@@ -11,11 +11,15 @@ android {
         applicationId "com.weartools.weekdayutccomp"
         minSdk 27
         targetSdk 33
-        versionCode 53
-        versionName "1.5.3"
-
+        versionCode 59
+        versionName "1.5.9"
+        resConfigs("en", "de", "el", "it", "pt", "ro", "sk")
     }
-
+    bundle {
+        language {
+            enableSplit = false // TO HAVE ALL LANGUAGES AVAILABLE
+        }
+    }
     buildTypes {
         release {
             minifyEnabled true

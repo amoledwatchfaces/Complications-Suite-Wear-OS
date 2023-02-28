@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Translated by: amoledwatchfaces -->
-<resources lang="en" country="US">
+<resources>
     <!-- Do not translate translatable="false" lines -->
     <string name="app_name">Complications Suite</string> <!-- Does not need to be translated, but it's recommended -->
     <string name="app_info">App Info</string>
     <string name="version">Version</string>
-    <string name="version_number" translatable="false">v1.5.3</string>
+    <string name="version_number" translatable="false">v1.5.9</string>
     <string name="settings">Settings</string>
     <string name="language">Language</string>
 
@@ -57,7 +57,7 @@
     <string name="moon_setting_hemi_on">Northern</string>
     <string name="moon_setting_hemi_off">Southern</string>
     <string name="moon_setting_simple_icon_key" translatable="false">is_simple_icon</string>
-    <string name="moon_setting_simple_icon_title">Icon</string>
+    <string name="moon_setting_simple_icon_title">Moon Icon</string>
     <string name="moon_setting_simple_icon_on">Simple</string>
     <string name="moon_setting_simple_icon_off">Detailed</string>
     <string name="key_pref_phase_icon" translatable="false">R.drawable.moon0</string>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!-- Translated by: Develeon64 -->
-<resources lang="de" country="DE">
+<resources>
     <!-- Do not translate translatable="false" lines -->
     <string name="app_name">Komplikationen-Suite</string> <!-- Does not need to be translated, but it's recommended -->
     <string name="settings">Einstellungen</string>
