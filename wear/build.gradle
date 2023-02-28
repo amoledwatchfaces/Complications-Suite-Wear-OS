@@ -11,8 +11,8 @@ android {
         applicationId "com.weartools.weekdayutccomp"
         minSdk 27
         targetSdk 33
-        versionCode 50
-        versionName "1.5.0"
+        versionCode 53
+        versionName "1.5.3"
 
     }
 
@@ -52,23 +52,21 @@ dependencies {
     implementation 'androidx.wear.watchface:watchface-complications-data-source-ktx:1.1.1'
     implementation 'androidx.wear:wear:1.2.0'
 
-    // BEFORE COMPOSE
-    implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.percentlayout:percentlayout:1.0.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.2.1'
-    implementation 'androidx.preference:preference-ktx:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    //implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    //implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    //implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    //implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1"
+    //implementation 'androidx.percentlayout:percentlayout:1.0.0'
+    //implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
 
-    // WITH COMPOSE
-    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1"
-    implementation 'androidx.percentlayout:percentlayout:1.0.0'
+    implementation 'androidx.preference:preference-ktx:1.2.0'
+    implementation 'androidx.core:core-ktx:1.9.0'
     implementation "androidx.compose.ui:ui:1.3.3"
     implementation "androidx.wear.compose:compose-material:1.1.2"
     implementation "androidx.wear.compose:compose-foundation:1.1.2"
     implementation "androidx.compose.ui:ui-tooling-preview:1.3.3"
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
     implementation 'androidx.activity:activity-compose:1.6.1'
+
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.3.3"
     debugImplementation "androidx.compose.ui:ui-tooling:1.3.3"
     debugImplementation "androidx.compose.ui:ui-test-manifest:1.3.3"
@@ -76,6 +74,6 @@ dependencies {
     //Pref
     implementation "androidx.datastore:datastore-preferences:1.0.0"
 
-    //For Locale
+    //Locale
     implementation 'androidx.appcompat:appcompat:1.7.0-alpha02'
 }

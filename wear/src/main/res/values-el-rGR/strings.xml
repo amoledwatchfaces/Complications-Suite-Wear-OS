@@ -5,6 +5,9 @@
     <!-- Do not translate translatable="false" lines -->
     <string name="app_name">Complications Suite</string> <!-- Does not need to be translated, but it's recommended -->
     <string name="settings">Ρυθμίσεις</string>
+    <string name="language">Γλώσσα</string>
+    <string name="app_info">Σχετικά με</string>
+    <string name="version">Εκδοχή</string>
 
     <!-- Crypto Complication -->
     <string name="crypto_name_1" translatable="true">BTC η τιμή $</string>
@@ -46,7 +49,9 @@
     <string name="moon_setting_hemi_off">Όχι</string>
     <string name="key_pref_phase_icon" translatable="false">R.drawable.moon0</string>
     <string name="key_pref_moon_visibility" translatable="false">0.0</string>
-    <string name="moon_setting_simple_icon_title">Απλό εικονίδιο</string>
+    <string name="moon_setting_simple_icon_title">εικονίδιο</string>
+    <string name="moon_setting_simple_icon_on">απλός</string>
+    <string name="moon_setting_simple_icon_off">λεπτομερής</string>
 
     <!-- Pay Complication -->
     <string name="pay_comp_name">Pay</string>
@@ -94,7 +99,7 @@
     <string name="woy_complication_description">Εβδομάδα του Χρόνου</string>
     <string name="woy_setting_preference_category_title">Complication Εβδομάδα του Χρόνου</string>
     <string name="woy_setting_key" translatable="false">is_iso_week</string>
-    <string name="woy_setting_title">Force ISO format</string>
+    <string name="woy_setting_title">Μορφή</string>
     <string name="woy_setting_on" translatable="false">ISO</string>
     <string name="woy_setting_off" translatable="false">US</string>
 </resources>

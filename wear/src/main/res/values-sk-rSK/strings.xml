@@ -5,6 +5,9 @@
     <!-- Do not translate translatable="false" lines -->
     <string name="app_name">Complications Suite</string> <!-- Does not need to be translated, but it's recommended -->
     <string name="settings">Nastavenia</string>
+    <string name="language">Jazyk</string>
+    <string name="app_info">Info o aplikácii</string>
+    <string name="version">Verzia</string>
 
     <!-- Crypto Complication -->
     <string name="crypto_name_1" translatable="true">BTC Cena $</string>
@@ -40,7 +43,9 @@
     <string name="moon_setting_hemi_title">Severná hemisféra</string>
     <string name="moon_setting_hemi_on">Áno</string>
     <string name="moon_setting_hemi_off">Nie</string>
-    <string name="moon_setting_simple_icon_title">Jednoduchá Ikona</string>
+    <string name="moon_setting_simple_icon_title">Ikona</string>
+    <string name="moon_setting_simple_icon_on">Jednoduchá</string>
+    <string name="moon_setting_simple_icon_off">Detailná</string>
 
     <!-- Pay Complication -->
     <string name="pay_comp_name">Pay</string>
@@ -61,7 +66,7 @@
     <!-- World Clock Complication Preferences -->
     <string name="wc_comp_name_1">Svetový čas 1</string>
     <string name="wc_comp_name_2">Svetový čas 2</string>
-    <string name="wc_setting_preference_category_title">UTC / Svetový čas - Komplikácia</string>
+    <string name="wc_setting_preference_category_title">Svetový čas - Komplikácia</string>
     <string name="wc_setting_leading_zero_title" translatable="false">Vedúca nula</string>
 
     <string name="wc_ampm_setting_title">Vojenský Čas</string>
@@ -73,7 +78,7 @@
 
     <!-- WOY Complication Preferences -->
     <string name="week_complication_name">Týždeň v roku</string>
-    <string name="woy_setting_title">ISO formát</string>
+    <string name="woy_setting_title">Formát</string>
     <string name="woy_complication_text">Týždeň</string>
     <string name="woy_complication_description">Týždeň v roku</string>
     <string name="woy_setting_preference_category_title">Týždeň v roku - Komplikácia</string>

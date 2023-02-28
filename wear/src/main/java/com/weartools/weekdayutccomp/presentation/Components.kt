@@ -1,23 +1,20 @@
 package com.weartools.weekdayutccomp.presentation
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.*
 import androidx.wear.compose.material.dialog.Alert
 import androidx.wear.compose.material.dialog.Dialog
+import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme
-import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme2
 import com.weartools.weekdayutccomp.theme.wearColorPalette
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
@@ -29,7 +26,7 @@ fun DialogChip(
     Chip(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 2.dp, horizontal = 10.dp),
+            .padding(horizontal = 10.dp),
         onClick = {
             onClick?.invoke()
         },
@@ -61,7 +58,7 @@ fun ListItemsWidget(
     var position by remember {
         mutableStateOf(0)
     }
-    ComplicationsSuiteTheme2 {
+    ComplicationsSuiteTheme {
         val listState = rememberScalingLazyListState()
         val coroutineScope = rememberCoroutineScope()
         Dialog(
@@ -88,19 +85,19 @@ fun ListItemsWidget(
                         ToggleChip(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(vertical = 2.dp, horizontal = 10.dp),
+                                .padding(horizontal = 10.dp),
                             checked = preValue == items[index],
                             colors = ToggleChipDefaults.toggleChipColors(
-                                //checkedStartBackgroundColor = wearColorPalette.primaryVariant,
                                 checkedEndBackgroundColor = wearColorPalette.primaryVariant,
+                                checkedToggleControlColor = Color(0xFFffd215)
                             ),
                             toggleControl = {
                                 Icon(
                                     imageVector = ToggleChipDefaults.radioIcon(preValue == items[index]),
-                                    contentDescription = stringResource(id = com.weartools.weekdayutccomp.R.string.compose_toggle)
+                                    contentDescription = stringResource(id = R.string.compose_toggle)
                                 )
                             },
-                            onCheckedChange = { enabled ->
+                            onCheckedChange = {
                                 state.value = false
                                 callback(index)
                             },
@@ -135,10 +132,11 @@ fun ToggleChip(
     ToggleChip(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 2.dp, horizontal = 10.dp),
+            .padding(horizontal = 10.dp),
         checked = checked,
         colors = ToggleChipDefaults.toggleChipColors(
             checkedEndBackgroundColor = wearColorPalette.primaryVariant,
+            checkedToggleControlColor = Color(0xFFffd215)
         ),
         onCheckedChange = { enabled ->
             onCheckedChange(enabled)
@@ -152,9 +150,49 @@ fun ToggleChip(
         toggleControl = {
             Icon(
                 imageVector = ToggleChipDefaults.switchIcon(checked),
-                contentDescription = stringResource(id = com.weartools.weekdayutccomp.R.string.compose_toggle)
+                contentDescription = stringResource(id = R.string.compose_toggle)
             )
         }
+    )
+}
+
+@Composable
+fun SettingsText(modifier: Modifier = Modifier) {
+    Text(
+        modifier = modifier.padding(top = 2.dp, bottom = 2.dp).offset(y= (-7).dp),
+        textAlign = TextAlign.Center,
+        color = MaterialTheme.colors.primary,
+        text = stringResource(id = R.string.settings),
+        style = MaterialTheme.typography.title3
+    )
+}
+
+@Composable
+fun PreferenceCategory(
+    modifier: Modifier = Modifier,
+    title: String
+) {
+    Text(
+        text = title,
+        modifier = modifier.padding(
+            start = 16.dp,
+            top = 14.dp,
+            end = 16.dp,
+            bottom = 4.dp
+        ),
+        color = wearColorPalette.secondary,
+        style = MaterialTheme.typography.caption2
+    )
+}
+
+@Composable
+fun SectionText(modifier: Modifier = Modifier, text: String) {
+    Text(
+        modifier = modifier,
+        textAlign = TextAlign.Center,
+        color = MaterialTheme.colors.onSecondary,
+        text = text,
+        style = MaterialTheme.typography.caption3
     )
 }
 

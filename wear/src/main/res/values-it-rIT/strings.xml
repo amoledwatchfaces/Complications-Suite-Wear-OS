@@ -4,6 +4,9 @@
     <!-- Do not translate translatable="false" lines -->
     <string name="app_name">Complications Suite</string> <!-- Does not need to be translated, but it's recommended -->
     <string name="settings">Impostazioni</string>
+    <string name="language">Lingua</string>
+    <string name="app_info">Informazioni sull\'app</string>
+    <string name="version">Versione</string>
 
     <!-- Crypto Complication -->
     <string name="crypto_name_1" translatable="true">BTC il prezzo $</string>
@@ -44,9 +47,11 @@
     <string name="moon_setting_hemi_on">Si</string>
     <string name="moon_setting_hemi_off">No</string>
     <string name="moon_setting_simple_icon_key" translatable="false">is_simple_icon</string>
-    <string name="moon_setting_simple_icon_title">Icona Semplice</string>
     <string name="key_pref_phase_icon" translatable="false">R.drawable.moon0</string>
     <string name="key_pref_moon_visibility" translatable="false">0.0</string>
+    <string name="moon_setting_simple_icon_title">Icona</string>
+    <string name="moon_setting_simple_icon_on">Semplice</string>
+    <string name="moon_setting_simple_icon_off">Dettagliata</string>
 
     <!-- Pay Complication -->
     <string name="pay_comp_name">Pay</string>
@@ -72,7 +77,7 @@
     <!-- World Clock Complication Preferences -->
     <string name="wc_comp_name_1">Orologio Mondiale 1</string>
     <string name="wc_comp_name_2">Orologio Mondiale 2</string>
-    <string name="wc_setting_preference_category_title">UTC / Orologio Mondiale</string>
+    <string name="wc_setting_preference_category_title">Orologio Mondiale</string>
     <string name="wc_setting_leading_zero_key" translatable="false">leading_zero</string>
     <string name="wc_setting_leading_zero_title">Mostra Lo Zero Iniziale</string>
     <string name="wc_setting_leading_zero_summary_on" translatable="false">09:00</string>
@@ -94,7 +99,7 @@
     <string name="woy_complication_description">Settimana Dell\'Anno</string>
     <string name="woy_setting_preference_category_title">Settimana Dell\'Anno</string>
     <string name="woy_setting_key" translatable="false">is_iso_week</string>
-    <string name="woy_setting_title">Forza Il Formato ISO</string>
+    <string name="woy_setting_title">Formato</string>
     <string name="woy_setting_on" translatable="false">ISO</string>
     <string name="woy_setting_off" translatable="false">US</string>
 </resources>

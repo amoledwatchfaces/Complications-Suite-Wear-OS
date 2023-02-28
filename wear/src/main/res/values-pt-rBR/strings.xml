@@ -5,6 +5,9 @@
     <!-- Do not translate translatable="false" lines -->
     <string name="app_name">Complications Suite</string> <!-- Does not need to be translated, but it's recommended -->
     <string name="settings">Configurações</string>
+    <string name="language">Linguagem</string>
+    <string name="app_info">Sobre o aplicativo</string>
+    <string name="version">Versão</string>
 
     <!-- Crypto Complication -->
     <string name="crypto_name_1" translatable="true">BTC o preço $</string>
@@ -46,7 +49,9 @@
     <string name="moon_setting_hemi_off">Não</string>
     <string name="key_pref_phase_icon" translatable="false">R.drawable.moon0</string>
     <string name="key_pref_moon_visibility" translatable="false">0.0</string>
-    <string name="moon_setting_simple_icon_title">Ícone simples</string>
+    <string name="moon_setting_simple_icon_title">Ícone</string>
+    <string name="moon_setting_simple_icon_on">Simples</string>
+    <string name="moon_setting_simple_icon_off">Detalhada</string>
 
     <!-- Pay Complication -->
     <string name="pay_comp_name">Pay</string>
@@ -72,7 +77,7 @@
     <!-- World Clock Complication Preferences -->
     <string name="wc_comp_name_1">Relógio Mundial 1</string>
     <string name="wc_comp_name_2">Relógio Mundial 2</string>
-    <string name="wc_setting_preference_category_title">UTC / Complicação de Relógio Mundial</string>
+    <string name="wc_setting_preference_category_title">Complicação de Relógio Mundial</string>
     <string name="wc_setting_leading_zero_key" translatable="false">leading_zero</string>
     <string name="wc_setting_leading_zero_title">Mostrar zero à esquerda</string>
     <string name="wc_setting_leading_zero_summary_on" translatable="false">09:00</string>
@@ -94,7 +99,7 @@
     <string name="woy_complication_description">Semana do Ano</string>
     <string name="woy_setting_preference_category_title">Complicação de Semana do Ano</string>
     <string name="woy_setting_key" translatable="false">is_iso_week</string>
-    <string name="woy_setting_title">Forçar formato ISO</string>
+    <string name="woy_setting_title">Formato</string>
     <string name="woy_setting_on" translatable="false">ISO</string>
     <string name="woy_setting_off" translatable="false">US</string>
 </resources>

@@ -16,111 +16,71 @@
 package com.weartools.weekdayutccomp.presentation
 
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.compose.foundation.layout.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.getValue
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.intl.LocaleList
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.os.LocaleListCompat
-import androidx.wear.compose.material.*
+import androidx.wear.compose.material.AutoCenteringParams
+import androidx.wear.compose.material.ScalingLazyColumn
+import androidx.wear.compose.material.ScalingLazyListState
+import androidx.wear.compose.material.rememberScalingLazyListState
 import com.weartools.weekdayutccomp.Pref
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme
-import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme2
-import java.util.concurrent.Flow
 
 @Composable
 fun ComplicationsSuiteScreen(
-    listState: ScalingLazyListState = rememberScalingLazyListState(),
-    onEnableClick: (String, Boolean) -> Unit,
+    listState: ScalingLazyListState = rememberScalingLazyListState()
 ) {
     val pref = Pref(LocalContext.current)
     AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(pref.getLocale()))
 
+    // WORLD CLOCK
     val listcity = stringArrayResource(id = R.array.cities_zone).toList()
     val listcityID = stringArrayResource(id = R.array.cities).toList()
+    var getCity1 by remember { mutableStateOf(listcity[listcityID.indexOf(pref.getCity())]) }
+    var getCity2 by remember { mutableStateOf(listcity[listcityID.indexOf(pref.getCity2())]) }
+    var leadingZero by remember { mutableStateOf(pref.getIsLeadingZero()) }
+    var militaryTime by remember { mutableStateOf(pref.getIsMilitary()) }
+    var isTImeZOnClick by remember { mutableStateOf(false) }
+    var isTImeZOnClick2 by remember { mutableStateOf(false) }
+
+    // MOON PHASE
+    var hemisphere by remember { mutableStateOf(pref.getIsHemisphere()) }
+    var simpleIcon by remember { mutableStateOf(pref.getIsSimpleIcon()) }
+
+    // TIME
+    var leadingZero2 by remember { mutableStateOf(pref.getIsLeadingZeroTime()) }
+    var militaryTime2 by remember { mutableStateOf(pref.getIsMilitaryTime()) }
+
+    // WEEK OF YEAR
+    var forceISO by remember { mutableStateOf(pref.getIsISO()) }
+
+    // DATE
     val listLongFormat = stringArrayResource(id = R.array.dateformats).toList()
     val listShortFormat = stringArrayResource(id = R.array.shortformats).toList()
+    var getLongText by remember { mutableStateOf(pref.getLongText()) }
+    var getShortText by remember { mutableStateOf(pref.getShortText()) }
+    var getShortTitle by remember { mutableStateOf(pref.getShortTitle()) }
+    var longTextFormat by remember { mutableStateOf(false) }
+    var shortTextFormat by remember { mutableStateOf(false) }
+    var shortTitleFormat by remember { mutableStateOf(false) }
 
+    // LOCALE
     val str ="en,de,el,it,pt,ro,sk"
-    val list = arrayListOf<String>("English","German","Greek","Italian","Portuguese","Romanian","Slovak")
+    val list = arrayListOf("English","German","Greek","Italian","Portuguese","Romanian","Slovak")
     val strArray=str.split(",")
     val index=strArray.indexOf(pref.getLocale())
     val currentLocale =if (index!=-1)list[index] else "English"
-
-    var getCity1 by remember {
-        mutableStateOf(listcity[listcityID.indexOf(pref.getCity())])
-    }
-
-    var getCity2 by remember {
-        mutableStateOf(listcity[listcityID.indexOf(pref.getCity2())])
-    }
-
-    var getLongText by remember {
-        mutableStateOf(pref.getLongText())
-    }
-
-    var getShortText by remember {
-        mutableStateOf(pref.getShortText())
-    }
-
-    var getShortTitle by remember {
-        mutableStateOf(pref.getShortTitle())
-    }
-
-    var leadingZero by remember {
-        mutableStateOf(pref.getIsLeadingZero())
-    }
-    var militaryTime by remember {
-        mutableStateOf(pref.getIsMilitary())
-    }
-    var hemisphere by remember {
-        mutableStateOf(pref.getIsHemisphere())
-    }
-    var simpleIcon by remember {
-        mutableStateOf(pref.getIsSimpleIcon())
-    }
-
-    var leadingZero2 by remember {
-        mutableStateOf(pref.getIsLeadingZeroTime())
-    }
-    var militaryTime2 by remember {
-        mutableStateOf(pref.getIsMilitaryTime())
-    }
-    var forceISO by remember {
-        mutableStateOf(pref.getIsISO())
-    }
-
-
-    var isTImeZOnClick by remember {
-        mutableStateOf(false)
-    }
-    var isTImeZOnClick2 by remember {
-        mutableStateOf(false)
-    }
-
-    var longTextFormat by remember {
-        mutableStateOf(false)
-    }
-    var shortTextFormat by remember {
-        mutableStateOf(false)
-    }
-    var shortTitleFormat by remember {
-        mutableStateOf(false)
-    }
-
-    var openLocale by remember{
-        mutableStateOf(false)
-    }
+    var openLocale by remember{ mutableStateOf(false) }
 
     ScalingLazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -159,7 +119,7 @@ fun ComplicationsSuiteScreen(
                 secondaryLabelOn = stringResource(id = R.string.wc_setting_leading_zero_summary_on), // STRING FROM STRINGS.XML BASED ON KEY ON / OFF
                 secondaryLabelOff = stringResource(id = R.string.wc_setting_leading_zero_summary_off),
                 checked = leadingZero,
-                onCheckedChange = {it->
+                onCheckedChange = {
                     leadingZero=it
                     pref.setIsLeadingZero(it)
                 }
@@ -171,7 +131,7 @@ fun ComplicationsSuiteScreen(
                 secondaryLabelOn = stringResource(id = R.string.time_ampm_setting_on),
                 secondaryLabelOff = stringResource(id = R.string.time_ampm_setting_off),
                 checked = militaryTime,
-                onCheckedChange = {it->
+                onCheckedChange = {
                     militaryTime=it
                     pref.setIsMilitary(it)
                 }
@@ -186,7 +146,7 @@ fun ComplicationsSuiteScreen(
                 secondaryLabelOn = stringResource(id = R.string.moon_setting_hemi_on),
                 secondaryLabelOff = stringResource(id = R.string.moon_setting_hemi_off),
                 checked = hemisphere,
-                onCheckedChange = {it->
+                onCheckedChange = {
                     hemisphere=it
                     pref.setIsHemisphere(it)
                 }
@@ -195,10 +155,10 @@ fun ComplicationsSuiteScreen(
         item {
             ToggleChip(
                 label = stringResource(id = R.string.moon_setting_simple_icon_title),
-                secondaryLabelOn = stringResource(id = R.string.moon_setting_hemi_on),
-                secondaryLabelOff = stringResource(id = R.string.moon_setting_hemi_off),
+                secondaryLabelOn = stringResource(id = R.string.moon_setting_simple_icon_on),
+                secondaryLabelOff = stringResource(id = R.string.moon_setting_simple_icon_off),
                 checked = simpleIcon,
-                onCheckedChange = {it->
+                onCheckedChange = {
                     simpleIcon=it
                     pref.setIsSimpleIcon(it)
                 }
@@ -214,7 +174,7 @@ fun ComplicationsSuiteScreen(
                 secondaryLabelOn = stringResource(id = R.string.time_setting_leading_zero_summary_on),
                 secondaryLabelOff = stringResource(id = R.string.time_setting_leading_zero_summary_off),
                 checked = leadingZero2,
-                onCheckedChange = {it->
+                onCheckedChange = {
                     leadingZero2=it
                     pref.setIsLeadingZeroTime(it)
                 }
@@ -226,7 +186,7 @@ fun ComplicationsSuiteScreen(
                 secondaryLabelOn = stringResource(id = R.string.time_ampm_setting_on),
                 secondaryLabelOff = stringResource(id = R.string.time_ampm_setting_off),
                 checked = militaryTime2,
-                onCheckedChange = {it->
+                onCheckedChange = {
                     militaryTime2=it
                     pref.setIsMilitaryTime(it)
                 }
@@ -241,7 +201,7 @@ fun ComplicationsSuiteScreen(
                 secondaryLabelOn = stringResource(id = R.string.woy_setting_on),
                 secondaryLabelOff = stringResource(id = R.string.woy_setting_off),
                 checked = forceISO,
-                onCheckedChange = {it->
+                onCheckedChange = {
                     forceISO=it
                     pref.setIsISO(it)
                 }
@@ -280,10 +240,10 @@ fun ComplicationsSuiteScreen(
 
 
         // APP INFO SECTION
-        item { PreferenceCategory(title = "App Info") }
+        item { PreferenceCategory(title = stringResource(id = R.string.app_info)) }
         item {
             DialogChip(
-                text = "Locale",
+                text = stringResource(id = R.string.language),
                 title = currentLocale,
                 onClick = {
                    openLocale=openLocale.not()
@@ -292,8 +252,8 @@ fun ComplicationsSuiteScreen(
         }
         item {
             DialogChip(
-                text = "Version",
-                title = "v1.4.5",
+                text = stringResource(id = R.string.version),
+                title = stringResource(id = R.string.version_number),
             )
         }
         item {
@@ -400,9 +360,7 @@ fun changeLocale(s: String) {
 
 @Composable
 fun ComplicationsSuiteScreenPreview() {
-    ComplicationsSuiteTheme2 {
-        ComplicationsSuiteScreen(
-            onEnableClick = { key, active -> },
-        )
+    ComplicationsSuiteTheme {
+        ComplicationsSuiteScreen()
     }
 }

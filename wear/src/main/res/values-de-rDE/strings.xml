@@ -5,6 +5,9 @@
     <!-- Do not translate translatable="false" lines -->
     <string name="app_name">Komplikationen-Suite</string> <!-- Does not need to be translated, but it's recommended -->
     <string name="settings">Einstellungen</string>
+    <string name="language">Sprache</string>
+    <string name="app_info">App-Information</string>
+    <string name="version">Ausführung</string>
 
     <!-- Crypto Complication -->
     <string name="crypto_name_1" translatable="true">BTC Preis $</string>
@@ -38,12 +41,14 @@
     <string name="moon_comp_name">Mondphase</string>
     <string name="moon_setting_preference_category_title">Mondphasen-Komplikation</string>
     <string name="moon_setting_hemi_key" translatable="false">is_northern</string>
-    <string name="moon_setting_hemi_title">Nordhemisphäre</string>
-    <string name="moon_setting_hemi_on">Ja</string>
-    <string name="moon_setting_hemi_off">Nein</string>
+    <string name="moon_setting_hemi_title">Hemisphäre</string>
+    <string name="moon_setting_hemi_on">Nördlich</string>
+    <string name="moon_setting_hemi_off">Süd</string>
     <string name="key_pref_phase_icon" translatable="false">R.drawable.moon0</string>
     <string name="key_pref_moon_visibility" translatable="false">0.0</string>
-    <string name="moon_setting_simple_icon_title">Einfaches Symbol</string>
+    <string name="moon_setting_simple_icon_title">Symbol</string>
+    <string name="moon_setting_simple_icon_on">Einfaches</string>
+    <string name="moon_setting_simple_icon_off">Detailliert</string>
 
     <!-- Pay Complication -->
     <string name="pay_comp_name">Pay</string>
@@ -69,7 +74,7 @@
     <!-- World Clock Complication Preferences -->
     <string name="wc_comp_name_1">Weltuhr 1</string>
     <string name="wc_comp_name_2">Weltuhr 2</string>
-    <string name="wc_setting_preference_category_title">Weltuhr / UTC Komplikation</string>
+    <string name="wc_setting_preference_category_title">Weltuhr Komplikation</string>
     <string name="wc_setting_leading_zero_key" translatable="false">leading_zero</string>
     <string name="wc_setting_leading_zero_title">Führende Null</string>
     <string name="wc_setting_leading_zero_summary_on" translatable="false">09:00</string>
@@ -91,7 +96,7 @@
     <string name="woy_complication_description">Woche des Jahres</string>
     <string name="woy_setting_preference_category_title">Kalenderwochen-Komplikation</string>
     <string name="woy_setting_key" translatable="false">is_iso_week</string>
-    <string name="woy_setting_title">ISO Format erzwingen</string>
+    <string name="woy_setting_title">Format</string>
     <string name="woy_setting_on" translatable="false">ISO</string>
     <string name="woy_setting_off" translatable="false">US</string>
 </resources>

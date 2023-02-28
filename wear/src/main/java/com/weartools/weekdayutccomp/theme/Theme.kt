@@ -15,7 +15,6 @@
  */
 package com.weartools.weekdayutccomp.theme
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -31,6 +30,7 @@ val Blue500 = Color(0xFF8fb4ff)
 val Blue700 = Color(0xFF5075bf)
 val Teal200 = Color(0xFFb7cfff)
 val Red400 = Color(0xFFCF6679)
+val Yellow = Color(0xFFffd215)
 
 internal val wearColorPalette: Colors = Colors(
     primary = Blue200,
@@ -56,36 +56,10 @@ fun ComplicationsSuiteTheme(
     )
 }
 
-@Composable
-fun ComplicationsSuiteTheme2(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
-) {
-    val colors = wearColorPalette
-
-    MaterialTheme(
-        colors = colors,
-        typography = Typography,
-        content = content
-    )
-}
-
 val Typography = Typography(
     body1 = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp
     )
-    /* Other default text styles to override
-    button = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.W500,
-        fontSize = 14.sp
-    ),
-    caption = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 12.sp
-    )
-    */
 )

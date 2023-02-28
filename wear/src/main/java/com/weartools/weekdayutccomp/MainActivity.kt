@@ -27,16 +27,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.preference.PreferenceManager
 import androidx.wear.compose.material.*
 import androidx.wear.watchface.complications.datasource.ComplicationDataSourceService
 import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUpdateRequester
 import com.weartools.weekdayutccomp.complication.*
 import com.weartools.weekdayutccomp.presentation.ComplicationsSuiteScreen
-import com.weartools.weekdayutccomp.presentation.ComplicationsSuiteViewModel
-import com.weartools.weekdayutccomp.presentation.ComplicationsSuiteViewModelFactory
-import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme2
+import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme
 
 
 class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
@@ -81,25 +78,16 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
 
 @Composable
 fun ComplicationsSuiteApp() {
-    ComplicationsSuiteTheme2 {
+    ComplicationsSuiteTheme {
         val listState = rememberScalingLazyListState()
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             timeText = { TimeText(modifier = Modifier.scrollAway(listState)) },
             positionIndicator = { PositionIndicator(scalingLazyListState = listState) }
         ) {
-            val viewModel: ComplicationsSuiteViewModel = viewModel(
-                factory = ComplicationsSuiteViewModelFactory()
-            )
             ComplicationsSuiteScreen(
-                onEnableClick = { key, active ->
-                    viewModel.toggleEnabled()
-
-
-                },
                 listState = listState
             )
-
         }
     }
 }
