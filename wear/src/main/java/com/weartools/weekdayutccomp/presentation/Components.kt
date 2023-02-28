@@ -4,9 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,6 +17,8 @@ import androidx.wear.compose.material.dialog.Dialog
 import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme
 import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme2
 import com.weartools.weekdayutccomp.theme.wearColorPalette
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun DialogChip(
@@ -51,15 +51,24 @@ fun DialogChip(
 }
 
 @Composable
-fun ListItemsWidget(titles: String, items: List<String>,preValue:String, callback: (Int) -> Unit) {
+fun ListItemsWidget(
+    titles: String,
+    items: List<String>,
+    preValue: String,
+    callback: (Int) -> Unit
+) {
     val state = remember { mutableStateOf(true) }
+    var position by remember {
+        mutableStateOf(0)
+    }
     ComplicationsSuiteTheme2 {
         val listState = rememberScalingLazyListState()
+        val coroutineScope = rememberCoroutineScope()
         Dialog(
 
             showDialog = state.value,
             scrollState = listState,
-            onDismissRequest = { callback.invoke(-1)}
+            onDismissRequest = { callback.invoke(-1) }
         )
         {
             Alert(
@@ -67,36 +76,49 @@ fun ListItemsWidget(titles: String, items: List<String>,preValue:String, callbac
                 scrollState = listState,
                 title = { PreferenceCategory(title = titles) },
                 verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.Top),
-                contentPadding = PaddingValues(start = 10.dp, end = 10.dp, top = 24.dp, bottom = 52.dp),
+                contentPadding = PaddingValues(
+                    start = 10.dp,
+                    end = 10.dp,
+                    top = 24.dp,
+                    bottom = 52.dp
+                ),
                 content = {
 
-                itemsIndexed(items) { index, i ->
-                    ToggleChip(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 2.dp, horizontal = 10.dp),
-                        checked = preValue== items[index],
-                        colors = ToggleChipDefaults.toggleChipColors(
-                            //checkedStartBackgroundColor = wearColorPalette.primaryVariant,
-                            checkedEndBackgroundColor = wearColorPalette.primaryVariant,
-                        ),
-                        toggleControl = {
-                            Icon(
-                                imageVector = ToggleChipDefaults .radioIcon(preValue== items[index]),
-                                contentDescription = stringResource(id = com.weartools.weekdayutccomp.R.string.compose_toggle)
-                            )
-                        },
-                        onCheckedChange = { enabled ->
-                            state.value = false
-                            callback(index)
-                        },
-                        label = { Text(i) },
-                    )
+                    itemsIndexed(items) { index, i ->
+                        ToggleChip(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 2.dp, horizontal = 10.dp),
+                            checked = preValue == items[index],
+                            colors = ToggleChipDefaults.toggleChipColors(
+                                //checkedStartBackgroundColor = wearColorPalette.primaryVariant,
+                                checkedEndBackgroundColor = wearColorPalette.primaryVariant,
+                            ),
+                            toggleControl = {
+                                Icon(
+                                    imageVector = ToggleChipDefaults.radioIcon(preValue == items[index]),
+                                    contentDescription = stringResource(id = com.weartools.weekdayutccomp.R.string.compose_toggle)
+                                )
+                            },
+                            onCheckedChange = { enabled ->
+                                state.value = false
+                                callback(index)
+                            },
+                            label = { Text(i) },
+                        )
+                    }
                 }
-            }
             )
 
         }
+        position= items.indexOf(preValue)
+        if (position != 0)
+            LaunchedEffect(position) {
+                coroutineScope.launch {
+                    listState.scrollToItem(index = position,120)
+                }
+            }
+
     }
 
 
