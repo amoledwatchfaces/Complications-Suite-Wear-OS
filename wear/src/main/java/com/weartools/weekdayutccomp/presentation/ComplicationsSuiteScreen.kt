@@ -136,9 +136,6 @@ fun ComplicationsSuiteScreen(
             DialogChip(
                 text = stringResource(id = R.string.wc_comp_name_1),
                 title = getCity1, //STRING FROM STRINGS.XML BASED ON PICK FROM THE LIST
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 2.dp, horizontal = 10.dp),
                 onClick = {
                     isTImeZOnClick = isTImeZOnClick.not()
                 },

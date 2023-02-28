@@ -41,7 +41,9 @@ internal val wearColorPalette: Colors = Colors(
     onPrimary = Color.White,
     onSecondary = Color.Gray,
     onError = Color.Black,
-    background = Color.Black
+    background = Color.Black,
+    onSurfaceVariant = Color.Black,
+    surface = Color.Black
 )
 
 @Composable
