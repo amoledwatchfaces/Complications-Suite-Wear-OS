@@ -1,8 +1,10 @@
 package com.weartools.weekdayutccomp.presentation
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -20,13 +22,14 @@ import com.weartools.weekdayutccomp.theme.wearColorPalette
 
 @Composable
 fun DialogChip(
-    modifier: Modifier = Modifier,
     text: String,
     title: String,
     onClick: (() -> Unit)? = null,
 ) {
     Chip(
-        modifier = modifier,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 2.dp, horizontal = 10.dp),
         onClick = {
             onClick?.invoke()
         },
@@ -49,14 +52,29 @@ fun DialogChip(
 
 @Composable
 fun ListItemsWidget(titles: String, items: List<String>,preValue:String, callback: (Int) -> Unit) {
-    val state = remember {
-        mutableStateOf(true)
-    }
+    val state = remember { mutableStateOf(true) }
     ComplicationsSuiteTheme2 {
-        Dialog(showDialog = state.value, onDismissRequest = { callback.invoke(-1)}) {
-            Alert(title = { PreferenceCategory(title = titles) }, content = {
+        val listState = rememberScalingLazyListState()
+        Dialog(
+
+            showDialog = state.value,
+            scrollState = listState,
+            onDismissRequest = { callback.invoke(-1)}
+        )
+        {
+            Alert(
+                backgroundColor = Color.Black,
+                scrollState = listState,
+                title = { PreferenceCategory(title = titles) },
+                verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.Top),
+                contentPadding = PaddingValues(start = 10.dp, end = 10.dp, top = 24.dp, bottom = 52.dp),
+                content = {
+
                 itemsIndexed(items) { index, i ->
                     ToggleChip(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 2.dp, horizontal = 10.dp),
                         checked = preValue== items[index],
                         colors = ToggleChipDefaults.toggleChipColors(
                             //checkedStartBackgroundColor = wearColorPalette.primaryVariant,
@@ -75,7 +93,9 @@ fun ListItemsWidget(titles: String, items: List<String>,preValue:String, callbac
                         label = { Text(i) },
                     )
                 }
-            })
+            }
+            )
+
         }
     }
 
@@ -89,13 +109,13 @@ fun ToggleChip(
     label: String,
     secondaryLabelOn: String,
     secondaryLabelOff: String,
-    modifier: Modifier = Modifier
 ) {
     ToggleChip(
-        modifier = modifier,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 2.dp, horizontal = 10.dp),
         checked = checked,
         colors = ToggleChipDefaults.toggleChipColors(
-            //checkedStartBackgroundColor = wearColorPalette.primaryVariant,
             checkedEndBackgroundColor = wearColorPalette.primaryVariant,
         ),
         onCheckedChange = { enabled ->
