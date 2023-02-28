@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Translated by: amoledwatchfaces -->
+<resources>
+    <!-- Do not translate translatable="false" lines -->
+    <string name="app_name">Complications Suite</string> <!-- Does not need to be translated, but it's recommended -->
+    <string name="settings">Nastavenia</string>
+    <string name="language">Jazyk</string>
+    <string name="app_info">Info o aplikácii</string>
+    <string name="version">Verzia</string>
+
+    <!-- Crypto Complication -->
+    <string name="crypto_name_1" translatable="true">BTC Cena $</string>
+    <string name="crypto_name_2" translatable="true">ETH Cena $</string>
+
+    <!-- Flashlight Complication -->
+    <string name="flashlight_comp_name">Svietidlo</string>
+
+    <!-- Alarm Complication Preferences -->
+    <string name="alarm_comp_name">Budík</string>
+
+    <!-- Assist Complication Preferences -->
+    <string name="assist_comp_name">Asistent</string>
+    <string name="assist_missing">Assistent apka nie je nainštalovaná</string>
+
+    <!-- Date Complication Preferences -->
+    <string name="date_comp_name">Dátum</string>
+    <string name="date_setting_preference_category_title">Dátum - Komplikácia</string>
+    <string name="date_long_text_format">Long Text Formát</string>
+    <string name="date_short_title_format">Short Title Formát</string>
+    <string name="date_short_text_format">Short Text Formát</string>
+
+    <!-- Day of Year Complication Preferences -->
+    <string name="doy_comp_name">Deň v roku</string>
+    <string name="doy_short_title">Deň</string>
+
+    <!-- Logo Complication Preferences -->
+    <string name="logo_comp_name">Logo Wear OS</string>
+
+    <!-- Moon Phase Complication Preferences -->
+    <string name="moon_comp_name">Fáza mesiaca</string>
+    <string name="moon_setting_preference_category_title">Fáza mesiaca - komplikácia</string>
+    <string name="moon_setting_hemi_title">Severná hemisféra</string>
+    <string name="moon_setting_hemi_on">Áno</string>
+    <string name="moon_setting_hemi_off">Nie</string>
+    <string name="moon_setting_simple_icon_title">Ikona</string>
+    <string name="moon_setting_simple_icon_on">Jednoduchá</string>
+    <string name="moon_setting_simple_icon_off">Detailná</string>
+
+    <!-- Pay Complication -->
+    <string name="pay_comp_name">Pay</string>
+
+    <!-- Sec Complication -->
+    <string name="sec_comp_name">Sekundy</string>
+    <string name="sec_short_title">Sek.</string>
+
+    <!-- Time Complication Preferences -->
+    <string name="time_comp_name">Čas</string>
+    <string name="time_comp_desc">Momentálny čas</string>
+    <string name="time_setting_leading_zero_title">Vedúca nula</string>
+    <string name="time_ampm_setting_preference_category_title" translatable="false">Čas - Komplikácia</string>
+    <string name="time_ampm_setting_title">Vojenský Čas</string>
+    <string name="time_ampm_setting_on">24h</string>
+    <string name="time_ampm_setting_off">12h</string>
+
+    <!-- World Clock Complication Preferences -->
+    <string name="wc_comp_name_1">Svetový čas 1</string>
+    <string name="wc_comp_name_2">Svetový čas 2</string>
+    <string name="wc_setting_preference_category_title">Svetový čas - Komplikácia</string>
+    <string name="wc_setting_leading_zero_title" translatable="false">Vedúca nula</string>
+
+    <string name="wc_ampm_setting_title">Vojenský Čas</string>
+    <string name="wc_ampm_setting_on">24h</string>
+    <string name="wc_ampm_setting_off">12h</string>
+
+    <string name="wc_setting_title">Časová zóna 1</string>
+    <string name="wc2_setting_title">Časová zóna 2</string>
+
+    <!-- WOY Complication Preferences -->
+    <string name="week_complication_name">Týždeň v roku</string>
+    <string name="woy_setting_title">Formát</string>
+    <string name="woy_complication_text">Týždeň</string>
+    <string name="woy_complication_description">Týždeň v roku</string>
+    <string name="woy_setting_preference_category_title">Týždeň v roku - Komplikácia</string>
+</resources>
