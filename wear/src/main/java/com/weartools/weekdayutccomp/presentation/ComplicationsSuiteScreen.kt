@@ -15,6 +15,7 @@
  */
 package com.weartools.weekdayutccomp.presentation
 
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -24,27 +25,39 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringArrayResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.intl.LocaleList
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.os.LocaleListCompat
 import androidx.wear.compose.material.*
 import com.weartools.weekdayutccomp.Pref
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme
+import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme2
 import java.util.concurrent.Flow
 
 @Composable
 fun ComplicationsSuiteScreen(
     listState: ScalingLazyListState = rememberScalingLazyListState(),
-            onEnableClick: (String,Boolean) -> Unit,
+    onEnableClick: (String, Boolean) -> Unit,
 ) {
-    val pref= Pref(LocalContext.current)
+    val pref = Pref(LocalContext.current)
+    AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(pref.getLocale()))
+
     val listcity = stringArrayResource(id = R.array.cities_zone).toList()
     val listcityID = stringArrayResource(id = R.array.cities).toList()
     val listLongFormat = stringArrayResource(id = R.array.dateformats).toList()
     val listShortFormat = stringArrayResource(id = R.array.shortformats).toList()
 
-    var getCity1 by remember{
+    val str ="en,de,el,it,pt,ro,sk"
+    val list = arrayListOf<String>("English","German","Greek","Italian","Portuguese","Romanian","Slovak")
+    val strArray=str.split(",")
+    val index=strArray.indexOf(pref.getLocale())
+    val currentLocale =if (index!=-1)list[index] else "English"
+
+    var getCity1 by remember {
         mutableStateOf(listcity[listcityID.indexOf(pref.getCity())])
     }
 
@@ -105,99 +118,107 @@ fun ComplicationsSuiteScreen(
         mutableStateOf(false)
     }
 
+    var openLocale by remember{
+        mutableStateOf(false)
+    }
+
     ScalingLazyColumn(
         modifier = Modifier.fillMaxSize(),
         autoCentering = AutoCenteringParams(itemIndex = 1),
         state = listState,
 
-    ) {
+        ) {
         //SETTINGS TEST
         item { SettingsText() }
 
         // WORLD CLOCK COMPLICATION PREFERENCE CATEGORY
-        item { PreferenceCategory(title = "World Clock Complication") }
-        item { DialogChip(
-            text = "Timezone 1 ID",
-            title = getCity1, //STRING FROM STRINGS.XML BASED ON PICK FROM THE LIST
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 2.dp, horizontal = 10.dp),
-            onClick = {
-                      isTImeZOnClick=isTImeZOnClick.not()
-            },
-        )}
+        item { PreferenceCategory(title = stringResource(id = R.string.wc_setting_preference_category_title)) }
+        item {
+            DialogChip(
+                text = stringResource(id = R.string.wc_comp_name_1),
+                title = getCity1, //STRING FROM STRINGS.XML BASED ON PICK FROM THE LIST
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 2.dp, horizontal = 10.dp),
+                onClick = {
+                    isTImeZOnClick = isTImeZOnClick.not()
+                },
+            )
+        }
 
 
 
-        item { DialogChip(
-            text = "Timezone 2 ID",
-            title = getCity2,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 2.dp, horizontal = 10.dp),
-            onClick = {
-                isTImeZOnClick2=isTImeZOnClick2.not()
-            }
-        )}
+        item {
+            DialogChip(
+                text = stringResource(id = R.string.wc_comp_name_2),
+                title = getCity2,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 2.dp, horizontal = 10.dp),
+                onClick = {
+                    isTImeZOnClick2 = isTImeZOnClick2.not()
+                }
+            )
+        }
         item {
             ToggleChip(
-                label = "Leading zero",
-                secondaryLabelOn = "09:00", // STRING FROM STRINGS.XML BASED ON KEY ON / OFF
-                secondaryLabelOff = "9:00",
+                label = stringResource(id = R.string.wc_setting_leading_zero_title),
+                secondaryLabelOn = stringResource(id = R.string.wc_setting_leading_zero_summary_on), // STRING FROM STRINGS.XML BASED ON KEY ON / OFF
+                secondaryLabelOff = stringResource(id = R.string.wc_setting_leading_zero_summary_off),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 2.dp, horizontal = 10.dp),
                 checked = leadingZero,
-                onCheckedChange = {it->
-                    leadingZero=it
+                onCheckedChange = { it ->
+                    leadingZero = it
                     pref.setIsLeadingZero(it)
                 }
             )
         }
         item {
             ToggleChip(
-                label = "Military Time",
-                secondaryLabelOn = "ON / 24h",
-                secondaryLabelOff = "OFF / 12h",
+                label = stringResource(id = R.string.wc_ampm_setting_title),
+                secondaryLabelOn = stringResource(id = R.string.time_ampm_setting_on),
+                secondaryLabelOff = stringResource(id = R.string.time_ampm_setting_off),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 2.dp, horizontal = 10.dp),
                 checked = militaryTime,
-                onCheckedChange = {it->
-                    militaryTime=it
+                onCheckedChange = { it ->
+                    militaryTime = it
                     pref.setIsMilitary(it)
                 }
             )
         }
 
         // MOON PHASE COMPLICATION PREFERENCE CATEGORY
-        item { PreferenceCategory(title = "Moon Phase Complication") }
+        item { PreferenceCategory(title = stringResource(id = R.string.moon_setting_preference_category_title)) }
         item {
             ToggleChip(
-                label = "Hemisphere",
-                secondaryLabelOn = "Northern",
-                secondaryLabelOff = "Southern",
+                label = stringResource(id = R.string.moon_setting_hemi_title),
+                secondaryLabelOn = stringResource(id = R.string.moon_setting_hemi_on),
+                secondaryLabelOff = stringResource(id = R.string.moon_setting_hemi_off),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 2.dp, horizontal = 10.dp),
                 checked = hemisphere,
-                onCheckedChange = {it->
-                    hemisphere=it
+                onCheckedChange = { it ->
+                    hemisphere = it
                     pref.setIsHemisphere(it)
                 }
             )
         }
         item {
             ToggleChip(
-                label = "Simple Icon",
-                secondaryLabelOn = "Yes",
-                secondaryLabelOff = "No",
+                label = stringResource(id = R.string.moon_setting_simple_icon_title),
+                secondaryLabelOn = stringResource(id = R.string.moon_setting_hemi_on),
+                secondaryLabelOff = stringResource(id = R.string.moon_setting_hemi_off),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 2.dp, horizontal = 10.dp),
                 checked = simpleIcon,
-                onCheckedChange = {it->
-                    simpleIcon=it
+                onCheckedChange = { it ->
+                    simpleIcon = it
                     pref.setIsSimpleIcon(it)
                 }
             )
@@ -205,171 +226,213 @@ fun ComplicationsSuiteScreen(
 
 
         // TIME COMPLICATION PREFERENCE CATEGORY
-        item { PreferenceCategory(title = "Time Complication") }
+        item { PreferenceCategory(title = stringResource(id = R.string.time_ampm_setting_preference_category_title)) }
         item {
             ToggleChip(
-                label = "Leading Zero",
-                secondaryLabelOn = "09:00",
-                secondaryLabelOff = "9:00",
+                label = stringResource(id = R.string.time_setting_leading_zero_title),
+                secondaryLabelOn = stringResource(id = R.string.time_setting_leading_zero_summary_on),
+                secondaryLabelOff = stringResource(id = R.string.time_setting_leading_zero_summary_off),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 2.dp, horizontal = 10.dp),
                 checked = leadingZero2,
-                onCheckedChange = {it->
-                    leadingZero2=it
+                onCheckedChange = { it ->
+                    leadingZero2 = it
                     pref.setIsLeadingZeroTime(it)
                 }
             )
         }
         item {
             ToggleChip(
-                label = "Military Time",
-                secondaryLabelOn = "ON / 24h",
-                secondaryLabelOff = "OFF / 12h",
+                label = stringResource(id = R.string.time_ampm_setting_title),
+                secondaryLabelOn = stringResource(id = R.string.time_ampm_setting_on),
+                secondaryLabelOff = stringResource(id = R.string.time_ampm_setting_off),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 2.dp, horizontal = 10.dp),
                 checked = militaryTime2,
-                onCheckedChange = {it->
-                    militaryTime2=it
+                onCheckedChange = { it ->
+                    militaryTime2 = it
                     pref.setIsMilitaryTime(it)
                 }
             )
         }
 
         // WEEK OF YEAR COMPLICATION PREFERENCE CATEGORY
-        item { PreferenceCategory(title = "Week of Year Complication") }
+        item { PreferenceCategory(title = stringResource(id = R.string.woy_setting_preference_category_title)) }
         item {
             ToggleChip(
-                label = "Force ISO",
-                secondaryLabelOn = "ISO",
-                secondaryLabelOff = "US",
+                label = stringResource(id = R.string.woy_setting_title),
+                secondaryLabelOn = stringResource(id = R.string.woy_setting_on),
+                secondaryLabelOff = stringResource(id = R.string.woy_setting_off),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 2.dp, horizontal = 10.dp),
                 checked = forceISO,
-                onCheckedChange = {it->
-                    forceISO=it
+                onCheckedChange = { it ->
+                    forceISO = it
                     pref.setIsISO(it)
                 }
             )
         }
 
         // DATE COMPLICATION PREFERENCE CATEGORY
-        item { PreferenceCategory(title = "Date Complication") }
-        item { DialogChip(
-            text = "Long Text Format",
-            title = getLongText,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 2.dp, horizontal = 10.dp),
-            onClick = {
-                longTextFormat=longTextFormat.not()
-            }
-        )}
-        item { DialogChip(
-            text = "Short Text Format",
-            title = getShortText,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 2.dp, horizontal = 10.dp),
-            onClick = {
-                shortTextFormat=shortTextFormat.not()
-            }
-        )}
-        item { DialogChip(
-            text = "Short Title Format",
-            title = getShortTitle,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 2.dp, horizontal = 10.dp),
-            onClick = {
-                shortTitleFormat=shortTitleFormat.not()
-            }
-        )}
+        item { PreferenceCategory(title = stringResource(id = R.string.date_setting_preference_category_title)) }
+        item {
+            DialogChip(
+                text = stringResource(id = R.string.date_long_text_format),
+                title = getLongText,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 2.dp, horizontal = 10.dp),
+                onClick = {
+                    longTextFormat = longTextFormat.not()
+                }
+            )
+        }
+        item {
+            DialogChip(
+                text = stringResource(id = R.string.date_short_text_format),
+                title = getShortText,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 2.dp, horizontal = 10.dp),
+                onClick = {
+                    shortTextFormat = shortTextFormat.not()
+                }
+            )
+        }
+        item {
+            DialogChip(
+                text = stringResource(id = R.string.date_short_title_format),
+                title = getShortTitle,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 2.dp, horizontal = 10.dp),
+                onClick = {
+                    shortTitleFormat = shortTitleFormat.not()
+                }
+            )
+        }
 
 
         // APP INFO SECTION
         item { PreferenceCategory(title = "App Info") }
-        item { DialogChip(
-            text = "Version",
-            title = "v1.4.5",
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 2.dp, horizontal = 10.dp),
-        )}
-        item { SectionText(
-            text = "amoledwatchfaces.com",
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 12.dp, start = 20.dp, end = 20.dp),
-        )
+        item {
+            DialogChip(
+                text = "Locale",
+                title = currentLocale,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 2.dp, horizontal = 10.dp),
+                onClick = {
+                   openLocale=openLocale.not()
+                }
+            )
+        }
+        item {
+            DialogChip(
+                text = "Version",
+                title = "v1.4.5",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 2.dp, horizontal = 10.dp),
+            )
+        }
+        item {
+            SectionText(
+                text = "amoledwatchfaces.com",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 12.dp, start = 20.dp, end = 20.dp),
+            )
         }
 
     }
-    if (isTImeZOnClick || isTImeZOnClick2){
-        val title= if (isTImeZOnClick) "Timezone 1 ID" else "Timezone 2 ID"
-        val prValue= if (isTImeZOnClick) getCity1
+    if (isTImeZOnClick || isTImeZOnClick2) {
+        val title = if (isTImeZOnClick) "Timezone 1 ID" else "Timezone 2 ID"
+        val prValue = if (isTImeZOnClick) getCity1
         else getCity2
         ListItemsWidget(titles = title, preValue = prValue, items = listcity, callback = {
-            if (it==-1){
-                isTImeZOnClick=false
-                isTImeZOnClick2=false
+            if (it == -1) {
+                isTImeZOnClick = false
+                isTImeZOnClick2 = false
                 return@ListItemsWidget
             }
-            if (isTImeZOnClick){
-                val city=listcity[it]
-                getCity1=city
-                val cityId=listcityID[it]
+            if (isTImeZOnClick) {
+                val city = listcity[it]
+                getCity1 = city
+                val cityId = listcityID[it]
                 pref.setCity(cityId)
-                isTImeZOnClick=isTImeZOnClick.not()
-            }else{
-                val city=listcity[it]
-                getCity2=city
-                val cityId=listcityID[it]
+                isTImeZOnClick = isTImeZOnClick.not()
+            } else {
+                val city = listcity[it]
+                getCity2 = city
+                val cityId = listcityID[it]
                 pref.setCity2(cityId)
-                isTImeZOnClick2=isTImeZOnClick2.not()
+                isTImeZOnClick2 = isTImeZOnClick2.not()
             }
 
 
         })
     }
 
-    if (longTextFormat || shortTextFormat ||shortTitleFormat){
+    if (longTextFormat || shortTextFormat || shortTitleFormat) {
         val title = if (longTextFormat) "Long Text Format"
         else if (shortTextFormat) "Short Text Format"
         else "Short Title Format"
-        val prValue=if (longTextFormat) getLongText
+        val prValue = if (longTextFormat) getLongText
         else if (shortTextFormat) getShortText
-        else  getShortTitle
-        ListItemsWidget(titles = title, preValue =  prValue,items = if (longTextFormat) listLongFormat else listShortFormat, callback = {
-            if (it==-1) {
-                longTextFormat = false
-                shortTextFormat=false
-                shortTitleFormat=false
-                return@ListItemsWidget
-            }
-            if (longTextFormat){
-                val format=listLongFormat[it]
-                getLongText=format
-                pref.setLongText(format)
-                longTextFormat=longTextFormat.not()
-            }else{
-                val format=listShortFormat[it]
-                if (shortTextFormat) {
-                    getShortText = format
-                    shortTextFormat=false
-                    pref.setShortText(format)
-                }else {
-                    getShortTitle = format
-                    shortTitleFormat=shortTitleFormat.not()
-                    pref.setShortTitle(format)
+        else getShortTitle
+        ListItemsWidget(
+            titles = title,
+            preValue = prValue,
+            items = if (longTextFormat) listLongFormat else listShortFormat,
+            callback = {
+                if (it == -1) {
+                    longTextFormat = false
+                    shortTextFormat = false
+                    shortTitleFormat = false
+                    return@ListItemsWidget
                 }
-            }
+                if (longTextFormat) {
+                    val format = listLongFormat[it]
+                    getLongText = format
+                    pref.setLongText(format)
+                    longTextFormat = longTextFormat.not()
+                } else {
+                    val format = listShortFormat[it]
+                    if (shortTextFormat) {
+                        getShortText = format
+                        shortTextFormat = false
+                        pref.setShortText(format)
+                    } else {
+                        getShortTitle = format
+                        shortTitleFormat = shortTitleFormat.not()
+                        pref.setShortTitle(format)
+                    }
+                }
 
 
-        })
+            })
     }
+
+    if (openLocale){
+        ListItemsWidget(titles = "Change Locale", items = list, preValue =currentLocale , callback ={
+            if (it!=-1) {
+                pref.updateLocale(strArray[it])
+              changeLocale(strArray[it])
+            }else
+                openLocale=false
+        } )
+
+    }
+}
+
+fun changeLocale(s: String) {
+    val appLocale: LocaleListCompat = LocaleListCompat.forLanguageTags(s)
+// Call this on the main thread as it may require Activity.restart()
+    AppCompatDelegate.setApplicationLocales(appLocale)
 }
 
 @Preview(
@@ -380,9 +443,9 @@ fun ComplicationsSuiteScreen(
 
 @Composable
 fun ComplicationsSuiteScreenPreview() {
-    ComplicationsSuiteTheme {
+    ComplicationsSuiteTheme2 {
         ComplicationsSuiteScreen(
-            onEnableClick = {key,active->},
+            onEnableClick = { key, active -> },
         )
     }
 }

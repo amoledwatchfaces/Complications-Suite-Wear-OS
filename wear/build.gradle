@@ -38,7 +38,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion '1.2.0'
+        kotlinCompilerExtensionVersion '1.4.0'
     }
     namespace 'com.weartools.weekdayutccomp'
 }
@@ -75,4 +75,7 @@ dependencies {
 
     //Pref
     implementation "androidx.datastore:datastore-preferences:1.0.0"
+
+    //For Locale
+    implementation 'androidx.appcompat:appcompat:1.7.0-alpha02'
 }

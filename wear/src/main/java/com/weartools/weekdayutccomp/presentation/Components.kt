@@ -15,6 +15,7 @@ import androidx.wear.compose.material.*
 import androidx.wear.compose.material.dialog.Alert
 import androidx.wear.compose.material.dialog.Dialog
 import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme
+import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme2
 import com.weartools.weekdayutccomp.theme.wearColorPalette
 
 @Composable
@@ -51,7 +52,7 @@ fun ListItemsWidget(titles: String, items: List<String>,preValue:String, callbac
     val state = remember {
         mutableStateOf(true)
     }
-    ComplicationsSuiteTheme {
+    ComplicationsSuiteTheme2 {
         Dialog(showDialog = state.value, onDismissRequest = { callback.invoke(-1)}) {
             Alert(title = { PreferenceCategory(title = titles) }, content = {
                 itemsIndexed(items) { index, i ->
@@ -68,8 +69,8 @@ fun ListItemsWidget(titles: String, items: List<String>,preValue:String, callbac
                             )
                         },
                         onCheckedChange = { enabled ->
-                            callback(index)
                             state.value = false
+                            callback(index)
                         },
                         label = { Text(i) },
                     )

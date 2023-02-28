@@ -15,6 +15,7 @@
  */
 package com.weartools.weekdayutccomp.theme
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -39,7 +40,8 @@ internal val wearColorPalette: Colors = Colors(
     error = Red400,
     onPrimary = Color.White,
     onSecondary = Color.Gray,
-    onError = Color.Black
+    onError = Color.Black,
+    background = Color.Black
 )
 
 @Composable
@@ -51,6 +53,20 @@ fun ComplicationsSuiteTheme(
         typography = Typography,
         // For shapes, we generally recommend using the default Material Wear shapes which are
         // optimized for round and non-round devices.
+        content = content
+    )
+}
+
+@Composable
+fun ComplicationsSuiteTheme2(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    content: @Composable () -> Unit
+) {
+    val colors = wearColorPalette
+
+    MaterialTheme(
+        colors = colors,
+        typography = Typography,
         content = content
     )
 }

@@ -158,6 +158,14 @@ class Pref(val context: Context) {
         getInstance(context).edit().putString("citiesid2",value).apply()
     }
 
+    fun updateLocale(s: String) {
+        getInstance(context).edit().putString("locale",s).apply ()
+    }
+
+    fun getLocale(): String {
+        return getInstance(context).getString("locale","en")?:"en"
+    }
+
 //    suspend fun setTicket1(value: String) {
 //        context?.dataStoree?.edit { preferences ->
 //            preferences[ticker_1] = value

@@ -20,13 +20,11 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCompositionContext
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -38,10 +36,10 @@ import com.weartools.weekdayutccomp.complication.*
 import com.weartools.weekdayutccomp.presentation.ComplicationsSuiteScreen
 import com.weartools.weekdayutccomp.presentation.ComplicationsSuiteViewModel
 import com.weartools.weekdayutccomp.presentation.ComplicationsSuiteViewModelFactory
-import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme
+import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme2
 
 
-class MainActivity : ComponentActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
+class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -83,7 +81,7 @@ class MainActivity : ComponentActivity(), SharedPreferences.OnSharedPreferenceCh
 
 @Composable
 fun ComplicationsSuiteApp() {
-    ComplicationsSuiteTheme {
+    ComplicationsSuiteTheme2 {
         val listState = rememberScalingLazyListState()
         Scaffold(
             modifier = Modifier.fillMaxSize(),
