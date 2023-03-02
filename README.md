@@ -1,6 +1,6 @@
 # Complications Suite - Wear OS
 
-Day/Week of Year, Seconds, World Clock/UTC, Moon phase complications for Wear OS
+Day/Week of Year, Seconds, World Clock, Time, Assistant, Moon phase, Bitcoin & Ethereum complications for Wear OS
 
 ## Preview
 
