@@ -32,6 +32,7 @@ import androidx.wear.compose.material.AutoCenteringParams
 import androidx.wear.compose.material.ScalingLazyColumn
 import androidx.wear.compose.material.ScalingLazyListState
 import androidx.wear.compose.material.rememberScalingLazyListState
+import com.weartools.weekdayutccomp.BuildConfig
 import com.weartools.weekdayutccomp.Pref
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme
@@ -253,7 +254,7 @@ fun ComplicationsSuiteScreen(
         item {
             DialogChip(
                 text = stringResource(id = R.string.version),
-                title = stringResource(id = R.string.version_number),
+                title = BuildConfig.VERSION_NAME,
             )
         }
         item {
@@ -317,7 +318,8 @@ fun ComplicationsSuiteScreen(
                     getLongText = format
                     pref.setLongText(format)
                     longTextFormat = longTextFormat.not()
-                } else {
+                }
+                else {
                     val format = listShortFormat[it]
                     if (shortTextFormat) {
                         getShortText = format
