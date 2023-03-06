@@ -16,16 +16,21 @@
 package com.weartools.weekdayutccomp.presentation
 
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.foundation.focusable
+import androidx.compose.foundation.gestures.animateScrollBy
+import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.*
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.input.rotary.onPreRotaryScrollEvent
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Devices
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.os.LocaleListCompat
 import androidx.wear.compose.material.AutoCenteringParams
@@ -35,11 +40,15 @@ import androidx.wear.compose.material.rememberScalingLazyListState
 import com.weartools.weekdayutccomp.BuildConfig
 import com.weartools.weekdayutccomp.Pref
 import com.weartools.weekdayutccomp.R
-import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ComplicationsSuiteScreen(
-    listState: ScalingLazyListState = rememberScalingLazyListState()
+    listState: ScalingLazyListState = rememberScalingLazyListState(),
+    focusRequester: FocusRequester,
+    coroutineScope: CoroutineScope
 ) {
     val pref = Pref(LocalContext.current)
     AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(pref.getLocale()))
@@ -84,7 +93,16 @@ fun ComplicationsSuiteScreen(
     var openLocale by remember{ mutableStateOf(false) }
 
     ScalingLazyColumn(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize()
+            .onPreRotaryScrollEvent {
+                coroutineScope.launch {
+                    listState.scrollBy(it.verticalScrollPixels*2) //*2 for faster scrolling with animateScrollBy 0f + OnPreRotary?
+                    listState.animateScrollBy(0f)
+                }
+                true
+            }
+            .focusRequester(focusRequester)
+            .focusable(),
         autoCentering = AutoCenteringParams(itemIndex = 1),
         state = listState,
     ) {
@@ -352,17 +370,4 @@ fun changeLocale(s: String) {
     val appLocale: LocaleListCompat = LocaleListCompat.forLanguageTags(s)
 // Call this on the main thread as it may require Activity.restart()
     AppCompatDelegate.setApplicationLocales(appLocale)
-}
-
-@Preview(
-    device = Devices.WEAR_OS_SMALL_ROUND,
-    showBackground = false,
-    showSystemUi = true
-)
-
-@Composable
-fun ComplicationsSuiteScreenPreview() {
-    ComplicationsSuiteTheme {
-        ComplicationsSuiteScreen()
-    }
 }

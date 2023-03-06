@@ -1,10 +1,17 @@
 package com.weartools.weekdayutccomp.presentation
 
+import androidx.compose.foundation.focusable
+import androidx.compose.foundation.gestures.animateScrollBy
+import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.rotary.onPreRotaryScrollEvent
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -47,6 +54,7 @@ fun DialogChip(
     )
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ListItemsWidget(
     titles: String,
@@ -59,10 +67,21 @@ fun ListItemsWidget(
         mutableStateOf(0)
     }
     ComplicationsSuiteTheme {
-        val listState = rememberScalingLazyListState()
+        val listState = rememberScalingLazyListState(initialCenterItemIndex = 0)
+        val focusRequester = remember { FocusRequester() }
         val coroutineScope = rememberCoroutineScope()
+        LaunchedEffect(Unit) {focusRequester.requestFocus()}
         Dialog(
-
+            modifier = Modifier
+                .onPreRotaryScrollEvent {
+                    coroutineScope.launch {
+                        listState.scrollBy(it.verticalScrollPixels*2) //*2 for faster scrolling with anymateScrollBy 0f + OnPreRotary?
+                        listState.animateScrollBy(0f)
+                    }
+                    true
+                }
+                .focusRequester(focusRequester)
+                .focusable(),
             showDialog = state.value,
             scrollState = listState,
             onDismissRequest = { callback.invoke(-1) }

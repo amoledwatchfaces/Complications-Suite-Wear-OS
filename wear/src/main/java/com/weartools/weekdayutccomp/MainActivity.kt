@@ -24,9 +24,11 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Devices
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.focus.FocusRequester
 import androidx.preference.PreferenceManager
 import androidx.wear.compose.material.*
 import androidx.wear.watchface.complications.datasource.ComplicationDataSourceService
@@ -80,22 +82,15 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
 fun ComplicationsSuiteApp() {
     ComplicationsSuiteTheme {
         val listState = rememberScalingLazyListState()
+        val focusRequester = remember { FocusRequester() }
+        val coroutineScope = rememberCoroutineScope()
+        LaunchedEffect(Unit) {focusRequester.requestFocus()}
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             timeText = { TimeText(modifier = Modifier.scrollAway(listState)) },
             positionIndicator = { PositionIndicator(scalingLazyListState = listState) }
         ) {
-            ComplicationsSuiteScreen(
-                listState = listState
-            )
+            ComplicationsSuiteScreen(listState = listState, focusRequester = focusRequester, coroutineScope = coroutineScope)
         }
     }
-}
-
-
-
-@Preview(device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
-@Composable
-fun DefaultPreview() {
-    ComplicationsSuiteApp()
 }
