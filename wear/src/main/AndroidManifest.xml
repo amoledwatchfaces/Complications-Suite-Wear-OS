@@ -290,5 +290,19 @@
                 android:value="ICON,SMALL_IMAGE" />
         </service>
 
+        <service
+            android:name="com.weartools.weekdayutccomp.complication.CustomTextComplicationService"
+            android:exported="true"
+            android:icon="@drawable/ic_custom_text"
+            android:label="@string/custom_text_comp_name"
+            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
+            <meta-data
+                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+                android:value="SHORT_TEXT,LONG_TEXT" />
+        </service>
+
     </application>
 </manifest>

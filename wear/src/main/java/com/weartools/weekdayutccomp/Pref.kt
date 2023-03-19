@@ -49,6 +49,13 @@ class Pref(val context: Context) {
     fun setShortText(value: String){ getInstance(context).edit().putString("short_text_format",value).apply() }
     fun setShortTitle(value: String){ getInstance(context).edit().putString("short_title_format",value).apply() }
 
+    // CUSTOM TEXT
+    fun setCustomText(value: String){ getInstance(context).edit().putString("custom_text",value).apply() }
+    fun setCustomTitle(value: String){ getInstance(context).edit().putString("custom_title",value).apply() }
+    // CUSTOM TEXT
+    fun getCustomText():String{ return getInstance(context).getString("custom_text","Text")?:"Text" }
+    fun getCustomTitle():String{ return getInstance(context).getString("custom_title","Title")?:"Title" }
+
     // LOCALE
     fun updateLocale(s: String) { getInstance(context).edit().putString("locale",s).apply () }
     fun getLocale(): String { return getInstance(context).getString("locale","en")?:"en" }

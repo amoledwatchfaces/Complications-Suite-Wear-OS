@@ -1,5 +1,13 @@
 package com.weartools.weekdayutccomp.presentation
 
+import android.app.RemoteInput
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import android.view.inputmethod.EditorInfo
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.gestures.scrollBy
@@ -19,7 +27,13 @@ import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.*
 import androidx.wear.compose.material.dialog.Alert
 import androidx.wear.compose.material.dialog.Dialog
+import androidx.wear.input.RemoteInputIntentHelper
+import androidx.wear.input.wearableExtender
+import androidx.wear.watchface.complications.datasource.ComplicationDataSourceService
+import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUpdateRequester
+import com.weartools.weekdayutccomp.Pref
 import com.weartools.weekdayutccomp.R
+import com.weartools.weekdayutccomp.complication.CustomTextComplicationService
 import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme
 import com.weartools.weekdayutccomp.theme.wearColorPalette
 import kotlinx.coroutines.launch
@@ -75,7 +89,7 @@ fun ListItemsWidget(
             modifier = Modifier
                 .onPreRotaryScrollEvent {
                     coroutineScope.launch {
-                        listState.scrollBy(it.verticalScrollPixels*2) //*2 for faster scrolling with anymateScrollBy 0f + OnPreRotary?
+                        listState.scrollBy(it.verticalScrollPixels * 2) //*2 for faster scrolling with animateScrollBy 0f + OnPreRotary?
                         listState.animateScrollBy(0f)
                     }
                     true
@@ -178,7 +192,9 @@ fun ToggleChip(
 @Composable
 fun SettingsText(modifier: Modifier = Modifier) {
     Text(
-        modifier = modifier.padding(top = 2.dp, bottom = 2.dp).offset(y= (-7).dp),
+        modifier = modifier
+            .padding(top = 2.dp, bottom = 2.dp)
+            .offset(y = (-7).dp),
         textAlign = TextAlign.Center,
         color = MaterialTheme.colors.primary,
         text = stringResource(id = R.string.settings),
@@ -213,5 +229,53 @@ fun SectionText(modifier: Modifier = Modifier, text: String) {
         text = text,
         style = MaterialTheme.typography.caption3
     )
+}
+
+@Composable
+fun TextInput(
+    row1: String,
+    row2: String,
+    pref: Pref,
+    context: Context
+) {
+    val secondaryLabel = remember { mutableStateOf(row2)}
+    val launcher =
+        rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            it.data?.let { data ->
+                val results: Bundle = RemoteInput.getResultsFromIntent(data)
+                val input: CharSequence? = results.getCharSequence("custom_text")
+                secondaryLabel.value = input as String
+                if (row1 == "Text") {pref.setCustomText(input)}
+                else {pref.setCustomTitle(input)}
+                updateComplication(context, CustomTextComplicationService::class.java)
+            }
+        }
+        Chip(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 10.dp),
+            label = {Text(row1)},
+            secondaryLabel = { Text(secondaryLabel.value, color =  wearColorPalette.primary) },
+            onClick = {
+                val intent: Intent = RemoteInputIntentHelper.createActionRemoteInputIntent()
+                val remoteInputs: List<RemoteInput> = listOf(
+                    RemoteInput.Builder("custom_text")
+                        .setLabel("Input")
+                        .wearableExtender {
+                            setEmojisAllowed(false)
+                            setInputActionType(EditorInfo.IME_ACTION_DONE)
+                        }.build()
+                )
+                RemoteInputIntentHelper.putRemoteInputsExtra(intent, remoteInputs)
+                launcher.launch(intent)
+            },
+            colors = ChipDefaults.primaryChipColors(backgroundColor = Color(0xff2c2c2d))
+        )
+}
+
+fun updateComplication(context: Context, cls: Class<out ComplicationDataSourceService>) {
+    val component = ComponentName(context, cls)
+    val req = ComplicationDataSourceUpdateRequester.create(context,component)
+    req.requestUpdateAll()
 }
 

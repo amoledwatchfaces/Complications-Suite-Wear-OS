@@ -11,8 +11,8 @@ android {
         applicationId "com.weartools.weekdayutccomp"
         minSdk 27
         targetSdk 33
-        versionCode 64
-        versionName "1.6.4"
+        versionCode 67
+        versionName "1.6.7"
         resConfigs("en", "de", "el", "it", "pt", "ro", "sk")
     }
     bundle {
@@ -74,4 +74,7 @@ dependencies {
 
     //Locale
     implementation 'androidx.appcompat:appcompat:1.7.0-alpha02'
+
+    // INPUT
+    implementation 'androidx.wear:wear-input:1.2.0-alpha02'
 }

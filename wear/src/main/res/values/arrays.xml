@@ -133,6 +133,7 @@
         <item>PER</item>
         <item>PHL</item>
         <item>PHX</item>
+        <item>TGD</item>
         <item>PDL</item>
         <item>PAP</item>
         <item>PDX</item>
@@ -318,6 +319,7 @@
         <item>Perth (PER)</item>
         <item>Philadelphia (PHL)</item>
         <item>Phoenix (PHX)</item>
+        <item>Podgorica (TGD)</item>
         <item>Ponta Delgada (PDL)</item>
         <item>Port-au-Prince (PAP)</item>
         <item>Portland (PDX)</item>
@@ -503,6 +505,7 @@
         <item>Australia/Perth</item>
         <item>America/New_York</item>
         <item>America/Phoenix</item>
+        <item>Europe/Podgorica</item>
         <item>Atlantic/Azores</item>
         <item>America/Port-au-Prince</item>
         <item>America/Los_Angeles</item>

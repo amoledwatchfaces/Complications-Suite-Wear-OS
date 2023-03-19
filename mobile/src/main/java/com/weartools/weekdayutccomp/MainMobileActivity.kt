@@ -102,7 +102,7 @@ class MainMobileActivity : AppCompatActivity(), OnCapabilityChangedListener {
 
         btnEmail.setOnClickListener {
             val emailIntent = Intent(Intent.ACTION_SENDTO,
-                    Uri.fromParts("mailto", "support@weartools.com", null))
+                    Uri.fromParts("mailto", "support@amoledwatchfaces.com", null))
             startActivity(Intent.createChooser(emailIntent, "Send email..."))
         }
         devpage = findViewById(R.id.devpage)
@@ -288,7 +288,7 @@ class MainMobileActivity : AppCompatActivity(), OnCapabilityChangedListener {
     private fun showRateDialog() {
         reviewManager = ReviewManagerFactory.create(this@MainMobileActivity)
         val request = reviewManager.requestReviewFlow()
-        request.addOnCompleteListener { request ->
+        request.addOnCompleteListener {
             if (request.isSuccessful) {
                 // We got the ReviewInfo object
                 val reviewInfo = request.result

@@ -50,8 +50,10 @@ fun ComplicationsSuiteScreen(
     focusRequester: FocusRequester,
     coroutineScope: CoroutineScope
 ) {
-    val pref = Pref(LocalContext.current)
+    val context = LocalContext.current
+    val pref = Pref(context)
     AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(pref.getLocale()))
+
 
     // WORLD CLOCK
     val listcity = stringArrayResource(id = R.array.cities_zone).toList()
@@ -74,6 +76,10 @@ fun ComplicationsSuiteScreen(
     // WEEK OF YEAR
     var forceISO by remember { mutableStateOf(pref.getIsISO()) }
 
+    // CUSTOM TEXT
+    val customText by remember { mutableStateOf(pref.getCustomText()) }
+    val customTitle by remember { mutableStateOf(pref.getCustomTitle()) }
+
     // DATE
     val listLongFormat = stringArrayResource(id = R.array.dateformats).toList()
     val listShortFormat = stringArrayResource(id = R.array.shortformats).toList()
@@ -84,6 +90,7 @@ fun ComplicationsSuiteScreen(
     var shortTextFormat by remember { mutableStateOf(false) }
     var shortTitleFormat by remember { mutableStateOf(false) }
 
+
     // LOCALE
     val str ="en,de,el,it,pt,ro,sk"
     val list = arrayListOf("English","German","Greek","Italian","Portuguese","Romanian","Slovak")
@@ -93,10 +100,11 @@ fun ComplicationsSuiteScreen(
     var openLocale by remember{ mutableStateOf(false) }
 
     ScalingLazyColumn(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
             .onPreRotaryScrollEvent {
                 coroutineScope.launch {
-                    listState.scrollBy(it.verticalScrollPixels*2) //*2 for faster scrolling with animateScrollBy 0f + OnPreRotary?
+                    listState.scrollBy(it.verticalScrollPixels * 2) //*2 for faster scrolling with animateScrollBy 0f + OnPreRotary?
                     listState.animateScrollBy(0f)
                 }
                 true
@@ -257,6 +265,10 @@ fun ComplicationsSuiteScreen(
             )
         }
 
+        item { PreferenceCategory(title = stringResource(id = R.string.custom_text_comp_name_category)) }
+        item { TextInput(row1 = "Text", row2 = customText, pref = pref, context = context) }
+        item { TextInput(row1 = "Title", row2 = customTitle, pref = pref, context = context) }
+
 
         // APP INFO SECTION
         item { PreferenceCategory(title = stringResource(id = R.string.app_info)) }
@@ -275,6 +287,7 @@ fun ComplicationsSuiteScreen(
                 title = BuildConfig.VERSION_NAME,
             )
         }
+
         item {
             SectionText(
                 text = "amoledwatchfaces.com",
@@ -283,6 +296,7 @@ fun ComplicationsSuiteScreen(
                     .padding(top = 12.dp, start = 20.dp, end = 20.dp),
             )
         }
+
 
     }
     if (isTImeZOnClick || isTImeZOnClick2) {
