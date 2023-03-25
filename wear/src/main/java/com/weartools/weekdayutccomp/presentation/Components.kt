@@ -14,7 +14,6 @@ import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -68,7 +67,6 @@ fun DialogChip(
     )
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ListItemsWidget(
     titles: String,
@@ -244,9 +242,9 @@ fun TextInput(
             it.data?.let { data ->
                 val results: Bundle = RemoteInput.getResultsFromIntent(data)
                 val input: CharSequence? = results.getCharSequence("custom_text")
-                secondaryLabel.value = input as String
-                if (row1 == "Text") {pref.setCustomText(input)}
-                else {pref.setCustomTitle(input)}
+                secondaryLabel.value = input.toString()
+                if (row1 == "Text") {pref.setCustomText(input.toString())}
+                else {pref.setCustomTitle(input.toString())}
                 updateComplication(context, CustomTextComplicationService::class.java)
             }
         }

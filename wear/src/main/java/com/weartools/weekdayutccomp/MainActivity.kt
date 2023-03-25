@@ -33,16 +33,20 @@ import androidx.preference.PreferenceManager
 import androidx.wear.compose.material.*
 import androidx.wear.watchface.complications.datasource.ComplicationDataSourceService
 import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUpdateRequester
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.weartools.weekdayutccomp.complication.*
 import com.weartools.weekdayutccomp.presentation.ComplicationsSuiteScreen
 import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme
 
 
 class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         setContent {
-            ComplicationsSuiteApp()
+            ComplicationsSuiteApp(fusedLocationClient)
         }
     }
 
@@ -66,9 +70,13 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             updateComplication(this, WorldClock2ComplicationService::class.java)
         }
         if (key == "is_northern" || key == "is_simple_icon"){updateComplication(this, MoonPhaseComplicationService::class.java)}
-        if (key == "leading_zero_time" || key == "is_military_time"){updateComplication(this, TimeComplicationService::class.java)}
+        if (key == "leading_zero_time" || key == "is_military_time"){
+            updateComplication(this, TimeComplicationService::class.java)
+            updateComplication(this, SunriseSunsetComplicationService::class.java)
+        }
         if (key == "is_iso_week"){updateComplication(this, WeekOfYearComplicationService::class.java)}
         if (key == "date_format" || key == "short_text_format" || key == "short_title_format"){updateComplication(this, DateComplicationService::class.java)}
+        if (key == "coarse_enabled"){ updateComplication(this, SunriseSunsetComplicationService::class.java) }
     }
 
     fun updateComplication(context: Context, cls: Class<out ComplicationDataSourceService>) {
@@ -79,18 +87,19 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
 }
 
 @Composable
-fun ComplicationsSuiteApp() {
+fun ComplicationsSuiteApp(fusedLocationClient: FusedLocationProviderClient) {
     ComplicationsSuiteTheme {
         val listState = rememberScalingLazyListState()
         val focusRequester = remember { FocusRequester() }
         val coroutineScope = rememberCoroutineScope()
+
         LaunchedEffect(Unit) {focusRequester.requestFocus()}
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             timeText = { TimeText(modifier = Modifier.scrollAway(listState)) },
             positionIndicator = { PositionIndicator(scalingLazyListState = listState) }
         ) {
-            ComplicationsSuiteScreen(listState = listState, focusRequester = focusRequester, coroutineScope = coroutineScope)
+            ComplicationsSuiteScreen(listState = listState, focusRequester = focusRequester, coroutineScope = coroutineScope, fusedLocationClient = fusedLocationClient)
         }
     }
 }

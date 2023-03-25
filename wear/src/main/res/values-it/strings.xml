@@ -23,7 +23,7 @@
     <string name="assist_missing">App dell\'assistente non installata</string>
 
     <!-- Date Complication Preferences -->
-    <string name="date_comp_name">Data</string>
+    <string name="date_comp_name">Data (Suite)</string>
     <string name="date_setting_preference_category_title">Data</string>
     <string name="date_long_text_key" translatable="false">date_format</string>
     <string name="date_short_text_key" translatable="false">short_text_format</string>

@@ -24,7 +24,7 @@
     <string name="assist_missing">Η εφαρμογή Google Assistant δεν είναι εγκατεστημένη</string>
 
     <!-- Προτημήσεις Complication Ημέρας -->
-    <string name="date_comp_name">Ημέρα</string>
+    <string name="date_comp_name">Ημέρα (Suite)</string>
     <string name="date_setting_preference_category_title">Complication Ημέρας</string>
     <string name="date_long_text_key" translatable="false">date_format</string>
     <string name="date_short_text_key" translatable="false">short_text_format</string>

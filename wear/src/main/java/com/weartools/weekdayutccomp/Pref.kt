@@ -56,6 +56,16 @@ class Pref(val context: Context) {
     fun getCustomText():String{ return getInstance(context).getString("custom_text","Text")?:"Text" }
     fun getCustomTitle():String{ return getInstance(context).getString("custom_title","Title")?:"Title" }
 
+
+    // LOCATION
+    fun getCoarsePermission():Boolean { return getInstance(context).getBoolean("coarse_enabled",false) }
+    fun setCoarsePermission(value: Boolean) { getInstance(context).edit().putBoolean("coarse_enabled",value).apply() }
+
+    fun setLatitude(value: String){ getInstance(context).edit().putString("latitude_value",value).apply() }
+    fun setLongitude(value: String){ getInstance(context).edit().putString("longitude_value",value).apply() }
+    fun getLatitude():String{ return getInstance(context).getString("latitude_value","0.0")?:"0.0" }
+    fun getLongitude():String{ return getInstance(context).getString("longitude_value","0.0")?:"0.0" }
+
     // LOCALE
     fun updateLocale(s: String) { getInstance(context).edit().putString("locale",s).apply () }
     fun getLocale(): String { return getInstance(context).getString("locale","en")?:"en" }

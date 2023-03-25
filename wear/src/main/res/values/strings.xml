@@ -85,7 +85,7 @@
     <string name="time_setting_leading_zero_summary_on" translatable="false">09:00</string>
     <string name="time_setting_leading_zero_summary_off" translatable="false">9:00</string>
 
-    <string name="time_ampm_setting_preference_category_title">Time Complication</string>
+    <string name="time_ampm_setting_preference_category_title">Time / Sun Complication</string>
     <string name="time_ampm_setting_key" translatable="false">is_military_time</string>
     <string name="time_ampm_setting_title">Hour Format</string>
     <string name="time_ampm_setting_on">24h</string>
@@ -119,4 +119,19 @@
     <string name="woy_setting_title">Format</string>
     <string name="woy_setting_on" translatable="false">ISO</string>
     <string name="woy_setting_off" translatable="false">US</string>
+
+    <!-- LOCATION -->
+    <string name="latitude_value" translatable="false">latitude_value</string>
+    <string name="longitude_value" translatable="false">longitude_value</string>
+    <string name="coarse_enabled" translatable="false">coarse_enabled</string>
+
+    <!-- Sunrise / Sunset -->
+    <string name="change_time" translatable="false">change_time</string>
+    <string name="sunrise_sunset_icon" translatable="false">R.drawable.ic_sunrise</string>
+    <string name="is_sunrise" translatable="false">is_sunrise</string>
+    <!-- TRANSLATABLE TRUE! -->
+    <string name="sunrise_sunset_comp_name" translatable="false">Sunrise &amp; Sunset</string>
+    <string name="sunrise" translatable="false">Sunrise</string>
+    <string name="sunset" translatable="false">Sunset</string>
+    <string name="enable_permission_toast" translatable="false">Needs coarse location permission (App UI)</string>
 </resources>

@@ -24,7 +24,7 @@
     <string name="assist_missing">Assistant-App nicht installiert</string>
 
     <!-- Date Complication Preferences -->
-    <string name="date_comp_name">Datum</string>
+    <string name="date_comp_name">Datum (Suite)</string>
     <string name="date_setting_preference_category_title">Datums-Komplikation</string>
     <string name="date_long_text_format">Long Text Format</string>
     <string name="date_short_text_format">Short Text Format</string>

@@ -21,6 +21,8 @@
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
     <uses-permission android:name="android.permission.INTERNET"/>
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/> <!-- FOR MOON / SUNRISE -->
+
     <uses-feature android:name="android.hardware.type.watch" />
 
     <queries>
@@ -238,6 +240,21 @@
             <meta-data
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
                 android:value="SHORT_TEXT,ICON,SMALL_IMAGE,RANGED_VALUE" />
+        </service>
+
+        <service
+            android:name="com.weartools.weekdayutccomp.complication.SunriseSunsetComplicationService"
+            android:exported="true"
+            android:icon="@drawable/ic_sunrise_3"
+            android:label="@string/sunrise_sunset_comp_name"
+            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
+            <meta-data android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS" android:value="0"/>
+            <meta-data
+                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+                android:value="SHORT_TEXT,LONG_TEXT" />
         </service>
 
         <service

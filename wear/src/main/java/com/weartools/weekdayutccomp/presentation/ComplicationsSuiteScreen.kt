@@ -15,6 +15,9 @@
  */
 package com.weartools.weekdayutccomp.presentation
 
+import android.annotation.SuppressLint
+import android.content.ContentValues
+import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.gestures.animateScrollBy
@@ -37,23 +40,28 @@ import androidx.wear.compose.material.AutoCenteringParams
 import androidx.wear.compose.material.ScalingLazyColumn
 import androidx.wear.compose.material.ScalingLazyListState
 import androidx.wear.compose.material.rememberScalingLazyListState
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
+import com.google.android.gms.location.FusedLocationProviderClient
 import com.weartools.weekdayutccomp.BuildConfig
 import com.weartools.weekdayutccomp.Pref
 import com.weartools.weekdayutccomp.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalComposeUiApi::class)
+@SuppressLint("MissingPermission")
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalPermissionsApi::class)
 @Composable
 fun ComplicationsSuiteScreen(
     listState: ScalingLazyListState = rememberScalingLazyListState(),
     focusRequester: FocusRequester,
-    coroutineScope: CoroutineScope
+    coroutineScope: CoroutineScope,
+    fusedLocationClient: FusedLocationProviderClient
 ) {
     val context = LocalContext.current
     val pref = Pref(context)
     AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(pref.getLocale()))
-
 
     // WORLD CLOCK
     val listcity = stringArrayResource(id = R.array.cities_zone).toList()
@@ -79,6 +87,36 @@ fun ComplicationsSuiteScreen(
     // CUSTOM TEXT
     val customText by remember { mutableStateOf(pref.getCustomText()) }
     val customTitle by remember { mutableStateOf(pref.getCustomTitle()) }
+
+
+    // LOCATION
+    var coarseEnabled by remember { mutableStateOf(pref.getCoarsePermission()) }
+    var latitude by remember { mutableStateOf(pref.getLatitude()) }
+    var longitude by remember { mutableStateOf(pref.getLongitude()) }
+    val permissionState = rememberPermissionState(
+        permission = "android.permission.ACCESS_COARSE_LOCATION" ,
+        onPermissionResult = { granted ->
+            if (granted) {
+                coarseEnabled=true
+                fusedLocationClient.lastLocation
+                    .addOnSuccessListener {
+                        if (it != null) {
+                        pref.setCoarsePermission(true)
+                        pref.setLatitude(it.latitude.toString())
+                        pref.setLongitude(it.longitude.toString())
+                        Log.d(ContentValues.TAG, "$it")
+                        latitude=it.latitude.toString()
+                        longitude=it.longitude.toString()
+                    }
+                else { Log.d(ContentValues.TAG, "No Location available :(") }
+                    }
+            }
+            else {
+                coarseEnabled=false
+                pref.setCoarsePermission(false)
+            }
+        }
+    )
 
     // DATE
     val listLongFormat = stringArrayResource(id = R.array.dateformats).toList()
@@ -191,6 +229,29 @@ fun ComplicationsSuiteScreen(
                 }
             )
         }
+
+
+        item {
+            LocationToggle(
+                checked = coarseEnabled,
+                onCheckedChange = {
+                    if (coarseEnabled) {
+                        pref.setCoarsePermission(false)
+                        coarseEnabled = false
+                    }
+                    else if (permissionState.status.isGranted && !coarseEnabled) {
+                    pref.setCoarsePermission(true)
+                    coarseEnabled = true
+                }
+
+                                  },
+                permissionState = permissionState,
+                fusedLocationClient = fusedLocationClient, pref = pref)
+        }
+        if (coarseEnabled) {
+            item { LocationCard(latitude = latitude, longitude = longitude, permissionState = permissionState, fusedLocationClient = fusedLocationClient, pref = pref) }
+        }
+
 
 
         // TIME COMPLICATION PREFERENCE CATEGORY
