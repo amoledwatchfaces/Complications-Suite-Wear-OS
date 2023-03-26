@@ -59,7 +59,7 @@
     <string name="time_comp_desc">Aktuální čas</string>
     <string name="time_setting_leading_zero_title">Předřazená nula</string>
     <string name="time_ampm_setting_preference_category_title" translatable="false">Čas / Svítaní a západ slunce - Komplikace</string>
-    <string name="time_ampm_setting_title">Vojenský Čas</string>
+    <string name="time_ampm_setting_title">Formát</string>
     <string name="time_ampm_setting_on">24h</string>
     <string name="time_ampm_setting_off">12h</string>
 
@@ -69,7 +69,7 @@
     <string name="wc_setting_preference_category_title">Světový čas - Komplikace</string>
     <string name="wc_setting_leading_zero_title" translatable="false">Předřazená nula</string>
 
-    <string name="wc_ampm_setting_title">Vojenský Čas</string>
+    <string name="wc_ampm_setting_title">Formát</string>
     <string name="wc_ampm_setting_on">24h</string>
     <string name="wc_ampm_setting_off">12h</string>
 
