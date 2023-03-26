@@ -40,8 +40,8 @@
     <string name="logo_comp_name">Wear OS logo</string>
 
     <!-- Moon Phase Complication Preferences -->
-    <string name="moon_comp_name">Fase Lunare</string>
-    <string name="moon_setting_preference_category_title">Fase Lunare</string>
+    <string name="moon_comp_name">Fase lunare</string>
+    <string name="moon_setting_preference_category_title">Fase lunare / Alba e tramonto</string>
     <string name="moon_setting_hemi_key" translatable="false">is_northern</string>
     <string name="moon_setting_hemi_title">Emisfero Nord</string>
     <string name="moon_setting_hemi_on">Si</string>
@@ -68,7 +68,7 @@
     <string name="time_setting_leading_zero_summary_on" translatable="false">09:00</string>
     <string name="time_setting_leading_zero_summary_off" translatable="false">9:00</string>
 
-    <string name="time_ampm_setting_preference_category_title">Ora</string>
+    <string name="time_ampm_setting_preference_category_title">Ora / Alba e tramonto</string>
     <string name="time_ampm_setting_key" translatable="false">is_military_time</string>
     <string name="time_ampm_setting_title">Sistema Orario</string>
     <string name="time_ampm_setting_on">ON / 24h</string>
@@ -114,7 +114,7 @@
     <string name="coarse_toggle_description">Coarse Location Permission Toggle</string>
 
     <!-- Sunrise / Sunset -->
-    <string name="sunrise_sunset_comp_name">Alba &amp; Tramonto</string>
+    <string name="sunrise_sunset_comp_name">Alba e tramonto</string>
     <string name="sunrise">Alba</string>
     <string name="sunset">Tramonto</string>
     <string name="enable_permission_toast">Richiede il permesso! (App UI)</string>

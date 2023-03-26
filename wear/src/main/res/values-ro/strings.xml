@@ -41,7 +41,7 @@
 
     <!-- Moon Phase Complication Preferences -->
     <string name="moon_comp_name">Faza Lunară</string>
-    <string name="moon_setting_preference_category_title">Faza Lunară - Complicaţie</string>
+    <string name="moon_setting_preference_category_title">Faza Lunară / Rasarit și apus - Complicaţie</string>
     <string name="moon_setting_hemi_key" translatable="false">is_northern</string>
     <string name="moon_setting_hemi_title">Emisfera Nordică</string>
     <string name="moon_setting_hemi_on">Da</string>
@@ -68,7 +68,7 @@
     <string name="time_setting_leading_zero_summary_on" translatable="false">09:00</string>
     <string name="time_setting_leading_zero_summary_off" translatable="false">9:00</string>
 
-    <string name="time_ampm_setting_preference_category_title">Ora - Complicaţie</string>
+    <string name="time_ampm_setting_preference_category_title">Ora / Rasarit și apus - Complicaţie</string>
     <string name="time_ampm_setting_key" translatable="false">is_military_time</string>
     <string name="time_ampm_setting_title">Sistem De Timp</string>
     <string name="time_ampm_setting_on">ON / 24h</string>
@@ -114,7 +114,7 @@
     <string name="coarse_toggle_description">Coarse Location Permission Toggle</string>
 
     <!-- Sunrise / Sunset -->
-    <string name="sunrise_sunset_comp_name">Rasarit &amp; Apus</string>
+    <string name="sunrise_sunset_comp_name">Rasarit și apus</string>
     <string name="sunrise">Rasarit</string>
     <string name="sunset">Apus</string>
     <string name="enable_permission_toast">Am nevoie de permisiune! (App UI)</string>

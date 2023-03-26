@@ -39,7 +39,7 @@
 
     <!-- Moon Phase Complication Preferences -->
     <string name="moon_comp_name">Fáze měsíce</string>
-    <string name="moon_setting_preference_category_title">Fáze měsíce - Komplikace</string>
+    <string name="moon_setting_preference_category_title">Měsíc / Svítaní a západ slunce - Komplikace</string>
     <string name="moon_setting_hemi_title">Severní hemisféra</string>
     <string name="moon_setting_hemi_on">Ano</string>
     <string name="moon_setting_hemi_off">Ne</string>
@@ -58,7 +58,7 @@
     <string name="time_comp_name">Čas</string>
     <string name="time_comp_desc">Aktuální čas</string>
     <string name="time_setting_leading_zero_title">Předřazená nula</string>
-    <string name="time_ampm_setting_preference_category_title" translatable="false">Čas - Komplikace</string>
+    <string name="time_ampm_setting_preference_category_title" translatable="false">Čas / Svítaní a západ slunce - Komplikace</string>
     <string name="time_ampm_setting_title">Vojenský Čas</string>
     <string name="time_ampm_setting_on">24h</string>
     <string name="time_ampm_setting_off">12h</string>
@@ -94,7 +94,7 @@
     <string name="coarse_toggle_description">Povolení polohy</string>
 
     <!-- Sunrise / Sunset -->
-    <string name="sunrise_sunset_comp_name">Svítaní &amp; Západ Slunce</string>
+    <string name="sunrise_sunset_comp_name">Svítaní a Západ Slunce</string>
     <string name="sunrise">Svítání</string>
     <string name="sunset">Západ slunce</string>
     <string name="enable_permission_toast">Vyžaduje povolení v appce</string>

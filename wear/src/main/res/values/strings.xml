@@ -51,7 +51,7 @@
 
     <!-- Moon Phase Complication Preferences -->
     <string name="moon_comp_name">Moon Phase</string>
-    <string name="moon_setting_preference_category_title">Moon Phase Complication</string>
+    <string name="moon_setting_preference_category_title">Moon / Sun Complication</string>
     <string name="moon_setting_hemi_key" translatable="false">is_northern</string>
     <string name="moon_setting_hemi_title">Hemisphere</string>
     <string name="moon_setting_hemi_on">Northern</string>

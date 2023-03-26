@@ -42,7 +42,7 @@
 
     <!-- Moon Phase Complication Preferences -->
     <string name="moon_comp_name">Fase da Lua</string>
-    <string name="moon_setting_preference_category_title">Complicação de Fase da Lua</string>
+    <string name="moon_setting_preference_category_title">Complicação de Fase da Lua / Nascer e pôr do sol</string>
     <string name="moon_setting_hemi_key" translatable="false">is_northern</string>
     <string name="moon_setting_hemi_title">Hemisfério Norte</string>
     <string name="moon_setting_hemi_on">Sim</string>
@@ -68,7 +68,7 @@
     <string name="time_setting_leading_zero_summary_on" translatable="false">09:00</string>
     <string name="time_setting_leading_zero_summary_off" translatable="false">9:00</string>
 
-    <string name="time_ampm_setting_preference_category_title">Complicação de Hora</string>
+    <string name="time_ampm_setting_preference_category_title">Complicação de Hora / Nascer e pôr do sol</string>
     <string name="time_ampm_setting_key" translatable="false">is_military_time</string>
     <string name="time_ampm_setting_title">Hora Militar</string>
     <string name="time_ampm_setting_on">ON / 24h</string>
@@ -114,7 +114,7 @@
     <string name="coarse_toggle_description">Coarse Location Permission Toggle</string>
 
     <!-- Sunrise / Sunset -->
-    <string name="sunrise_sunset_comp_name">Nascer do sol &amp; Pôr do sol</string>
+    <string name="sunrise_sunset_comp_name">Nascer e pôr do sol</string>
     <string name="sunrise">Nascer do sol</string>
     <string name="sunset">Pôr do sol</string>
     <string name="enable_permission_toast">Precisa de permissão! (App UI)</string>
