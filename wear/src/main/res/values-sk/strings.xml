@@ -39,7 +39,7 @@
 
     <!-- Moon Phase Complication Preferences -->
     <string name="moon_comp_name">Fáza mesiaca</string>
-    <string name="moon_setting_preference_category_title">Fáza mesiaca - komplikácia</string>
+    <string name="moon_setting_preference_category_title">Fáza mesiaca - Komplikácia</string>
     <string name="moon_setting_hemi_title">Severná hemisféra</string>
     <string name="moon_setting_hemi_on">Áno</string>
     <string name="moon_setting_hemi_off">Nie</string>
@@ -82,4 +82,21 @@
     <string name="woy_complication_text">Týždeň</string>
     <string name="woy_complication_description">Týždeň v roku</string>
     <string name="woy_setting_preference_category_title">Týždeň v roku - Komplikácia</string>
+
+    <!-- Custom Text + Title -->
+    <string name="custom_text_comp_name">Vlastný Text</string>
+    <string name="custom_text_comp_name_category">Vlastný Text - Komplikácia</string>
+
+    <!-- LOCATION -->
+    <string name="coarse_location_toggle_title">Približná Poloha</string>
+    <string name="coarse_secondary_enabled">Povolená</string>
+    <string name="coarse_secondary_disabled">Vypnutá</string>
+    <string name="coarse_toggle_description">Udelenie povolenia približnej polohy</string>
+
+    <!-- Sunrise / Sunset -->
+    <string name="sunrise_sunset_comp_name">Východ &amp; Západ Slnka</string>
+    <string name="sunrise">Východ slnka</string>
+    <string name="sunset">Západ slnka</string>
+    <string name="enable_permission_toast">Najprv povoľte približnú polohu (App UI)</string>
+    <string name="location">Poloha</string>
 </resources>

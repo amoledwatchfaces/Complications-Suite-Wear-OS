@@ -1,8 +1,6 @@
 package com.weartools.weekdayutccomp.presentation
 
 import android.app.RemoteInput
-import android.content.ComponentName
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.inputmethod.EditorInfo
@@ -28,11 +26,8 @@ import androidx.wear.compose.material.dialog.Alert
 import androidx.wear.compose.material.dialog.Dialog
 import androidx.wear.input.RemoteInputIntentHelper
 import androidx.wear.input.wearableExtender
-import androidx.wear.watchface.complications.datasource.ComplicationDataSourceService
-import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUpdateRequester
 import com.weartools.weekdayutccomp.Pref
 import com.weartools.weekdayutccomp.R
-import com.weartools.weekdayutccomp.complication.CustomTextComplicationService
 import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme
 import com.weartools.weekdayutccomp.theme.wearColorPalette
 import kotlinx.coroutines.launch
@@ -233,8 +228,7 @@ fun SectionText(modifier: Modifier = Modifier, text: String) {
 fun TextInput(
     row1: String,
     row2: String,
-    pref: Pref,
-    context: Context
+    pref: Pref
 ) {
     val secondaryLabel = remember { mutableStateOf(row2)}
     val launcher =
@@ -245,7 +239,6 @@ fun TextInput(
                 secondaryLabel.value = input.toString()
                 if (row1 == "Text") {pref.setCustomText(input.toString())}
                 else {pref.setCustomTitle(input.toString())}
-                updateComplication(context, CustomTextComplicationService::class.java)
             }
         }
         Chip(
@@ -271,9 +264,4 @@ fun TextInput(
         )
 }
 
-fun updateComplication(context: Context, cls: Class<out ComplicationDataSourceService>) {
-    val component = ComponentName(context, cls)
-    val req = ComplicationDataSourceUpdateRequester.create(context,component)
-    req.requestUpdateAll()
-}
 

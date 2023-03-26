@@ -74,6 +74,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             updateComplication(this, TimeComplicationService::class.java)
             updateComplication(this, SunriseSunsetComplicationService::class.java)
         }
+        if (key == "custom_text" || key == "custom_title"){ updateComplication(this, CustomTextComplicationService::class.java) }
         if (key == "is_iso_week"){updateComplication(this, WeekOfYearComplicationService::class.java)}
         if (key == "date_format" || key == "short_text_format" || key == "short_title_format"){updateComplication(this, DateComplicationService::class.java)}
         if (key == "coarse_enabled"){ updateComplication(this, SunriseSunsetComplicationService::class.java) }

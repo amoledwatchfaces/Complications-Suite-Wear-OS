@@ -26,7 +26,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.*
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -51,7 +50,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @SuppressLint("MissingPermission")
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalPermissionsApi::class)
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun ComplicationsSuiteScreen(
     listState: ScalingLazyListState = rememberScalingLazyListState(),
@@ -108,8 +107,10 @@ fun ComplicationsSuiteScreen(
                         latitude=it.latitude.toString()
                         longitude=it.longitude.toString()
                     }
-                else { Log.d(ContentValues.TAG, "No Location available :(") }
-                    }
+                else {
+                    Log.d(ContentValues.TAG, "No Location available :(")
+                            //TODO: Implement some Toast to notify user
+                } }
             }
             else {
                 coarseEnabled=false
@@ -327,8 +328,8 @@ fun ComplicationsSuiteScreen(
         }
 
         item { PreferenceCategory(title = stringResource(id = R.string.custom_text_comp_name_category)) }
-        item { TextInput(row1 = "Text", row2 = customText, pref = pref, context = context) }
-        item { TextInput(row1 = "Title", row2 = customTitle, pref = pref, context = context) }
+        item { TextInput(row1 = "Text", row2 = customText, pref = pref) }
+        item { TextInput(row1 = "Title", row2 = customTitle, pref = pref) }
 
 
         // APP INFO SECTION

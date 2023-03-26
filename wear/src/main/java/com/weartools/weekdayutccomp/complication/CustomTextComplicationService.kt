@@ -105,7 +105,7 @@ override fun onComplicationDeactivated(complicationInstanceId: Int) {
     Log.d(TAG, "onComplicationDeactivated(): $complicationInstanceId")
 }
 companion object {
-    private const val TAG = "BitcoinComplication"
+    private const val TAG = "CustomTextComplication"
 }
 }
 

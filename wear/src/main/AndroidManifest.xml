@@ -66,6 +66,18 @@
                 android:name="autoStoreLocales"
                 android:value="true" />
         </service>
+
+        <receiver android:name=".DateAndBootReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.DATE_CHANGED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+
         <service
             android:name="com.weartools.weekdayutccomp.complication.WeekOfYearComplicationService"
             android:exported="true"

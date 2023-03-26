@@ -102,4 +102,21 @@
     <string name="woy_setting_title">Formatul</string>
     <string name="woy_setting_on" translatable="false">ISO</string>
     <string name="woy_setting_off" translatable="false">US</string>
+
+    <!-- Custom Text + Title -->
+    <string name="custom_text_comp_name">Text personalizat</string>
+    <string name="custom_text_comp_name_category">Text personalizat</string>
+
+    <!-- LOCATION -->
+    <string name="coarse_location_toggle_title">Locație aproximativă</string>
+    <string name="coarse_secondary_enabled">On</string>
+    <string name="coarse_secondary_disabled">Off</string>
+    <string name="coarse_toggle_description">Coarse Location Permission Toggle</string>
+
+    <!-- Sunrise / Sunset -->
+    <string name="sunrise_sunset_comp_name">Rasarit &amp; Apus</string>
+    <string name="sunrise">Rasarit</string>
+    <string name="sunset">Apus</string>
+    <string name="enable_permission_toast">Am nevoie de permisiune! (App UI)</string>
+    <string name="location">Locație</string>
 </resources>

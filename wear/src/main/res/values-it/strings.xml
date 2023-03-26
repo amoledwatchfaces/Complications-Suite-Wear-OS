@@ -102,4 +102,21 @@
     <string name="woy_setting_title">Formato</string>
     <string name="woy_setting_on" translatable="false">ISO</string>
     <string name="woy_setting_off" translatable="false">US</string>
+
+    <!-- Custom Text + Title -->
+    <string name="custom_text_comp_name">Testo personalizzato</string>
+    <string name="custom_text_comp_name_category">Testo personalizzato</string>
+
+    <!-- LOCATION -->
+    <string name="coarse_location_toggle_title">Posizione approssimativa</string>
+    <string name="coarse_secondary_enabled">On</string>
+    <string name="coarse_secondary_disabled">Off</string>
+    <string name="coarse_toggle_description">Coarse Location Permission Toggle</string>
+
+    <!-- Sunrise / Sunset -->
+    <string name="sunrise_sunset_comp_name">Alba &amp; Tramonto</string>
+    <string name="sunrise">Alba</string>
+    <string name="sunset">Tramonto</string>
+    <string name="enable_permission_toast">Richiede il permesso! (App UI)</string>
+    <string name="location">Posizione</string>
 </resources>

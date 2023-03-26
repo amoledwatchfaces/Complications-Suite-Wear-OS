@@ -102,4 +102,21 @@
     <string name="woy_setting_title">Μορφή</string>
     <string name="woy_setting_on" translatable="false">ISO</string>
     <string name="woy_setting_off" translatable="false">US</string>
+
+    <!-- Custom Text + Title -->
+    <string name="custom_text_comp_name">Προσαρμοσμένο κείμενο</string>
+    <string name="custom_text_comp_name_category">Προσαρμοσμένο κείμενο</string>
+
+    <!-- LOCATION -->
+    <string name="coarse_location_toggle_title">Coarse Location</string>
+    <string name="coarse_secondary_enabled">On</string>
+    <string name="coarse_secondary_disabled">Off</string>
+    <string name="coarse_toggle_description">Coarse Location Permission Toggle</string>
+
+    <!-- Sunrise / Sunset -->
+    <string name="sunrise_sunset_comp_name">Ανατολή &amp; Δύση ηλίου</string>
+    <string name="sunrise">Ανατολή ηλίου</string>
+    <string name="sunset">Η δυση του ηλιου</string>
+    <string name="enable_permission_toast">Χρειάζεται άδεια! (App UI)</string>
+    <string name="location">Τοποθεσία</string>
 </resources>

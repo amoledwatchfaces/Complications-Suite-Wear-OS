@@ -40,7 +40,7 @@ class MoonPhaseHelper{
     private fun scheduleSunriseSunsetWorker(context: Context, scheduleTime: Long) {
       Log.i(TAG, "Enqueuing SunriseSunsetWorker!")
 
-      val delay = (scheduleTime - System.currentTimeMillis() + 30000) // ADDED 30 SECONDS AS WE WANT TO SEE CURRENT MINUTE OF SUNSET / SUNRISE
+      val delay = (scheduleTime - System.currentTimeMillis()) // + 30? SECONDS AS WE WANT TO SEE CURRENT MINUTE OF SUNSET / SUNRISE
       Log.i(TAG, "Complication will update in $delay MILLISECONDS")
 
       val sunriseSunsetWorkRequest = OneTimeWorkRequestBuilder<SunriseSunsetWorker>()

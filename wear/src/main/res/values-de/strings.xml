@@ -99,4 +99,21 @@
     <string name="woy_setting_title">Format</string>
     <string name="woy_setting_on" translatable="false">ISO</string>
     <string name="woy_setting_off" translatable="false">US</string>
+
+    <!-- Custom Text + Title -->
+    <string name="custom_text_comp_name">Eigene Texte</string>
+    <string name="custom_text_comp_name_category">Eigene Texte Komplikation</string>
+
+    <!-- LOCATION -->
+    <string name="coarse_location_toggle_title">Ungefähre Standort</string>
+    <string name="coarse_secondary_enabled">An</string>
+    <string name="coarse_secondary_disabled">Aus</string>
+    <string name="coarse_toggle_description">Ungefähre Standort Berechtigung umschalten</string>
+
+    <!-- Sunrise / Sunset -->
+    <string name="sunrise_sunset_comp_name">Sonnenaufgang &amp; Sonnenuntergang</string>
+    <string name="sunrise">Sonnenaufgang</string>
+    <string name="sunset">Sonnenuntergang</string>
+    <string name="enable_permission_toast">Benötigt zuerst eine Erlaubnis (App)</string>
+    <string name="location">Standort</string>
 </resources>
