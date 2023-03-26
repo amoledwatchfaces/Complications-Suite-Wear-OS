@@ -11,9 +11,9 @@ android {
         applicationId "com.weartools.weekdayutccomp"
         minSdk 27
         targetSdk 33
-        versionCode 67
-        versionName "1.6.7"
-        resConfigs 'en', 'de', 'el', 'it', 'pt', 'ro', 'sk'
+        versionCode 69
+        versionName "1.6.9"
+        resConfigs 'en', 'cs', 'de', 'el', 'it', 'pt', 'ro', 'sk'
     }
     bundle {
         language {
@@ -55,8 +55,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:21.0.1'
 
     // Used for WorkManager
-    implementation 'androidx.work:work-runtime:2.8.0'
-    implementation 'androidx.work:work-runtime-ktx:2.8.0'
+    implementation 'androidx.work:work-runtime:2.8.1'
+    implementation 'androidx.work:work-runtime-ktx:2.8.1'
 
     // MOON PHASE HELPER
     implementation 'org.shredzone.commons:commons-suncalc:3.5'
@@ -74,7 +74,7 @@ dependencies {
     implementation "androidx.wear.compose:compose-foundation:1.1.2"
     implementation "androidx.compose.ui:ui-tooling-preview:1.4.0"
     implementation 'androidx.activity:activity-compose:1.7.0'
-    implementation 'androidx.compose.material:material-icons-core:1.3.1'
+    implementation 'androidx.compose.material:material-icons-core:1.4.0'
 
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.4.0"
     debugImplementation "androidx.compose.ui:ui-tooling:1.4.0"

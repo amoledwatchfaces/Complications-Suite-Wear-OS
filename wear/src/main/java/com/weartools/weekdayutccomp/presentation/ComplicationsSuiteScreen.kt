@@ -131,8 +131,8 @@ fun ComplicationsSuiteScreen(
 
 
     // LOCALE
-    val str ="en,de,el,it,pt,ro,sk"
-    val list = arrayListOf("English","German","Greek","Italian","Portuguese","Romanian","Slovak")
+    val str ="en,cs,de,el,it,pt,ro,sk"
+    val list = arrayListOf("English","Czech","German","Greek","Italian","Portuguese","Romanian","Slovak")
     val strArray=str.split(",")
     val index=strArray.indexOf(pref.getLocale())
     val currentLocale =if (index!=-1)list[index] else "English"
@@ -328,8 +328,8 @@ fun ComplicationsSuiteScreen(
         }
 
         item { PreferenceCategory(title = stringResource(id = R.string.custom_text_comp_name_category)) }
-        item { TextInput(row1 = "Text", row2 = customText, pref = pref) }
-        item { TextInput(row1 = "Title", row2 = customTitle, pref = pref) }
+        item { TextInput(row1 = "Text", row2 = customText, pref = pref, context = context) }
+        item { TextInput(row1 = "Title", row2 = customTitle, pref = pref, context = context) }
 
 
         // APP INFO SECTION
