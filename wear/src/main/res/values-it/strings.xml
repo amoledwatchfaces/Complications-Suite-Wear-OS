@@ -42,6 +42,18 @@
     <!-- Moon Phase Complication Preferences -->
     <string name="moon_comp_name">Fase lunare</string>
     <string name="moon_setting_preference_category_title">Fase lunare / Alba e tramonto</string>
+
+    <array name="moon_phases">
+        <item>First Quarter</item>
+        <item>Full Moon</item>
+        <item>Last Quarter</item>
+        <item>New Moon</item>
+        <item>Waning Crescent</item>
+        <item>Waning Gibbous</item>
+        <item>Waxing Crescent</item>
+        <item>Waxing Gibbous</item>
+    </array>
+
     <string name="moon_setting_hemi_key" translatable="false">is_northern</string>
     <string name="moon_setting_hemi_title">Emisfero Nord</string>
     <string name="moon_setting_hemi_on">Si</string>

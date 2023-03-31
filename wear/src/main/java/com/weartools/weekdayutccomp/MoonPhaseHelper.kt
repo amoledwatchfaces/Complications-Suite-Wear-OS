@@ -27,7 +27,6 @@ import androidx.work.*
 import com.weartools.weekdayutccomp.R.drawable
 import com.weartools.weekdayutccomp.R.string
 import com.weartools.weekdayutccomp.complication.SunriseSunsetComplicationService
-import org.shredzone.commons.suncalc.MoonIllumination
 import org.shredzone.commons.suncalc.SunTimes
 import java.util.concurrent.TimeUnit
 import kotlin.math.floor
@@ -87,17 +86,11 @@ class MoonPhaseHelper{
     }
 
 
-    fun update(context: Context?) {
-      val preferences = PreferenceManager.getDefaultSharedPreferences(context!!)
-      val editor = preferences.edit()
+    fun getSimpleIcon(rawPhase: Double, isnorthernHemi: Boolean): Int {
 
-      val parameters = MoonIllumination.compute().now().execute()
-      val visibility = (parameters.fraction * 100.0).toFloat()
-      val phase = ((parameters.phase)+180.0)*(MOON_PHASE_LENGTH/360.0)
-
-      Log.i(TAG, "Computed moon phase: $phase")
+      // GET RAW PHASE
+      val phase = rawPhase * MOON_PHASE_LENGTH
       val phaseValue = floor(phase).toInt() % 30
-      Log.i(TAG, "Discrete phase value: $phaseValue")
       val simplePhaseValue: Int = when (phaseValue) {
         in 1..6 -> 1
         7 -> 2
@@ -108,59 +101,14 @@ class MoonPhaseHelper{
         in 24..30 -> 7
         else -> 0
       }
-      Log.i(TAG, "Simple phase value: $simplePhaseValue")
 
-      Log.i(TAG, "Visibility value: $visibility")
-      val isnorthernhemi = preferences.getBoolean(context.getString(string.moon_setting_hemi_key), true)
-      val simpleIcon = preferences.getBoolean(context.getString(string.moon_setting_simple_icon_key), false)
-
-      if (phaseValue==0 && simpleIcon) { editor.putInt(context.getString(string.key_pref_phase_icon),
-        drawable.x_moon_new).apply() }
-      else if (phaseValue==0) { editor.putInt(context.getString(string.key_pref_phase_icon),
-        drawable.moon0).apply() }
-      else if (simpleIcon && isnorthernhemi) { editor.putInt(context.getString(string.key_pref_phase_icon),(SIMPLE_IMAGE_LOOKUP[simplePhaseValue])).apply()}
-      else if (simpleIcon) { editor.putInt(context.getString(string.key_pref_phase_icon),(SIMPLE_IMAGE_LOOKUP[8 -simplePhaseValue])).apply()}
-      else if (isnorthernhemi){ editor.putInt(context.getString(string.key_pref_phase_icon),(IMAGE_LOOKUP[phaseValue])).apply() }
-      else { editor.putInt(context.getString(string.key_pref_phase_icon),(IMAGE_LOOKUP[30 - phaseValue])).apply() }
-
-      editor.putFloat(context.getString(string.key_pref_moon_visibility), visibility).apply()
+      return if (phaseValue==0) { drawable.x_moon_new }
+      else if (isnorthernHemi) { SIMPLE_IMAGE_LOOKUP[simplePhaseValue] }
+      else { SIMPLE_IMAGE_LOOKUP[8 - simplePhaseValue] }
     }
 
     private const val TAG = "MoonView"
     private const val MOON_PHASE_LENGTH = 29.5
-
-    private val IMAGE_LOOKUP = intArrayOf(
-      drawable.moon0,
-      drawable.moon1,
-      drawable.moon2,
-      drawable.moon3,
-      drawable.moon4,
-      drawable.moon5,
-      drawable.moon6,
-      drawable.moon7,
-      drawable.moon8,
-      drawable.moon9,
-      drawable.moon10,
-      drawable.moon11,
-      drawable.moon12,
-      drawable.moon13,
-      drawable.moon14,
-      drawable.moon15,
-      drawable.moon16,
-      drawable.moon17,
-      drawable.moon18,
-      drawable.moon19,
-      drawable.moon20,
-      drawable.moon21,
-      drawable.moon22,
-      drawable.moon23,
-      drawable.moon24,
-      drawable.moon25,
-      drawable.moon26,
-      drawable.moon27,
-      drawable.moon28,
-      drawable.moon29
-    )
 
     private val SIMPLE_IMAGE_LOOKUP = intArrayOf(
       drawable.x_moon_new,
@@ -172,6 +120,17 @@ class MoonPhaseHelper{
       drawable.x_moon_last_quarter,
       drawable.x_moon_waning_crescent,
     )
+
+    fun getMoonPhaseName(phase: String, context: Context): String {
+
+      val str = "FIRST_QUARTER,FULL_MOON,LAST_QUARTER,NEW_MOON,WANING_CRESCENT,WANING_GIBBOUS,WAXING_CRESCENT,WAXING_GIBBOUS"
+      val strArray = str.split(",")
+
+      val str2 = context.resources.getStringArray(R.array.moon_phases)
+
+      val index = strArray.indexOf(phase)
+      return if (index != -1) str2[index] else "First Quarter"
+    }
   }
 }
 

@@ -18,17 +18,22 @@ package com.weartools.weekdayutccomp.complication
 
 import android.app.PendingIntent
 import android.content.Intent
+import android.graphics.drawable.Icon.createWithBitmap
 import android.graphics.drawable.Icon.createWithResource
 import android.util.Log
 import androidx.preference.PreferenceManager
 import androidx.wear.watchface.complications.data.*
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
+import com.weartools.weekdayutccomp.LunarPhase
 import com.weartools.weekdayutccomp.MoonPhaseHelper
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.R.drawable
+import org.shredzone.commons.suncalc.MoonIllumination
+import org.shredzone.commons.suncalc.MoonPosition
 import java.math.RoundingMode
 import java.text.DecimalFormat
+
 
 class MoonPhaseComplicationService : SuspendingComplicationDataSourceService() {
 
@@ -61,27 +66,27 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
         )
             .setMonochromaticImage(
                 MonochromaticImage.Builder(
-                    image = createWithResource(this, drawable.moon15),
+                    image = createWithResource(this, drawable.x_moon_full),
                 ).build()
             )
             .setTapAction(null)
             .build()
 
         ComplicationType.RANGED_VALUE -> RangedValueComplicationData.Builder(
-            value = 43f,
+            value = 50f,
             min = 0f,
             max =  100f,
             contentDescription = PlainComplicationText.Builder(text = "Visibility").build()
             )
             .setMonochromaticImage(
-                MonochromaticImage.Builder(createWithResource(this, drawable.moon6)).build()
+                MonochromaticImage.Builder(createWithResource(this, drawable.x_moon_first_quarter)).build()
             )
             .setTapAction(null)
             .build()
 
         ComplicationType.MONOCHROMATIC_IMAGE -> MonochromaticImageComplicationData.Builder(
             monochromaticImage = MonochromaticImage.Builder(
-                createWithResource(this, drawable.moon15)
+                createWithResource(this, drawable.x_moon_full)
             )
                 .build(),
             contentDescription = PlainComplicationText.Builder(text = "MONO_IMG.").build()
@@ -92,7 +97,7 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
 
         ComplicationType.SMALL_IMAGE -> SmallImageComplicationData.Builder(
             smallImage = SmallImage.Builder(
-                image = createWithResource(this, drawable.moon15),
+                image = createWithResource(this, drawable.x_moon_full),
                 type = SmallImageType.ICON
             ).build(),
             contentDescription = PlainComplicationText.Builder(text = "SMALL_IMAGE.").build()
@@ -104,18 +109,35 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
     }
 }
 
-override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
+    override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
     Log.d(TAG, "onComplicationRequest() id: ${request.complicationInstanceId}")
 
-    MoonPhaseHelper.update(context = this)
+        val preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+        val simpleIcon = preferences.getBoolean(getString(R.string.moon_setting_simple_icon_key), false)
+        val isnorthernHemi = preferences.getBoolean(getString(R.string.moon_setting_hemi_key), true)
 
-    val preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
-    val phaseicon = preferences.getInt(getString(R.string.key_pref_phase_icon), drawable.moon15)
+        val par1 = MoonIllumination.compute().now().execute() //TODO: Use this to get phase, fraction, angle
+        val par2 = MoonPosition.compute().now().at(48.89, 19.85).execute() //TODO: Use this to get parallacticAngle, altitude, azimuth
 
-    val visibility = preferences.getFloat(getString(R.string.key_pref_moon_visibility), 0F)
+        val phase = (par1.phase+180)/360
+        val fraction = par1.fraction
+        val angle = par1.angle - par2.parallacticAngle
+        val phaseText = par1.closestPhase
+
+        Log.d(TAG, "phase: $phase")
+        Log.d(TAG, "fraction: $fraction")
+        Log.d(TAG, "angle: $angle")
+
+        val resultBitmap = LunarPhase.getLunarPhaseBitmap(
+            fractionValue = fraction,
+            phaseValue = phase,
+            angleValue = angle.toFloat(),
+            isnorthernHemi = isnorthernHemi
+        )
+
     val df = DecimalFormat("#.#")
     df.roundingMode = RoundingMode.HALF_UP
-    val visibilityok = df.format(visibility).toString()
+    val visibilityok = df.format(fraction*100).toString()
 
     return when (request.complicationType) {
 
@@ -124,38 +146,84 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
             contentDescription = PlainComplicationText.Builder(text = getString(R.string.moon_comp_name)).build())
 
             .setMonochromaticImage(
-                MonochromaticImage.Builder(createWithResource(this, phaseicon)).build()
+                MonochromaticImage.Builder(
+                    if (simpleIcon) {
+                        createWithResource(this,
+                            MoonPhaseHelper.getSimpleIcon(phase,isnorthernHemi))
+                    }
+                    else {
+                        createWithBitmap(resultBitmap)
+                    }
+                ).build()
+            )
+            .setTapAction(openScreen())
+            .build()
+        ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
+            text = PlainComplicationText.Builder(text = "$visibilityok %").build(),
+            contentDescription = PlainComplicationText.Builder(text = getString(R.string.moon_comp_name)).build())
+
+            .setTitle(PlainComplicationText.Builder(text = MoonPhaseHelper.getMoonPhaseName(
+                context = this,
+                phase = phaseText.name
+            )).build())
+            .setMonochromaticImage(
+                MonochromaticImage.Builder(
+                    if (simpleIcon) {
+                        createWithResource(this,
+                            MoonPhaseHelper.getSimpleIcon(phase,isnorthernHemi))
+                    }
+                    else {
+                        createWithBitmap(resultBitmap)
+                    }
+                ).build()
             )
             .setTapAction(openScreen())
             .build()
 
         ComplicationType.RANGED_VALUE -> RangedValueComplicationData.Builder(
-            value = visibility,
-            min = 0f,
-            max =  100f,
+            value = fraction.toFloat(),
+            min = 0.0f,
+            max =  1.0f,
             contentDescription = PlainComplicationText
                 .Builder(text = "Visibility").build()
         )
             .setMonochromaticImage(
-                MonochromaticImage.Builder(createWithResource(this, phaseicon)).build()
+                MonochromaticImage.Builder(
+                    if (simpleIcon) {
+                        createWithResource(this,
+                            MoonPhaseHelper.getSimpleIcon(phase,isnorthernHemi))
+                    }
+                    else {createWithBitmap(resultBitmap)}
+                ).build()
             )
             .setTapAction(openScreen())
             .build()
 
-        ComplicationType.MONOCHROMATIC_IMAGE -> MonochromaticImageComplicationData.Builder(
-            monochromaticImage = MonochromaticImage.Builder(
-                createWithResource(this, phaseicon)
+        ComplicationType.MONOCHROMATIC_IMAGE -> {
+
+            MonochromaticImageComplicationData.Builder(
+                monochromaticImage = MonochromaticImage.Builder(
+                    if (simpleIcon) {
+                        createWithResource(this,
+                            MoonPhaseHelper.getSimpleIcon(phase,isnorthernHemi))
+                    }
+                    else {createWithBitmap(resultBitmap)}
+                ).build(),
+                contentDescription = PlainComplicationText.Builder(text = "MONO_IMG.").build()
             )
-                .build(),
-            contentDescription = PlainComplicationText.Builder(text = "MONO_IMG.").build()
-        )
-            .setTapAction(openScreen())
-            .build()
+                .setTapAction(openScreen())
+
+                .build()
+        }
 
 
         ComplicationType.SMALL_IMAGE -> SmallImageComplicationData.Builder(
             smallImage = SmallImage.Builder(
-                image = createWithResource(this, phaseicon),
+                image = if (simpleIcon) {
+                    createWithResource(this,
+                        MoonPhaseHelper.getSimpleIcon(phase,isnorthernHemi))
+                }
+                else {createWithBitmap(resultBitmap)},
                 type = SmallImageType.ICON
             ).build(),
             contentDescription = PlainComplicationText.Builder(text = "SMALL_IMAGE.").build()
@@ -170,7 +238,6 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
             null
         }
 
-
     }
 }
 
@@ -180,6 +247,7 @@ override fun onComplicationDeactivated(complicationInstanceId: Int) {
 
 companion object {
     private const val TAG = "CompDataSourceService"
+
 }
 }
 

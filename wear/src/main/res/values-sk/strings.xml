@@ -40,6 +40,18 @@
     <!-- Moon Phase Complication Preferences -->
     <string name="moon_comp_name">Fáza mesiaca</string>
     <string name="moon_setting_preference_category_title">Fáza mesiaca / Východ a Západ slnka - Komplikácia</string>
+
+    <array name="moon_phases">
+        <item>Prvá štvrť</item>
+        <item>Spln</item>
+        <item>Posledná štrť</item>
+        <item>Nov</item>
+        <item>Ubúdajúci</item>
+        <item>Ubúdajúci</item>
+        <item>Dorastajúci</item>
+        <item>Dorastajúci</item>
+    </array>
+
     <string name="moon_setting_hemi_title">Severná hemisféra</string>
     <string name="moon_setting_hemi_on">Áno</string>
     <string name="moon_setting_hemi_off">Nie</string>
