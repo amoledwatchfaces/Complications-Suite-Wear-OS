@@ -1,133 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Translated by: amoledwatchfaces -->
+<!-- Translated by: Flyfish233 -->
 <resources>
     <!-- Do not translate translatable="false" lines -->
     <string name="app_name">Complications Suite</string> <!-- Does not need to be translated, but it's recommended -->
-    <string name="app_info">App Info</string>
-    <string name="version">Version</string>
+    <string name="app_info">应用信息</string>
+    <string name="version">版本</string>
     <string name="version_number" translatable="false">v1.6.2</string>
-    <string name="settings">Settings</string>
-    <string name="language">Language</string>
+    <string name="settings">设置</string>
+    <string name="language">语言</string>
 
     <string name="compose_toggle" translatable="false">Toggle</string>
 
     <!-- Crypto Complication -->
-    <string name="crypto_name_1" translatable="true">BTC Price $</string>
+    <string name="crypto_name_1" translatable="true">BTC 价格 $</string>
     <string name="price_1" translatable="false">0.0</string>
     <string name="price_1_string" translatable="false">BTC</string>
     <string name="ticker_1" translatable="false">BTCBUSD</string>
 
-    <string name="crypto_name_2" translatable="true">ETH Price $</string>
+    <string name="crypto_name_2" translatable="true">ETH 价格 $</string>
     <string name="price_2" translatable="false">0.0</string>
     <string name="price_2_string" translatable="false">ETH</string>
     <string name="ticker_2" translatable="false">ETHBUSD</string>
 
     <!-- Flashlight Complication -->
-    <string name="flashlight_comp_name">Flashlight</string>
+    <string name="flashlight_comp_name">手电筒</string>
 
     <!-- Alarm Complication Preferences -->
-    <string name="alarm_comp_name">Alarm</string>
+    <string name="alarm_comp_name">闹钟</string>
 
     <!-- Assist Complication Preferences -->
-    <string name="assist_comp_name">Assistant</string>
-    <string name="assist_missing">Assistant app not installed</string>
+    <string name="assist_comp_name">语音助手</string>
+    <string name="assist_missing">未安装任何语音助手</string>
 
     <!-- Date Complication Preferences -->
-    <string name="date_comp_name">Date (Suite)</string>
-    <string name="date_setting_preference_category_title">Date Complication</string>
+    <string name="date_comp_name">日期系列组件</string>
+    <string name="date_setting_preference_category_title">日期组件</string>
     <string name="date_long_text_key" translatable="false">date_format</string>
     <string name="date_short_text_key" translatable="false">short_text_format</string>
     <string name="date_short_title_key" translatable="false">short_title_format</string>
-    <string name="date_long_text_format">Long Text Format</string>
-    <string name="date_short_text_format">Short Text Format</string>
-    <string name="date_short_title_format">Short Title Format</string>
+    <string name="date_long_text_format">长文本格式</string>
+    <string name="date_short_text_format">短文本格式</string>
+    <string name="date_short_title_format">短标题格式</string>
 
     <!-- Day of Year Complication Preferences -->
-    <string name="doy_comp_name">Day of Year</string>
-    <string name="doy_short_title">Day</string>
+    <string name="doy_comp_name">一年中的第几天</string>
+    <string name="doy_short_title">日</string>
 
     <!-- Logo Complication Preferences -->
     <string name="logo_comp_name">Wear OS logo</string>
 
     <!-- Moon Phase Complication Preferences -->
-    <string name="moon_comp_name">Moon Phase</string>
-    <string name="moon_setting_preference_category_title">Moon / Sun Complication</string>
+    <string name="moon_comp_name">月相</string>
+    <string name="moon_setting_preference_category_title">月亮 / 太阳组件</string>
 
     <array name="moon_phases">
-        <item>First Quarter</item>
-        <item>Full Moon</item>
-        <item>Last Quarter</item>
-        <item>New Moon</item>
-        <item>Waning Crescent</item>
-        <item>Waning Gibbous</item>
-        <item>Waxing Crescent</item>
-        <item>Waxing Gibbous</item>
+        <item>初弦月</item>
+        <item>满月</item>
+        <item>末弦月</item>
+        <item>新月</item>
+        <item>残月</item>
+        <item>渐盈月</item>
+        <item>初凸月</item>
+        <item>盈凸月</item>
     </array>
 
     <string name="moon_setting_hemi_key" translatable="false">is_northern</string>
-    <string name="moon_setting_hemi_title">Hemisphere</string>
-    <string name="moon_setting_hemi_on">Northern</string>
-    <string name="moon_setting_hemi_off">Southern</string>
+    <string name="moon_setting_hemi_title">半球</string>
+    <string name="moon_setting_hemi_on">北半球</string>
+    <string name="moon_setting_hemi_off">南半球</string>
     <string name="moon_setting_simple_icon_key" translatable="false">is_simple_icon</string>
-    <string name="moon_setting_simple_icon_title">Moon Icon</string>
-    <string name="moon_setting_simple_icon_on">Simple</string>
-    <string name="moon_setting_simple_icon_off">Detailed</string>
+    <string name="moon_setting_simple_icon_title">月相图标</string>
+    <string name="moon_setting_simple_icon_on">简单</string>
+    <string name="moon_setting_simple_icon_off">详细</string>
     <string name="key_pref_phase_icon" translatable="false">R.drawable.moon0</string>
     <string name="key_pref_moon_visibility" translatable="false">0.0</string>
 
     <!-- Pay Complication -->
-    <string name="pay_comp_name">Pay</string>
+    <string name="pay_comp_name">支付</string>
 
     <!-- Sec Complication -->
-    <string name="sec_comp_name">Seconds</string>
-    <string name="sec_short_title">Sec</string>
+    <string name="sec_comp_name">秒</string>
+    <string name="sec_short_title">秒</string>
 
     <!-- Time Complication Preferences -->
-    <string name="time_comp_name">Time</string>
-    <string name="time_comp_desc">Current Time</string>
+    <string name="time_comp_name">时间</string>
+    <string name="time_comp_desc">当前时间</string>
     <string name="time_setting_leading_zero_key" translatable="false">leading_zero_time</string>
-    <string name="time_setting_leading_zero_title">Leading zero</string>
+    <string name="time_setting_leading_zero_title">前导零</string>
     <string name="time_setting_leading_zero_summary_on" translatable="false">09:00</string>
     <string name="time_setting_leading_zero_summary_off" translatable="false">9:00</string>
 
-    <string name="time_ampm_setting_preference_category_title">Time / Sun Complication</string>
+    <string name="time_ampm_setting_preference_category_title">时间 / 太阳组件</string>
     <string name="time_ampm_setting_key" translatable="false">is_military_time</string>
-    <string name="time_ampm_setting_title">Hour Format</string>
+    <string name="time_ampm_setting_title">小时制</string>
     <string name="time_ampm_setting_on">24h</string>
     <string name="time_ampm_setting_off">12h</string>
 
     <!-- World Clock Complication Preferences -->
-    <string name="wc_comp_name_1">World Clock 1</string>
-    <string name="wc_comp_name_2">World Clock 2</string>
-    <string name="wc_setting_preference_category_title">World Clock Complication</string>
+    <string name="wc_comp_name_1">世界时钟 1</string>
+    <string name="wc_comp_name_2">世界时钟 2</string>
+    <string name="wc_setting_preference_category_title">世界时钟组件</string>
     <string name="wc_setting_leading_zero_key" translatable="false">leading_zero</string>
-    <string name="wc_setting_leading_zero_title">Leading zero</string>
+    <string name="wc_setting_leading_zero_title">前导零</string>
     <string name="wc_setting_leading_zero_summary_on" translatable="false">09:00</string>
     <string name="wc_setting_leading_zero_summary_off" translatable="false">9:00</string>
 
     <string name="wc_ampm_setting_key" translatable="false">is_military</string>
-    <string name="wc_ampm_setting_title">Hour Format</string>
+    <string name="wc_ampm_setting_title">小时制</string>
     <string name="wc_ampm_setting_on">24h</string>
     <string name="wc_ampm_setting_off">12h</string>
 
     <string name="wc_setting_key" translatable="false">citiesid</string>
     <string name="wc2_setting_key" translatable="false">citiesid2</string>
-    <string name="wc_setting_title">Timezone 1 ID</string>
-    <string name="wc2_setting_title">Timezone 2 ID</string>
+    <string name="wc_setting_title">时区 ID 1</string>
+    <string name="wc2_setting_title">时区 ID 2</string>
 
     <!-- WOY Complication Preferences -->
-    <string name="week_complication_name">Week of Year</string>
-    <string name="woy_complication_text">Week</string>
-    <string name="woy_complication_description">Week of Year</string>
-    <string name="woy_setting_preference_category_title">Week of Year Complication</string>
+    <string name="week_complication_name">一年中的第几周</string>
+    <string name="woy_complication_text">周</string>
+    <string name="woy_complication_description">一年中的第几周</string>
+    <string name="woy_setting_preference_category_title">一年中的第几周组件</string>
     <string name="woy_setting_key" translatable="false">is_iso_week</string>
-    <string name="woy_setting_title">Format</string>
+    <string name="woy_setting_title">格式</string>
     <string name="woy_setting_on" translatable="false">ISO</string>
     <string name="woy_setting_off" translatable="false">US</string>
 
     <!-- Custom Text + Title -->
-    <string name="custom_text_comp_name">Custom Text</string>
-    <string name="custom_text_comp_name_category">Custom Text Complication</string>
+    <string name="custom_text_comp_name">自定义文本</string>
+    <string name="custom_text_comp_name_category">自定义文本功能</string>
     <string name="custom_text" translatable="false">custom_text</string>
     <string name="custom_title" translatable="false">custom_title</string>
 
@@ -136,19 +136,19 @@
     <string name="longitude_value" translatable="false">longitude_value</string>
     <string name="coarse_enabled" translatable="false">coarse_enabled</string>
     <!--translate-->
-    <string name="coarse_location_toggle_title">Coarse Location</string>
-    <string name="coarse_secondary_enabled">Enabled</string>
-    <string name="coarse_secondary_disabled">Disabled</string>
-    <string name="coarse_toggle_description">Coarse Location Permission Toggle</string>
+    <string name="coarse_location_toggle_title">粗略定位</string>
+    <string name="coarse_secondary_enabled">启用</string>
+    <string name="coarse_secondary_disabled">关闭</string>
+    <string name="coarse_toggle_description">粗略定位权限开关</string>
 
     <!-- Sunrise / Sunset -->
     <string name="change_time" translatable="false">change_time</string>
     <string name="sunrise_sunset_icon" translatable="false">R.drawable.ic_sunrise</string>
     <string name="is_sunrise" translatable="false">is_sunrise</string>
     <!--translate-->
-    <string name="sunrise_sunset_comp_name">Sunrise &amp; Sunset</string>
-    <string name="sunrise">Sunrise</string>
-    <string name="sunset">Sunset</string>
-    <string name="enable_permission_toast">Needs coarse location permission (App UI)</string>
-    <string name="location">Location</string>
+    <string name="sunrise_sunset_comp_name">日出与日落</string>
+    <string name="sunrise">日出</string>
+    <string name="sunset">日落</string>
+    <string name="enable_permission_toast">需要开启粗略定位权限</string>
+    <string name="location">位置</string>
 </resources>
