@@ -107,7 +107,7 @@ class MoonPhaseHelper{
     }
 
     private const val TAG = "MoonView"
-    private const val MOON_PHASE_LENGTH = 29.53
+    private const val MOON_PHASE_LENGTH = 29.53058
 
     private val SIMPLE_IMAGE_LOOKUP = intArrayOf(
       drawable.x_moon_new,
