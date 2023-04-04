@@ -29,7 +29,6 @@ object LunarPhase {
         var phase = phaseValue
         if (phase >= 0.97 || phase < 0.03) { phase = 0.0 }
         if (phase >= 0.03 && phase < 0.08) { phase = 0.08 }
-        if (phase >= 0.93) { phase = 0.93 }
 
         /**
          * APPLY ROTATION
