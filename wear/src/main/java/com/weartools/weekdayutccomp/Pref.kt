@@ -63,8 +63,12 @@ class Pref(val context: Context) {
 
     fun setLatitude(value: String){ getInstance(context).edit().putString("latitude_value",value).apply() }
     fun setLongitude(value: String){ getInstance(context).edit().putString("longitude_value",value).apply() }
+
     fun getLatitude():String{ return getInstance(context).getString("latitude_value","0.0")?:"0.0" }
     fun getLongitude():String{ return getInstance(context).getString("longitude_value","0.0")?:"0.0" }
+
+    //fun setAltitude(value: Int){ getInstance(context).edit().putInt("altitude_value",value).apply() }
+    //fun getAltitude():Int { return getInstance(context).getInt("altitude_value",0)  }
 
     // LOCALE
     fun updateLocale(s: String) { getInstance(context).edit().putString("locale",s).apply () }

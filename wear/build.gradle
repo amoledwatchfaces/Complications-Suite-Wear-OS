@@ -13,7 +13,7 @@ android {
         targetSdk 33
         versionCode 71
         versionName "1.7.1"
-        resConfigs 'en', 'cs', 'de', 'el', 'it', 'pt', 'ro', 'sk'
+        resConfigs 'en', 'cs', 'de', 'el', 'it', 'pt', 'ro', 'sk', 'zh'
     }
     bundle {
         language {

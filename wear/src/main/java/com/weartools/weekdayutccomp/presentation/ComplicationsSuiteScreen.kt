@@ -103,7 +103,7 @@ fun ComplicationsSuiteScreen(
                         pref.setCoarsePermission(true)
                         pref.setLatitude(it.latitude.toString())
                         pref.setLongitude(it.longitude.toString())
-                        Log.d(ContentValues.TAG, "$it")
+                        //pref.setAltitude(it.altitude.toInt())
                         latitude=it.latitude.toString()
                         longitude=it.longitude.toString()
                     }
@@ -131,8 +131,8 @@ fun ComplicationsSuiteScreen(
 
 
     // LOCALE
-    val str ="en,cs,de,el,it,pt,ro,sk"
-    val list = arrayListOf("English","Czech","German","Greek","Italian","Portuguese","Romanian","Slovak")
+    val str ="en,cs,de,el,it,pt,ro,sk,zh"
+    val list = arrayListOf("English","Czech","German","Greek","Italian","Portuguese","Romanian","Slovak","Chinese (Simplified)")
     val strArray=str.split(",")
     val index=strArray.indexOf(pref.getLocale())
     val currentLocale =if (index!=-1)list[index] else "English"
@@ -257,8 +257,6 @@ fun ComplicationsSuiteScreen(
             item { LocationCard(latitude = latitude, longitude = longitude, permissionState = permissionState, fusedLocationClient = fusedLocationClient, pref = pref) }
         }
 
-
-
         // TIME COMPLICATION PREFERENCE CATEGORY
         item { PreferenceCategory(title = stringResource(id = R.string.time_ampm_setting_preference_category_title)) }
         item {
@@ -366,7 +364,7 @@ fun ComplicationsSuiteScreen(
 
     }
     if (isTImeZOnClick || isTImeZOnClick2) {
-        val title = if (isTImeZOnClick) "Timezone 1 ID" else "Timezone 2 ID"
+        val title = if (isTImeZOnClick) stringResource(id = R.string.wc_setting_title) else stringResource(id = R.string.wc2_setting_title)
         val prValue = if (isTImeZOnClick) getCity1
         else getCity2
         ListItemsWidget(titles = title, preValue = prValue, items = listcity, callback = {

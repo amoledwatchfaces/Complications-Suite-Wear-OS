@@ -122,6 +122,7 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
 
         val lat = preferences.getString(getString(R.string.latitude_value), "0.0").toString().toDouble()
         val long = preferences.getString(getString(R.string.longitude_value), "0.0").toString().toDouble()
+        //val altitude = preferences.getInt(getString(R.string.altitude_value), 0)
         /**
          * Get current time and split it to YYYY / MM / DD / HH / MM / SS - CONVERT TO UTC
          */

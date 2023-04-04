@@ -32,7 +32,7 @@ fun LocationCard(
     fusedLocationClient: FusedLocationProviderClient,
     pref: Pref,
     latitude: String,
-    longitude: String
+    longitude: String,
 ) {
     val df = DecimalFormat("#.#####")
 
@@ -43,13 +43,14 @@ fun LocationCard(
         enabled = true,
         onClick = {
             if (permissionState.status.isGranted) {
-                Log.d(TAG, "We have a permission")
+                //Log.d(TAG, "We have a permission")
                 fusedLocationClient.lastLocation
                     .addOnSuccessListener {
                         if (it != null) {
                         pref.setLatitude(it.latitude.toString())
                         pref.setLongitude(it.longitude.toString())
-                        Log.d(TAG, "$it")
+                        //pref.setAltitude(it.altitude.toInt())
+                        //Log.d(TAG, "${it.altitude}")
                         }
                         else { Log.d(TAG, "No Location available :(") }
                     }
@@ -78,7 +79,6 @@ fun LocationCard(
 
     }
 }
-
 @SuppressLint("MissingPermission")
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -102,13 +102,14 @@ fun LocationToggle(
         onCheckedChange = { enabled ->
             onCheckedChange(enabled)
             if (permissionState.status.isGranted) {
-                Log.d(TAG, "We have a permission")
+                //Log.d(TAG, "We have a permission")
                 fusedLocationClient.lastLocation
                     .addOnSuccessListener {
                         if (it != null) {
                             pref.setLatitude(it.latitude.toString())
                             pref.setLongitude(it.longitude.toString())
-                            Log.d(TAG, "$it")
+                            //pref.setAltitude(it.altitude.toInt())
+                            //Log.d(TAG, "$it")
                         }
                         else { Log.d(TAG, "No Location available :(") }
                     }
