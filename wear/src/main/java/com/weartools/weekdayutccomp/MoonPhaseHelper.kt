@@ -31,7 +31,6 @@ import org.shredzone.commons.suncalc.SunTimes
 import java.util.concurrent.TimeUnit
 import kotlin.math.floor
 
-
 class MoonPhaseHelper{
 
   companion object {
