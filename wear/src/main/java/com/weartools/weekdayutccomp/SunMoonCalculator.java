@@ -195,6 +195,7 @@ public class SunMoonCalculator {
 
     /** Moon's age in days as an independent variable. */
     public double moonAge;
+    public double moonPhase;
 
 
     /**
@@ -321,6 +322,7 @@ public class SunMoonCalculator {
         setUTDate(jd);
         moon = doCalc(getMoon());
         double ma = moonAge;
+        double ph = moonPhase;
 
         //niter = 15; // Number of iterations to get accurate rise/set/transit times
         moon.rise = obtainAccurateRiseSetTransit(moon.rise, EVENT.RISE, niter, false);
@@ -336,6 +338,7 @@ public class SunMoonCalculator {
 
         setUTDate(jd);
         moonAge = ma;
+        moonPhase = ph;
 
         // Compute illumination phase percentage for the Moon
         getIlluminationPhase(moon);
@@ -489,6 +492,7 @@ public class SunMoonCalculator {
         l += E2 * 7.17E-4 * Math.sin(anomaly - 2 * sanomaly);
 
         double longitude = l * DEG_TO_RAD;
+        moonPhase = phase;
 
         double Psin = 29.530588853;
         if (sun != null) {
@@ -1108,7 +1112,7 @@ public class SunMoonCalculator {
         double bl = (Math.PI + Math.atan2(Math.cos(sunDEC) * Math.sin(moonRA - sunRA), Math.cos(sunDEC) *
                 sinMoonDec * Math.cos(moonRA - sunRA) - Math.sin(sunDEC) * cosMoonDec));
 
-        // Paralactic angle par
+        // Parallactic angle par
         y = Math.sin(lst - moonRA);
         x = Math.tan(obsLat) * cosMoonDec - sinMoonDec * Math.cos(lst - moonRA);
         double par;

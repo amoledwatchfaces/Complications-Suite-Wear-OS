@@ -31,6 +31,7 @@ import com.weartools.weekdayutccomp.MoonPhaseHelper
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.R.drawable
 import com.weartools.weekdayutccomp.SunMoonCalculator
+import com.weartools.weekdayutccomp.SunMoonCalculator.TWO_PI
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.time.LocalDateTime
@@ -120,8 +121,8 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
         val simpleIcon = preferences.getBoolean(getString(R.string.moon_setting_simple_icon_key), false)
         val isnorthernHemi = preferences.getBoolean(getString(R.string.moon_setting_hemi_key), true)
 
-        val lat = preferences.getString(getString(R.string.latitude_value), "0.0").toString().toDouble()
-        val long = preferences.getString(getString(R.string.longitude_value), "0.0").toString().toDouble()
+        val lat = preferences.getString(getString(R.string.latitude_value), "48").toString().toDouble()
+        val long = preferences.getString(getString(R.string.longitude_value), "19").toString().toDouble()
         //val altitude = preferences.getInt(getString(R.string.altitude_value), 0)
         /**
          * Get current time and split it to YYYY / MM / DD / HH / MM / SS - CONVERT TO UTC
@@ -144,7 +145,12 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
 
         /** Get moon phase value */
         val fraction = smc.moon.illuminationPhase
-        val phase = smc.moonAge / 29.59
+        //val oldPhase = smc.moonAge / 29.53058 // 29.530588853
+        val phase = smc.moonPhase / TWO_PI
+
+        //Log.d(TAG, "Fraction: $fraction")
+        //Log.d(TAG, "phase: $phase")
+        //Log.d(TAG, "phaseOld: $oldPhase")
 
         /** CONSIDER LOCATION TOAST */
         if (lat == 0.0) {
