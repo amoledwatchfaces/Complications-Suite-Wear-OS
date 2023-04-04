@@ -173,7 +173,7 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
                 MonochromaticImage.Builder(
                     if (simpleIcon) {
                         createWithResource(this,
-                            MoonPhaseHelper.getSimpleIcon(phase,isnorthernHemi))
+                            MoonPhaseHelper.getSimpleIcon(smc.moonAge,isnorthernHemi))
                     }
                     else {
                         createWithBitmap(
@@ -192,12 +192,12 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
             text = PlainComplicationText.Builder(text = "$visibilityok %").build(),
             contentDescription = PlainComplicationText.Builder(text = getString(R.string.moon_comp_name)).build())
 
-            .setTitle(PlainComplicationText.Builder(text = MoonPhaseHelper.getMoonPhaseName(phase = smc.moonAge, context = this)).build())
+            .setTitle(PlainComplicationText.Builder(text = MoonPhaseHelper.getMoonPhaseName(moonAge = smc.moonAge, context = this)).build())
             .setMonochromaticImage(
                 MonochromaticImage.Builder(
                     if (simpleIcon) {
                         createWithResource(this,
-                            MoonPhaseHelper.getSimpleIcon(phase,isnorthernHemi))
+                            MoonPhaseHelper.getSimpleIcon(smc.moonAge,isnorthernHemi))
                     }
                     else {
                         createWithBitmap(LunarPhase.getNewLunarPhaseBitmap(
@@ -223,7 +223,7 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
                 MonochromaticImage.Builder(
                     if (simpleIcon) {
                         createWithResource(this,
-                            MoonPhaseHelper.getSimpleIcon(phase,isnorthernHemi))
+                            MoonPhaseHelper.getSimpleIcon(smc.moonAge,isnorthernHemi))
                     }
                     else {createWithBitmap(LunarPhase.getNewLunarPhaseBitmap(
                         phaseValue = phase,
@@ -242,7 +242,7 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
                 monochromaticImage = MonochromaticImage.Builder(
                     if (simpleIcon) {
                         createWithResource(this,
-                            MoonPhaseHelper.getSimpleIcon(phase,isnorthernHemi))
+                            MoonPhaseHelper.getSimpleIcon(smc.moonAge,isnorthernHemi))
                     }
                     else {createWithBitmap(LunarPhase.getNewLunarPhaseBitmap(
                         phaseValue = phase,
@@ -263,7 +263,7 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
             smallImage = SmallImage.Builder(
                 image = if (simpleIcon) {
                     createWithResource(this,
-                        MoonPhaseHelper.getSimpleIcon(phase,isnorthernHemi))
+                        MoonPhaseHelper.getSimpleIcon(smc.moonAge,isnorthernHemi))
                 }
                 else {createWithBitmap(LunarPhase.getNewLunarPhaseBitmap(
                     phaseValue = phase,

@@ -85,12 +85,11 @@ class MoonPhaseHelper{
     }
 
 
-    fun getSimpleIcon(rawPhase: Double, isnorthernHemi: Boolean): Int {
+    fun getSimpleIcon(moonAge: Double, isnorthernHemi: Boolean): Int {
 
       // GET RAW PHASE
-      val phase = rawPhase * MOON_PHASE_LENGTH
-      val phaseValue = floor(phase).toInt() % 30
-      val simplePhaseValue: Int = when (phaseValue) {
+      val ageValue = floor(moonAge).toInt() % 30
+      val simplePhaseValue: Int = when (ageValue) {
         in 1..6 -> 1
         7 -> 2
         in 8..14 -> 3
@@ -101,13 +100,12 @@ class MoonPhaseHelper{
         else -> 0
       }
 
-      return if (phaseValue==0) { drawable.x_moon_new }
+      return if (ageValue==0) { drawable.x_moon_new }
       else if (isnorthernHemi) { SIMPLE_IMAGE_LOOKUP[simplePhaseValue] }
       else { SIMPLE_IMAGE_LOOKUP[8 - simplePhaseValue] }
     }
 
     private const val TAG = "MoonView"
-    private const val MOON_PHASE_LENGTH = 29.53058
 
     private val SIMPLE_IMAGE_LOOKUP = intArrayOf(
       drawable.x_moon_new,
@@ -120,9 +118,9 @@ class MoonPhaseHelper{
       drawable.x_moon_waning_crescent,
     )
 
-    fun getMoonPhaseName(phase: Double, context: Context): String {
+    fun getMoonPhaseName(moonAge: Double, context: Context): String {
 
-      val phaseString: String = when (floor(phase).toInt() % 30) {
+      val phaseString: String = when (floor(moonAge).toInt() % 30) {
         in 1..6 -> "WAXING_CRESCENT"
         7 -> "FIRST_QUARTER"
         in 8..14 -> "WAXING_GIBBOUS"
