@@ -130,5 +130,6 @@
     <string name="sunrise">Nascer do sol</string>
     <string name="sunset">Pôr do sol</string>
     <string name="enable_permission_toast">Precisa de permissão! (App UI)</string>
+    <string name="enable_permission_toast_consider">Ativar localização para lua precisa</string>
     <string name="location">Localização</string>
 </resources>

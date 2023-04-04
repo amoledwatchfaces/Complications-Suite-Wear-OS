@@ -1,121 +1,126 @@
 package com.weartools.weekdayutccomp
 
 import android.graphics.*
-import kotlin.math.min
-
+import kotlin.math.abs
+import kotlin.math.asin
+import kotlin.math.cos
+import java.lang.Math.toDegrees as deg
 
 object LunarPhase {
-    /**
-     * Draw a circle, then draw a half circle on top of it, then draw a quarter circle on top of that,
-     * then flip the image if the phase is less or equal to 0.5
-     *
-     * @param fractionValue The percentage of the moon that is illuminated. 0.0 - not visible, 1.0 fully visible
-     * @param phaseValue The phase of the moon, in degrees. 0.0 is new moon, 1.0 is full moon
-     * @param targetSize The size of the bitmap to be returned.
-     * @return A bitmap of the moon's phase.
-     */
-    fun getLunarPhaseBitmap(
-        fractionValue: Double, // percentage of the moon that is illuminated (0 --> 100)
-        phaseValue: Double,// 0.0 (new moon) --> 0.5 (full moon) --> 1.0 (new moon)
-        targetSize: Int = 72, // target size of the output bitmap
-        angleValue: Float = 0f,
-        isnorthernHemi: Boolean,
-    ): Bitmap {
-        var percentIlluminated: Double = fractionValue // calculate the percentage of the moon that is illuminated
-        when (percentIlluminated) {
-            in 0.01..0.05 -> percentIlluminated = 0.05
-            in 0.06..0.15 -> percentIlluminated += 0.05
-            in 0.16..0.25 -> percentIlluminated += 0.04
-            in 0.26..0.35 -> percentIlluminated += 0.03
-            in 0.36..0.45 -> percentIlluminated += 0.02
-            in 0.55..0.65 -> percentIlluminated -= 0.05
-            in 0.66..0.75 -> percentIlluminated -= 0.04
-            in 0.76..0.85 -> percentIlluminated -= 0.03
-            in 0.86..0.95 -> percentIlluminated -= 0.02
-        }
 
-        // DARK COLOR
+    fun getNewLunarPhaseBitmap(
+        phaseValue: Double,
+        smc: SunMoonCalculator,
+        lat: Double,
+        hemi: Boolean
+    ): Bitmap
+    {
+        /**
+         * Set Bitmap SIZE
+         */
+        val targetSize = 72F // BITMAP SIZE
+
+        /** Get orientation angles */
+        val p1 = smc.moonDiskOrientationAngles
+        val axis = deg(p1[2])
+        val brightLimb = deg(p1[3])
+        val parallactic = deg(p1[4])
+
+        var phase = phaseValue
+        if (phase >= 0.97 || phase < 0.03) { phase = 0.0 }
+        if (phase >= 0.03 && phase < 0.08) { phase = 0.08 }
+        if (phase >= 0.93) { phase = 0.93 }
+
+        /**
+         * APPLY ROTATION
+         */
+        var brightLimbRotate = brightLimb - 90
+        if (brightLimb > 180) {
+            brightLimbRotate = brightLimb - 270
+        }
+        brightLimbRotate -= axis
+        val preRotate = parallactic - axis
+
+        /** SET ROTATION TO 90 WHEN LOCATION IS NOT SET AND ROTATE BACKWARDS WHEN IS NORTH HEMI IS NOT TRUE*/
+        val postRotate = if (lat!=0.0) (brightLimbRotate + preRotate)
+                            else if (!hemi) 180
+                            else 0
+
+        // DEBUG
+/*
+        Log.d(TAG, "phase: $phase")
+        Log.d(TAG, "axis: $axis")
+        Log.d(TAG, "brightLimb: $brightLimb")
+        Log.d(TAG, "parallactic: $parallactic")
+        Log.d(TAG, "preRotate: $preRotate")
+        Log.d(TAG, "postRotate: $postRotate")
+*/
+        /**
+         * MOON COLORS
+         */
+        // MOON DARK PART COLOR
+        val path = Path()
         val shadowPaint = Paint()
         shadowPaint.color =  Color.rgb(52,52,52)
+        shadowPaint.style = Paint.Style.FILL
         shadowPaint.isAntiAlias = true
 
-        // WHITE COLOR
+        // MOON WHITE PART
         val brightPaint = Paint()
+        brightPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
         brightPaint.color = Color.WHITE
         brightPaint.isAntiAlias = true
 
-        val scalingFactor = 1f // scaling factor used to scale down the moon's size slightly
-        val radius = min(targetSize / 2f, targetSize / 2f * scalingFactor) // calculate the radius of the moon
-        val bitmap = Bitmap.createBitmap(targetSize, targetSize, Bitmap.Config.ARGB_8888)
+        /** START DRAWING */
+        val bitmap = Bitmap.createBitmap(targetSize.toInt(), targetSize.toInt(), Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
-        val rotationCenter = targetSize / 2f
+        val radius = ((targetSize / 2))
 
-        var rotation = if (phaseValue>0.5) 0f else 180f //TODO: Implement proper rotation for (48.89,19.85), test different dates basic date 31/3/2023
-        if (!isnorthernHemi) rotation += 180f
+        /** DRAW MOON CIRCLE */
+        canvas.drawCircle(
+            targetSize / 2,
+            targetSize / 2,
+            radius,
+            shadowPaint
+        )
 
-        if (percentIlluminated != 0.0) {
-            // if the moon is not completely dark, draw a white circle to represent the moon
-            canvas.drawCircle(
-                (targetSize / 2).toFloat(),
-                (targetSize / 2).toFloat(),
-                radius,
-                shadowPaint
-            )
+        val limb = (cos(2.0 * Math.PI * phase) * radius * cos(asin(0.0))).toFloat()
+        if (phase < 0.5) {
+            if (limb >= 0) {
+                path.moveTo(targetSize / 2f, 0f)
+                path.arcTo(
+                    radius - abs(limb),
+                    0f,
+                    radius + abs(limb),
+                    targetSize,
+                    270f,
+                    180f,
+                    false
+                )
+                path.lineTo(targetSize, targetSize)
+                path.lineTo(targetSize, 0f)
+            } else {
+                path.moveTo(targetSize / 2f, targetSize)
+                path.arcTo(radius - abs(limb), 0f, radius + abs(limb), targetSize, 90f, 180f, false)
+                path.lineTo(targetSize, 0f)
+                path.lineTo(targetSize, targetSize)
+            }
+        } else if (limb >= 0) {
+            path.moveTo(targetSize / 2f, targetSize)
+            path.arcTo(radius - abs(limb), 0f, radius + abs(limb), targetSize, 90f, 180f, false)
+            path.lineTo(0f, 0f)
+            path.lineTo(0f, targetSize)
+        } else {
+            path.moveTo(targetSize / 2f, 0f)
+            path.arcTo(radius - abs(limb), 0f, radius + abs(limb), targetSize, 270f, 180f, false)
+            path.lineTo(0f, targetSize)
+            path.lineTo(0f, 0f)
         }
 
-        if (percentIlluminated > 0.01 && percentIlluminated <= 0.5) {
-            // if the moon is in the first half of its cycle
-            // draw a dark semicircle to represent the un-illuminated portion of the moon
-            canvas.save()
-            canvas.rotate(rotation, rotationCenter, rotationCenter)
-            canvas.drawArc(
-                (targetSize / 2) - radius,
-                (targetSize / 2) - radius,
-                (targetSize / 2) + radius,
-                (targetSize / 2) + radius,
-                90f,
-                180f,
-                true,
-                brightPaint
-            )
-            canvas.restore()
-            canvas.save()
-            canvas.rotate(rotation, rotationCenter, rotationCenter)
-            val ovalBounds = RectF()
-            val ovalLeft = (targetSize / 2 - radius + 2 * radius * percentIlluminated).toFloat()
-            val ovalRight = (targetSize / 2 + radius - 2 * radius * percentIlluminated).toFloat()
-            ovalBounds[ovalLeft, (targetSize / 2 - radius), ovalRight] = (targetSize / 2 + radius)
-            canvas.drawOval(ovalBounds, shadowPaint)
-            canvas.restore()
+        canvas.rotate(postRotate.toFloat(), radius, radius)
+        if (phase != 0.0) {canvas.drawPath(path, brightPaint)}
 
-        } else if (percentIlluminated > 0.5){
-            // if the moon is in the second half of its cycle
-            // draw a dark semicircle to represent the un-illuminated portion of the moon
-
-            canvas.save()
-            canvas.rotate(rotation, rotationCenter, rotationCenter)
-            canvas.drawArc(
-                (targetSize / 2) - radius,
-                (targetSize / 2) - radius,
-                (targetSize / 2) + radius,
-                (targetSize / 2) + radius,
-                90f,
-                180f,
-                true,
-                brightPaint
-            )
-            canvas.restore()
-            canvas.save()
-            // draw a white oval to represent the illuminated portion of the moon
-            canvas.rotate(rotation, rotationCenter, rotationCenter)
-            val ovalBounds = RectF()
-            val ovalLeft = (targetSize / 2 + radius - 2 * radius * percentIlluminated).toFloat()
-            val ovalRight = (targetSize / 2 - radius + 2 * radius * percentIlluminated).toFloat()
-            ovalBounds[ovalLeft, (targetSize / 2 - radius), ovalRight] = (targetSize / 2 + radius)
-            canvas.drawOval(ovalBounds, brightPaint)
-            canvas.restore()
-        }
-
-        return Bitmap.createScaledBitmap(bitmap, targetSize, targetSize, true)
+        /** RETURN BITMAP */
+        return bitmap
     }
 }

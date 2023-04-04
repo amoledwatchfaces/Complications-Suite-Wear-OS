@@ -130,5 +130,6 @@
     <string name="sunrise">Alba</string>
     <string name="sunset">Tramonto</string>
     <string name="enable_permission_toast">Richiede il permesso! (App UI)</string>
+    <string name="enable_permission_toast_consider">Abilita la posizione per la luna precisa</string>
     <string name="location">Posizione</string>
 </resources>

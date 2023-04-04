@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Translated by: amoledwatchfaces -->
+<resources>
+    <!-- Do not translate translatable="false" lines -->
+    <string name="app_name">Complications Suite</string> <!-- Does not need to be translated, but it's recommended -->
+    <string name="app_info">App Info</string>
+    <string name="version">Version</string>
+    <string name="version_number" translatable="false">v1.6.2</string>
+    <string name="settings">Settings</string>
+    <string name="language">Language</string>
+
+    <string name="compose_toggle" translatable="false">Toggle</string>
+
+    <!-- Crypto Complication -->
+    <string name="crypto_name_1" translatable="true">BTC Price $</string>
+    <string name="price_1" translatable="false">0.0</string>
+    <string name="price_1_string" translatable="false">BTC</string>
+    <string name="ticker_1" translatable="false">BTCBUSD</string>
+
+    <string name="crypto_name_2" translatable="true">ETH Price $</string>
+    <string name="price_2" translatable="false">0.0</string>
+    <string name="price_2_string" translatable="false">ETH</string>
+    <string name="ticker_2" translatable="false">ETHBUSD</string>
+
+    <!-- Flashlight Complication -->
+    <string name="flashlight_comp_name">Flashlight</string>
+
+    <!-- Alarm Complication Preferences -->
+    <string name="alarm_comp_name">Alarm</string>
+
+    <!-- Assist Complication Preferences -->
+    <string name="assist_comp_name">Assistant</string>
+    <string name="assist_missing">Assistant app not installed</string>
+
+    <!-- Date Complication Preferences -->
+    <string name="date_comp_name">Date (Suite)</string>
+    <string name="date_setting_preference_category_title">Date Complication</string>
+    <string name="date_long_text_key" translatable="false">date_format</string>
+    <string name="date_short_text_key" translatable="false">short_text_format</string>
+    <string name="date_short_title_key" translatable="false">short_title_format</string>
+    <string name="date_long_text_format">Long Text Format</string>
+    <string name="date_short_text_format">Short Text Format</string>
+    <string name="date_short_title_format">Short Title Format</string>
+
+    <!-- Day of Year Complication Preferences -->
+    <string name="doy_comp_name">Day of Year</string>
+    <string name="doy_short_title">Day</string>
+
+    <!-- Logo Complication Preferences -->
+    <string name="logo_comp_name">Wear OS logo</string>
+
+    <!-- Moon Phase Complication Preferences -->
+    <string name="moon_comp_name">Moon Phase</string>
+    <string name="moon_setting_preference_category_title">Moon / Sun Complication</string>
+
+    <array name="moon_phases">
+        <item>First Quarter</item>
+        <item>Full Moon</item>
+        <item>Last Quarter</item>
+        <item>New Moon</item>
+        <item>Waning Crescent</item>
+        <item>Waning Gibbous</item>
+        <item>Waxing Crescent</item>
+        <item>Waxing Gibbous</item>
+    </array>
+
+    <string name="moon_setting_hemi_key" translatable="false">is_northern</string>
+    <string name="moon_setting_hemi_title">Hemisphere</string>
+    <string name="moon_setting_hemi_on">Northern</string>
+    <string name="moon_setting_hemi_off">Southern</string>
+    <string name="moon_setting_simple_icon_key" translatable="false">is_simple_icon</string>
+    <string name="moon_setting_simple_icon_title">Moon Icon</string>
+    <string name="moon_setting_simple_icon_on">Simple</string>
+    <string name="moon_setting_simple_icon_off">Detailed</string>
+    <string name="key_pref_phase_icon" translatable="false">R.drawable.moon0</string>
+    <string name="key_pref_moon_visibility" translatable="false">0.0</string>
+
+    <!-- Pay Complication -->
+    <string name="pay_comp_name">Pay</string>
+
+    <!-- Sec Complication -->
+    <string name="sec_comp_name">Seconds</string>
+    <string name="sec_short_title">Sec</string>
+
+    <!-- Time Complication Preferences -->
+    <string name="time_comp_name">Time</string>
+    <string name="time_comp_desc">Current Time</string>
+    <string name="time_setting_leading_zero_key" translatable="false">leading_zero_time</string>
+    <string name="time_setting_leading_zero_title">Leading zero</string>
+    <string name="time_setting_leading_zero_summary_on" translatable="false">09:00</string>
+    <string name="time_setting_leading_zero_summary_off" translatable="false">9:00</string>
+
+    <string name="time_ampm_setting_preference_category_title">Time / Sun Complication</string>
+    <string name="time_ampm_setting_key" translatable="false">is_military_time</string>
+    <string name="time_ampm_setting_title">Hour Format</string>
+    <string name="time_ampm_setting_on">24h</string>
+    <string name="time_ampm_setting_off">12h</string>
+
+    <!-- World Clock Complication Preferences -->
+    <string name="wc_comp_name_1">World Clock 1</string>
+    <string name="wc_comp_name_2">World Clock 2</string>
+    <string name="wc_setting_preference_category_title">World Clock Complication</string>
+    <string name="wc_setting_leading_zero_key" translatable="false">leading_zero</string>
+    <string name="wc_setting_leading_zero_title">Leading zero</string>
+    <string name="wc_setting_leading_zero_summary_on" translatable="false">09:00</string>
+    <string name="wc_setting_leading_zero_summary_off" translatable="false">9:00</string>
+
+    <string name="wc_ampm_setting_key" translatable="false">is_military</string>
+    <string name="wc_ampm_setting_title">Hour Format</string>
+    <string name="wc_ampm_setting_on">24h</string>
+    <string name="wc_ampm_setting_off">12h</string>
+
+    <string name="wc_setting_key" translatable="false">citiesid</string>
+    <string name="wc2_setting_key" translatable="false">citiesid2</string>
+    <string name="wc_setting_title">Timezone 1 ID</string>
+    <string name="wc2_setting_title">Timezone 2 ID</string>
+
+    <!-- WOY Complication Preferences -->
+    <string name="week_complication_name">Week of Year</string>
+    <string name="woy_complication_text">Week</string>
+    <string name="woy_complication_description">Week of Year</string>
+    <string name="woy_setting_preference_category_title">Week of Year Complication</string>
+    <string name="woy_setting_key" translatable="false">is_iso_week</string>
+    <string name="woy_setting_title">Format</string>
+    <string name="woy_setting_on" translatable="false">ISO</string>
+    <string name="woy_setting_off" translatable="false">US</string>
+
+    <!-- Custom Text + Title -->
+    <string name="custom_text_comp_name">Custom Text</string>
+    <string name="custom_text_comp_name_category">Custom Text Complication</string>
+    <string name="custom_text" translatable="false">custom_text</string>
+    <string name="custom_title" translatable="false">custom_title</string>
+
+    <string name="longitude_value" translatable="false">longitude_value</string>
+    <string name="coarse_enabled" translatable="false">coarse_enabled</string>
+    <!--translate-->
+    <string name="coarse_location_toggle_title">Coarse Location</string>
+    <string name="coarse_secondary_enabled">Enabled</string>
+    <string name="coarse_secondary_disabled">Disabled</string>
+    <string name="coarse_toggle_description">Coarse Location Permission Toggle</string>
+
+    <!-- Sunrise / Sunset -->
+    <string name="change_time" translatable="false">change_time</string>
+    <string name="sunrise_sunset_icon" translatable="false">R.drawable.ic_sunrise</string>
+    <string name="is_sunrise" translatable="false">is_sunrise</string>
+    <!--translate-->
+    <string name="sunrise_sunset_comp_name">Sunrise &amp; Sunset</string>
+    <string name="sunrise">Sunrise</string>
+    <string name="sunset">Sunset</string>
+    <string name="enable_permission_toast">Needs coarse location permission (App UI)</string>
+    <string name="enable_permission_toast_consider">Enable location for precise Moon rotation</string>
+    <string name="location">Location</string>
+</resources>

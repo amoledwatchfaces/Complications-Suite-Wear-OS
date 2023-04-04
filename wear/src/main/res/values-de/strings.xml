@@ -127,5 +127,6 @@
     <string name="sunrise">Sonnenaufgang</string>
     <string name="sunset">Sonnenuntergang</string>
     <string name="enable_permission_toast">Benötigt zuerst eine Erlaubnis (App)</string>
+    <string name="enable_permission_toast_consider">Standort für präzise Mondrotation aktivieren</string>
     <string name="location">Standort</string>
 </resources>

@@ -206,18 +206,7 @@ fun ComplicationsSuiteScreen(
 
         // MOON PHASE COMPLICATION PREFERENCE CATEGORY
         item { PreferenceCategory(title = stringResource(id = R.string.moon_setting_preference_category_title)) }
-        item {
-            ToggleChip(
-                label = stringResource(id = R.string.moon_setting_hemi_title),
-                secondaryLabelOn = stringResource(id = R.string.moon_setting_hemi_on),
-                secondaryLabelOff = stringResource(id = R.string.moon_setting_hemi_off),
-                checked = hemisphere,
-                onCheckedChange = {
-                    hemisphere=it
-                    pref.setIsHemisphere(it)
-                }
-            )
-        }
+
         item {
             ToggleChip(
                 label = stringResource(id = R.string.moon_setting_simple_icon_title),
@@ -231,6 +220,21 @@ fun ComplicationsSuiteScreen(
             )
         }
 
+        if (simpleIcon || !coarseEnabled)
+        {
+            item {
+                ToggleChip(
+                    label = stringResource(id = R.string.moon_setting_hemi_title),
+                    secondaryLabelOn = stringResource(id = R.string.moon_setting_hemi_on),
+                    secondaryLabelOff = stringResource(id = R.string.moon_setting_hemi_off),
+                    checked = hemisphere,
+                    onCheckedChange = {
+                        hemisphere=it
+                        pref.setIsHemisphere(it)
+                    }
+                )
+            }
+        }
 
         item {
             LocationToggle(

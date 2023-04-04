@@ -110,5 +110,6 @@
     <string name="sunrise">Východ slnka</string>
     <string name="sunset">Západ slnka</string>
     <string name="enable_permission_toast">Najprv povoľte približnú polohu (App UI)</string>
+    <string name="enable_permission_toast_consider">Pre presnejšiu rotáciu povoľte polohu</string>
     <string name="location">Poloha</string>
 </resources>

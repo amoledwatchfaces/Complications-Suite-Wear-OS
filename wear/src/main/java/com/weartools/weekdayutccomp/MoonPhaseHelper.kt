@@ -108,7 +108,7 @@ class MoonPhaseHelper{
     }
 
     private const val TAG = "MoonView"
-    private const val MOON_PHASE_LENGTH = 29.5
+    private const val MOON_PHASE_LENGTH = 29.59
 
     private val SIMPLE_IMAGE_LOOKUP = intArrayOf(
       drawable.x_moon_new,
@@ -121,14 +121,25 @@ class MoonPhaseHelper{
       drawable.x_moon_waning_crescent,
     )
 
-    fun getMoonPhaseName(phase: String, context: Context): String {
+    fun getMoonPhaseName(phase: Double, context: Context): String {
+
+      val phaseString: String = when (floor(phase).toInt() % 30) {
+        in 1..6 -> "WAXING_CRESCENT"
+        7 -> "FIRST_QUARTER"
+        in 8..14 -> "WAXING_GIBBOUS"
+        15 -> "FULL_MOON"
+        in 16..22 -> "WANING_GIBBOUS"
+        23 -> "LAST_QUARTER"
+        in 24..30 -> "WANING_CRESCENT"
+        else -> "NEW_MOON"
+      }
 
       val str = "FIRST_QUARTER,FULL_MOON,LAST_QUARTER,NEW_MOON,WANING_CRESCENT,WANING_GIBBOUS,WAXING_CRESCENT,WAXING_GIBBOUS"
       val strArray = str.split(",")
 
       val str2 = context.resources.getStringArray(R.array.moon_phases)
 
-      val index = strArray.indexOf(phase)
+      val index = strArray.indexOf(phaseString)
       return if (index != -1) str2[index] else "First Quarter"
     }
   }

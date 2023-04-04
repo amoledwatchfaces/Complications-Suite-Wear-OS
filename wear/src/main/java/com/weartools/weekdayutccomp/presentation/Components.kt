@@ -158,7 +158,7 @@ fun ToggleChip(
     onCheckedChange: (Boolean) -> Unit,
     label: String,
     secondaryLabelOn: String,
-    secondaryLabelOff: String,
+    secondaryLabelOff: String
 ) {
     ToggleChip(
         modifier = Modifier
@@ -167,7 +167,7 @@ fun ToggleChip(
         checked = checked,
         colors = ToggleChipDefaults.toggleChipColors(
             checkedEndBackgroundColor = wearColorPalette.primaryVariant,
-            checkedToggleControlColor = Color(0xFFffd215)
+            checkedToggleControlColor = Color(0xFFffd215),
         ),
         onCheckedChange = { enabled ->
             onCheckedChange(enabled)

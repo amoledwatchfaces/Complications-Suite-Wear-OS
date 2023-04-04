@@ -79,11 +79,11 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         if (key == "coarse_enabled"){ updateComplication(this, SunriseSunsetComplicationService::class.java) }
     }
 
-    fun updateComplication(context: Context, cls: Class<out ComplicationDataSourceService>) {
+
+    }    fun updateComplication(context: Context, cls: Class<out ComplicationDataSourceService>) {
         val component = ComponentName(context, cls)
         val req = ComplicationDataSourceUpdateRequester.create(context,component)
         req.requestUpdateAll()
-    }
 }
 
 @Composable
