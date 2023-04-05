@@ -121,7 +121,7 @@ object DrawMoonBitmap {
                 true,
                 brightPaint
             )
-            // draw a white oval to represent the illuminated portion of the moon
+            // draw a dark oval to hide rest of the illuminated part (using shadowPaint)
             val ovalBounds = RectF()
             val ovalLeft = (0f + 2 * radius * percentIlluminated).toFloat()
             val ovalRight = (targetSizeFloat - 2 * radius * percentIlluminated).toFloat()
