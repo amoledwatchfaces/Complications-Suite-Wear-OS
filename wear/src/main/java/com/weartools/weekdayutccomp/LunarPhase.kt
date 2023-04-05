@@ -1,6 +1,8 @@
 package com.weartools.weekdayutccomp
 
+import android.content.ContentValues.TAG
 import android.graphics.*
+import android.util.Log
 import kotlin.math.abs
 import kotlin.math.asin
 import kotlin.math.cos
@@ -25,6 +27,12 @@ object LunarPhase {
         val axis = deg(p1[2])
         val brightLimb = deg(p1[3])
         val parallactic = deg(p1[4])
+
+        Log.d(TAG, "--- OLD --")
+        Log.d(TAG, "axis: $axis")
+        Log.d(TAG, "brightLimb: $brightLimb")
+        Log.d(TAG, "parallactic: $parallactic")
+        Log.d(TAG, "--- OLD --")
 
         var phase = phaseValue
         if (phase >= 0.97 || phase < 0.03) { phase = 0.0 }

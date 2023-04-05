@@ -26,11 +26,9 @@ import androidx.preference.PreferenceManager
 import androidx.wear.watchface.complications.data.*
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
-import com.weartools.weekdayutccomp.LunarPhase
-import com.weartools.weekdayutccomp.MoonPhaseHelper
+import com.weartools.weekdayutccomp.*
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.R.drawable
-import com.weartools.weekdayutccomp.SunMoonCalculator
 import com.weartools.weekdayutccomp.SunMoonCalculator.TWO_PI
 import java.math.RoundingMode
 import java.text.DecimalFormat
@@ -121,8 +119,8 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
         val simpleIcon = preferences.getBoolean(getString(R.string.moon_setting_simple_icon_key), false)
         val isnorthernHemi = preferences.getBoolean(getString(R.string.moon_setting_hemi_key), true)
 
-        val lat = preferences.getString(getString(R.string.latitude_value), "0.0").toString().toDouble()
-        val long = preferences.getString(getString(R.string.longitude_value), "0.0").toString().toDouble()
+        val lat = preferences.getString(getString(R.string.latitude_value), "48.0").toString().toDouble()
+        val long = preferences.getString(getString(R.string.longitude_value), "20.0").toString().toDouble()
         //val altitude = preferences.getInt(getString(R.string.altitude_value), 0)
         /**
          * Get current time and split it to YYYY / MM / DD / HH / MM / SS - CONVERT TO UTC
@@ -244,12 +242,7 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
                         createWithResource(this,
                             MoonPhaseHelper.getSimpleIcon(smc.moonAge,isnorthernHemi))
                     }
-                    else {createWithBitmap(LunarPhase.getNewLunarPhaseBitmap(
-                        phaseValue = phase,
-                        smc = smc,
-                        lat = lat,
-                        hemi = isnorthernHemi
-                    ))}
+                    else {createWithBitmap(DrawMoonBitmap.getLunarPhaseBitmap())}
                 ).build(),
                 contentDescription = PlainComplicationText.Builder(text = "MONO_IMG.").build()
             )
