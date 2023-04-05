@@ -10,7 +10,7 @@ import org.shredzone.commons.suncalc.MoonPosition
 object DrawMoonBitmap {
     /**
      * Draw a circle, then draw a half circle on top of it, then draw a quarter circle on top of that,
-     * then flip the image if the phase is less or equal to 0.5
+     * then flip the image if the phase is less or equal to 0.5 (0 when we use scale -180 to 180)
      *
      */
     fun getLunarPhaseBitmap(
@@ -22,9 +22,9 @@ object DrawMoonBitmap {
         /** INITIAL SET OF VARIABLES USED */
         var percentIlluminated = set2.fraction // calculate the percentage of the moon that is illuminated
         val phaseValue = set2.phase // phase from -180 (new moon - waxing) to 180 (new moon - waning)
-        val axis = 18f // TODO: Needs to be computed
-        val brightLimb = 291f // TODO: Needs to be computed
-        val parallactic = set1.parallacticAngle.toFloat()
+        val axis = 0f // TODO: Needs to be computed
+        val brightLimb = 0f // TODO: Needs to be computed
+        val parallactic = set1.parallacticAngle.toFloat() // TODO: Differs from SunMoonCalculator a lot, maybe because SMC is also using Sun Position?
 
         Log.d(TAG, "percentIlluminated: $percentIlluminated")
         Log.d(TAG, "phaseValue: $phaseValue")
@@ -32,15 +32,13 @@ object DrawMoonBitmap {
         Log.d(TAG, "brightLimb: $brightLimb")
         Log.d(TAG, "parallactic: $parallactic")
 
-
         /** COMPUTE MOON IMAGE ROTATION */
-        var initialRotation =  0f // INITIAL SET
-        if (phaseValue<0) initialRotation -= 180f // ROTATE BY 180° because our draw method works only in one direction
+        var initialRotation =  0f // INITIAL ROTATION
+        if (phaseValue <= 0) initialRotation -= 180f // ROTATE BY 180° when moon is waxing (-180, 0) because our draw method works only in one direction
+
         // NOW CONTINUE WITH OTHER COMPUTATIONS
         var brightLimbRotate = brightLimb - 90f
-        if (brightLimb > 180f) {
-            brightLimbRotate = brightLimb - 270f
-        }
+        if (brightLimb > 180f) { brightLimbRotate = brightLimb - 270f }
         brightLimbRotate -= axis
         val lastRotate = parallactic - axis
 
