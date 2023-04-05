@@ -94,6 +94,7 @@ object DrawMoonBitmap {
 
         /** SET CANVAS */
         val radius = targetSize / 2f // calculate the radius of the moon = CENTER POINT
+        val targetSizeFloat = targetSize.toFloat()
         val bitmap = Bitmap.createBitmap(targetSize, targetSize, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
 
@@ -111,10 +112,10 @@ object DrawMoonBitmap {
             // draw a white semicircle to represent the illuminated portion of the moon
 
             canvas.drawArc(
-                (targetSize / 2) - radius,
-                (targetSize / 2) - radius,
-                (targetSize / 2) + radius,
-                (targetSize / 2) + radius,
+                0f,
+                0f,
+                targetSizeFloat,
+                targetSizeFloat,
                 90f,
                 180f,
                 true,
@@ -122,9 +123,9 @@ object DrawMoonBitmap {
             )
             // draw a white oval to represent the illuminated portion of the moon
             val ovalBounds = RectF()
-            val ovalLeft = (targetSize / 2 - radius + 2 * radius * percentIlluminated).toFloat()
-            val ovalRight = (targetSize / 2 + radius - 2 * radius * percentIlluminated).toFloat()
-            ovalBounds[ovalLeft, (targetSize / 2 - radius), ovalRight] = (targetSize / 2 + radius)
+            val ovalLeft = (0f + 2 * radius * percentIlluminated).toFloat()
+            val ovalRight = (targetSizeFloat - 2 * radius * percentIlluminated).toFloat()
+            ovalBounds[ovalLeft, 0f, ovalRight] = targetSizeFloat
             canvas.drawOval(ovalBounds, shadowPaint)
 
         }
@@ -133,10 +134,10 @@ object DrawMoonBitmap {
             // if the moon is in the second half of its cycle
             // draw a white semicircle to represent the illuminated portion of the moon
             canvas.drawArc(
-                (targetSize / 2) - radius,
-                (targetSize / 2) - radius,
-                (targetSize / 2) + radius,
-                (targetSize / 2) + radius,
+                0f,
+                0f,
+                targetSizeFloat,
+                targetSizeFloat,
                 90f,
                 180f,
                 true,
@@ -144,9 +145,9 @@ object DrawMoonBitmap {
             )
             // draw a white oval to represent the illuminated portion of the moon
             val ovalBounds = RectF()
-            val ovalLeft = (targetSize / 2 + radius - 2 * radius * percentIlluminated).toFloat()
-            val ovalRight = (targetSize / 2 - radius + 2 * radius * percentIlluminated).toFloat()
-            ovalBounds[ovalLeft, (targetSize / 2 - radius), ovalRight] = (targetSize / 2 + radius)
+            val ovalLeft = (targetSizeFloat - 2 * radius * percentIlluminated).toFloat()
+            val ovalRight = (0f + 2 * radius * percentIlluminated).toFloat()
+            ovalBounds[ovalLeft, 0f, ovalRight] = targetSizeFloat
             canvas.drawOval(ovalBounds, brightPaint)
 
         }
