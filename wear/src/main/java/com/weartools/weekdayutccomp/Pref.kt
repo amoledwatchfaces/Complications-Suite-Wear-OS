@@ -70,6 +70,8 @@ class Pref(val context: Context) {
     //fun setAltitude(value: Int){ getInstance(context).edit().putInt("altitude_value",value).apply() }
     //fun getAltitude():Int { return getInstance(context).getInt("altitude_value",0)  }
 
+    fun forceRefresh(value: Int){ getInstance(context).edit().putInt("force_refresh",value).apply() }
+
     // LOCALE
     fun updateLocale(s: String) { getInstance(context).edit().putString("locale",s).apply () }
     fun getLocale(): String { return getInstance(context).getString("locale","en")?:"en" }

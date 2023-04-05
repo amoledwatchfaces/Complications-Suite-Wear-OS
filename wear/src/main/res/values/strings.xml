@@ -135,6 +135,8 @@
     <string name="longitude_value" translatable="false">longitude_value</string>
     <!--<string name="altitude_value" translatable="false">altitude_value</string>-->
     <string name="coarse_enabled" translatable="false">coarse_enabled</string>
+    <string name="force_refresh" translatable="false">force_refresh</string>
+
     <!--translate-->
     <string name="coarse_location_toggle_title">Coarse Location</string>
     <string name="coarse_secondary_enabled">Enabled</string>

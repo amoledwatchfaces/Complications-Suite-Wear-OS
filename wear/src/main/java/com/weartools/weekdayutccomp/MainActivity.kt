@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         }
         if (key == "is_iso_week"){updateComplication(this, WeekOfYearComplicationService::class.java)}
         if (key == "date_format" || key == "short_text_format" || key == "short_title_format"){updateComplication(this, DateComplicationService::class.java)}
-        if (key == "coarse_enabled"){
+        if (key == "coarse_enabled" || key == "force_refresh"){
             updateComplication(this, SunriseSunsetComplicationService::class.java)
             updateComplication(this, MoonPhaseComplicationService::class.java)
         }

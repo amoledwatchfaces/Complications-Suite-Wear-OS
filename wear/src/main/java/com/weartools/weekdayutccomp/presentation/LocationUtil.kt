@@ -49,7 +49,7 @@ fun LocationCard(
                         if (it != null) {
                         pref.setLatitude(it.latitude.toString())
                         pref.setLongitude(it.longitude.toString())
-                        //pref.setAltitude(it.altitude.toInt())
+                        pref.forceRefresh((0..10).random()) // TO REFRESH COMPLICATIONS ON REFRESH BUTTON CLICK
                         //Log.d(TAG, "${it.altitude}")
                         }
                         else { Log.d(TAG, "No Location available :(") }
