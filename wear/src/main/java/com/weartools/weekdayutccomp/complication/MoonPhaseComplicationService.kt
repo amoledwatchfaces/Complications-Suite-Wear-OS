@@ -119,8 +119,8 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
         val simpleIcon = preferences.getBoolean(getString(R.string.moon_setting_simple_icon_key), false)
         val isnorthernHemi = preferences.getBoolean(getString(R.string.moon_setting_hemi_key), true)
 
-        val lat = preferences.getString(getString(R.string.latitude_value), "48.0").toString().toDouble()
-        val long = preferences.getString(getString(R.string.longitude_value), "20.0").toString().toDouble()
+        val lat = preferences.getString(getString(R.string.latitude_value), "0.0").toString().toDouble()
+        val long = preferences.getString(getString(R.string.longitude_value), "0.0").toString().toDouble()
         //val altitude = preferences.getInt(getString(R.string.altitude_value), 0)
         /**
          * Get current time and split it to YYYY / MM / DD / HH / MM / SS - CONVERT TO UTC
@@ -143,8 +143,8 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
 
         /** Get moon phase value */
         val fraction = smc.moon.illuminationPhase
-        //val oldPhase = smc.moonAge / 29.53058 // 29.530588853
         val phase = smc.moonPhase / TWO_PI
+        //val oldPhase = smc.moonAge / 29.53058 // 29.530588853
 
         //Log.d(TAG, "Fraction: $fraction")
         //Log.d(TAG, "phase: $phase")
@@ -175,12 +175,12 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
                     }
                     else {
                         createWithBitmap(
-                            LunarPhase.getNewLunarPhaseBitmap(
-                            phaseValue = phase,
-                            smc = smc,
-                            lat = lat,
-                            hemi = isnorthernHemi
-                        ))
+                            DrawMoonBitmap.getLunarPhaseBitmap(
+                                phaseValue = phase,
+                                fraction = fraction,
+                                smc = smc,
+                                lat = lat,
+                                hemi = isnorthernHemi))
                     }
                 ).build()
             )
@@ -198,12 +198,12 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
                             MoonPhaseHelper.getSimpleIcon(smc.moonAge,isnorthernHemi))
                     }
                     else {
-                        createWithBitmap(LunarPhase.getNewLunarPhaseBitmap(
+                        createWithBitmap(DrawMoonBitmap.getLunarPhaseBitmap(
                             phaseValue = phase,
+                            fraction = fraction,
                             smc = smc,
                             lat = lat,
-                            hemi = isnorthernHemi
-                        ))
+                            hemi = isnorthernHemi))
                     }
                 ).build()
             )
@@ -223,12 +223,12 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
                         createWithResource(this,
                             MoonPhaseHelper.getSimpleIcon(smc.moonAge,isnorthernHemi))
                     }
-                    else {createWithBitmap(LunarPhase.getNewLunarPhaseBitmap(
+                    else {createWithBitmap(DrawMoonBitmap.getLunarPhaseBitmap(
                         phaseValue = phase,
+                        fraction = fraction,
                         smc = smc,
                         lat = lat,
-                        hemi = isnorthernHemi
-                    ))}
+                        hemi = isnorthernHemi))}
                 ).build()
             )
             .setTapAction(openScreen())
@@ -242,8 +242,13 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
                         createWithResource(this,
                             MoonPhaseHelper.getSimpleIcon(smc.moonAge,isnorthernHemi))
                     }
-                    else {createWithBitmap(DrawMoonBitmap.getLunarPhaseBitmap())}
-                ).build(),
+                    else {createWithBitmap(DrawMoonBitmap.getLunarPhaseBitmap(
+                        phaseValue = phase,
+                        fraction = fraction,
+                        smc = smc,
+                        lat = lat,
+                        hemi = isnorthernHemi))
+                    }).build(),
                 contentDescription = PlainComplicationText.Builder(text = "MONO_IMG.").build()
             )
                 .setTapAction(openScreen())
@@ -258,12 +263,12 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
                     createWithResource(this,
                         MoonPhaseHelper.getSimpleIcon(smc.moonAge,isnorthernHemi))
                 }
-                else {createWithBitmap(LunarPhase.getNewLunarPhaseBitmap(
+                else {createWithBitmap(DrawMoonBitmap.getLunarPhaseBitmap(
                     phaseValue = phase,
+                    fraction = fraction,
                     smc = smc,
                     lat = lat,
-                    hemi = isnorthernHemi
-                ))},
+                    hemi = isnorthernHemi))},
                 type = SmallImageType.ICON
             ).build(),
             contentDescription = PlainComplicationText.Builder(text = "SMALL_IMAGE.").build()
