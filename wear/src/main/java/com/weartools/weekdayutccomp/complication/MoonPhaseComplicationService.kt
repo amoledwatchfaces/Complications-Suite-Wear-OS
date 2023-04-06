@@ -190,12 +190,12 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
             text = PlainComplicationText.Builder(text = "$visibilityok %").build(),
             contentDescription = PlainComplicationText.Builder(text = getString(R.string.moon_comp_name)).build())
 
-            .setTitle(PlainComplicationText.Builder(text = MoonPhaseHelper.getMoonPhaseName(moonAge = smc.moonAge, context = this)).build())
+            .setTitle(PlainComplicationText.Builder(text = MoonPhaseHelper.getMoonPhaseName(moonAge = phase, context = this)).build())
             .setMonochromaticImage(
                 MonochromaticImage.Builder(
                     if (simpleIcon) {
                         createWithResource(this,
-                            MoonPhaseHelper.getSimpleIcon(smc.moonAge,isnorthernHemi))
+                            MoonPhaseHelper.getSimpleIcon(moonAge = phase,isnorthernHemi))
                     }
                     else {
                         createWithBitmap(DrawMoonBitmap.getLunarPhaseBitmap(
