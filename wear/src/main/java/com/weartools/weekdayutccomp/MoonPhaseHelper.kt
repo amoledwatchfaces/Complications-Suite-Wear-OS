@@ -89,8 +89,8 @@ class MoonPhaseHelper{
       // GET RAW PHASE
 
       val simplePhaseValue: Int =
-        if (moonAge <= 0.2 || moonAge >= 0.99) 0
-        else if (moonAge > 0.2 && moonAge <= 0.25) 1
+        if (moonAge <= 0.02 || moonAge >= 0.99) 0
+        else if (moonAge > 0.02 && moonAge <= 0.25) 1
         else if (moonAge > 0.25 && moonAge <= 0.27) 2
         else if (moonAge > 0.27 && moonAge <= 0.49) 3
         else if (moonAge > 0.49 && moonAge <= 0.53) 4
@@ -119,8 +119,8 @@ class MoonPhaseHelper{
     fun getMoonPhaseName(moonAge: Double, context: Context): String {
 
       val phaseString: String =
-        if (moonAge <= 0.2 || moonAge >= 0.99) "NEW_MOON"
-        else if (moonAge > 0.2 && moonAge <= 0.25) "WAXING_CRESCENT"
+        if (moonAge <= 0.02 || moonAge >= 0.99) "NEW_MOON"
+        else if (moonAge > 0.02 && moonAge <= 0.25) "WAXING_CRESCENT"
         else if (moonAge > 0.25 && moonAge <= 0.27) "FIRST_QUARTER"
         else if (moonAge > 0.27 && moonAge <= 0.49) "WAXING_GIBBOUS"
         else if (moonAge > 0.49 && moonAge <= 0.53) "FULL_MOON"
