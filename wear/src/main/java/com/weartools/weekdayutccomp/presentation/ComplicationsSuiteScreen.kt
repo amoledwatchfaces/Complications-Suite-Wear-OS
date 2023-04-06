@@ -16,8 +16,7 @@
 package com.weartools.weekdayutccomp.presentation
 
 import android.annotation.SuppressLint
-import android.content.ContentValues
-import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.gestures.animateScrollBy
@@ -43,6 +42,10 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.Priority
+import com.google.android.gms.tasks.CancellationToken
+import com.google.android.gms.tasks.CancellationTokenSource
+import com.google.android.gms.tasks.OnTokenCanceledListener
 import com.weartools.weekdayutccomp.BuildConfig
 import com.weartools.weekdayutccomp.Pref
 import com.weartools.weekdayutccomp.R
@@ -97,20 +100,20 @@ fun ComplicationsSuiteScreen(
         onPermissionResult = { granted ->
             if (granted) {
                 coarseEnabled=true
-                fusedLocationClient.lastLocation
+                fusedLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, object : CancellationToken() {
+                    override fun onCanceledRequested(p0: OnTokenCanceledListener) = CancellationTokenSource().token
+                    override fun isCancellationRequested() = false
+                })
                     .addOnSuccessListener {
-                        if (it != null) {
+                        if (it == null) Toast.makeText(context, R.string.no_location, Toast.LENGTH_SHORT).show()
+                        else {
                         pref.setCoarsePermission(true)
                         pref.setLatitude(it.latitude.toString())
                         pref.setLongitude(it.longitude.toString())
                         //pref.setAltitude(it.altitude.toInt())
                         latitude=it.latitude.toString()
                         longitude=it.longitude.toString()
-                    }
-                else {
-                    Log.d(ContentValues.TAG, "No Location available :(")
-                            //TODO: Implement some Toast to notify user
-                } }
+                    } }
             }
             else {
                 coarseEnabled=false
@@ -251,10 +254,10 @@ fun ComplicationsSuiteScreen(
 
                                   },
                 permissionState = permissionState,
-                fusedLocationClient = fusedLocationClient, pref = pref)
+                fusedLocationClient = fusedLocationClient, pref = pref, context = context)
         }
         if (coarseEnabled) {
-            item { LocationCard(latitude = latitude, longitude = longitude, permissionState = permissionState, fusedLocationClient = fusedLocationClient, pref = pref) }
+            item { LocationCard(latitude = latitude, longitude = longitude, permissionState = permissionState, fusedLocationClient = fusedLocationClient, pref = pref, context = context) }
         }
 
         // TIME COMPLICATION PREFERENCE CATEGORY

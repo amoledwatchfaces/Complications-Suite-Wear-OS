@@ -111,4 +111,5 @@
     <string name="enable_permission_toast">需要开启粗略定位权限</string>
     <string name="enable_permission_toast_consider">需要开启粗略定位权限</string>
     <string name="location">位置</string>
+    <string name="no_location">检查全球定位系统</string>
 </resources>

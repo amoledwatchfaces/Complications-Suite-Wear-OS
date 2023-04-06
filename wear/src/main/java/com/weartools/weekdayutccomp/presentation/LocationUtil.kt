@@ -1,8 +1,8 @@
 package com.weartools.weekdayutccomp.presentation
 
 import android.annotation.SuppressLint
-import android.content.ContentValues.TAG
-import android.util.Log
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
@@ -18,6 +18,10 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.isGranted
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.Priority
+import com.google.android.gms.tasks.CancellationToken
+import com.google.android.gms.tasks.CancellationTokenSource
+import com.google.android.gms.tasks.OnTokenCanceledListener
 import com.weartools.weekdayutccomp.Pref
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.theme.wearColorPalette
@@ -33,6 +37,7 @@ fun LocationCard(
     pref: Pref,
     latitude: String,
     longitude: String,
+    context: Context
 ) {
     val df = DecimalFormat("#.#####")
 
@@ -44,15 +49,18 @@ fun LocationCard(
         onClick = {
             if (permissionState.status.isGranted) {
                 //Log.d(TAG, "We have a permission")
-                fusedLocationClient.lastLocation
+                fusedLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, object : CancellationToken() {
+                    override fun onCanceledRequested(p0: OnTokenCanceledListener) = CancellationTokenSource().token
+                    override fun isCancellationRequested() = false
+                })
                     .addOnSuccessListener {
-                        if (it != null) {
+                        if (it == null) Toast.makeText(context, R.string.no_location, Toast.LENGTH_SHORT).show()
+                        else {
                         pref.setLatitude(it.latitude.toString())
                         pref.setLongitude(it.longitude.toString())
                         pref.forceRefresh((0..10).random()) // TO REFRESH COMPLICATIONS ON REFRESH BUTTON CLICK
                         //Log.d(TAG, "${it.altitude}")
                         }
-                        else { Log.d(TAG, "No Location available :(") }
                     }
             } else {
                 permissionState.launchPermissionRequest()
@@ -88,7 +96,8 @@ fun LocationToggle(
     permissionState: PermissionState,
     modifier: Modifier = Modifier,
     fusedLocationClient: FusedLocationProviderClient,
-    pref: Pref
+    pref: Pref,
+    context: Context
 ) {
     ToggleChip(
         modifier = modifier
@@ -103,15 +112,18 @@ fun LocationToggle(
             onCheckedChange(enabled)
             if (permissionState.status.isGranted) {
                 //Log.d(TAG, "We have a permission")
-                fusedLocationClient.lastLocation
+                fusedLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, object : CancellationToken() {
+                    override fun onCanceledRequested(p0: OnTokenCanceledListener) = CancellationTokenSource().token
+                    override fun isCancellationRequested() = false
+                })
                     .addOnSuccessListener {
-                        if (it != null) {
+                        if (it == null) Toast.makeText(context, R.string.no_location, Toast.LENGTH_SHORT).show()
+                        else {
                             pref.setLatitude(it.latitude.toString())
                             pref.setLongitude(it.longitude.toString())
                             //pref.setAltitude(it.altitude.toInt())
                             //Log.d(TAG, "$it")
                         }
-                        else { Log.d(TAG, "No Location available :(") }
                     }
             } else {
                 permissionState.launchPermissionRequest()

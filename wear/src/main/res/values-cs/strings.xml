@@ -112,4 +112,5 @@
     <string name="enable_permission_toast">Vyžaduje povolení v aplikaci</string>
     <string name="enable_permission_toast_consider">Povolte polohu pro přesné otáčení Měsíce</string>
     <string name="location">Poloha</string>
+    <string name="no_location">Skontrolujte GPS</string>
 </resources>

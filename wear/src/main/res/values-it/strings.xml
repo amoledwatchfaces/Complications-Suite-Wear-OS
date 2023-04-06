@@ -132,4 +132,5 @@
     <string name="enable_permission_toast">Richiede il permesso! (App UI)</string>
     <string name="enable_permission_toast_consider">Abilita la posizione per la luna precisa</string>
     <string name="location">Posizione</string>
+    <string name="no_location">Controlla il GPS</string>
 </resources>
