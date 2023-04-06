@@ -132,5 +132,6 @@
     <string name="enable_permission_toast">Χρειάζεται άδεια! (App UI)</string>
     <string name="enable_permission_toast_consider">Ενεργοποίηση τοποθεσίας για ακριβή φεγγάρι</string>
     <string name="location">Τοποθεσία</string>
+    <string name="checking">Βρίσκω την τοποθεσία…</string>
     <string name="no_location">Ελέγξτε το GPS</string>
 </resources>

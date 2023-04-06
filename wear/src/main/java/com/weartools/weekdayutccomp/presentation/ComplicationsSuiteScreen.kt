@@ -100,6 +100,7 @@ fun ComplicationsSuiteScreen(
         onPermissionResult = { granted ->
             if (granted) {
                 coarseEnabled=true
+                Toast.makeText(context, R.string.checking, Toast.LENGTH_SHORT).show()
                 fusedLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, object : CancellationToken() {
                     override fun onCanceledRequested(p0: OnTokenCanceledListener) = CancellationTokenSource().token
                     override fun isCancellationRequested() = false
@@ -107,6 +108,7 @@ fun ComplicationsSuiteScreen(
                     .addOnSuccessListener {
                         if (it == null) Toast.makeText(context, R.string.no_location, Toast.LENGTH_SHORT).show()
                         else {
+                            Toast.makeText(context, "OK!", Toast.LENGTH_SHORT).show()
                         pref.setCoarsePermission(true)
                         pref.setLatitude(it.latitude.toString())
                         pref.setLongitude(it.longitude.toString())

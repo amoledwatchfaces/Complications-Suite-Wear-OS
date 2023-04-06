@@ -35,11 +35,15 @@ fun LocationCard(
     permissionState: PermissionState,
     fusedLocationClient: FusedLocationProviderClient,
     pref: Pref,
+    context: Context,
     latitude: String,
-    longitude: String,
-    context: Context
+    longitude: String
 ) {
     val df = DecimalFormat("#.#####")
+    var latitudeText by remember { mutableStateOf("0.0") }
+    var longitudeText by remember { mutableStateOf("0.0") }
+    latitudeText = latitude
+    longitudeText = longitude
 
     Card(
         modifier = Modifier
@@ -49,6 +53,8 @@ fun LocationCard(
         onClick = {
             if (permissionState.status.isGranted) {
                 //Log.d(TAG, "We have a permission")
+                //fusedLocationClient.lastLocation
+                Toast.makeText(context, R.string.checking, Toast.LENGTH_SHORT).show()
                 fusedLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, object : CancellationToken() {
                     override fun onCanceledRequested(p0: OnTokenCanceledListener) = CancellationTokenSource().token
                     override fun isCancellationRequested() = false
@@ -56,9 +62,13 @@ fun LocationCard(
                     .addOnSuccessListener {
                         if (it == null) Toast.makeText(context, R.string.no_location, Toast.LENGTH_SHORT).show()
                         else {
+                            Toast.makeText(context, "OK!", Toast.LENGTH_SHORT).show()
                         pref.setLatitude(it.latitude.toString())
                         pref.setLongitude(it.longitude.toString())
                         pref.forceRefresh((0..10).random()) // TO REFRESH COMPLICATIONS ON REFRESH BUTTON CLICK
+                            latitudeText = it.latitude.toString()
+                            longitudeText = it.longitude.toString()
+                            pref.setCoarsePermission(true)
                         //Log.d(TAG, "${it.altitude}")
                         }
                     }
@@ -75,8 +85,8 @@ fun LocationCard(
 
             Column {
                 Text(stringResource(id = R.string.location), color = Color(0xFFF1F1F1))
-                Text("Lat: ${df.format(latitude.toDouble())}", color =  wearColorPalette.primary, fontSize = 12.sp)
-                Text("Long: ${df.format(longitude.toDouble())}", color =  wearColorPalette.primary, fontSize = 12.sp)
+                    Text("Lat: ${ df.format(latitudeText.toDouble())}", color =  wearColorPalette.primary, fontSize = 12.sp)
+                    Text("Long: ${ df.format(longitudeText.toDouble())}", color =  wearColorPalette.primary, fontSize = 12.sp)
             }
             Icon(
                 imageVector = Icons.Default.Refresh,
@@ -97,7 +107,7 @@ fun LocationToggle(
     modifier: Modifier = Modifier,
     fusedLocationClient: FusedLocationProviderClient,
     pref: Pref,
-    context: Context
+    context: Context,
 ) {
     ToggleChip(
         modifier = modifier
@@ -112,6 +122,8 @@ fun LocationToggle(
             onCheckedChange(enabled)
             if (permissionState.status.isGranted) {
                 //Log.d(TAG, "We have a permission")
+                //fusedLocationClient.lastLocation
+                Toast.makeText(context, R.string.checking, Toast.LENGTH_SHORT).show()
                 fusedLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, object : CancellationToken() {
                     override fun onCanceledRequested(p0: OnTokenCanceledListener) = CancellationTokenSource().token
                     override fun isCancellationRequested() = false
@@ -119,6 +131,7 @@ fun LocationToggle(
                     .addOnSuccessListener {
                         if (it == null) Toast.makeText(context, R.string.no_location, Toast.LENGTH_SHORT).show()
                         else {
+                            Toast.makeText(context, "OK!", Toast.LENGTH_SHORT).show()
                             pref.setLatitude(it.latitude.toString())
                             pref.setLongitude(it.longitude.toString())
                             //pref.setAltitude(it.altitude.toInt())

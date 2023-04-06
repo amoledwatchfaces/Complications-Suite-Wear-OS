@@ -132,5 +132,6 @@
     <string name="enable_permission_toast">Am nevoie de permisiune! (App UI)</string>
     <string name="enable_permission_toast_consider">Activați locația pentru lună precisă</string>
     <string name="location">Locație</string>
+    <string name="checking">Găsesc locația…</string>
     <string name="no_location">Verifica GPS-ul</string>
 </resources>
