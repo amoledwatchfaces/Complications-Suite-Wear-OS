@@ -134,4 +134,9 @@
     <string name="location">Τοποθεσία</string>
     <string name="checking">Βρίσκω την τοποθεσία…</string>
     <string name="no_location">Ελέγξτε το GPS</string>
+
+    <!-- Day and Week -->
+    <string name="day_and_week_comp_name">Ημέρα και Εβδομάδα</string>
+    <string name="dayD">Η:</string>
+    <string name="weekW">Ε:</string>
 </resources>

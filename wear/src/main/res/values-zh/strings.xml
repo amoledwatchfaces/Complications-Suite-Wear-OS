@@ -113,4 +113,9 @@
     <string name="location">位置</string>
     <string name="checking">我正在寻找位置…</string>
     <string name="no_location">检查全球定位系统</string>
+
+    <!-- Day and Week -->
+    <string name="day_and_week_comp_name">日与周</string>
+    <string name="dayD">日:</string>
+    <string name="weekW">周:</string>
 </resources>

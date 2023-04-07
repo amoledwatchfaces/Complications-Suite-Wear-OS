@@ -156,4 +156,9 @@
     <string name="location">Location</string>
     <string name="checking">Checking location…</string>
     <string name="no_location">Cannot get location. Check GPS</string>
+
+    <!--translate-->
+    <string name="day_and_week_comp_name">Day &amp; Week</string>
+    <string name="dayD">D:</string>
+    <string name="weekW">W:</string>
 </resources>

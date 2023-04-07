@@ -134,4 +134,9 @@
     <string name="location">Localização</string>
     <string name="checking">estou encontrando o local…</string>
     <string name="no_location">Verifique o GPS</string>
+
+    <!-- Day and Week -->
+    <string name="day_and_week_comp_name">Dia e Semana</string>
+    <string name="dayD">D:</string>
+    <string name="weekW">S:</string>
 </resources>

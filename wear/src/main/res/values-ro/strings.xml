@@ -134,4 +134,9 @@
     <string name="location">Locație</string>
     <string name="checking">Găsesc locația…</string>
     <string name="no_location">Verifica GPS-ul</string>
+
+    <!-- Day and Week -->
+    <string name="day_and_week_comp_name">Zi și Săptămâna</string>
+    <string name="dayD">Z:</string>
+    <string name="weekW">S:</string>
 </resources>
