@@ -260,7 +260,7 @@ fun TextInput(
                     RemoteInput.Builder("custom_text")
                         .setLabel("Input")
                         .wearableExtender {
-                            setEmojisAllowed(false)
+                            setEmojisAllowed(true)
                             setInputActionType(EditorInfo.IME_ACTION_DONE)
                         }.build()
                 )
