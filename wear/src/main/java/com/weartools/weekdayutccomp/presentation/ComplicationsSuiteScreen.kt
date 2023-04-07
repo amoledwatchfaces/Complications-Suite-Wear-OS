@@ -248,6 +248,8 @@ fun ComplicationsSuiteScreen(
                     if (coarseEnabled) {
                         pref.setCoarsePermission(false)
                         coarseEnabled = false
+                        pref.setLatitude("0.0") //TODO: SET LAT LONG BACK AGAIN TO ZERO?
+                        pref.setLongitude("0.0")
                     }
                     else if (permissionState.status.isGranted && !coarseEnabled) {
                     pref.setCoarsePermission(true)

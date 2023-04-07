@@ -155,6 +155,24 @@ object DrawMoonBitmap {
         canvas.restore()
         canvas.save()
 
+        /** DRAW CRATERS - OPTIONAL */
+/*
+        // WHITE COLOR FOR BRIGHT LIMB
+        val craterPaint = Paint()
+        craterPaint.color = Color.argb(35,0,0,0)
+        craterPaint.isAntiAlias = true
+
+        val circlesPath = Path()
+        circlesPath.addCircle(targetSize * 0.315f, targetSize * 0.5f, targetSize * 0.225f, Path.Direction.CW)
+        circlesPath.addCircle(targetSize * 0.485f, targetSize * 0.299f, targetSize * 0.115f, Path.Direction.CW)
+        circlesPath.addCircle(targetSize * 0.669f, targetSize * 0.161f, targetSize * 0.054f, Path.Direction.CW)
+        circlesPath.addCircle(targetSize * 0.408f, targetSize * 0.840f, targetSize * 0.054f, Path.Direction.CW)
+        circlesPath.addCircle(targetSize * 0.793f, targetSize * 0.623f, targetSize * 0.115f, Path.Direction.CW)
+        circlesPath.addCircle(targetSize * 0.868f, targetSize * 0.377f, targetSize * 0.069f, Path.Direction.CW)
+        circlesPath.close()
+        canvas.drawPath(circlesPath, craterPaint)
+*/
+
         /** RETURN MOON BITMAP */
         return Bitmap.createScaledBitmap(bitmap, targetSize, targetSize, true)
     }
