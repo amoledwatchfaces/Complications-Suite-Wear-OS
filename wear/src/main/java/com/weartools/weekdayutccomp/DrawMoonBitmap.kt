@@ -10,7 +10,11 @@ object DrawMoonBitmap {
     /**
      * Draw a circle, then draw a half circle on top of it, then draw a quarter circle on top of that,
      * then flip the image if the phase is less or equal to 0.5 (0 when we use scale -180 to 180)
-     *
+     * @param phaseValue Moon phase value between 0 and 1. 0 = New Moon, 0.5 = Full Moon, 1 = New Moon
+     * @param fraction Illuminated portion of the moon in % (0% -> 100%)
+     * @param smc SunMoonCalculator.java. Currently we are using this one for calculations
+     * @param lat Observers latitude, just for knowing if location is disabled or enabled (disabled when 0.0)
+     * @param hemi Observers hemisphere. Used only when location is not given so we know how to rotate moon image for southern hemisphere
      */
     fun getLunarPhaseBitmap(
         phaseValue: Double,
