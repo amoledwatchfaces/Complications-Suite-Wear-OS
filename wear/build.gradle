@@ -11,8 +11,8 @@ android {
         applicationId "com.weartools.weekdayutccomp"
         minSdk 27
         targetSdk 33
-        versionCode 97
-        versionName "1.9.7"
+        versionCode 99
+        versionName "1.9.9"
         resConfigs 'en', 'cs', 'de', 'el', 'it', 'pt', 'ro', 'sk', 'zh'
     }
     bundle {
@@ -69,16 +69,16 @@ dependencies {
     //COMPOSE
     implementation 'androidx.preference:preference-ktx:1.2.0'
     implementation 'androidx.core:core-ktx:1.10.0'
-    implementation "androidx.compose.ui:ui:1.4.0"
+    implementation "androidx.compose.ui:ui:1.4.1"
     implementation "androidx.wear.compose:compose-material:1.1.2"
     implementation "androidx.wear.compose:compose-foundation:1.1.2"
-    implementation "androidx.compose.ui:ui-tooling-preview:1.4.0"
+    implementation "androidx.compose.ui:ui-tooling-preview:1.4.1"
     implementation 'androidx.activity:activity-compose:1.7.0'
     implementation 'androidx.compose.material:material-icons-core:1.4.0'
 
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.4.0"
-    debugImplementation "androidx.compose.ui:ui-tooling:1.4.0"
-    debugImplementation "androidx.compose.ui:ui-test-manifest:1.4.0"
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.4.1"
+    debugImplementation "androidx.compose.ui:ui-tooling:1.4.1"
+    debugImplementation "androidx.compose.ui:ui-test-manifest:1.4.1"
 
     //Pref
     implementation "androidx.datastore:datastore-preferences:1.0.0"

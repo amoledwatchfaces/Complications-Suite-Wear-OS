@@ -211,7 +211,7 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
             .build()
 
         ComplicationType.RANGED_VALUE -> RangedValueComplicationData.Builder(
-            value = fraction.toFloat(),
+            value = phase.toFloat(),
             min = 0.0f,
             max =  1.0f,
             contentDescription = PlainComplicationText
