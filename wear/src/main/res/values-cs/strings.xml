@@ -113,7 +113,7 @@
     <string name="enable_permission_toast_consider">Povolte polohu pro přesné otáčení Měsíce</string>
     <string name="location">Poloha</string>
     <string name="checking">Zjišťuji polohu…</string>
-    <string name="no_location">Chyba. Skontrolujte GPS</string>
+    <string name="no_location">Chyba. Zkontrolujte GPS</string>
 
     <!-- Day and Week -->
     <string name="day_and_week_comp_name">Den a Týden</string>
