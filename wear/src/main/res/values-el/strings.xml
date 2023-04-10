@@ -61,9 +61,9 @@
     <string name="moon_setting_hemi_off">Όχι</string>
     <string name="key_pref_phase_icon" translatable="false">R.drawable.moon0</string>
     <string name="key_pref_moon_visibility" translatable="false">0.0</string>
-    <string name="moon_setting_simple_icon_title">εικονίδιο</string>
-    <string name="moon_setting_simple_icon_on">απλός</string>
-    <string name="moon_setting_simple_icon_off">λεπτομερής</string>
+    <string name="moon_setting_simple_icon_title">Εικονίδιο Φεγγαριού</string>
+    <string name="moon_setting_simple_icon_on">Απλό</string>
+    <string name="moon_setting_simple_icon_off">Λεπτομερές</string>
 
     <!-- Pay Complication -->
     <string name="pay_comp_name">Pay</string>
@@ -120,7 +120,7 @@
     <string name="custom_text_comp_name_category">Προσαρμοσμένο κείμενο</string>
 
     <!-- LOCATION -->
-    <string name="coarse_location_toggle_title">Coarse Location</string>
+    <string name="coarse_location_toggle_title">Τοποθεσία κατά Προσέγγιση</string>
     <string name="coarse_secondary_enabled">On</string>
     <string name="coarse_secondary_disabled">Off</string>
     <string name="coarse_toggle_description">Coarse Location Permission Toggle</string>
