@@ -84,58 +84,44 @@ class MoonPhaseHelper{
     }
 
 
-    fun getSimpleIcon(moonAge: Double, isnorthernHemi: Boolean): Int {
+    fun getSimpleIcon(phaseName: String, isnorthernHemi: Boolean): Int {
 
-      // GET RAW PHASE
-
-      val simplePhaseValue: Int =
-        if (moonAge <= 0.02 || moonAge >= 0.99) 0
-        else if (moonAge > 0.02 && moonAge <= 0.25) 1
-        else if (moonAge > 0.25 && moonAge <= 0.27) 2
-        else if (moonAge > 0.27 && moonAge <= 0.49) 3
-        else if (moonAge > 0.49 && moonAge <= 0.53) 4
-        else if (moonAge > 0.53 && moonAge <= 0.74) 5
-        else if (moonAge > 0.74 && moonAge <= 0.76) 6
-        else 7
-
-      return if (simplePhaseValue==0) { drawable.x_moon_new }
-      else if (isnorthernHemi) { SIMPLE_IMAGE_LOOKUP[simplePhaseValue] }
-      else { SIMPLE_IMAGE_LOOKUP[8 - simplePhaseValue] }
+      return if (isnorthernHemi)
+      /** NORTHER HEMI */
+      {
+        when (phaseName) {
+        "NEW_MOON" -> drawable.x_moon_new
+        "WAXING_CRESCENT" -> drawable.x_moon_waxing_crescent
+        "FIRST_QUARTER" -> drawable.x_moon_first_quarter
+        "WAXING_GIBBOUS" -> drawable.x_moon_waxing_gibbous
+        "FULL_MOON" -> drawable.x_moon_full
+        "WANING_GIBBOUS" -> drawable.x_moon_waning_gibbous
+        "LAST_QUARTER" -> drawable.x_moon_last_quarter
+        else -> drawable.x_moon_waning_crescent // WANING_CRESCENT
+      }
+      }
+      else
+      /** SOUTHERN HEMI - FLIP IMAGES */
+        when (phaseName) {
+          "NEW_MOON" -> drawable.x_moon_new
+          "WAXING_CRESCENT" -> drawable.x_moon_waning_crescent
+          "FIRST_QUARTER" -> drawable.x_moon_last_quarter
+          "WAXING_GIBBOUS" -> drawable.x_moon_waning_gibbous
+          "FULL_MOON" -> drawable.x_moon_full
+          "WANING_GIBBOUS" -> drawable.x_moon_waxing_gibbous
+          "LAST_QUARTER" -> drawable.x_moon_first_quarter
+          else -> drawable.x_moon_waxing_crescent // WANING_CRESCENT
+        }
     }
 
-    private const val TAG = "MoonView"
-
-    private val SIMPLE_IMAGE_LOOKUP = intArrayOf(
-      drawable.x_moon_new,
-      drawable.x_moon_waxing_crescent,
-      drawable.x_moon_first_quarter,
-      drawable.x_moon_waxing_gibbous,
-      drawable.x_moon_full,
-      drawable.x_moon_waning_gibbous,
-      drawable.x_moon_last_quarter,
-      drawable.x_moon_waning_crescent,
-    )
-
-    fun getMoonPhaseName(moonAge: Double, context: Context): String {
-
-      val phaseString: String =
-        if (moonAge <= 0.02 || moonAge >= 0.99) "NEW_MOON"
-        else if (moonAge > 0.02 && moonAge <= 0.25) "WAXING_CRESCENT"
-        else if (moonAge > 0.25 && moonAge <= 0.27) "FIRST_QUARTER"
-        else if (moonAge > 0.27 && moonAge <= 0.49) "WAXING_GIBBOUS"
-        else if (moonAge > 0.49 && moonAge <= 0.53) "FULL_MOON"
-        else if (moonAge > 0.53 && moonAge <= 0.74) "WANING_GIBBOUS"
-        else if (moonAge > 0.74 && moonAge <= 0.76) "LAST_QUARTER"
-        else "WANING_CRESCENT"
-
-      //Log.d(TAG, "Phase: ${(moonAge)}")
+    fun getMoonPhaseName(phaseName: String, context: Context): String {
 
       val str = "FIRST_QUARTER,FULL_MOON,LAST_QUARTER,NEW_MOON,WANING_CRESCENT,WANING_GIBBOUS,WAXING_CRESCENT,WAXING_GIBBOUS"
       val strArray = str.split(",")
 
       val str2 = context.resources.getStringArray(R.array.moon_phases)
 
-      val index = strArray.indexOf(phaseString)
+      val index = strArray.indexOf(phaseName)
       return if (index != -1) str2[index] else "First Quarter"
     }
   }

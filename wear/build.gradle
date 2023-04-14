@@ -59,7 +59,8 @@ dependencies {
     implementation 'androidx.work:work-runtime-ktx:2.8.1'
 
     // MOON PHASE HELPER
-    implementation 'org.shredzone.commons:commons-suncalc:3.5'
+    implementation 'org.shredzone.commons:commons-suncalc:3.6' //TODO: REMOVE LATER
+    implementation project(path: ':SunKalc')
 
     // WEAR OS
     implementation 'com.google.android.gms:play-services-wearable:18.0.0'
@@ -74,7 +75,8 @@ dependencies {
     implementation "androidx.wear.compose:compose-foundation:1.1.2"
     implementation "androidx.compose.ui:ui-tooling-preview:1.4.1"
     implementation 'androidx.activity:activity-compose:1.7.0'
-    implementation 'androidx.compose.material:material-icons-core:1.4.0'
+    implementation 'androidx.compose.material:material-icons-core:1.4.1'
+
 
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.4.1"
     debugImplementation "androidx.compose.ui:ui-tooling:1.4.1"

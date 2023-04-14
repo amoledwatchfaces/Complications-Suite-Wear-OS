@@ -26,16 +26,16 @@ import androidx.preference.PreferenceManager
 import androidx.wear.watchface.complications.data.*
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
-import com.weartools.weekdayutccomp.*
+import com.weartools.weekdayutccomp.DrawMoonBitmap
+import com.weartools.weekdayutccomp.MoonPhaseHelper
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.R.drawable
-import com.weartools.weekdayutccomp.SunMoonCalculator.TWO_PI
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.ZonedDateTime
-import java.lang.Math.toRadians as rad
+import java.time.ZoneOffset
+import java.lang.Math.toDegrees as deg
+import com.weartools.sunkalc.SunKalc
 
 
 class MoonPhaseComplicationService : SuspendingComplicationDataSourceService() {
@@ -112,6 +112,7 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
     }
 }
 
+
     override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
     Log.d(TAG, "onComplicationRequest() id: ${request.complicationInstanceId}")
 
@@ -119,36 +120,20 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
         val simpleIcon = preferences.getBoolean(getString(R.string.moon_setting_simple_icon_key), false)
         val isnorthernHemi = preferences.getBoolean(getString(R.string.moon_setting_hemi_key), true)
 
-        val lat = preferences.getString(getString(R.string.latitude_value), "0.0").toString().toDouble()
-        val long = preferences.getString(getString(R.string.longitude_value), "0.0").toString().toDouble()
+        val lat = preferences.getString(getString(R.string.latitude_value), "48.0").toString().toDouble()
+        val long = preferences.getString(getString(R.string.longitude_value), "20.0").toString().toDouble()
         //val altitude = preferences.getInt(getString(R.string.altitude_value), 0)
         /**
-         * Get current time and split it to YYYY / MM / DD / HH / MM / SS - CONVERT TO UTC
+         * CALCULATE MOON
          */
-        val localDateTime = LocalDateTime.now() // get the current local time
-        val zoneId = ZoneId.systemDefault() // get the system's default time zone
-        val zonedDateTime = ZonedDateTime.of(localDateTime, zoneId) // create a ZonedDateTime object
-        val utcDateTime = zonedDateTime.withZoneSameInstant(ZoneId.of("UTC")) // convert to UTC tim
+        val sunkalc = SunKalc(latitude = lat, longitude = long, LocalDateTime.now(ZoneOffset.UTC))
+        val phase = sunkalc.getMoonPhase().phase.toFloat()
+        val angle = deg(sunkalc.getMoonPhase().angle).toFloat()*(-1)
+        val parallacticAngle = deg(sunkalc.getMoonPosition().parallacticAngle).toFloat()
+        val fraction = sunkalc.getMoonPhase().fraction
+        val phaseName = sunkalc.getMoonPhase().phaseName.name
 
-        val year = utcDateTime.year
-        val month = utcDateTime.month.value
-        val day = utcDateTime.dayOfMonth
-        val h = utcDateTime.hour
-        val m = utcDateTime.minute
-        val s = utcDateTime.second
 
-        val smc = SunMoonCalculator(year, month, day, h, m, s, rad(long), rad(lat), 0)
-        smc.setTwilightMode(SunMoonCalculator.TWILIGHT_MODE.TODAY_UT)
-        smc.calcSunAndMoon()
-
-        /** Get moon phase value */
-        val fraction = smc.moon.illuminationPhase
-        val phase = smc.moonPhase / TWO_PI
-        //val oldPhase = smc.moonAge / 29.53058 // 29.530588853
-
-        //Log.d(TAG, "Fraction: $fraction")
-        //Log.d(TAG, "phase: $phase")
-        //Log.d(TAG, "phaseOld: $oldPhase")
 
         /** CONSIDER LOCATION TOAST */
         if (lat == 0.0) {
@@ -159,7 +144,7 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
 
     val df = DecimalFormat("#.#")
     df.roundingMode = RoundingMode.HALF_UP
-    val visibilityok = df.format(fraction).toString()
+    val visibilityok = df.format(fraction*100).toString()
 
     return when (request.complicationType) {
 
@@ -171,14 +156,14 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
                 MonochromaticImage.Builder(
                     if (simpleIcon) {
                         createWithResource(this,
-                            MoonPhaseHelper.getSimpleIcon(smc.moonAge,isnorthernHemi))
+                            MoonPhaseHelper.getSimpleIcon(phaseName = phaseName,isnorthernHemi))
                     }
                     else {
                         createWithBitmap(
                             DrawMoonBitmap.getLunarPhaseBitmap(
-                                phaseValue = phase,
                                 fraction = fraction,
-                                smc = smc,
+                                angle = angle,
+                                parallacticAngle = parallacticAngle,
                                 lat = lat,
                                 hemi = isnorthernHemi))
                     }
@@ -190,18 +175,18 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
             text = PlainComplicationText.Builder(text = "$visibilityok %").build(),
             contentDescription = PlainComplicationText.Builder(text = getString(R.string.moon_comp_name)).build())
 
-            .setTitle(PlainComplicationText.Builder(text = MoonPhaseHelper.getMoonPhaseName(moonAge = phase, context = this)).build())
+            .setTitle(PlainComplicationText.Builder(text = MoonPhaseHelper.getMoonPhaseName(phaseName = phaseName, context = this)).build())
             .setMonochromaticImage(
                 MonochromaticImage.Builder(
                     if (simpleIcon) {
                         createWithResource(this,
-                            MoonPhaseHelper.getSimpleIcon(moonAge = phase,isnorthernHemi))
+                            MoonPhaseHelper.getSimpleIcon(phaseName = phaseName,isnorthernHemi))
                     }
                     else {
                         createWithBitmap(DrawMoonBitmap.getLunarPhaseBitmap(
-                            phaseValue = phase,
                             fraction = fraction,
-                            smc = smc,
+                            angle = angle,
+                            parallacticAngle = parallacticAngle,
                             lat = lat,
                             hemi = isnorthernHemi))
                     }
@@ -211,7 +196,7 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
             .build()
 
         ComplicationType.RANGED_VALUE -> RangedValueComplicationData.Builder(
-            value = phase.toFloat(),
+            value = phase,
             min = 0.0f,
             max =  1.0f,
             contentDescription = PlainComplicationText
@@ -221,14 +206,15 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
                 MonochromaticImage.Builder(
                     if (simpleIcon) {
                         createWithResource(this,
-                            MoonPhaseHelper.getSimpleIcon(smc.moonAge,isnorthernHemi))
+                            MoonPhaseHelper.getSimpleIcon(phaseName = phaseName,isnorthernHemi))
                     }
                     else {createWithBitmap(DrawMoonBitmap.getLunarPhaseBitmap(
-                        phaseValue = phase,
                         fraction = fraction,
-                        smc = smc,
+                        angle = angle,
+                        parallacticAngle = parallacticAngle,
                         lat = lat,
-                        hemi = isnorthernHemi))}
+                        hemi = isnorthernHemi))
+                    }
                 ).build()
             )
             .setTapAction(openScreen())
@@ -240,12 +226,12 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
                 monochromaticImage = MonochromaticImage.Builder(
                     if (simpleIcon) {
                         createWithResource(this,
-                            MoonPhaseHelper.getSimpleIcon(smc.moonAge,isnorthernHemi))
+                            MoonPhaseHelper.getSimpleIcon(phaseName = phaseName,isnorthernHemi))
                     }
                     else {createWithBitmap(DrawMoonBitmap.getLunarPhaseBitmap(
-                        phaseValue = phase,
                         fraction = fraction,
-                        smc = smc,
+                        angle = angle,
+                        parallacticAngle = parallacticAngle,
                         lat = lat,
                         hemi = isnorthernHemi))
                     }).build(),
@@ -261,14 +247,15 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
             smallImage = SmallImage.Builder(
                 image = if (simpleIcon) {
                     createWithResource(this,
-                        MoonPhaseHelper.getSimpleIcon(smc.moonAge,isnorthernHemi))
+                        MoonPhaseHelper.getSimpleIcon(phaseName = phaseName,isnorthernHemi))
                 }
                 else {createWithBitmap(DrawMoonBitmap.getLunarPhaseBitmap(
-                    phaseValue = phase,
                     fraction = fraction,
-                    smc = smc,
+                    angle = angle,
+                    parallacticAngle = parallacticAngle,
                     lat = lat,
-                    hemi = isnorthernHemi))},
+                    hemi = isnorthernHemi))
+                     },
                 type = SmallImageType.ICON
             ).build(),
             contentDescription = PlainComplicationText.Builder(text = "SMALL_IMAGE.").build()

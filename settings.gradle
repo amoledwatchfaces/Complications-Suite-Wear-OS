@@ -10,8 +10,11 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        //jcenter()
+        maven { url 'https://jitpack.io' }
     }
 }
 rootProject.name = "Complications Suite"
 include ':mobile'
 include ':wear'
+include ':SunKalc'
