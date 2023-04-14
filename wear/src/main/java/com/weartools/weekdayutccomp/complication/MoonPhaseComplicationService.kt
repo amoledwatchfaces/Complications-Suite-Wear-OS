@@ -118,8 +118,8 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
         val simpleIcon = preferences.getBoolean(getString(R.string.moon_setting_simple_icon_key), false)
         val isnorthernHemi = preferences.getBoolean(getString(R.string.moon_setting_hemi_key), true)
 
-        val lat = preferences.getString(getString(R.string.latitude_value), "48.0").toString().toDouble()
-        val long = preferences.getString(getString(R.string.longitude_value), "20.0").toString().toDouble()
+        val lat = preferences.getString(getString(R.string.latitude_value), "0.0").toString().toDouble()
+        val long = preferences.getString(getString(R.string.longitude_value), "0.0").toString().toDouble()
         //val altitude = preferences.getInt(getString(R.string.altitude_value), 0)
 
         /**
@@ -134,7 +134,7 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
         val fraction = set2.fraction
         val phaseName = set2.closestPhase.name
 
-        Log.d(TAG, "phase: $phase")
+        //Log.d(TAG, "phase: $phase")
 
         /** CONSIDER LOCATION TOAST */
         if (lat == 0.0) {

@@ -29,55 +29,8 @@ object DrawMoonBitmap {
 
         var percentIlluminated = fraction
 
-        Log.d(TAG, "percentIlluminated: $percentIlluminated")
-/*
-        // SMC BRIGHT LIMB
-        val localDateTime = LocalDateTime.now() // get the current local time
-        val zoneId = ZoneId.systemDefault() // get the system's default time zone
-        val zonedDateTime = ZonedDateTime.of(localDateTime, zoneId) // create a ZonedDateTime object
-        val utcDateTime = zonedDateTime.withZoneSameInstant(ZoneId.of("UTC")) // convert to UTC tim
+        //Log.d(TAG, "percentIlluminated: $percentIlluminated")
 
-        val year = utcDateTime.year
-        val month = utcDateTime.month.value
-        val day = utcDateTime.dayOfMonth
-        val h = utcDateTime.hour
-        val m = utcDateTime.minute
-        val s = utcDateTime.second
-
-        val smc = SunMoonCalculator(year, month, day, h, m, s, rad(20.0), rad(48.0), 0)
-        smc.setTwilightMode(SunMoonCalculator.TWILIGHT_MODE.TODAY_UT)
-        smc.calcSunAndMoon()
-
-        val p1 = smc.moonDiskOrientationAngles
-        val brightLimbSMC = Math.toDegrees(p1[3]).toFloat()
-        val parallacticSMC = Math.toDegrees(p1[4]).toFloat()
-
-
-        val sunkalc = SunKalc(48.0,20.0,LocalDateTime.now(ZoneOffset.UTC))
-        val pA = deg(sunkalc.getMoonPhase().angle).toFloat()*(-1)
-        val q = deg(sunkalc.getMoonPosition().parallacticAngle).toFloat()
-        val fr = sunkalc.getMoonPhase().fraction
-        val n = sunkalc.getMoonPhase().phaseName.name
-
-        Log.d(TAG, "---- SHREDZONE ----")
-        Log.d(TAG, "brightLimb: $angle")
-        Log.d(TAG, "parallactic: $parallacticAngle")
-        Log.d(TAG, "fraction: $fraction")
-        Log.d(TAG, "---- SMC ----")
-        Log.d(TAG, "brightLimb: $brightLimbSMC")
-        Log.d(TAG, "parallactic: $parallacticSMC")
-        Log.d(TAG, "fraction: ${smc.moon.illuminationPhase}")
-        Log.d(TAG, "---- SUNKALC----")
-        Log.d(TAG, "brightLimb: $pA")
-        Log.d(TAG, "parallactic: $q")
-        Log.d(TAG, "fraction: $fr")
-        Log.d(TAG, "name: $n")
-
-        /** COMPUTE INITIAL ROTATION - DON'T CHANGE THIS */
-        val initialRotation =  90f // INITIAL ROTATION
-        val brightLimb = angle.toFloat()*(-1) // TODO: SMC BRIGHT LIMB HAS BETTER ANGLE
-        val parallactic = parallacticAngle.toFloat()
-*/
         /** FINAL ROTATION
          * IF LOCATION IS SET, CALCULATE ROTATION
          * IF LOCATION IS NOT SET, SET ROTATION TO 0 (ZERO) AND ROTATE BY 180° (FLIP) WHEN USER SELECTS SOUTHERN HEMISPHERE

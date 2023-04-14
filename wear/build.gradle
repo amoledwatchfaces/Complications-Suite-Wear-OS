@@ -59,9 +59,7 @@ dependencies {
     implementation 'androidx.work:work-runtime-ktx:2.8.1'
 
     // MOON PHASE HELPER
-    //noinspection GradlePath
-    implementation files('C:/Users/amoledwatchfaces/StudioProjects/Complications_Suite_COMPOSE/wear/libs/commons-suncalc-3.7-SNAPSHOT.jar')
-    //implementation 'org.shredzone.commons:commons-suncalc:3.6' //TODO: 3.7 IS GOOD
+    implementation 'org.shredzone.commons:commons-suncalc:3.7'
     //implementation project(path: ':SunKalc')
 
     // WEAR OS
