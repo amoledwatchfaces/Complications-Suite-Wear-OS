@@ -118,6 +118,9 @@
     <!-- Custom Text + Title -->
     <string name="custom_text_comp_name">Texto personalizado</string>
     <string name="custom_text_comp_name_category">Texto personalizado</string>
+    <!--Custom Text + Title 2-->
+    <string name="custom_text_p1">Texto</string>
+    <string name="custom_title_p1">Título</string>
 
     <!-- LOCATION -->
     <string name="coarse_location_toggle_title">Localização aproximada</string>

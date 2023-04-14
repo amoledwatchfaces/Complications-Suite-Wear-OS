@@ -98,6 +98,9 @@
     <!-- Custom Text + Title -->
     <string name="custom_text_comp_name">Vlastní Text</string>
     <string name="custom_text_comp_name_category">Vlastní text - Komplikace</string>
+    <!--Custom Text + Title 2-->
+    <string name="custom_text_p1">Text</string>
+    <string name="custom_title_p1">Titulek</string>
 
     <!-- LOCATION -->
     <string name="coarse_location_toggle_title">Přibližná Poloha</string>

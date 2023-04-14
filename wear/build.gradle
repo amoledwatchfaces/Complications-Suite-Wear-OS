@@ -11,9 +11,9 @@ android {
         applicationId "com.weartools.weekdayutccomp"
         minSdk 27
         targetSdk 33
-        versionCode 201
-        versionName "2.0.1"
-        resConfigs 'en', 'cs', 'de', 'el', 'it', 'pt', 'ro', 'sk', 'zh'
+        versionCode 203
+        versionName "2.0.3"
+        resConfigs 'en', 'cs', 'de', 'el', 'es', 'it', 'pt', 'ro', 'sk', 'zh'
     }
     bundle {
         language {

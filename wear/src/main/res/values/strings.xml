@@ -130,6 +130,11 @@
     <string name="custom_text_comp_name_category">Custom Text Complication</string>
     <string name="custom_text" translatable="false">custom_text</string>
     <string name="custom_title" translatable="false">custom_title</string>
+    <!--Custom Text + Title 2-->
+    <string name="custom_text_p1">Text</string>
+    <string name="custom_title_p1">Title</string>
+
+
 
     <string name="latitude_value" translatable="false">latitude_value</string>
     <string name="longitude_value" translatable="false">longitude_value</string>

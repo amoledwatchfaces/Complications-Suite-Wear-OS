@@ -53,9 +53,8 @@ class Pref(val context: Context) {
     fun setCustomText(value: String){ getInstance(context).edit().putString("custom_text",value).apply() }
     fun setCustomTitle(value: String){ getInstance(context).edit().putString("custom_title",value).apply() }
     // CUSTOM TEXT
-    fun getCustomText():String{ return getInstance(context).getString("custom_text","Text")?:"Text" }
-    fun getCustomTitle():String{ return getInstance(context).getString("custom_title","Title")?:"Title" }
-
+    fun getCustomText():String{ return getInstance(context).getString("custom_text",context.getString(R.string.custom_text_p1))?:context.getString(R.string.custom_text_p1) }
+    fun getCustomTitle():String{ return getInstance(context).getString("custom_title",context.getString(R.string.custom_title_p1))?:context.getString(R.string.custom_title_p1) }
 
     // LOCATION
     fun getCoarsePermission():Boolean { return getInstance(context).getBoolean("coarse_enabled",false) }

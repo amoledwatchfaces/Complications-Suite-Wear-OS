@@ -136,8 +136,8 @@ fun ComplicationsSuiteScreen(
 
 
     // LOCALE
-    val str ="en,cs,de,el,it,pt,ro,sk,zh"
-    val list = arrayListOf("English","Czech","German","Greek","Italian","Portuguese","Romanian","Slovak","Chinese (Simplified)")
+    val str ="en,cs,de,el,es,it,pt,ro,sk,zh"
+    val list = arrayListOf("English","Czech","German","Greek","Spanish","Italian","Portuguese","Romanian","Slovak","Chinese (Simplified)")
     val strArray=str.split(",")
     val index=strArray.indexOf(pref.getLocale())
     val currentLocale =if (index!=-1)list[index] else "English"
@@ -337,8 +337,8 @@ fun ComplicationsSuiteScreen(
         }
 
         item { PreferenceCategory(title = stringResource(id = R.string.custom_text_comp_name_category)) }
-        item { TextInput(row1 = "Text", row2 = customText, pref = pref, context = context) }
-        item { TextInput(row1 = "Title", row2 = customTitle, pref = pref, context = context) }
+        item { TextInput(row1 = stringResource(id = R.string.custom_text_p1), row2 = customText, pref = pref, context = context, isText = true) }
+        item { TextInput(row1 = stringResource(id = R.string.custom_title_p1), row2 = customTitle, pref = pref, context = context, isText = false) }
 
 
         // APP INFO SECTION
@@ -399,9 +399,9 @@ fun ComplicationsSuiteScreen(
     }
 
     if (longTextFormat || shortTextFormat || shortTitleFormat) {
-        val title = if (longTextFormat) "Long Text Format"
-        else if (shortTextFormat) "Short Text Format"
-        else "Short Title Format"
+        val title = if (longTextFormat) stringResource(id = R.string.date_long_text_format)
+        else if (shortTextFormat) stringResource(id = R.string.date_short_text_format)
+        else stringResource(id = R.string.date_short_title_format)
         val prValue = if (longTextFormat) getLongText
         else if (shortTextFormat) getShortText
         else getShortTitle

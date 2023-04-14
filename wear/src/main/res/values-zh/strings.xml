@@ -97,6 +97,9 @@
     <!-- Custom Text + Title -->
     <string name="custom_text_comp_name">自定义文本</string>
     <string name="custom_text_comp_name_category">自定义文本功能</string>
+    <!--Custom Text + Title 2-->
+    <string name="custom_text_p1">文本</string>
+    <string name="custom_title_p1">标题</string>
 
     <!--LOCATION-->
     <string name="coarse_location_toggle_title">粗略定位</string>

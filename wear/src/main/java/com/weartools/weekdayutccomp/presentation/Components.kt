@@ -234,7 +234,8 @@ fun TextInput(
     row1: String,
     row2: String,
     pref: Pref,
-    context: Context
+    context: Context,
+    isText: Boolean
 ) {
     val secondaryLabel = remember { mutableStateOf(row2)}
     val launcher =
@@ -243,7 +244,7 @@ fun TextInput(
                 val results: Bundle = RemoteInput.getResultsFromIntent(data)
                 val input: CharSequence? = results.getCharSequence("custom_text")
                 secondaryLabel.value = input.toString()
-                if (row1 == "Text") {pref.setCustomText(input.toString())}
+                if (isText) {pref.setCustomText(input.toString())}
                 else {pref.setCustomTitle(input.toString())}
                 updateComplication(context, CustomTextComplicationService::class.java)
             }
