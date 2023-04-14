@@ -30,12 +30,10 @@ import com.weartools.weekdayutccomp.DrawMoonBitmap
 import com.weartools.weekdayutccomp.MoonPhaseHelper
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.R.drawable
+import org.shredzone.commons.suncalc.MoonIllumination
+import org.shredzone.commons.suncalc.MoonPosition
 import java.math.RoundingMode
 import java.text.DecimalFormat
-import java.time.LocalDateTime
-import java.time.ZoneOffset
-import java.lang.Math.toDegrees as deg
-import com.weartools.sunkalc.SunKalc
 
 
 class MoonPhaseComplicationService : SuspendingComplicationDataSourceService() {
@@ -123,17 +121,20 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
         val lat = preferences.getString(getString(R.string.latitude_value), "48.0").toString().toDouble()
         val long = preferences.getString(getString(R.string.longitude_value), "20.0").toString().toDouble()
         //val altitude = preferences.getInt(getString(R.string.altitude_value), 0)
+
         /**
          * CALCULATE MOON
          */
-        val sunkalc = SunKalc(latitude = lat, longitude = long, LocalDateTime.now(ZoneOffset.UTC))
-        val phase = sunkalc.getMoonPhase().phase.toFloat()
-        val angle = deg(sunkalc.getMoonPhase().angle).toFloat()*(-1)
-        val parallacticAngle = deg(sunkalc.getMoonPosition().parallacticAngle).toFloat()
-        val fraction = sunkalc.getMoonPhase().fraction
-        val phaseName = sunkalc.getMoonPhase().phaseName.name
+        val set1 = MoonPosition.compute().now().at(lat,long).execute()
+        val set2 = MoonIllumination.compute().now().execute()
 
+        val parallacticAngle = set1.parallacticAngle.toFloat()
+        val phase = set2.phase.toFloat()
+        val angle = set2.angle.toFloat()*(-1)
+        val fraction = set2.fraction
+        val phaseName = set2.closestPhase.name
 
+        Log.d(TAG, "phase: $phase")
 
         /** CONSIDER LOCATION TOAST */
         if (lat == 0.0) {
@@ -197,8 +198,8 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
 
         ComplicationType.RANGED_VALUE -> RangedValueComplicationData.Builder(
             value = phase,
-            min = 0.0f,
-            max =  1.0f,
+            min = -180.0f,
+            max =  180.0f,
             contentDescription = PlainComplicationText
                 .Builder(text = "Visibility").build()
         )
