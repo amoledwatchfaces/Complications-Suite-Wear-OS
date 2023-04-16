@@ -11,8 +11,8 @@ android {
         applicationId "com.weartools.weekdayutccomp"
         minSdk 27
         targetSdk 33
-        versionCode 203
-        versionName "2.0.3"
+        versionCode 205
+        versionName "2.0.5"
         resConfigs 'en', 'cs', 'de', 'el', 'es', 'it', 'pt', 'ro', 'sk', 'zh'
     }
     bundle {
@@ -60,7 +60,6 @@ dependencies {
 
     // MOON PHASE HELPER
     implementation 'org.shredzone.commons:commons-suncalc:3.7'
-    //implementation project(path: ':SunKalc')
 
     // WEAR OS
     implementation 'com.google.android.gms:play-services-wearable:18.0.0'
