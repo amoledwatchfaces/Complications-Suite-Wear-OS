@@ -137,7 +137,7 @@ companion object {
     }
 
     private fun updateComplication(context: Context?) {
-        Log.d(TAG, "Updating Assist Complication")
+        //Log.d(TAG, "Updating Assist Complication")
         val componentName = ComponentName(context!!, AssistComplicationService::class.java)
         val req = ComplicationDataSourceUpdateRequester.create(context,componentName)
         req.requestUpdateAll()

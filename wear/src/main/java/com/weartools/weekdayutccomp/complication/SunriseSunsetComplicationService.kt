@@ -54,7 +54,7 @@ class SunriseSunsetComplicationService : SuspendingComplicationDataSourceService
             }
         }
 
-        Log.d(TAG, "req permission func")
+        //Log.d(TAG, "req permission func")
     }
 
 

@@ -17,7 +17,7 @@ class DateAndBootReceiver: BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
 
-        Log.d(TAG, "DATE CHANGED! $intent")
+        //Log.d(TAG, "DATE CHANGED! $intent")
         if (intent.action in listOf(Intent.ACTION_TIME_CHANGED,Intent.ACTION_TIMEZONE_CHANGED, Intent.ACTION_DATE_CHANGED, Intent.ACTION_BOOT_COMPLETED))
             scheduleComplicationUpdateWorker(context)
         else return

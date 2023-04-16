@@ -56,7 +56,7 @@ class MoonPhaseHelper{
       val long = preferences.getString(context.getString(string.longitude_value), "0.0").toString()
       val coarseEnabled = preferences.getBoolean(context.getString(string.coarse_enabled), false)
 
-      Log.d(TAG, "Coarse Location: $coarseEnabled")
+      //Log.d(TAG, "Coarse Location: $coarseEnabled")
       val parameters =
               if (coarseEnabled) { SunTimes.compute()
                 .at(lat.toDouble(),long.toDouble()).now().execute()
