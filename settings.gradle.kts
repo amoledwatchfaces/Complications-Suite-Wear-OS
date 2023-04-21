@@ -5,13 +5,13 @@ pluginManagement {
         mavenCentral()
     }
 }
+@Suppress("UnstableApiUsage") //TODO: CHECK LATER
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()
     }
 }
+
 rootProject.name = "Complications Suite"
-include ':mobile'
-include ':wear'
+include(":mobile", ":wear")
