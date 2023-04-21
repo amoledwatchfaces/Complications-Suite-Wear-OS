@@ -5,14 +5,15 @@ plugins {
 
 @Suppress("UnstableApiUsage") //TODO: CHECK LATER
 android {
+
     compileSdk = 33
 
     defaultConfig {
         applicationId = "com.weartools.weekdayutccomp"
         minSdk = 23
         targetSdk = 33
-        versionCode = 206
-        versionName = "2.0.6"
+        versionCode = 208
+        versionName = "2.0.8"
 
     }
 
@@ -27,13 +28,6 @@ android {
         }
     }
 
-    buildTypes {
-        release {
-            isMinifyEnabled = true
-            isShrinkResources = true
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-        }
-    }
     buildFeatures {
         viewBinding = true
     }

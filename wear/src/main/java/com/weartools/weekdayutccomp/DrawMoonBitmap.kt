@@ -1,8 +1,10 @@
 package com.weartools.weekdayutccomp
 
-import android.content.ContentValues.TAG
-import android.graphics.*
-import android.util.Log
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.RectF
 
 object DrawMoonBitmap {
     /**
@@ -36,9 +38,12 @@ object DrawMoonBitmap {
          * IF LOCATION IS NOT SET, SET ROTATION TO 0 (ZERO) AND ROTATE BY 180° (FLIP) WHEN USER SELECTS SOUTHERN HEMISPHERE
          * */
 
-        val finalRotation = if (lat!=0.0) (90F + angle + parallacticAngle)
-        else if (!hemi) 180f
-        else 0f
+        var finalRotation = (90F + angle + parallacticAngle)
+        if (lat==0.0) finalRotation = 0f // Zero rotation when we don't have coarse location
+        if (hemi && lat==0.0) finalRotation += 180f // Rotate by 180° when moon is waxing because our image only grows from one side (left to right)
+        if (angle<0 && lat==0.0) finalRotation += 180f // Flip image when moon is waning (angle > 0), note that previously, angle value was multiplied with (-1)
+
+        //val finalRotation = if (lat!=0.0) (90F + angle + parallacticAngle)
 
         /** SLIGHTLY EDIT ILLUMINATION SO RESULTED BITMAP WONT LOOK BAD */
         when (percentIlluminated) {
