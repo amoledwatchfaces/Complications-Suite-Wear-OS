@@ -16,8 +16,11 @@
  */
 package com.weartools.weekdayutccomp.complication
 
+import android.Manifest
 import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.drawable.Icon.createWithBitmap
 import android.graphics.drawable.Icon.createWithResource
 import android.util.Log
@@ -30,6 +33,7 @@ import com.weartools.weekdayutccomp.DrawMoonBitmap
 import com.weartools.weekdayutccomp.MoonPhaseHelper
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.R.drawable
+import kotlinx.coroutines.runBlocking
 import org.shredzone.commons.suncalc.MoonIllumination
 import org.shredzone.commons.suncalc.MoonPosition
 import java.math.RoundingMode
@@ -43,6 +47,20 @@ class MoonPhaseComplicationService : SuspendingComplicationDataSourceService() {
         type: ComplicationType
     ) {
         Log.d(TAG, "onComplicationActivated(): $complicationInstanceId")
+        reqPermissionFunction(applicationContext)
+    }
+
+    /** CHECK LOCATION PERMISSION + CONSIDER LOCATION TOAST */
+    private fun reqPermissionFunction(context: Context) {
+
+        runBlocking {
+            val result = context.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
+            if (result == PackageManager.PERMISSION_GRANTED) {
+                Log.i(TAG, "Permission granted")
+            } else {
+                Toast.makeText(context, getString(R.string.enable_permission_toast_consider), Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
 
@@ -133,15 +151,6 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
         val angle = set2.angle.toFloat()*(-1)
         val fraction = set2.fraction
         val phaseName = set2.closestPhase.name
-
-        //Log.d(TAG, "phase: $phase")
-
-        /** CONSIDER LOCATION TOAST */
-        if (lat == 0.0) {
-            Toast
-                .makeText(this, getString(R.string.enable_permission_toast_consider), Toast.LENGTH_SHORT)
-                .show()
-        }
 
     val df = DecimalFormat("#.#")
     df.roundingMode = RoundingMode.HALF_UP
