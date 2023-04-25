@@ -52,8 +52,7 @@ fun LocationCard(
         enabled = true,
         onClick = {
             if (permissionState.status.isGranted) {
-                //Log.d(TAG, "We have a permission")
-                //fusedLocationClient.lastLocation
+
                 Toast.makeText(context, R.string.checking, Toast.LENGTH_SHORT).show()
                 fusedLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, object : CancellationToken() {
                     override fun onCanceledRequested(p0: OnTokenCanceledListener) = CancellationTokenSource().token
@@ -68,8 +67,7 @@ fun LocationCard(
                         pref.forceRefresh((0..10).random()) // TO REFRESH COMPLICATIONS ON REFRESH BUTTON CLICK
                             latitudeText = it.latitude.toString()
                             longitudeText = it.longitude.toString()
-                            pref.setCoarsePermission(true)
-                        //Log.d(TAG, "${it.altitude}")
+
                         }
                     }
             } else {
@@ -97,17 +95,11 @@ fun LocationCard(
 
     }
 }
-@SuppressLint("MissingPermission")
-@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun LocationToggle(
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
-    permissionState: PermissionState,
     modifier: Modifier = Modifier,
-    fusedLocationClient: FusedLocationProviderClient,
-    pref: Pref,
-    context: Context,
 ) {
     ToggleChip(
         modifier = modifier
@@ -120,27 +112,6 @@ fun LocationToggle(
         ),
         onCheckedChange = { enabled ->
             onCheckedChange(enabled)
-            if (permissionState.status.isGranted) {
-                //Log.d(TAG, "We have a permission")
-                //fusedLocationClient.lastLocation
-                Toast.makeText(context, R.string.checking, Toast.LENGTH_SHORT).show()
-                fusedLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, object : CancellationToken() {
-                    override fun onCanceledRequested(p0: OnTokenCanceledListener) = CancellationTokenSource().token
-                    override fun isCancellationRequested() = false
-                })
-                    .addOnSuccessListener {
-                        if (it == null) Toast.makeText(context, R.string.no_location, Toast.LENGTH_SHORT).show()
-                        else {
-                            Toast.makeText(context, "OK!", Toast.LENGTH_SHORT).show()
-                            pref.setLatitude(it.latitude.toString())
-                            pref.setLongitude(it.longitude.toString())
-                            //pref.setAltitude(it.altitude.toInt())
-                            //Log.d(TAG, "$it")
-                        }
-                    }
-            } else {
-                permissionState.launchPermissionRequest()
-            }
         },
         label = { Text(stringResource(id = R.string.coarse_location_toggle_title)) },
         secondaryLabel = {

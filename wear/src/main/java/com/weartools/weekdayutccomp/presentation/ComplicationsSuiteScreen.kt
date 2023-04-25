@@ -112,7 +112,7 @@ fun ComplicationsSuiteScreen(
                         pref.setCoarsePermission(true)
                         pref.setLatitude(it.latitude.toString())
                         pref.setLongitude(it.longitude.toString())
-                        //pref.setAltitude(it.altitude.toInt())
+
                         latitude=it.latitude.toString()
                         longitude=it.longitude.toString()
                     } }
@@ -245,20 +245,38 @@ fun ComplicationsSuiteScreen(
             LocationToggle(
                 checked = coarseEnabled,
                 onCheckedChange = {
-                    if (coarseEnabled) {
+                    if (permissionState.status.isGranted && coarseEnabled) {
                         pref.setCoarsePermission(false)
                         coarseEnabled = false
                         pref.setLatitude("0.0") //TODO: SET LAT LONG BACK AGAIN TO ZERO?
                         pref.setLongitude("0.0")
+                        pref.forceRefresh((0..10).random())
+                        latitude = "0.0"
+                        longitude = "0.0"
                     }
                     else if (permissionState.status.isGranted && !coarseEnabled) {
                     pref.setCoarsePermission(true)
                     coarseEnabled = true
-                }
 
-                                  },
-                permissionState = permissionState,
-                fusedLocationClient = fusedLocationClient, pref = pref, context = context)
+                    Toast.makeText(context, R.string.checking, Toast.LENGTH_SHORT).show()
+                        fusedLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, object : CancellationToken() {
+                            override fun onCanceledRequested(p0: OnTokenCanceledListener) = CancellationTokenSource().token
+                            override fun isCancellationRequested() = false
+                        })
+                            .addOnSuccessListener {
+                                if (it == null) Toast.makeText(context, R.string.no_location, Toast.LENGTH_SHORT).show()
+                                else {
+                                    Toast.makeText(context, "OK!", Toast.LENGTH_SHORT).show()
+                                    pref.setLatitude(it.latitude.toString())
+                                    pref.setLongitude(it.longitude.toString())
+                                    pref.forceRefresh((0..10).random())
+                                    latitude = it.latitude.toString()
+                                    longitude = it.longitude.toString()
+                                }
+                            }
+                }
+                    else {permissionState.launchPermissionRequest()}
+               })
         }
         if (coarseEnabled) {
             item { LocationCard(latitude = latitude, longitude = longitude, permissionState = permissionState, fusedLocationClient = fusedLocationClient, pref = pref, context = context) }
@@ -456,3 +474,4 @@ fun changeLocale(s: String) {
 // Call this on the main thread as it may require Activity.restart()
     AppCompatDelegate.setApplicationLocales(appLocale)
 }
+
