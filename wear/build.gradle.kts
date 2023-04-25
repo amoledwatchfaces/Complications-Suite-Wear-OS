@@ -12,8 +12,8 @@ android {
         applicationId = "com.weartools.weekdayutccomp"
         minSdk = 27
         targetSdk = 33
-        versionCode = 213
-        versionName = "2.1.3"
+        versionCode = 215
+        versionName = "2.1.5"
         resourceConfigurations += listOf("en", "cs", "de", "el", "es", "it", "pt", "ro", "sk", "zh")
     }
     bundle {
@@ -80,7 +80,7 @@ dependencies {
     implementation ("androidx.wear.compose:compose-material:$composeWearVersion")
     implementation ("androidx.wear.compose:compose-foundation:$composeWearVersion")
     implementation ("androidx.compose.ui:ui-tooling-preview:$composeUiVersion")
-    implementation ("androidx.activity:activity-compose:1.7.0")
+    implementation ("androidx.activity:activity-compose:1.7.1")
     implementation ("androidx.compose.material:material-icons-core:$composeUiVersion")
 
     androidTestImplementation ("androidx.compose.ui:ui-test-junit4:$composeUiVersion")
