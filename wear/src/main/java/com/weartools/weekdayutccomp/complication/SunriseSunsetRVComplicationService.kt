@@ -63,7 +63,6 @@ class SunriseSunsetRVComplicationService : SuspendingComplicationDataSourceServi
                 Toast.makeText(context, context.getString(R.string.enable_permission_toast), Toast.LENGTH_SHORT).show()
             }
         }
-
         //Log.d(TAG, "req permission func")
     }
 
@@ -128,9 +127,7 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
                 value = progress,
                 min = 0f,
                 max = length,
-                contentDescription = PlainComplicationText
-                    .Builder(text = getString(R.string.doy_comp_name)).build()
-            )
+                contentDescription = PlainComplicationText.Builder(text = getString(R.string.sunrise_sunset_countdown_comp_name)).build())
                 .setText(
                     if (coarseEnabled) TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.SHORT_DUAL_UNIT, CountDownTimeReference(timeInstance)).build()
                     else PlainComplicationText.Builder(text = "-").build())
@@ -144,22 +141,22 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
             return LongTextComplicationData.Builder(
                 text = if (coarseEnabled)
                     TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.SHORT_DUAL_UNIT, CountDownTimeReference(timeInstance))
-                        .setText(if (isSunrise) "${getString(R.string.sunrise_in)} ^1" else "${getString(R.string.sunset_in)} ^1")
+                        .setText(if (isSunrise) "${getString(R.string.sunrise_in)}: ^1" else "${getString(R.string.sunset_in)}: ^1")
                         .build()
-                else PlainComplicationText.Builder(text = "${getString(R.string.sunrise_in)} -:-").build(),
+                else PlainComplicationText.Builder(text = "${getString(R.string.sunrise_in)}: -:-").build(),
 
                 contentDescription = if (coarseEnabled)
                     TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.SHORT_DUAL_UNIT, CountDownTimeReference(timeInstance))
-                        .setText(if (isSunrise) "${getString(R.string.sunrise_in)} ^1" else "${getString(R.string.sunset_in)} ^1")
+                        .setText(if (isSunrise) "${getString(R.string.sunrise_in)}: ^1" else "${getString(R.string.sunset_in)}: ^1")
                         .build()
-                else PlainComplicationText.Builder(text = "${getString(R.string.sunrise_in)} -:-").build())
+                else PlainComplicationText.Builder(text = "${getString(R.string.sunrise_in)}: -:-").build())
 
                 .setTapAction(null)
                 .build()
         }
         ComplicationType.SHORT_TEXT -> {
             val isSunrise = prefs.getBoolean(getString(R.string.is_sunrise), false)
-            return LongTextComplicationData.Builder(
+            return ShortTextComplicationData.Builder(
                 text = if (coarseEnabled)
                     TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.SHORT_DUAL_UNIT, CountDownTimeReference(timeInstance))
                         .build()
@@ -167,9 +164,9 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
 
                 contentDescription = if (coarseEnabled)
                     TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.SHORT_DUAL_UNIT, CountDownTimeReference(timeInstance))
-                        .setText(if (isSunrise) "${getString(R.string.sunrise_in)} ^1" else "${getString(R.string.sunset_in)} ^1")
+                        .setText(if (isSunrise) "${getString(R.string.sunrise_in)}: ^1" else "${getString(R.string.sunset_in)}: ^1")
                         .build()
-                else PlainComplicationText.Builder(text = "${getString(R.string.sunrise_in)} -:-").build()) //TODO: TRANSLATE
+                else PlainComplicationText.Builder(text = "${getString(R.string.sunrise_in)}: -:-").build()) //TODO: TRANSLATE
 
                 .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this,icon)).build())
                 .setTapAction(null)
