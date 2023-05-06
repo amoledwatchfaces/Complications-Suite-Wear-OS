@@ -132,6 +132,11 @@
     <string name="sunrise_sunset_comp_name">Nascer e pôr do sol</string>
     <string name="sunrise">Nascer do sol</string>
     <string name="sunset">Pôr do sol</string>
+
+    <string name="sunrise_sunset_countdown_comp_name">Nascer e pôr do sol contagem regressiva</string>
+    <string name="sunrise_in">Nascer do sol em</string>
+    <string name="sunset_in">Pôr do sol em</string>
+
     <string name="enable_permission_toast">Precisa de permissão! (App UI)</string>
     <string name="enable_permission_toast_consider">Ativar localização para lua precisa</string>
     <string name="location">Localização</string>

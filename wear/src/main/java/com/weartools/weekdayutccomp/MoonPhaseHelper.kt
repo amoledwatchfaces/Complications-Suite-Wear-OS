@@ -27,6 +27,7 @@ import androidx.work.*
 import com.weartools.weekdayutccomp.R.drawable
 import com.weartools.weekdayutccomp.R.string
 import com.weartools.weekdayutccomp.complication.SunriseSunsetComplicationService
+import com.weartools.weekdayutccomp.complication.SunriseSunsetRVComplicationService
 import org.shredzone.commons.suncalc.SunTimes
 import java.util.concurrent.TimeUnit
 
@@ -137,6 +138,7 @@ class SunriseSunsetWorker(private val appContext: Context, workerParams: WorkerP
   override suspend fun doWork(): Result {
     Log.i(TAG, "Worker running")
     updateComplication(appContext, SunriseSunsetComplicationService::class.java)
+    updateComplication(appContext, SunriseSunsetRVComplicationService::class.java)
     return Result.success()
   }
 }

@@ -270,6 +270,21 @@
         </service>
 
         <service
+            android:name="com.weartools.weekdayutccomp.complication.SunriseSunsetRVComplicationService"
+            android:exported="true"
+            android:icon="@drawable/ic_sunset_3"
+            android:label="@string/sunrise_sunset_countdown_comp_name"
+            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
+            <meta-data android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS" android:value="600"/>
+            <meta-data
+                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+                android:value="RANGED_VALUE,LONG_TEXT,SHORT_TEXT" />
+        </service>
+
+        <service
             android:name="com.weartools.weekdayutccomp.complication.BitcoinPriceComplicationService"
             android:exported="true"
             android:icon="@drawable/ic_btc"

@@ -78,6 +78,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         if (key == "date_format" || key == "short_text_format" || key == "short_title_format"){updateComplication(this, DateComplicationService::class.java)}
         if (key == "coarse_enabled" || key == "force_refresh"){
             updateComplication(this, SunriseSunsetComplicationService::class.java)
+            updateComplication(this, SunriseSunsetRVComplicationService::class.java)
             updateComplication(this, MoonPhaseComplicationService::class.java)
         }
     }

@@ -129,9 +129,14 @@
     <string name="coarse_toggle_description">Coarse Location Permission Toggle</string>
 
     <!-- Sunrise / Sunset -->
-    <string name="sunrise_sunset_comp_name">Rasarit și apus</string>
-    <string name="sunrise">Rasarit</string>
-    <string name="sunset">Apus</string>
+    <string name="sunrise_sunset_comp_name">Răsărit și apus</string>
+    <string name="sunrise">Răsărit</string>
+    <string name="sunset">Apus de soare</string>
+
+    <string name="sunrise_sunset_countdown_comp_name">Timp până la următorul răsărit și apus</string>
+    <string name="sunrise_in">Răsărit în</string>
+    <string name="sunset_in">Apus de soare în</string>
+
     <string name="enable_permission_toast">Am nevoie de permisiune! (App UI)</string>
     <string name="enable_permission_toast_consider">Activați locația pentru lună precisă</string>
     <string name="location">Locație</string>

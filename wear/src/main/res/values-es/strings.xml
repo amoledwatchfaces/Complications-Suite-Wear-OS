@@ -88,38 +88,43 @@
     <string name="wc2_setting_title">Zona Horaria 2 ID</string>
 
     <!-- WOY Complication Preferences -->
-<string name="week_complication_name">Semana del Año</string>
-<string name="woy_setting_title">Formato</string>
-<string name="woy_complication_text">Semana</string>
-<string name="woy_complication_description">Semana del Año</string>
-<string name="woy_setting_preference_category_title">Complicación de Semana del Año</string>
+    <string name="week_complication_name">Semana del Año</string>
+    <string name="woy_setting_title">Formato</string>
+    <string name="woy_complication_text">Semana</string>
+    <string name="woy_complication_description">Semana del Año</string>
+    <string name="woy_setting_preference_category_title">Complicación de Semana del Año</string>
 
     <!-- Custom Text + Title -->
-<string name="custom_text_comp_name">Texto Personalizado</string>
-<string name="custom_text_comp_name_category">Complicación de Texto Personalizado</string>
+    <string name="custom_text_comp_name">Texto Personalizado</string>
+    <string name="custom_text_comp_name_category">Complicación de Texto Personalizado</string>
     <!--Custom Text + Title 2-->
     <string name="custom_text_p1">Texto</string>
     <string name="custom_title_p1">Título</string>
 
     <!-- LOCATION -->
-<string name="coarse_location_toggle_title">Ubicación Aproximada</string>
-<string name="coarse_secondary_enabled">Habilitado</string>
-<string name="coarse_secondary_disabled">Deshabilitado</string>
-<string name="coarse_toggle_description">Interruptor de Permiso de Ubicación Aproximada</string>
+    <string name="coarse_location_toggle_title">Ubicación Aproximada</string>
+    <string name="coarse_secondary_enabled">Habilitado</string>
+    <string name="coarse_secondary_disabled">Deshabilitado</string>
+    <string name="coarse_toggle_description">Interruptor de Permiso de Ubicación Aproximada</string>
 
     <!-- Sunrise / Sunset -->
-<string name="sunrise_sunset_comp_name">Amanecer &amp; Atardecer</string>
-<string name="sunrise">Amanecer</string>
-<string name="sunset">Atardecer</string>
-<string name="enable_permission_toast">Requiere permiso de ubicación aproximada (App UI)</string>
-<string name="enable_permission_toast_consider">Habilita la ubicación para una precisa rotación de la luna</string>
-<string name="location">Ubicación</string>
-<string name="checking">Revisando ubicación</string>
-<string name="no_location">No puedo obtener la ubicación. Revisar GPS</string>
+    <string name="sunrise_sunset_comp_name">Amanecer &amp; Atardecer</string>
+    <string name="sunrise">Amanecer</string>
+    <string name="sunset">Atardecer</string>
+
+    <string name="sunrise_sunset_countdown_comp_name">Cuenta regresiva de amanecer y atardecer</string>
+    <string name="sunrise_in">Amanecer en</string>
+    <string name="sunset_in">Atardecer en</string>
+
+    <string name="enable_permission_toast">Requiere permiso de ubicación aproximada (App UI)</string>
+    <string name="enable_permission_toast_consider">Habilita la ubicación para una precisa rotación de la luna</string>
+    <string name="location">Ubicación</string>
+    <string name="checking">Revisando ubicación</string>
+    <string name="no_location">No puedo obtener la ubicación. Revisar GPS</string>
 
     <!--Day and Week-->
-<string name="day_and_week_comp_name">Día &amp; Semana</string>
-<string name="dayD">D:</string>
-<string name="weekW">S:</string>
+    <string name="day_and_week_comp_name">Día &amp; Semana</string>
+    <string name="dayD">D:</string>
+    <string name="weekW">S:</string>
 
 </resources>

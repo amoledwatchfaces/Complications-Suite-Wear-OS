@@ -112,6 +112,11 @@
     <string name="sunrise_sunset_comp_name">Východ a Západ Slnka</string>
     <string name="sunrise">Východ slnka</string>
     <string name="sunset">Západ slnka</string>
+
+    <string name="sunrise_sunset_countdown_comp_name">Čas do východu a západ slnka</string>
+    <string name="sunrise_in">Východ slnka o</string>
+    <string name="sunset_in">Západ slnka o</string>
+
     <string name="enable_permission_toast">Najprv povoľte približnú polohu (App UI)</string>
     <string name="enable_permission_toast_consider">Pre presnejšiu rotáciu povoľte polohu</string>
     <string name="location">Poloha</string>

@@ -11,6 +11,7 @@ import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUp
 import androidx.work.*
 import com.weartools.weekdayutccomp.complication.MoonPhaseComplicationService
 import com.weartools.weekdayutccomp.complication.SunriseSunsetComplicationService
+import com.weartools.weekdayutccomp.complication.SunriseSunsetRVComplicationService
 import java.util.concurrent.TimeUnit
 
 class DateAndBootReceiver: BroadcastReceiver() {
@@ -47,6 +48,7 @@ class ComplicationWorker(private val appContext: Context, workerParams: WorkerPa
     override suspend fun doWork(): Result {
         Log.i(TAG, "Worker running")
         updateComplication(appContext, SunriseSunsetComplicationService::class.java)
+        updateComplication(appContext, SunriseSunsetRVComplicationService::class.java)
         updateComplication(appContext, MoonPhaseComplicationService::class.java)
         return Result.success()
     }

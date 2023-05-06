@@ -8,11 +8,8 @@ buildscript {
 
 plugins {
     val kotlinVersion = "1.8.20"
-    id("com.android.application") version("8.0.0") apply false
+    id("com.android.application") version("8.0.1") apply false
     id("org.jetbrains.kotlin.android") version(kotlinVersion) apply false
-
-    //id("com.android.library") version("8.0.0") apply false
-    //id("org.jetbrains.kotlin.jvm") version(kotlinVersion) apply false
 }
 
 tasks.register("clean", Delete::class){

@@ -154,8 +154,11 @@
     <string name="is_sunrise" translatable="false">is_sunrise</string>
     <!--translate-->
     <string name="sunrise_sunset_comp_name">Sunrise &amp; Sunset</string>
+    <string name="sunrise_sunset_countdown_comp_name">Sunrise &amp; Sunset Countdown</string>
     <string name="sunrise">Sunrise</string>
     <string name="sunset">Sunset</string>
+    <string name="sunrise_in">Sunrise in</string>
+    <string name="sunset_in">Sunset in</string>
     <string name="enable_permission_toast">Needs coarse location permission (App UI)</string>
     <string name="enable_permission_toast_consider">Enable location for precise Moon rotation</string>
     <string name="location">Location</string>

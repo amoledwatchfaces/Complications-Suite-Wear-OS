@@ -132,6 +132,11 @@
     <string name="sunrise_sunset_comp_name">Ανατολή και ηλιοβασίλεμα</string>
     <string name="sunrise">Ανατολή ηλίου</string>
     <string name="sunset">Η δυση του ηλιου</string>
+
+    <string name="sunrise_sunset_countdown_comp_name">Χρόνος μέχρι την επόμενη Ανατολή και Δύση Ηλίου</string>
+    <string name="sunrise_in">Ανατολή ηλίου σε</string>
+    <string name="sunset_in">Ηλιοβασίλεμα σε</string>
+
     <string name="enable_permission_toast">Χρειάζεται άδεια! (App UI)</string>
     <string name="enable_permission_toast_consider">Ενεργοποίηση τοποθεσίας για ακριβή φεγγάρι</string>
     <string name="location">Τοποθεσία</string>

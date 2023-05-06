@@ -132,6 +132,11 @@
     <string name="sunrise_sunset_comp_name">Alba e tramonto</string>
     <string name="sunrise">Alba</string>
     <string name="sunset">Tramonto</string>
+
+    <string name="sunrise_sunset_countdown_comp_name">Conto alla rovescia di alba e tramonto</string>
+    <string name="sunrise_in">Alba tra</string>
+    <string name="sunset_in">Tramonto tra</string>
+
     <string name="enable_permission_toast">Richiede il permesso! (App UI)</string>
     <string name="enable_permission_toast_consider">Abilita la posizione per la luna precisa</string>
     <string name="location">Posizione</string>

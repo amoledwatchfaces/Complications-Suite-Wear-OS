@@ -111,6 +111,11 @@
     <string name="sunrise_sunset_comp_name">日出与日落</string>
     <string name="sunrise">日出</string>
     <string name="sunset">日落</string>
+
+    <string name="sunrise_sunset_countdown_comp_name">日出日落倒计时</string>
+    <string name="sunrise_in">日出</string>
+    <string name="sunset_in">日落</string>
+
     <string name="enable_permission_toast">需要开启粗略定位权限</string>
     <string name="enable_permission_toast_consider">请开启粗略定位权限</string>
     <string name="location">位置</string>
