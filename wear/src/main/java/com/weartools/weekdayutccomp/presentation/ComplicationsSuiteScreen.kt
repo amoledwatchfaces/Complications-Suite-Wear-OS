@@ -16,6 +16,10 @@
 package com.weartools.weekdayutccomp.presentation
 
 import android.annotation.SuppressLint
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.focusable
@@ -24,17 +28,22 @@ import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.rotary.onPreRotaryScrollEvent
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.os.LocaleListCompat
 import androidx.wear.compose.material.AutoCenteringParams
+import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.ScalingLazyColumn
 import androidx.wear.compose.material.ScalingLazyListState
 import androidx.wear.compose.material.rememberScalingLazyListState
@@ -49,6 +58,7 @@ import com.google.android.gms.tasks.OnTokenCanceledListener
 import com.weartools.weekdayutccomp.BuildConfig
 import com.weartools.weekdayutccomp.Pref
 import com.weartools.weekdayutccomp.R
+import com.weartools.weekdayutccomp.theme.wearColorPalette
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -167,6 +177,7 @@ fun ComplicationsSuiteScreen(
             DialogChip(
                 text = stringResource(id = R.string.wc_comp_name_1),
                 title = getCity1, //STRING FROM STRINGS.XML BASED ON PICK FROM THE LIST
+                icon = {},
                 onClick = {
                     isTImeZOnClick = isTImeZOnClick.not()
                 },
@@ -178,6 +189,7 @@ fun ComplicationsSuiteScreen(
         item {
             DialogChip(
                 text = stringResource(id = R.string.wc_comp_name_2),
+                icon = {},
                 title = getCity2,
                 onClick = {
                     isTImeZOnClick2 = isTImeZOnClick2.not()
@@ -190,6 +202,7 @@ fun ComplicationsSuiteScreen(
                 secondaryLabelOn = stringResource(id = R.string.wc_setting_leading_zero_summary_on), // STRING FROM STRINGS.XML BASED ON KEY ON / OFF
                 secondaryLabelOff = stringResource(id = R.string.wc_setting_leading_zero_summary_off),
                 checked = leadingZero,
+                icon = {},
                 onCheckedChange = {
                     leadingZero=it
                     pref.setIsLeadingZero(it)
@@ -202,6 +215,7 @@ fun ComplicationsSuiteScreen(
                 secondaryLabelOn = stringResource(id = R.string.time_ampm_setting_on),
                 secondaryLabelOff = stringResource(id = R.string.time_ampm_setting_off),
                 checked = militaryTime,
+                icon = {},
                 onCheckedChange = {
                     militaryTime=it
                     pref.setIsMilitary(it)
@@ -218,6 +232,17 @@ fun ComplicationsSuiteScreen(
                 secondaryLabelOn = stringResource(id = R.string.moon_setting_simple_icon_on),
                 secondaryLabelOff = stringResource(id = R.string.moon_setting_simple_icon_off),
                 checked = simpleIcon,
+                icon = {
+                    if (simpleIcon) Icon(
+                        painter = painterResource(id = R.drawable.ic_settings_moon_simple),
+                        contentDescription = "Simple Moon Icon"
+                    )
+                    else Icon(
+                        painter = painterResource(id = R.drawable.ic_settings_moon_detailed),
+                        contentDescription = "Detailed Moon Icon",
+                        tint = Color.Unspecified
+                    )
+                       },
                 onCheckedChange = {
                     simpleIcon=it
                     pref.setIsSimpleIcon(it)
@@ -233,6 +258,7 @@ fun ComplicationsSuiteScreen(
                     secondaryLabelOn = stringResource(id = R.string.moon_setting_hemi_on),
                     secondaryLabelOff = stringResource(id = R.string.moon_setting_hemi_off),
                     checked = hemisphere,
+                    icon = {},
                     onCheckedChange = {
                         hemisphere=it
                         pref.setIsHemisphere(it)
@@ -290,6 +316,7 @@ fun ComplicationsSuiteScreen(
                 secondaryLabelOn = stringResource(id = R.string.time_setting_leading_zero_summary_on),
                 secondaryLabelOff = stringResource(id = R.string.time_setting_leading_zero_summary_off),
                 checked = leadingZero2,
+                icon = {},
                 onCheckedChange = {
                     leadingZero2=it
                     pref.setIsLeadingZeroTime(it)
@@ -302,6 +329,7 @@ fun ComplicationsSuiteScreen(
                 secondaryLabelOn = stringResource(id = R.string.time_ampm_setting_on),
                 secondaryLabelOff = stringResource(id = R.string.time_ampm_setting_off),
                 checked = militaryTime2,
+                icon = {},
                 onCheckedChange = {
                     militaryTime2=it
                     pref.setIsMilitaryTime(it)
@@ -317,6 +345,7 @@ fun ComplicationsSuiteScreen(
                 secondaryLabelOn = stringResource(id = R.string.woy_setting_on),
                 secondaryLabelOff = stringResource(id = R.string.woy_setting_off),
                 checked = forceISO,
+                icon = {},
                 onCheckedChange = {
                     forceISO=it
                     pref.setIsISO(it)
@@ -329,6 +358,7 @@ fun ComplicationsSuiteScreen(
         item {
             DialogChip(
                 text = stringResource(id = R.string.date_long_text_format),
+                icon = {},
                 title = getLongText,
                 onClick = {
                     longTextFormat = longTextFormat.not()
@@ -338,6 +368,7 @@ fun ComplicationsSuiteScreen(
         item {
             DialogChip(
                 text = stringResource(id = R.string.date_short_text_format),
+                icon = {},
                 title = getShortText,
                 onClick = {
                     shortTextFormat = shortTextFormat.not()
@@ -347,6 +378,7 @@ fun ComplicationsSuiteScreen(
         item {
             DialogChip(
                 text = stringResource(id = R.string.date_short_title_format),
+                icon = {},
                 title = getShortTitle,
                 onClick = {
                     shortTitleFormat = shortTitleFormat.not()
@@ -364,6 +396,7 @@ fun ComplicationsSuiteScreen(
         item {
             DialogChip(
                 text = stringResource(id = R.string.language),
+                icon = {},
                 title = currentLocale,
                 onClick = {
                    openLocale=openLocale.not()
@@ -373,7 +406,9 @@ fun ComplicationsSuiteScreen(
         item {
             DialogChip(
                 text = stringResource(id = R.string.version),
+                icon = { Icon(imageVector = Icons.Outlined.Info, contentDescription = "Play Store Icon", tint = wearColorPalette.secondary)},
                 title = BuildConfig.VERSION_NAME,
+                onClick = {context.openPlayStore()}
             )
         }
 
@@ -466,6 +501,14 @@ fun ComplicationsSuiteScreen(
                 openLocale=false
         } )
 
+    }
+}
+
+fun Context.openPlayStore() {
+    try {
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName")))
+    } catch (e: ActivityNotFoundException) {
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$packageName")))
     }
 }
 

@@ -11,8 +11,19 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.gestures.scrollBy
-import androidx.compose.foundation.layout.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -23,9 +34,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.wear.compose.material.*
+import androidx.wear.compose.material.Chip
+import androidx.wear.compose.material.ChipDefaults
+import androidx.wear.compose.material.Icon
+import androidx.wear.compose.material.MaterialTheme
+import androidx.wear.compose.material.Text
+import androidx.wear.compose.material.ToggleChip
+import androidx.wear.compose.material.ToggleChipDefaults
 import androidx.wear.compose.material.dialog.Alert
 import androidx.wear.compose.material.dialog.Dialog
+import androidx.wear.compose.material.itemsIndexed
+import androidx.wear.compose.material.rememberScalingLazyListState
 import androidx.wear.input.RemoteInputIntentHelper
 import androidx.wear.input.wearableExtender
 import androidx.wear.watchface.complications.datasource.ComplicationDataSourceService
@@ -42,6 +61,7 @@ fun DialogChip(
     text: String,
     title: String,
     onClick: (() -> Unit)? = null,
+    icon: @Composable (BoxScope.() -> Unit)?
 ) {
     Chip(
         modifier = Modifier
@@ -50,6 +70,7 @@ fun DialogChip(
         onClick = {
             onClick?.invoke()
         },
+        icon = icon,
         colors = ChipDefaults.gradientBackgroundChipColors(
             startBackgroundColor = Color(0xff2c2c2d),
             endBackgroundColor = Color(0xff2c2c2d)
@@ -158,7 +179,8 @@ fun ToggleChip(
     onCheckedChange: (Boolean) -> Unit,
     label: String,
     secondaryLabelOn: String,
-    secondaryLabelOff: String
+    secondaryLabelOff: String,
+    icon: @Composable (BoxScope.() -> Unit)?
 ) {
     ToggleChip(
         modifier = Modifier
@@ -169,6 +191,7 @@ fun ToggleChip(
             checkedEndBackgroundColor = wearColorPalette.primaryVariant,
             checkedToggleControlColor = Color(0xFFffd215),
         ),
+        appIcon = icon,
         onCheckedChange = { enabled ->
             onCheckedChange(enabled)
         },
