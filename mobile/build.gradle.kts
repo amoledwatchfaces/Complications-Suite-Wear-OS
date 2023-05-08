@@ -12,8 +12,8 @@ android {
         applicationId = "com.weartools.weekdayutccomp"
         minSdk = 23
         targetSdk = 33
-        versionCode = 220
-        versionName = "2.2.0"
+        versionCode = 222
+        versionName = "2.2.2"
 
     }
 
