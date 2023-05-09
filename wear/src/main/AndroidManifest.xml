@@ -242,7 +242,7 @@
         <service
             android:name="com.weartools.weekdayutccomp.complication.MoonPhaseComplicationService"
             android:exported="true"
-            android:icon="@drawable/x_moon_new"
+            android:icon="@drawable/ic_settings_moon_detailed"
             android:label="@string/moon_comp_name"
             android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
             <intent-filter>

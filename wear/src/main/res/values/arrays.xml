@@ -177,6 +177,7 @@
         <item>TUN</item>
         <item>VAN</item>
         <item>VIE</item>
+        <item>VNO</item>
         <item>VVO</item>
         <item>VOG</item>
         <item>WAW</item>
@@ -363,6 +364,7 @@
         <item>Tunis (TUN)</item>
         <item>Vancouver (VAN)</item>
         <item>Vienna (VIE)</item>
+        <item>Vilnius (VNO)</item>
         <item>Vladivostok (VVO)</item>
         <item>Volgograd (VOG)</item>
         <item>Warsaw (WAW)</item>
@@ -549,6 +551,7 @@
         <item>Africa/Tunis</item>
         <item>America/Vancouver</item>
         <item>Europe/Vienna</item>
+        <item>Europe/Kiev</item>
         <item>Asia/Vladivostok</item>
         <item>Europe/Volgograd</item>
         <item>Europe/Warsaw</item>
