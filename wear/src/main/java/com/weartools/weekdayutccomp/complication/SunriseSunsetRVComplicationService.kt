@@ -129,7 +129,7 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
                 max = length,
                 contentDescription = PlainComplicationText.Builder(text = getString(R.string.sunrise_sunset_countdown_comp_name)).build())
                 .setText(
-                    if (coarseEnabled) TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.SHORT_DUAL_UNIT, CountDownTimeReference(timeInstance)).build()
+                    if (coarseEnabled) TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.SHORT_SINGLE_UNIT, CountDownTimeReference(timeInstance)).build()
                     else PlainComplicationText.Builder(text = "-").build())
                 .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this,icon)).build())
                 .setTapAction(null)
@@ -140,13 +140,13 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
             val isSunrise = prefs.getBoolean(getString(R.string.is_sunrise), false)
             return LongTextComplicationData.Builder(
                 text = if (coarseEnabled)
-                    TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.SHORT_DUAL_UNIT, CountDownTimeReference(timeInstance))
+                    TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.SHORT_SINGLE_UNIT, CountDownTimeReference(timeInstance))
                         .setText(if (isSunrise) "${getString(R.string.sunrise_in)}: ^1" else "${getString(R.string.sunset_in)}: ^1")
                         .build()
                 else PlainComplicationText.Builder(text = "${getString(R.string.sunrise_in)}: -:-").build(),
 
                 contentDescription = if (coarseEnabled)
-                    TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.SHORT_DUAL_UNIT, CountDownTimeReference(timeInstance))
+                    TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.SHORT_SINGLE_UNIT, CountDownTimeReference(timeInstance))
                         .setText(if (isSunrise) "${getString(R.string.sunrise_in)}: ^1" else "${getString(R.string.sunset_in)}: ^1")
                         .build()
                 else PlainComplicationText.Builder(text = "${getString(R.string.sunrise_in)}: -:-").build())
@@ -158,12 +158,12 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
             val isSunrise = prefs.getBoolean(getString(R.string.is_sunrise), false)
             return ShortTextComplicationData.Builder(
                 text = if (coarseEnabled)
-                    TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.SHORT_DUAL_UNIT, CountDownTimeReference(timeInstance))
+                    TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.SHORT_SINGLE_UNIT, CountDownTimeReference(timeInstance))
                         .build()
                 else PlainComplicationText.Builder(text = "-").build(),
 
                 contentDescription = if (coarseEnabled)
-                    TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.SHORT_DUAL_UNIT, CountDownTimeReference(timeInstance))
+                    TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.SHORT_SINGLE_UNIT, CountDownTimeReference(timeInstance))
                         .setText(if (isSunrise) "${getString(R.string.sunrise_in)}: ^1" else "${getString(R.string.sunset_in)}: ^1")
                         .build()
                 else PlainComplicationText.Builder(text = "${getString(R.string.sunrise_in)}: -:-").build()) //TODO: TRANSLATE
