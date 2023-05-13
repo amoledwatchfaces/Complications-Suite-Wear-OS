@@ -40,7 +40,6 @@ import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.R.drawable
 import kotlinx.coroutines.runBlocking
 import org.shredzone.commons.suncalc.SunTimes
-import java.time.LocalDate
 import java.time.ZonedDateTime
 
 class SunriseSunsetRVComplicationService : SuspendingComplicationDataSourceService() {
@@ -96,29 +95,34 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
     }
 }
 
+
 override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
-    //Log.d(TAG, "onComplicationRequest() id: ${request.complicationInstanceId}")
 
     MoonPhaseHelper.updateSun(context = this)
     val prefs = PreferenceManager.getDefaultSharedPreferences(applicationContext)
 
     val lat = prefs.getString(getString(R.string.latitude_value), "0.0").toString()
     val long = prefs.getString(getString(R.string.longitude_value), "0.0").toString()
+    val timeDiffStyle = prefs.getString(getString(R.string.time_diff_style), "SHORT_DUAL_UNIT").toString()
     val coarseEnabled = prefs.getBoolean(getString(R.string.coarse_enabled), false)
     var icon = prefs.getInt(getString(R.string.sunrise_sunset_icon), drawable.ic_sunrise_3)
     val time = prefs.getString(getString(R.string.change_time), "0").toString()
-    val timeInstance = ZonedDateTime.parse(time).toInstant()
 
+    if (time=="0" || !coarseEnabled) { icon = drawable.ic_location_not_available }
+    val timeInstance = ZonedDateTime.parse(time).toInstant()
 
     when (request.complicationType) {
         ComplicationType.RANGED_VALUE -> {
-            val isCalculatedForToday = ZonedDateTime.parse(time).toLocalDate()
-            if (time=="0" || !coarseEnabled) { icon = drawable.ic_location_not_available }
+
+            val times = SunTimes.compute().at(lat.toDouble(),long.toDouble()).today().execute()
+            val rise = times.rise?.toInstant()?.toEpochMilli()?.toFloat() ?: 0F
+            val set = times.set?.toInstant()?.toEpochMilli()?.toFloat() ?: 0F
 
             val max = timeInstance.toEpochMilli()
             val current = System.currentTimeMillis()
-            val min = if (isCalculatedForToday == LocalDate.now()) SunTimes.compute().at(lat.toDouble(),long.toDouble()).today().execute().rise?.toInstant()?.toEpochMilli()?.toFloat() ?: 0F
-            else SunTimes.compute().at(lat.toDouble(),long.toDouble()).today().execute().set?.toInstant()?.toEpochMilli()?.toFloat() ?: 0F
+            val min = if (current <= rise) set-86400000
+                      else if (current > rise && current <= set) rise
+                      else set
 
             val length = (max-min)/60000F
             val progress = (max-current)/60000F
@@ -129,7 +133,7 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
                 max = length,
                 contentDescription = PlainComplicationText.Builder(text = getString(R.string.sunrise_sunset_countdown_comp_name)).build())
                 .setText(
-                    if (coarseEnabled) TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.SHORT_SINGLE_UNIT, CountDownTimeReference(timeInstance)).build()
+                    if (coarseEnabled) TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.valueOf(timeDiffStyle), CountDownTimeReference(timeInstance)).build()
                     else PlainComplicationText.Builder(text = "-").build())
                 .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this,icon)).build())
                 .setTapAction(null)
@@ -140,13 +144,13 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
             val isSunrise = prefs.getBoolean(getString(R.string.is_sunrise), false)
             return LongTextComplicationData.Builder(
                 text = if (coarseEnabled)
-                    TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.SHORT_SINGLE_UNIT, CountDownTimeReference(timeInstance))
+                    TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.valueOf(timeDiffStyle), CountDownTimeReference(timeInstance))
                         .setText(if (isSunrise) "${getString(R.string.sunrise_in)}: ^1" else "${getString(R.string.sunset_in)}: ^1")
                         .build()
                 else PlainComplicationText.Builder(text = "${getString(R.string.sunrise_in)}: -:-").build(),
 
                 contentDescription = if (coarseEnabled)
-                    TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.SHORT_SINGLE_UNIT, CountDownTimeReference(timeInstance))
+                    TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.valueOf(timeDiffStyle), CountDownTimeReference(timeInstance))
                         .setText(if (isSunrise) "${getString(R.string.sunrise_in)}: ^1" else "${getString(R.string.sunset_in)}: ^1")
                         .build()
                 else PlainComplicationText.Builder(text = "${getString(R.string.sunrise_in)}: -:-").build())
@@ -158,12 +162,12 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
             val isSunrise = prefs.getBoolean(getString(R.string.is_sunrise), false)
             return ShortTextComplicationData.Builder(
                 text = if (coarseEnabled)
-                    TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.SHORT_SINGLE_UNIT, CountDownTimeReference(timeInstance))
+                    TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.valueOf(timeDiffStyle), CountDownTimeReference(timeInstance))
                         .build()
                 else PlainComplicationText.Builder(text = "-").build(),
 
                 contentDescription = if (coarseEnabled)
-                    TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.SHORT_SINGLE_UNIT, CountDownTimeReference(timeInstance))
+                    TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.valueOf(timeDiffStyle), CountDownTimeReference(timeInstance))
                         .setText(if (isSunrise) "${getString(R.string.sunrise_in)}: ^1" else "${getString(R.string.sunset_in)}: ^1")
                         .build()
                 else PlainComplicationText.Builder(text = "${getString(R.string.sunrise_in)}: -:-").build()) //TODO: TRANSLATE

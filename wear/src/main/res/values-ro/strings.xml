@@ -143,6 +143,10 @@
     <string name="checking">Găsesc locația…</string>
     <string name="no_location">Verifica GPS-ul</string>
 
+    <string name="countdown_style">Format</string>
+    <string name="countdown_style_style">Format</string>
+    <string name="e_g_">de exemplu.</string>
+
     <!-- Day and Week -->
     <string name="day_and_week_comp_name">Zi și Săptămâna</string>
     <string name="dayD">Z:</string>

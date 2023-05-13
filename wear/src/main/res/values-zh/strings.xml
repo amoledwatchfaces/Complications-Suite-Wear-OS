@@ -122,6 +122,10 @@
     <string name="checking">正在定位…</string>
     <string name="no_location">定位失败，请检查 GPS</string>
 
+    <string name="countdown_style">小时制</string>
+    <string name="countdown_style_style">小时制</string>
+    <string name="e_g_">例如</string>
+
     <!-- Day and Week -->
     <string name="day_and_week_comp_name">日与周</string>
     <string name="dayD">日:</string>

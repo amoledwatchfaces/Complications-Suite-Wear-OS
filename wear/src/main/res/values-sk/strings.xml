@@ -123,6 +123,10 @@
     <string name="checking">Zisťujem polohu…</string>
     <string name="no_location">Chyba. Skontrolujte GPS</string>
 
+    <string name="countdown_style">Formát</string>
+    <string name="countdown_style_style">Formát</string>
+    <string name="e_g_">napr.</string>
+
     <!-- Day and Week -->
     <string name="day_and_week_comp_name">Deň a Týždeň</string>
     <string name="dayD">D:</string>

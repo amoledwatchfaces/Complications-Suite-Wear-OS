@@ -165,6 +165,11 @@
     <string name="checking">Checking location…</string>
     <string name="no_location">Cannot get location. Check GPS</string>
 
+    <string name="time_diff_style" translatable="false">time_diff_style</string>
+    <string name="countdown_style">Countdown Format</string>
+    <string name="countdown_style_style">Format</string>
+    <string name="e_g_">e.g.</string>
+
     <!--translate-->
     <string name="day_and_week_comp_name">Day &amp; Week</string>
     <string name="dayD">D:</string>

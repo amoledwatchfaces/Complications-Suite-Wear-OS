@@ -49,6 +49,10 @@ class Pref(val context: Context) {
     fun setShortText(value: String){ getInstance(context).edit().putString("short_text_format",value).apply() }
     fun setShortTitle(value: String){ getInstance(context).edit().putString("short_title_format",value).apply() }
 
+    // TIME DIFF
+    fun getTimeDiffStyle():String{ return getInstance(context).getString("time_diff_style","SHORT_DUAL_UNIT")?:"SHORT_DUAL_UNIT" }
+    fun setTimeDiffStyle(value: String){ getInstance(context).edit().putString("time_diff_style",value).apply() }
+
     // CUSTOM TEXT
     fun setCustomText(value: String){ getInstance(context).edit().putString("custom_text",value).apply() }
     fun setCustomTitle(value: String){ getInstance(context).edit().putString("custom_title",value).apply() }

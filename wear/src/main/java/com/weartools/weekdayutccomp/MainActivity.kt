@@ -81,6 +81,10 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             updateComplication(this, SunriseSunsetRVComplicationService::class.java)
             updateComplication(this, MoonPhaseComplicationService::class.java)
         }
+
+        if (key == "time_diff_style"){
+            updateComplication(this, SunriseSunsetRVComplicationService::class.java)
+        }
     }
 
 

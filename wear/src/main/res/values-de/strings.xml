@@ -140,6 +140,10 @@
     <string name="checking">Standort prüfen…</string>
     <string name="no_location">GPS prüfen</string>
 
+    <string name="countdown_style">Format</string>
+    <string name="countdown_style_style">Format</string>
+    <string name="e_g_">z.B.</string>
+
     <!-- Day and Week -->
     <string name="day_and_week_comp_name">Tag und Woche</string>
     <string name="dayD">T:</string>

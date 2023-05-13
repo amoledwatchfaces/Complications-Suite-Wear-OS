@@ -25,12 +25,16 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.gestures.scrollBy
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -41,11 +45,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.os.LocaleListCompat
 import androidx.wear.compose.material.AutoCenteringParams
+import androidx.wear.compose.material.Card
 import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.ScalingLazyColumn
 import androidx.wear.compose.material.ScalingLazyListState
+import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.rememberScalingLazyListState
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
@@ -145,6 +152,11 @@ fun ComplicationsSuiteScreen(
     var shortTextFormat by remember { mutableStateOf(false) }
     var shortTitleFormat by remember { mutableStateOf(false) }
 
+    // Sun RV
+    val listTimeDiffStyles = stringArrayResource(id = R.array.timediffstyle).toList()
+    var getTimeDiffStyle by remember { mutableStateOf(pref.getTimeDiffStyle()) }
+    var timeDiffs by remember { mutableStateOf(false) }
+
 
     // LOCALE
     val str ="en,cs,de,el,es,it,pt,ro,sk,zh"
@@ -177,7 +189,7 @@ fun ComplicationsSuiteScreen(
         item {
             DialogChip(
                 text = stringResource(id = R.string.wc_comp_name_1),
-                title = getCity1, //STRING FROM STRINGS.XML BASED ON PICK FROM THE LIST
+                title = getCity1,
                 icon = {},
                 onClick = {
                     isTImeZOnClick = isTImeZOnClick.not()
@@ -200,7 +212,7 @@ fun ComplicationsSuiteScreen(
         item {
             ToggleChip(
                 label = stringResource(id = R.string.wc_setting_leading_zero_title),
-                secondaryLabelOn = stringResource(id = R.string.wc_setting_leading_zero_summary_on), // STRING FROM STRINGS.XML BASED ON KEY ON / OFF
+                secondaryLabelOn = stringResource(id = R.string.wc_setting_leading_zero_summary_on),
                 secondaryLabelOff = stringResource(id = R.string.wc_setting_leading_zero_summary_off),
                 checked = leadingZero,
                 icon = {},
@@ -336,6 +348,44 @@ fun ComplicationsSuiteScreen(
                     pref.setIsMilitaryTime(it)
                 }
             )
+        }
+
+        item { PreferenceCategory(title = stringResource(id = R.string.sunrise_sunset_countdown_comp_name)) }
+        /*item {
+            DialogChip(
+                text =  stringResource(id = R.string.countdown_style),
+                icon = {},
+                title = getTimeDiffStyle,
+                onClick = {
+                    timeDiffs = timeDiffs.not()
+                }
+            )
+        }*/
+        item {
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 10.dp),
+                onClick = {
+                    timeDiffs = timeDiffs.not()
+                },
+            ){
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    Column {
+                        Text(stringResource(id = R.string.countdown_style), color = Color(0xFFF1F1F1))
+                        Text(getTimeDiffStyle, color =  wearColorPalette.primary, fontSize = 12.sp)
+                        Text(
+                            when (getTimeDiffStyle) {
+                                "SHORT_DUAL_UNIT" -> "${stringResource(id = R.string.e_g_)} 5h 45m"
+                                "SHORT_SINGLE_UNIT" -> "${stringResource(id = R.string.e_g_)} 6h"
+                                else -> "${stringResource(id = R.string.e_g_)} 5:45"
+                            }, color =  Color.LightGray, fontSize = 12.sp)
+                    }
+                }
+            }
         }
 
         // WEEK OF YEAR COMPLICATION PREFERENCE CATEGORY
@@ -480,12 +530,13 @@ fun ComplicationsSuiteScreen(
                     val format = listShortFormat[it]
                     if (shortTextFormat) {
                         getShortText = format
-                        shortTextFormat = false
                         pref.setShortText(format)
+                        shortTextFormat = shortTextFormat.not()
+                        //shortTextFormat = false
                     } else {
                         getShortTitle = format
-                        shortTitleFormat = shortTitleFormat.not()
                         pref.setShortTitle(format)
+                        shortTitleFormat = shortTitleFormat.not()
                     }
                 }
 
@@ -494,12 +545,27 @@ fun ComplicationsSuiteScreen(
     }
 
     if (openLocale){
-        ListItemsWidget(titles = "Change Locale", items = list, preValue =currentLocale , callback ={
+        ListItemsWidget(titles = "Change Locale", items = list, preValue =currentLocale ,
+            callback ={
             if (it!=-1) {
                 pref.updateLocale(strArray[it])
-              changeLocale(strArray[it])
+                changeLocale(strArray[it])
             }else
                 openLocale=false
+        } )
+
+    }
+
+    if (timeDiffs){
+        ListItemsWidget(titles = stringResource(id = R.string.countdown_style_style), items = listTimeDiffStyles, preValue = getTimeDiffStyle ,
+            callback ={
+            if (it!=-1) {
+                val input = listTimeDiffStyles[it]
+                getTimeDiffStyle = input
+                pref.setTimeDiffStyle(input)
+                timeDiffs = timeDiffs.not()
+            }else
+                timeDiffs=false
         } )
 
     }

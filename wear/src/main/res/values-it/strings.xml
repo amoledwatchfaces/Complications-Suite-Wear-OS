@@ -143,6 +143,10 @@
     <string name="checking">Sto trovando la posizione…</string>
     <string name="no_location">Controlla il GPS</string>
 
+    <string name="countdown_style">Formato</string>
+    <string name="countdown_style_style">Formato</string>
+    <string name="e_g_">per esempio.</string>
+
     <!-- Day and Week -->
     <string name="day_and_week_comp_name">Giorno e Settimana</string>
     <string name="dayD">G:</string>

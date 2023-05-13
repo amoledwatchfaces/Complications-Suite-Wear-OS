@@ -122,6 +122,10 @@
     <string name="checking">Revisando ubicación</string>
     <string name="no_location">No puedo obtener la ubicación. Revisar GPS</string>
 
+    <string name="countdown_style">Formato</string>
+    <string name="countdown_style_style">Formato</string>
+    <string name="e_g_">p.ej.</string>
+
     <!--Day and Week-->
     <string name="day_and_week_comp_name">Día &amp; Semana</string>
     <string name="dayD">D:</string>

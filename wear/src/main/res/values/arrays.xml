@@ -594,4 +594,9 @@
         <item>EEE, d MMM</item>
         <item> </item>
     </string-array>
+    <string-array name="timediffstyle">
+        <item>SHORT_DUAL_UNIT</item>
+        <item>SHORT_SINGLE_UNIT</item>
+        <item>STOPWATCH</item>
+    </string-array>
 </resources>
