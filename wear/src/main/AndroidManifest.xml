@@ -81,7 +81,7 @@
         <service
             android:name="com.weartools.weekdayutccomp.complication.WeekOfYearComplicationService"
             android:exported="true"
-            android:icon="@drawable/ic_week"
+            android:icon="@drawable/complication_icon_woy"
             android:label="@string/week_complication_name"
             android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
             <intent-filter>
@@ -96,7 +96,7 @@
         <service
             android:name="com.weartools.weekdayutccomp.complication.DateComplicationService"
             android:exported="true"
-            android:icon="@drawable/ic_date"
+            android:icon="@drawable/complication_icon_date"
             android:label="@string/date_comp_name"
             android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
             <intent-filter>
@@ -112,7 +112,7 @@
         <service
             android:name="com.weartools.weekdayutccomp.complication.TimeComplicationService"
             android:exported="true"
-            android:icon="@drawable/ic_clock"
+            android:icon="@drawable/complication_icon_clock"
             android:label="@string/time_comp_name"
             android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
             <intent-filter>
@@ -128,7 +128,7 @@
         <service
             android:name="com.weartools.weekdayutccomp.complication.DayOfYearComplicationService"
             android:exported="true"
-            android:icon="@drawable/ic_day"
+            android:icon="@drawable/complication_icon_doy"
             android:label="@string/doy_comp_name"
             android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
             <intent-filter>
@@ -143,7 +143,7 @@
         <service
             android:name="com.weartools.weekdayutccomp.complication.WorldClock1ComplicationService"
             android:exported="true"
-            android:icon="@drawable/ic_utc"
+            android:icon="@drawable/complication_icon_world_clock"
             android:label="@string/wc_comp_name_1"
             android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
             <intent-filter>
@@ -157,7 +157,7 @@
         <service
             android:name="com.weartools.weekdayutccomp.complication.WorldClock2ComplicationService"
             android:exported="true"
-            android:icon="@drawable/ic_utc"
+            android:icon="@drawable/complication_icon_world_clock"
             android:label="@string/wc_comp_name_2"
             android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
             <intent-filter>
@@ -172,7 +172,7 @@
         <service
             android:name="com.weartools.weekdayutccomp.complication.SecondsComplicationService"
             android:exported="true"
-            android:icon="@drawable/ic_seconds"
+            android:icon="@drawable/complication_icon_seconds"
             android:label="@string/sec_comp_name"
             android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
             <intent-filter>
@@ -186,7 +186,7 @@
         <service
             android:name="com.weartools.weekdayutccomp.complication.PayComplicationService"
             android:exported="true"
-            android:icon="@drawable/ic_pay"
+            android:icon="@drawable/complication_icon_pay"
             android:label="@string/pay_comp_name"
             android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
             <intent-filter>
@@ -200,7 +200,7 @@
         <service
             android:name="com.weartools.weekdayutccomp.complication.AlarmComplicationService"
             android:exported="true"
-            android:icon="@drawable/ic_alarm"
+            android:icon="@drawable/complication_icon_alarm"
             android:label="@string/alarm_comp_name"
             android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
             <intent-filter>
@@ -242,7 +242,7 @@
         <service
             android:name="com.weartools.weekdayutccomp.complication.MoonPhaseComplicationService"
             android:exported="true"
-            android:icon="@drawable/ic_settings_moon_detailed"
+            android:icon="@drawable/complication_icon_moon"
             android:label="@string/moon_comp_name"
             android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
             <intent-filter>
@@ -257,7 +257,7 @@
         <service
             android:name="com.weartools.weekdayutccomp.complication.SunriseSunsetComplicationService"
             android:exported="true"
-            android:icon="@drawable/ic_sunrise_3"
+            android:icon="@drawable/complication_icon_sunrise_sunset"
             android:label="@string/sunrise_sunset_comp_name"
             android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
             <intent-filter>
@@ -272,7 +272,7 @@
         <service
             android:name="com.weartools.weekdayutccomp.complication.SunriseSunsetRVComplicationService"
             android:exported="true"
-            android:icon="@drawable/ic_sunset_3"
+            android:icon="@drawable/complication_icon_sun_countdown"
             android:label="@string/sunrise_sunset_countdown_comp_name"
             android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
             <intent-filter>
@@ -287,7 +287,7 @@
         <service
             android:name="com.weartools.weekdayutccomp.complication.BitcoinPriceComplicationService"
             android:exported="true"
-            android:icon="@drawable/ic_btc"
+            android:icon="@drawable/complication_icon_btc"
             android:label="@string/crypto_name_1"
             android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
             <intent-filter>
@@ -301,7 +301,7 @@
         <service
             android:name="com.weartools.weekdayutccomp.complication.EthereumPriceComplicationService"
             android:exported="true"
-            android:icon="@drawable/ic_ethereum"
+            android:icon="@drawable/complication_icon_eth"
             android:label="@string/crypto_name_2"
             android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
             <intent-filter>
@@ -322,7 +322,7 @@
         <service
             android:name="com.weartools.weekdayutccomp.complication.FlashlightComplicationService"
             android:exported="true"
-            android:icon="@drawable/ic_flashlight"
+            android:icon="@drawable/complication_icon_flashlight"
             android:label="@string/flashlight_comp_name"
             android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
             <intent-filter>
@@ -337,7 +337,7 @@
         <service
             android:name="com.weartools.weekdayutccomp.complication.CustomTextComplicationService"
             android:exported="true"
-            android:icon="@drawable/ic_custom_text"
+            android:icon="@drawable/complication_icon_custom_text"
             android:label="@string/custom_text_comp_name"
             android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
             <intent-filter>
@@ -351,7 +351,7 @@
         <service
             android:name="com.weartools.weekdayutccomp.complication.DayAndWeekComplicationService"
             android:exported="true"
-            android:icon="@drawable/ic_day_week"
+            android:icon="@drawable/complication_icon_day_week"
             android:label="@string/day_and_week_comp_name"
             android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
             <intent-filter>

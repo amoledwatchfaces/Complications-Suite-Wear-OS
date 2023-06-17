@@ -29,7 +29,7 @@
     <string name="alarm_comp_name">Alarm</string>
 
     <!-- Assist Complication Preferences -->
-    <string name="assist_comp_name">Assistant</string>
+    <string name="assist_comp_name">Assistant (Monochrome)</string>
     <string name="assist_missing">Assistant app not installed</string>
 
     <!-- Date Complication Preferences -->
