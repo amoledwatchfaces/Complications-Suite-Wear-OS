@@ -12,8 +12,8 @@ android {
         applicationId = "com.weartools.weekdayutccomp"
         minSdk = 23
         targetSdk = 33
-        versionCode = 10000230
-        versionName = "2.3.1"
+        versionCode = 10000233
+        versionName = "2.3.3"
 
     }
 
@@ -48,10 +48,10 @@ dependencies {
     implementation ("com.google.android.play:review:2.0.1")
     implementation ("androidx.wear:wear-remote-interactions:1.0.0")
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
-    implementation ("androidx.activity:activity-ktx:1.7.1")
+    implementation ("androidx.activity:activity-ktx:1.7.2")
     implementation ("androidx.appcompat:appcompat:1.6.1")
     implementation ("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation ("androidx.core:core-ktx:1.10.0")
+    implementation ("androidx.core:core-ktx:1.10.1")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4")
     implementation ("com.google.android.gms:play-services-wearable:18.0.0")
