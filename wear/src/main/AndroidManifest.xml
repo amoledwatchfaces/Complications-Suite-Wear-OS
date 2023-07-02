@@ -126,6 +126,21 @@
         </service>
 
         <service
+            android:name="com.weartools.weekdayutccomp.complication.ALogoComplicationService"
+            android:exported="true"
+            android:icon="@drawable/a_logo_2_min"
+            android:label="@string/awf_comp_name"
+            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+                android:value="ICON,SMALL_IMAGE" />
+        </service>
+
+        <service
             android:name="com.weartools.weekdayutccomp.complication.DayOfYearComplicationService"
             android:exported="true"
             android:icon="@drawable/complication_icon_doy"

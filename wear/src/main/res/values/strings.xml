@@ -11,6 +11,7 @@
 
     <string name="compose_toggle" translatable="false">Toggle</string>
 
+    <string name="awf_comp_name" translatable="false">Amoled Logo</string>
     <!-- Crypto Complication -->
     <string name="crypto_name_1" translatable="true">BTC Price $</string>
     <string name="price_1" translatable="false">0.0</string>
@@ -33,7 +34,7 @@
     <string name="assist_missing">Assistant app not installed</string>
 
     <!-- Date Complication Preferences -->
-    <string name="date_comp_name">Date (Suite)</string>
+    <string name="date_comp_name">Date</string>
     <string name="date_setting_preference_category_title">Date Complication</string>
     <string name="date_long_text_key" translatable="false">date_format</string>
     <string name="date_short_text_key" translatable="false">short_text_format</string>
