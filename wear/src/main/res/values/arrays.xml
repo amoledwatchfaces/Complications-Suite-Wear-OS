@@ -570,7 +570,9 @@
         <item>YYYY-MM-dd</item>
         <item>EEEE</item>
         <item>MMMM</item>
-
+        <item>EEEE, d MMM</item>
+        <item>EE, d MMM</item>
+        <item>d, EEEE</item>
     </string-array>
     <string-array name="shortformats">
         <item>d</item>
