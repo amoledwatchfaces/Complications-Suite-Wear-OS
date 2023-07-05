@@ -12,8 +12,8 @@ android {
         applicationId = "com.weartools.weekdayutccomp"
         minSdk = 23
         targetSdk = 33
-        versionCode = 10000240
-        versionName = "2.4.1"
+        versionCode = 10000242
+        versionName = "2.4.3"
 
     }
 
@@ -55,4 +55,7 @@ dependencies {
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4")
     implementation ("com.google.android.gms:play-services-wearable:18.0.0")
+
+    // SPLASH SCREEN
+    implementation ("androidx.core:core-splashscreen:1.0.1")
 }

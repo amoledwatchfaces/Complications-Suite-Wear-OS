@@ -143,18 +143,6 @@
             app:layout_constraintVertical_bias="0.969"
             tools:ignore="SpUsage" />
 
-        <!--
-        <ImageView
-            android:id="@+id/btnvideo"
-            android:layout_width="39dp"
-            android:layout_height="41dp"
-            android:layout_marginStart="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/btnguide"
-            app:layout_constraintStart_toEndOf="@+id/btnguide"
-            app:layout_constraintTop_toTopOf="@+id/btnguide"
-            app:srcCompat="@drawable/ic_video" />
-            -->
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.core.widget.NestedScrollView>
