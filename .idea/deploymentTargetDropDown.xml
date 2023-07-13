@@ -7,11 +7,11 @@
         <deviceKey>
           <Key>
             <type value="VIRTUAL_DEVICE_PATH" />
-            <value value="C:\Users\amoledwatchfaces\.android\avd\Wear-2_API_28.avd" />
+            <value value="C:\Users\amoledwatchfaces\.android\avd\Wear-3_API_33.avd" />
           </Key>
         </deviceKey>
       </Target>
     </targetSelectedWithDropDown>
-    <timeTargetWasSelectedWithDropDown value="2023-07-05T07:50:38.795174600Z" />
+    <timeTargetWasSelectedWithDropDown value="2023-07-13T05:51:45.635703600Z" />
   </component>
 </project>

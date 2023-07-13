@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="MyTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="Theme.App" parent="Theme.AppCompat.NoActionBar">
         <!--
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionBar">false</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
-        -->
+
         <item name="android:background">@android:color/black</item>
+        -->
         <item name="android:windowBackground">@android:color/black</item>
     </style>
 
     <style name="Theme.App.Starting" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@android:color/black</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/splash_screen</item>
-        <item name="windowSplashScreenAnimationDuration">1000</item>
-        <item name="postSplashScreenTheme">@style/MyTheme</item>
+        <item name="postSplashScreenTheme">@style/Theme.App</item>
     </style>
 </resources>
