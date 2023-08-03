@@ -56,6 +56,17 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="com.weartools.weekdayutccomp.PickDateActivity"
+            android:exported="true"
+            android:theme="@android:style/Theme.DeviceDefault">
+            <intent-filter>
+                <action android:name="com.weartools.weekdayutccomp.CONFIG_COMPLICATION" />
+                <category android:name="android.support.wearable.complications.category.PROVIDER_CONFIG" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <service
             android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
             android:enabled="false"
@@ -223,6 +234,33 @@
             <meta-data
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
                 android:value="ICON,SMALL_IMAGE" />
+        </service>
+        <service
+            android:name="com.weartools.weekdayutccomp.complication.DeveloperOptionsComplicationService"
+            android:exported="true"
+            android:icon="@drawable/complication_icon_developer"
+            android:label="@string/developer_options_comp_name"
+            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+                android:value="ICON,SMALL_IMAGE" />
+        </service>
+        <service
+            android:name="com.weartools.weekdayutccomp.complication.DateCountdownComplicationService"
+            android:exported="true"
+            android:icon="@drawable/complication_icon_date_countdown"
+            android:label="@string/date_countdown_comp_name"
+            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
+
+            <meta-data android:name="android.support.wearable.complications.SUPPORTED_TYPES" android:value="SHORT_TEXT,LONG_TEXT" />
+            <meta-data android:name="android.support.wearable.complications.PROVIDER_CONFIG_ACTION" android:value="com.weartools.weekdayutccomp.CONFIG_COMPLICATION" />
         </service>
         <service
             android:name="com.weartools.weekdayutccomp.complication.AssistComplicationService"

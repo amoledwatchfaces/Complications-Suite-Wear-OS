@@ -79,4 +79,8 @@ class Pref(val context: Context) {
     fun updateLocale(s: String) { getInstance(context).edit().putString("locale",s).apply () }
     fun getLocale(): String { return getInstance(context).getString("locale","en")?:"en" }
 
+    // DATE PICKER
+    fun setDatePicker(s: String) { getInstance(context).edit().putString("date_picked",s).apply () }
+    fun getDatePicker(): String { return getInstance(context).getString("date_picked","2025-01-01")?:"2025-01-01" }
+
 }

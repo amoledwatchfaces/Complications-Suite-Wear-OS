@@ -135,8 +135,6 @@
     <string name="custom_text_p1">Text</string>
     <string name="custom_title_p1">Title</string>
 
-
-
     <string name="latitude_value" translatable="false">latitude_value</string>
     <string name="longitude_value" translatable="false">longitude_value</string>
     <!--<string name="altitude_value" translatable="false">altitude_value</string>-->
@@ -175,4 +173,12 @@
     <string name="day_and_week_comp_name">Day &amp; Week</string>
     <string name="dayD">D:</string>
     <string name="weekW">W:</string>
+
+    <!-- Developer Options -->
+    <string name="developer_options_comp_name" translatable="false">Developer Options</string>
+
+    <!--Date Countdown-->
+    <string name="date_countdown_comp_name" translatable="false">Countdown to date</string>
+    <string name="countdown_text" translatable="false">Countdown</string>
+    <string name="date_picked" translatable="false">date_picked</string>
 </resources>

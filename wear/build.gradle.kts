@@ -12,8 +12,8 @@ android {
         applicationId = "com.weartools.weekdayutccomp"
         minSdk = 27
         targetSdk = 33
-        versionCode = 10000249
-        versionName = "2.4.9"
+        versionCode = 10000250
+        versionName = "2.5.0"
         resourceConfigurations += listOf("en", "cs", "de", "el", "es", "it", "pt", "ro", "sk", "zh")
     }
     bundle {
@@ -98,4 +98,7 @@ dependencies {
 
     // SPLASH SCREEN
     implementation ("androidx.core:core-splashscreen:1.0.1")
+
+    // HOROLOGIST
+    implementation ("com.google.android.horologist:horologist-composables:0.2.8")
 }
