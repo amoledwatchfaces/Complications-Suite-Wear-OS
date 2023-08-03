@@ -151,4 +151,11 @@
     <string name="day_and_week_comp_name">Ημέρα και Εβδομάδα</string>
     <string name="dayD">Η:</string>
     <string name="weekW">Ε:</string>
+
+    <!-- Developer Options -->
+    <string name="developer_options_comp_name">Επιλογές ανάπτυξης</string>
+
+    <!--Date Countdown-->
+    <string name="date_countdown_comp_name">Αντίστροφη μέτρηση για την ημέρα</string>
+    <string name="countdown_text">Αντίστροφη μέτρηση</string>
 </resources>

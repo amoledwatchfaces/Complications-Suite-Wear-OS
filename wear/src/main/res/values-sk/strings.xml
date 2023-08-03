@@ -131,4 +131,11 @@
     <string name="day_and_week_comp_name">Deň a Týždeň</string>
     <string name="dayD">D:</string>
     <string name="weekW">T:</string>
+
+    <!-- Developer Options -->
+    <string name="developer_options_comp_name">Možnoti vývoja</string>
+
+    <!--Date Countdown-->
+    <string name="date_countdown_comp_name">Odpočítavanie do dňa</string>
+    <string name="countdown_text">Ostáva</string>
 </resources>

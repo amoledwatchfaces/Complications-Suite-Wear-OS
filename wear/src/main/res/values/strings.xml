@@ -175,10 +175,10 @@
     <string name="weekW">W:</string>
 
     <!-- Developer Options -->
-    <string name="developer_options_comp_name" translatable="false">Developer Options</string>
+    <string name="developer_options_comp_name">Developer Options</string>
 
     <!--Date Countdown-->
-    <string name="date_countdown_comp_name" translatable="false">Countdown to date</string>
-    <string name="countdown_text" translatable="false">Countdown</string>
+    <string name="date_countdown_comp_name">Countdown to date</string>
+    <string name="countdown_text">Time left</string>
     <string name="date_picked" translatable="false">date_picked</string>
 </resources>

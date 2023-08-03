@@ -148,4 +148,11 @@
     <string name="day_and_week_comp_name">Tag und Woche</string>
     <string name="dayD">T:</string>
     <string name="weekW">W:</string>
+
+    <!-- Developer Options -->
+    <string name="developer_options_comp_name">Entwickleroptionen</string>
+
+    <!--Date Countdown-->
+    <string name="date_countdown_comp_name">Countdown bis zum Tag</string>
+    <string name="countdown_text">Countdown</string>
 </resources>

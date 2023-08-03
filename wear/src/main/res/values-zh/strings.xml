@@ -130,4 +130,11 @@
     <string name="day_and_week_comp_name">日与周</string>
     <string name="dayD">日:</string>
     <string name="weekW">周:</string>
+
+    <!-- Developer Options -->
+    <string name="developer_options_comp_name">开发者选项</string>
+
+    <!--Date Countdown-->
+    <string name="date_countdown_comp_name">日期倒计时</string>
+    <string name="countdown_text">遗迹</string>
 </resources>

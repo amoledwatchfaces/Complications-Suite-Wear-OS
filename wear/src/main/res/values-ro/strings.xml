@@ -151,4 +151,11 @@
     <string name="day_and_week_comp_name">Zi și Săptămâna</string>
     <string name="dayD">Z:</string>
     <string name="weekW">S:</string>
+
+    <!-- Developer Options -->
+    <string name="developer_options_comp_name">Opțiuni pentru dezvoltatori</string>
+
+    <!--Date Countdown-->
+    <string name="date_countdown_comp_name">Numărătoare inversă până la dată</string>
+    <string name="countdown_text">Rămășițe</string>
 </resources>

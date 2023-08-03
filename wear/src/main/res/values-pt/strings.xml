@@ -151,4 +151,11 @@
     <string name="day_and_week_comp_name">Dia e Semana</string>
     <string name="dayD">D:</string>
     <string name="weekW">S:</string>
+
+    <!-- Developer Options -->
+    <string name="developer_options_comp_name">Opções de desenvolvedor</string>
+
+    <!--Date Countdown-->
+    <string name="date_countdown_comp_name">Contagem regressiva para a data</string>
+    <string name="countdown_text">Restos</string>
 </resources>
