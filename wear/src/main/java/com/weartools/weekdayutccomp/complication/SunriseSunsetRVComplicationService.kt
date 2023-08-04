@@ -59,7 +59,7 @@ class SunriseSunsetRVComplicationService : SuspendingComplicationDataSourceServi
             if (result == PackageManager.PERMISSION_GRANTED) {
                 Log.i(TAG, "Permission granted")
             } else {
-                Toast.makeText(context, getString(R.string.enable_permission_toast_consider), Toast.LENGTH_LONG).show()
+                Toast.makeText(context, getString(R.string.enable_permission_toast), Toast.LENGTH_LONG).show()
             }
         }
     }

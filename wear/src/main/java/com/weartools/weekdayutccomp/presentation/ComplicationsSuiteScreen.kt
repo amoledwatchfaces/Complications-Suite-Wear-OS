@@ -157,12 +157,7 @@ fun ComplicationsSuiteScreen(
 
     var notificationAsked by remember { mutableStateOf(pref.getNotificationAsked()) }
     @OptIn(ExperimentalPermissionsApi::class)
-    val permissionStateNotifications = rememberPermissionState(
-        permission = "android.permission.POST_NOTIFICATIONS",
-        onPermissionResult = { granted ->
-            if (granted.not()) Toast.makeText(context, R.string.notification_permission_not_granted, Toast.LENGTH_LONG).show()
-        }
-    )
+    val permissionStateNotifications = rememberPermissionState(permission = "android.permission.POST_NOTIFICATIONS")
 
     // DATE
     val listLongFormat = stringArrayResource(id = R.array.dateformats).toList()

@@ -3,9 +3,12 @@ package com.weartools.weekdayutccomp
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
+import java.time.LocalDate
 
 class Pref(val context: Context) {
     // to make sure there's only one instance
+
+    val currentDateString: String = LocalDate.now().toString()
 
     companion object{
         var data :SharedPreferences?=null
@@ -81,7 +84,7 @@ class Pref(val context: Context) {
 
     // DATE PICKER
     fun setDatePicker(s: String) { getInstance(context).edit().putString("date_picked",s).apply () }
-    fun getDatePicker(): String { return getInstance(context).getString("date_picked","2025-01-01")?:"2025-01-01" }
+    fun getDatePicker(): String { return getInstance(context).getString("date_picked",currentDateString)?:currentDateString }
 
     fun getNotificationAsked():Boolean { return getInstance(context).getBoolean("notification_permission",false) }
     fun setNotificationAsked(value: Boolean) { getInstance(context).edit().putBoolean("notification_permission",value).apply() }
