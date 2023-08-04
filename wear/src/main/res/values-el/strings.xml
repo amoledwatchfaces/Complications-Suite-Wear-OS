@@ -161,4 +161,10 @@
 
     <!--NOTIFICATIONS-->
     <string name="notification_permission_info">Μερικά complications πρέπει να δείχνουν μηνύματα Toast στο Android 13. Η εφαρμογή θα ζητήσει άδεια για να τα εμφανίσει.</string>
+
+    <!--VOLUME-->
+    <string name="volume_comp_name">Ελεγχος έντασης</string>
+
+    <!--DICE-->
+    <string name="dice_comp_name">Ζάρια</string>
 </resources>

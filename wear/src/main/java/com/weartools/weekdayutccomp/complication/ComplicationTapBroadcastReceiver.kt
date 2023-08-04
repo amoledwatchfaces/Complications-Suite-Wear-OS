@@ -27,7 +27,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
-class CryptoComplicationTapBroadcastReceiver : BroadcastReceiver() {
+class ComplicationTapBroadcastReceiver : BroadcastReceiver() {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
     override fun onReceive(context: Context, intent: Intent) {
@@ -51,7 +51,7 @@ class CryptoComplicationTapBroadcastReceiver : BroadcastReceiver() {
             context: Context,
             args: ComplicationToggleArgs
         ): PendingIntent {
-            val intent = Intent(context, CryptoComplicationTapBroadcastReceiver::class.java).apply {
+            val intent = Intent(context, ComplicationTapBroadcastReceiver::class.java).apply {
                 putExtra(EXTRA_ARGS, args)
             }
 

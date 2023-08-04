@@ -75,7 +75,7 @@ class BitcoinPriceComplicationService : SuspendingComplicationDataSourceService(
 
 override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
     val args = ComplicationToggleArgs(providerComponent = ComponentName(this, javaClass), complicationInstanceId = request.complicationInstanceId)
-    val complicationPendingIntent = CryptoComplicationTapBroadcastReceiver.getToggleIntent(context = this, args = args)
+    val complicationPendingIntent = ComplicationTapBroadcastReceiver.getToggleIntent(context = this, args = args)
 
     val preferences = PreferenceManager.getDefaultSharedPreferences(this)
     val ticker: String = preferences.getString(getString(R.string.ticker_1), "BTCBUSD").toString()

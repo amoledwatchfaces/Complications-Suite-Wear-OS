@@ -140,4 +140,10 @@
 
     <!--NOTIFICATIONS-->
     <string name="notification_permission_info">某些复杂情况需要在 Android 13+ 上显示 Toast 消息。 应用程序将请求许可才能显示它们。</string>
+
+    <!--VOLUME-->
+    <string name="volume_comp_name">音量控制</string>
+
+    <!--DICE-->
+    <string name="dice_comp_name">骰子</string>
 </resources>

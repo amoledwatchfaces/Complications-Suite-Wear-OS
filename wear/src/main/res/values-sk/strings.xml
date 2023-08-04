@@ -141,4 +141,10 @@
 
     <!--NOTIFICATIONS-->
     <string name="notification_permission_info">Niektoré voliteľné prvky potrebujú zobrazovať toast oznámenia na Android 13+. Aplikáca sa spýta na povolenie (voliteľné).</string>
+
+    <!--VOLUME-->
+    <string name="volume_comp_name">Ovládanie hlasitosti</string>
+
+    <!--DICE-->
+    <string name="dice_comp_name">Hracia kocka</string>
 </resources>

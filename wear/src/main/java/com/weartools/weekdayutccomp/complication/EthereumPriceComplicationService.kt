@@ -76,7 +76,7 @@ class EthereumPriceComplicationService : SuspendingComplicationDataSourceService
     override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
         val args = ComplicationToggleArgs(providerComponent = ComponentName(this, javaClass), complicationInstanceId = request.complicationInstanceId)
         val complicationPendingIntent =
-            CryptoComplicationTapBroadcastReceiver.getToggleIntent(context = this, args = args)
+            ComplicationTapBroadcastReceiver.getToggleIntent(context = this, args = args)
 
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         val ticker2: String = preferences.getString(getString(R.string.ticker_2), "ETHBUSD").toString()

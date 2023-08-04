@@ -158,4 +158,10 @@
 
     <!--NOTIFICATIONS-->
     <string name="notification_permission_info">Einige Komplikationen erfordern die Anzeige von Toast-Nachrichten auf Android 13+. Die App bittet um Erlaubnis, sie anzuzeigen.</string>
+
+    <!--VOLUME-->
+    <string name="volume_comp_name">Volume Control</string>
+
+    <!--DICE-->
+    <string name="dice_comp_name">Dice</string>
 </resources>

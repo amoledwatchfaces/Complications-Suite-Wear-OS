@@ -185,4 +185,10 @@
     <!--NOTIFICATIONS-->
     <string name="notification_permission_info">Some complications need to show toast messages on Android 13+. App will ask for permission to show them.</string>
     <string name="notification_permission" translatable="false">notification_permission</string>
+
+    <!--VOLUME-->
+    <string name="volume_comp_name">Volume Control</string>
+
+    <!--DICE-->
+    <string name="dice_comp_name">Dice</string>
 </resources>
