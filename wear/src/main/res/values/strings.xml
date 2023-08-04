@@ -181,4 +181,8 @@
     <string name="date_countdown_comp_name">Countdown to date</string>
     <string name="countdown_text">Time left</string>
     <string name="date_picked" translatable="false">date_picked</string>
+
+    <!--NOTIFICATIONS-->
+    <string name="location_notification_name" translatable="false">Location Missing Notification</string>
+    <string name="location_notification_desc" translatable="false">Allow one-time location access</string>
 </resources>

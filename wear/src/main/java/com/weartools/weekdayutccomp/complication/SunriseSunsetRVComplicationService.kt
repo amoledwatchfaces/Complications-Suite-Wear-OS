@@ -62,7 +62,6 @@ class SunriseSunsetRVComplicationService : SuspendingComplicationDataSourceServi
                 Toast.makeText(context, context.getString(R.string.enable_permission_toast), Toast.LENGTH_SHORT).show()
             }
         }
-        //Log.d(TAG, "req permission func")
     }
 
 

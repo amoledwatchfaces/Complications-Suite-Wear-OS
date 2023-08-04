@@ -5,7 +5,11 @@
     android:viewportWidth="192.0"
     android:viewportHeight="192.0"
     xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:name="square"
+        android:fillColor="#000"
+        android:pathData="M0,0 L192,0 L192,192 L0,192 z" />
     <path
         android:fillColor="@drawable/bg_white_0"
         android:pathData="M96,192a96,96 0,1 0,0 -192a96,96 0,1 0,0 192z" />
+
 </vector>
