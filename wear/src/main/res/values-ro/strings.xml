@@ -158,4 +158,7 @@
     <!--Date Countdown-->
     <string name="date_countdown_comp_name">Numărătoare inversă până la dată</string>
     <string name="countdown_text">Rămășițe</string>
+
+    <!--NOTIFICATIONS-->
+    <string name="notification_permission_info">Unele complicații trebuie să afișeze mesajele Toast pe Android 13+. Aplicația va cere permisiunea de a le afișa.</string>
 </resources>

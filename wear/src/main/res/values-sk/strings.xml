@@ -138,4 +138,7 @@
     <!--Date Countdown-->
     <string name="date_countdown_comp_name">Odpočítavanie do dňa</string>
     <string name="countdown_text">Ostáva</string>
+
+    <!--NOTIFICATIONS-->
+    <string name="notification_permission_info">Niektoré voliteľné prvky potrebujú zobrazovať toast oznámenia na Android 13+. Aplikáca sa spýta na povolenie (voliteľné).</string>
 </resources>

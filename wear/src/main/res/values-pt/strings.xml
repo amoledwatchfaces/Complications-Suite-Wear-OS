@@ -158,4 +158,7 @@
     <!--Date Countdown-->
     <string name="date_countdown_comp_name">Contagem regressiva para a data</string>
     <string name="countdown_text">Restos</string>
+
+    <!--NOTIFICATIONS-->
+    <string name="notification_permission_info">Algumas complicações precisam mostrar mensagens Toast no Android 13+. O aplicativo pedirá permissão para mostrá-los.</string>
 </resources>

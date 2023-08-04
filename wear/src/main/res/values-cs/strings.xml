@@ -138,4 +138,7 @@
     <!--Date Countdown-->
     <string name="date_countdown_comp_name">Odpočítávání do data</string>
     <string name="countdown_text">Zůstává</string>
+
+    <!--NOTIFICATIONS-->
+    <string name="notification_permission_info">Některé komplikace vyžadují zobrazení toast zpráv na Androidu 13+. Aplikace požádá o povolení k jejich zobrazení.</string>
 </resources>

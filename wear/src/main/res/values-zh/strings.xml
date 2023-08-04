@@ -137,4 +137,7 @@
     <!--Date Countdown-->
     <string name="date_countdown_comp_name">日期倒计时</string>
     <string name="countdown_text">遗迹</string>
+
+    <!--NOTIFICATIONS-->
+    <string name="notification_permission_info">某些复杂情况需要在 Android 13+ 上显示 Toast 消息。 应用程序将请求许可才能显示它们。</string>
 </resources>

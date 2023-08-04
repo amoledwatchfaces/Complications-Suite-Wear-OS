@@ -158,4 +158,7 @@
     <!--Date Countdown-->
     <string name="date_countdown_comp_name">Αντίστροφη μέτρηση για την ημέρα</string>
     <string name="countdown_text">Αντίστροφη μέτρηση</string>
+
+    <!--NOTIFICATIONS-->
+    <string name="notification_permission_info">Μερικά complications πρέπει να δείχνουν μηνύματα Toast στο Android 13. Η εφαρμογή θα ζητήσει άδεια για να τα εμφανίσει.</string>
 </resources>

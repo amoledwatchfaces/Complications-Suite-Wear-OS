@@ -155,4 +155,7 @@
     <!--Date Countdown-->
     <string name="date_countdown_comp_name">Countdown bis zum Tag</string>
     <string name="countdown_text">Countdown</string>
+
+    <!--NOTIFICATIONS-->
+    <string name="notification_permission_info">Einige Komplikationen erfordern die Anzeige von Toast-Nachrichten auf Android 13+. Die App bittet um Erlaubnis, sie anzuzeigen.</string>
 </resources>
