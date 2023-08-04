@@ -20,18 +20,25 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -44,15 +51,20 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.os.LocaleListCompat
 import androidx.wear.compose.material.AutoCenteringParams
+import androidx.wear.compose.material.Button
+import androidx.wear.compose.material.ButtonDefaults
 import androidx.wear.compose.material.Card
 import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.ScalingLazyColumn
 import androidx.wear.compose.material.ScalingLazyListState
 import androidx.wear.compose.material.Text
+import androidx.wear.compose.material.dialog.Alert
+import androidx.wear.compose.material.dialog.Dialog
 import androidx.wear.compose.material.rememberScalingLazyListState
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
@@ -91,6 +103,7 @@ fun ComplicationsSuiteScreen(
     var militaryTime by remember { mutableStateOf(pref.getIsMilitary()) }
     var isTImeZOnClick by remember { mutableStateOf(false) }
     var isTImeZOnClick2 by remember { mutableStateOf(false) }
+
 
     // MOON PHASE
     var hemisphere by remember { mutableStateOf(pref.getIsHemisphere()) }
@@ -139,6 +152,15 @@ fun ComplicationsSuiteScreen(
                 coarseEnabled=false
                 pref.setCoarsePermission(false)
             }
+        }
+    )
+
+    var notificationAsked by remember { mutableStateOf(pref.getNotificationAsked()) }
+    @OptIn(ExperimentalPermissionsApi::class)
+    val permissionStateNotifications = rememberPermissionState(
+        permission = "android.permission.POST_NOTIFICATIONS",
+        onPermissionResult = { granted ->
+            if (granted.not()) Toast.makeText(context, R.string.notification_permission_not_granted, Toast.LENGTH_LONG).show()
         }
     )
 
@@ -569,7 +591,58 @@ fun ComplicationsSuiteScreen(
         } )
 
     }
-}
+
+
+    if (Build.VERSION.SDK_INT > 32 && notificationAsked.not()) {
+            Box {
+                var showDialog by remember { mutableStateOf(true) }
+                val scrollState = rememberScalingLazyListState()
+                Dialog(
+                    showDialog = showDialog,
+                    onDismissRequest = { showDialog = false },
+                    scrollState = scrollState,
+                ) {
+                    Alert(
+                        icon = {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_notification),
+                                contentDescription = "airplane",
+                                modifier = Modifier
+                                    .size(24.dp)
+                                    .wrapContentSize(align = Alignment.Center),
+                            )
+                        },
+                        title = { Text("Toast messages", textAlign = TextAlign.Center) },
+                        negativeButton = { Button(
+                            colors = ButtonDefaults.secondaryButtonColors(),
+                            onClick = {
+                                showDialog = false
+                                notificationAsked = true
+                                pref.setNotificationAsked(true)
+                            }) {
+                            Icon(imageVector = Icons.Default.Close, contentDescription = "Cancel")
+                        } },
+                        positiveButton = {
+                            Button(onClick = {
+                                showDialog = false
+                                notificationAsked = true
+                                pref.setNotificationAsked(true)
+                                permissionStateNotifications.launchPermissionRequest()
+                            }) {
+                                Icon(imageVector = Icons.Default.Check, contentDescription = "OK", tint = Color.Black) } },
+                        contentPadding =
+                        PaddingValues(start = 10.dp, end = 10.dp, top = 24.dp, bottom = 32.dp),
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.notification_permission_info),
+                            textAlign = TextAlign.Center
+                        )
+                    }
+                }
+            }
+        }
+    }
+
 
 fun Context.openPlayStore() {
     try {

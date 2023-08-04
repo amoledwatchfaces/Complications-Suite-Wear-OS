@@ -83,4 +83,8 @@ class Pref(val context: Context) {
     fun setDatePicker(s: String) { getInstance(context).edit().putString("date_picked",s).apply () }
     fun getDatePicker(): String { return getInstance(context).getString("date_picked","2025-01-01")?:"2025-01-01" }
 
+    fun getNotificationAsked():Boolean { return getInstance(context).getBoolean("notification_permission",false) }
+    fun setNotificationAsked(value: Boolean) { getInstance(context).edit().putBoolean("notification_permission",value).apply() }
+
+
 }

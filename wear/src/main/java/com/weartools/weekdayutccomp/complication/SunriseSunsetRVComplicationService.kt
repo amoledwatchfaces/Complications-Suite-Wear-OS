@@ -59,11 +59,49 @@ class SunriseSunsetRVComplicationService : SuspendingComplicationDataSourceServi
             if (result == PackageManager.PERMISSION_GRANTED) {
                 Log.i(TAG, "Permission granted")
             } else {
-                Toast.makeText(context, context.getString(R.string.enable_permission_toast), Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.enable_permission_toast_consider), Toast.LENGTH_LONG).show()
             }
         }
     }
+/*
+    private fun postNotification() {
 
+        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        val CHANNEL_ID = BuildConfig.APPLICATION_ID + "_SUN_2"
+        val CHANNEL_NAME = BuildConfig.APPLICATION_ID + "_sunrise_sunset_rv_notification"
+
+        var mChannel = notificationManager.getNotificationChannel(CHANNEL_ID)
+        if (mChannel == null) {
+            mChannel = NotificationChannel(
+                CHANNEL_ID,
+                CHANNEL_NAME,
+                NotificationManager.IMPORTANCE_HIGH
+            )
+            notificationManager.createNotificationChannel(mChannel)
+        }
+        val builder: NotificationCompat.Builder = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setSmallIcon(drawable.ic_location_not_available)
+            .setContentTitle(getString(R.string.location_notification))
+            .setContentText(getString(R.string.location_notification_desc))
+            .addAction(drawable.ic_launch, getString(R.string.notification_action),
+                openScreen())
+            .setAutoCancel(false)
+
+        val notification: Notification = builder.build()
+        notificationManager.notify(1000003, notification)
+    }
+
+    private fun openScreen(): PendingIntent? {
+        val intent = Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+
+        return PendingIntent.getActivity(
+            this, 0, intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+    }
+*/
 
 override fun getPreviewData(type: ComplicationType): ComplicationData? {
     return when (type) {

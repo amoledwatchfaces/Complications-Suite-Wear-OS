@@ -31,12 +31,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.preference.PreferenceManager
-import androidx.wear.compose.material.*
+import androidx.wear.compose.material.PositionIndicator
+import androidx.wear.compose.material.Scaffold
+import androidx.wear.compose.material.TimeText
+import androidx.wear.compose.material.rememberScalingLazyListState
+import androidx.wear.compose.material.scrollAway
 import androidx.wear.watchface.complications.datasource.ComplicationDataSourceService
 import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUpdateRequester
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.weartools.weekdayutccomp.complication.*
+import com.weartools.weekdayutccomp.complication.DateComplicationService
+import com.weartools.weekdayutccomp.complication.MoonPhaseComplicationService
+import com.weartools.weekdayutccomp.complication.SunriseSunsetComplicationService
+import com.weartools.weekdayutccomp.complication.SunriseSunsetRVComplicationService
+import com.weartools.weekdayutccomp.complication.TimeComplicationService
+import com.weartools.weekdayutccomp.complication.WeekOfYearComplicationService
+import com.weartools.weekdayutccomp.complication.WorldClock1ComplicationService
+import com.weartools.weekdayutccomp.complication.WorldClock2ComplicationService
 import com.weartools.weekdayutccomp.presentation.ComplicationsSuiteScreen
 import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme
 
@@ -88,9 +99,9 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             updateComplication(this, SunriseSunsetRVComplicationService::class.java)
         }
     }
+}
 
-
-    }    fun updateComplication(context: Context, cls: Class<out ComplicationDataSourceService>) {
+fun updateComplication(context: Context, cls: Class<out ComplicationDataSourceService>) {
         val component = ComponentName(context, cls)
         val req = ComplicationDataSourceUpdateRequester.create(context,component)
         req.requestUpdateAll()

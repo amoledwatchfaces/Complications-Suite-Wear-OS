@@ -183,6 +183,11 @@
     <string name="date_picked" translatable="false">date_picked</string>
 
     <!--NOTIFICATIONS-->
-    <string name="location_notification_name" translatable="false">Location Missing Notification</string>
-    <string name="location_notification_desc" translatable="false">Allow one-time location access</string>
+    <string name="location_notification_optional" translatable="false">Precise Moon rotation (Optional)</string>
+    <string name="location_notification" translatable="false">This Complication needs coarse location permission to work</string>
+    <string name="location_notification_desc" translatable="false">Allow one-time access and get location coordinates</string>
+    <string name="notification_action" translatable="false">Open App</string>
+    <string name="notification_permission_info" translatable="false">Some complications need to show toast messages on Android 13. App will ask for permission to show them.</string>
+    <string name="notification_permission_not_granted" translatable="false">Toast messages from complications won\'t work</string>
+    <string name="notification_permission" translatable="false">notification_permission</string>
 </resources>

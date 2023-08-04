@@ -16,6 +16,8 @@
  */
 package com.weartools.weekdayutccomp.complication
 
+import android.app.PendingIntent
+import android.content.Intent
 import android.graphics.drawable.Icon.createWithResource
 import android.util.Log
 import androidx.preference.PreferenceManager
@@ -30,6 +32,7 @@ import androidx.wear.watchface.complications.data.TimeDifferenceComplicationText
 import androidx.wear.watchface.complications.data.TimeDifferenceStyle
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
+import com.weartools.weekdayutccomp.PickDateActivity
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.R.drawable
 import java.time.LocalDate
@@ -42,6 +45,16 @@ class DateCountdownComplicationService : SuspendingComplicationDataSourceService
         type: ComplicationType
     ) {
         Log.d(TAG, "onComplicationActivated(): $complicationInstanceId")
+    }
+
+    private fun openScreen(): PendingIntent? {
+
+        val intent = Intent(this, PickDateActivity::class.java)
+
+        return PendingIntent.getActivity(
+            this, 0, intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
     }
 
 override fun getPreviewData(type: ComplicationType): ComplicationData? {
@@ -80,7 +93,7 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
                 text = TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.SHORT_SINGLE_UNIT, CountDownTimeReference(timeInstance)).build(),
                 contentDescription = PlainComplicationText.Builder(text = "Date Countdown").build())
                 .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_date_countdown)).build())
-                .setTapAction(null)
+                .setTapAction(openScreen())
                 .build()
         }
 
@@ -90,7 +103,7 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
                         .setText("${getString(R.string.countdown_text)}: ^1")
                         .build(),
                 contentDescription = PlainComplicationText.Builder(text = "Date Countdown").build())
-                .setTapAction(null)
+                .setTapAction(openScreen())
                 .build()
         }
 

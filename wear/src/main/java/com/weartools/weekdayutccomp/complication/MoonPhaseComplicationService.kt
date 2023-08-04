@@ -26,7 +26,17 @@ import android.graphics.drawable.Icon.createWithResource
 import android.util.Log
 import android.widget.Toast
 import androidx.preference.PreferenceManager
-import androidx.wear.watchface.complications.data.*
+import androidx.wear.watchface.complications.data.ComplicationData
+import androidx.wear.watchface.complications.data.ComplicationType
+import androidx.wear.watchface.complications.data.LongTextComplicationData
+import androidx.wear.watchface.complications.data.MonochromaticImage
+import androidx.wear.watchface.complications.data.MonochromaticImageComplicationData
+import androidx.wear.watchface.complications.data.PlainComplicationText
+import androidx.wear.watchface.complications.data.RangedValueComplicationData
+import androidx.wear.watchface.complications.data.ShortTextComplicationData
+import androidx.wear.watchface.complications.data.SmallImage
+import androidx.wear.watchface.complications.data.SmallImageComplicationData
+import androidx.wear.watchface.complications.data.SmallImageType
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
 import com.weartools.weekdayutccomp.DrawMoonBitmap
@@ -58,12 +68,49 @@ class MoonPhaseComplicationService : SuspendingComplicationDataSourceService() {
             if (result == PackageManager.PERMISSION_GRANTED) {
                 Log.i(TAG, "Permission granted")
             } else {
-                Toast.makeText(context, getString(R.string.enable_permission_toast_consider), Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.enable_permission_toast_consider), Toast.LENGTH_LONG).show()
             }
         }
     }
+/*
+    private fun postNotification() {
 
+        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        val CHANNEL_ID = BuildConfig.APPLICATION_ID + "_MOON_1"
+        val CHANNEL_NAME = BuildConfig.APPLICATION_ID + "_moon_notification"
 
+        var mChannel = notificationManager.getNotificationChannel(CHANNEL_ID)
+        if (mChannel == null) {
+            mChannel = NotificationChannel(
+                CHANNEL_ID,
+                CHANNEL_NAME,
+                NotificationManager.IMPORTANCE_HIGH
+            )
+            notificationManager.createNotificationChannel(mChannel)
+        }
+        val builder: NotificationCompat.Builder = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setSmallIcon(drawable.ic_location_not_available)
+            .setContentTitle(getString(R.string.location_notification_optional))
+            .setContentText(getString(R.string.location_notification_desc))
+            .addAction(drawable.ic_launch, getString(R.string.notification_action),
+                openAppScreen())
+            .setAutoCancel(false)
+
+        val notification: Notification = builder.build()
+        notificationManager.notify(1000001, notification)
+    }
+
+    private fun openAppScreen(): PendingIntent? {
+        val intent = Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+
+        return PendingIntent.getActivity(
+            this, 0, intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+    }
+*/
 private fun openScreen(): PendingIntent? {
 
     val calendarIntent = Intent()
