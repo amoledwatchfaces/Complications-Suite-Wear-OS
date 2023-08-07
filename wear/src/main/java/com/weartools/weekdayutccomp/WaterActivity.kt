@@ -143,7 +143,7 @@ fun WaterIntakeTheme(
             startAngle = 135f,
             endAngle = 225f,
             indicatorColor = wearColorPalette.secondary,
-            trackColor = MaterialTheme.colors.onBackground.copy(alpha = 0.15f),
+            trackColor = MaterialTheme.colors.onBackground.copy(alpha = 0.2f),
             strokeWidth = 5.dp
         )
     }
