@@ -167,4 +167,9 @@
 
     <!--DICE-->
     <string name="dice_comp_name">Dado</string>
+
+    <!--WATER-->
+    <string name="water_comp_name">Assunzione di acqua</string>
+    <string name="water_intake_text">Contare</string>
+    <string name="water_intake_goal_text">Bersaglio</string>
 </resources>

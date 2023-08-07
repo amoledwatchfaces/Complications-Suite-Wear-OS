@@ -147,4 +147,9 @@
 
     <!--DICE-->
     <string name="dice_comp_name">Kostky</string>
+
+    <!--WATER-->
+    <string name="water_comp_name">Příjem vody</string>
+    <string name="water_intake_text">Příjem</string>
+    <string name="water_intake_goal_text">Cíl</string>
 </resources>

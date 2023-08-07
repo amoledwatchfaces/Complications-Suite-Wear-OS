@@ -146,4 +146,9 @@
 
     <!--DICE-->
     <string name="dice_comp_name">Dado</string>
+
+    <!--WATER-->
+    <string name="water_comp_name">Consumo de agua</string>
+    <string name="water_intake_text">Contar</string>
+    <string name="water_intake_goal_text">Objetivo</string>
 </resources>

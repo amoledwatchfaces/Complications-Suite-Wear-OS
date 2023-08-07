@@ -167,4 +167,9 @@
 
     <!--DICE-->
     <string name="dice_comp_name">Ζάρια</string>
+
+    <!--WATER-->
+    <string name="water_comp_name">Εισαγωγή νερού</string>
+    <string name="water_intake_text">μετρώ</string>
+    <string name="water_intake_goal_text">Στόχος</string>
 </resources>

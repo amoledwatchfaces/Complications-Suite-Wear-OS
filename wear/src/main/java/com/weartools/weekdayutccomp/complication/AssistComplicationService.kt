@@ -41,27 +41,16 @@ class AssistComplicationService : SuspendingComplicationDataSourceService() {
     }
 
 
-private fun openScreen(): PendingIntent? {
+    private fun openScreen(): PendingIntent? {
 
-    val intent = packageManager.getLaunchIntentForPackage("com.google.android.wearable.assistant")
-    val i = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.google.android.wearable.assistant"))
-    //intent?.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        val calendarIntent = Intent()
+        calendarIntent.action = Intent.ACTION_VOICE_COMMAND
 
-    return if (intent!=null)
-    {
-        PendingIntent.getActivity(
-            this, 0, intent,
+        return PendingIntent.getActivity(
+            this, 0, calendarIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
     }
-    else {
-        Toast.makeText(this, this.getString(R.string.assist_missing), Toast.LENGTH_LONG).show()
-        updateComplication(context = this)
-        PendingIntent.getActivity(
-            this, 0, i,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
-    }
-}
 
 override fun getPreviewData(type: ComplicationType): ComplicationData? {
     return when (type) {

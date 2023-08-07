@@ -8,7 +8,7 @@ import java.time.LocalDate
 class Pref(val context: Context) {
     // to make sure there's only one instance
 
-    val currentDateString: String = LocalDate.now().toString()
+    private val currentDateString: String = LocalDate.now().toString()
 
     companion object{
         var data :SharedPreferences?=null
@@ -89,5 +89,10 @@ class Pref(val context: Context) {
     fun getNotificationAsked():Boolean { return getInstance(context).getBoolean("notification_permission",false) }
     fun setNotificationAsked(value: Boolean) { getInstance(context).edit().putBoolean("notification_permission",value).apply() }
 
+    fun getWater():Int { return getInstance(context).getInt("water_intake",0) }
+    fun setWater(value: Int) { getInstance(context).edit().putInt("water_intake",value).apply() }
+
+    fun getWaterGoal():Float { return getInstance(context).getFloat("water_intake_goal",20.0f) }
+    fun setWaterGoal(value: Float) { getInstance(context).edit().putFloat("water_intake_goal",value).apply() }
 
 }

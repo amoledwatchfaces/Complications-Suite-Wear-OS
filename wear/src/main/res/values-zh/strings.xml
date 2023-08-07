@@ -146,4 +146,9 @@
 
     <!--DICE-->
     <string name="dice_comp_name">骰子</string>
+
+    <!--WATER-->
+    <string name="water_comp_name">水摄入量</string>
+    <string name="water_intake_text">数数</string>
+    <string name="water_intake_goal_text">目标</string>
 </resources>

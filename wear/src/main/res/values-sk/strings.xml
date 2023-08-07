@@ -147,4 +147,9 @@
 
     <!--DICE-->
     <string name="dice_comp_name">Hracia kocka</string>
+
+    <!--WATER-->
+    <string name="water_comp_name">Príjem tekutin</string>
+    <string name="water_intake_text">Počet</string>
+    <string name="water_intake_goal_text">Cieľ</string>
 </resources>

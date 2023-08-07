@@ -191,4 +191,12 @@
 
     <!--DICE-->
     <string name="dice_comp_name">Dice</string>
+
+    <!--WATER-->
+    <string name="water_comp_name">Water intake</string>
+    <string name="water_intake_text">Intake</string>
+    <string name="water_intake_goal_text">Goal</string>
+
+    <string name="water_intake" translatable="false">water_intake</string>
+    <string name="water_intake_goal" translatable="false">water_intake_goal</string>
 </resources>
