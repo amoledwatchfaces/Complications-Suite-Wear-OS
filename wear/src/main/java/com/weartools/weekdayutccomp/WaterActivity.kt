@@ -13,6 +13,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.WaterDrop
+import androidx.compose.material.icons.outlined.RestartAlt
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,11 +26,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.wear.compose.material.ButtonDefaults
 import androidx.wear.compose.material.Chip
 import androidx.wear.compose.material.ChipDefaults
 import androidx.wear.compose.material.CircularProgressIndicator
 import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.MaterialTheme
+import androidx.wear.compose.material.OutlinedCompactButton
 import androidx.wear.compose.material.Stepper
 import androidx.wear.compose.material.Text
 import com.weartools.weekdayutccomp.complication.WaterComplicationService
@@ -91,10 +94,12 @@ fun WaterIntakeTheme(
             increaseIcon = { Icon(imageVector = Icons.Default.Add, contentDescription = "Add", tint = wearColorPalette.secondaryVariant) })
         {
             //WaterChip(context = context, pref = pref, text = "Intake: $intake", title = "Goal: ${intakeGoal.toInt()}")
+
             Chip(
                 modifier = Modifier
                     .fillMaxWidth(0.8f)
-                    .padding(horizontal = 10.dp),
+                    .padding(horizontal = 10.dp)
+                    .padding(bottom = 10.dp),
                 onClick = {
                     openGoalSetting = openGoalSetting.not()
                 },
@@ -135,6 +140,19 @@ fun WaterIntakeTheme(
 
             }
         }
+
+        OutlinedCompactButton(
+            border = ButtonDefaults.buttonBorder(null, null),
+            modifier = Modifier.padding(top = 90.dp),
+            onClick = {
+                pref.setWater(0)
+                intake = 0
+                updateComplication(context, WaterComplicationService::class.java)
+            }
+        ) {
+            Icon(imageVector = Icons.Outlined.RestartAlt, contentDescription = "Reset Counter", tint = Color.Gray)
+        }
+
         CircularProgressIndicator(
             progress = (intake / intakeGoal),
             modifier = Modifier
@@ -148,3 +166,14 @@ fun WaterIntakeTheme(
         )
     }
 }
+/*
+
+@Preview(widthDp = 300, heightDp = 300)
+@Composable
+fun SimpleComposablePreview(
+) {
+    val context: Context = LocalContext.current
+    val pref = Pref(context)
+    WaterIntakeTheme(pref = pref,context = context)
+}
+ */
