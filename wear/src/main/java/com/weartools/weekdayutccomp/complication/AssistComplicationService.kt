@@ -24,14 +24,7 @@ import android.graphics.drawable.Icon.createWithResource
 import android.net.Uri
 import android.util.Log
 import android.widget.Toast
-import androidx.wear.watchface.complications.data.ComplicationData
-import androidx.wear.watchface.complications.data.ComplicationType
-import androidx.wear.watchface.complications.data.MonochromaticImage
-import androidx.wear.watchface.complications.data.MonochromaticImageComplicationData
-import androidx.wear.watchface.complications.data.PlainComplicationText
-import androidx.wear.watchface.complications.data.SmallImage
-import androidx.wear.watchface.complications.data.SmallImageComplicationData
-import androidx.wear.watchface.complications.data.SmallImageType
+import androidx.wear.watchface.complications.data.*
 import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUpdateRequester
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
