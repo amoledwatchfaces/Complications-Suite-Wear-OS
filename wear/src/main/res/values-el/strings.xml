@@ -14,7 +14,7 @@
     <string name="crypto_name_2" translatable="true">Τιμή ETH $</string>
 
     <!-- Flashlight Complication -->
-    <string name="flashlight_comp_name">Φακός</string>
+    <string name="flashlight_comp_name">Complication Φακός</string>
 
     <!-- Προτιμήσεις Complication Ξυπνητηριού -->
     <string name="alarm_comp_name">Ξυπνητήρι</string>
@@ -153,23 +153,23 @@
     <string name="weekW">Ε:</string>
 
     <!-- Developer Options -->
-    <string name="developer_options_comp_name">Επιλογές ανάπτυξης</string>
+    <string name="developer_options_comp_name">Επιλογές Προγραμματιστή</string>
 
     <!--Date Countdown-->
-    <string name="date_countdown_comp_name">Αντίστροφη μέτρηση για την ημέρα</string>
-    <string name="countdown_text">Αντίστροφη μέτρηση</string>
+    <string name="date_countdown_comp_name">Αντίστροφη μέτρηση</string>
+    <string name="countdown_text">Χρόνος που απομένει</string>
 
     <!--NOTIFICATIONS-->
     <string name="notification_permission_info">Μερικά complications πρέπει να δείχνουν μηνύματα Toast στο Android 13. Η εφαρμογή θα ζητήσει άδεια για να τα εμφανίσει.</string>
 
     <!--VOLUME-->
-    <string name="volume_comp_name">Ελεγχος έντασης</string>
+    <string name="volume_comp_name">Έλεγχος έντασης</string>
 
     <!--DICE-->
-    <string name="dice_comp_name">Ζάρια</string>
+    <string name="dice_comp_name">Ζάρι</string>
 
     <!--WATER-->
-    <string name="water_comp_name">Εισαγωγή νερού</string>
-    <string name="water_intake_text">μετρώ</string>
+    <string name="water_comp_name">Νερό</string>
+    <string name="water_intake_text">Ποτήρια</string>
     <string name="water_intake_goal_text">Στόχος</string>
 </resources>
