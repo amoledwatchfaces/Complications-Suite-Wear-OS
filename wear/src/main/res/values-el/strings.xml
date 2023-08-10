@@ -160,7 +160,7 @@
     <string name="countdown_text">Χρόνος που απομένει</string>
 
     <!--NOTIFICATIONS-->
-    <string name="notification_permission_info">Μερικά complications πρέπει να δείχνουν μηνύματα Toast στο Android 13. Η εφαρμογή θα ζητήσει άδεια για να τα εμφανίσει.</string>
+    <string name="notification_permission_info">Μερικά complications πρέπει να δείχνουν μηνύματα Toast στο Android 13+. Η εφαρμογή θα ζητήσει άδεια για να τα εμφανίσει.</string>
 
     <!--VOLUME-->
     <string name="volume_comp_name">Έλεγχος έντασης</string>
