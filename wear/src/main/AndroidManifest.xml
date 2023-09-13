@@ -93,7 +93,6 @@
             </intent-filter>
         </receiver>
 
-
         <service
             android:name=".complication.WeekOfYearComplicationService"
             android:exported="true"
@@ -449,10 +448,6 @@
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
                 android:value="ICON,SMALL_IMAGE" />
         </service>
-
-
-
-
         <service
             android:name=".complication.WaterComplicationService"
             android:exported="true"
@@ -467,12 +462,25 @@
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
                 android:value="SHORT_TEXT,RANGED_VALUE,LONG_TEXT,ICON,SMALL_IMAGE" />
         </service>
-
         <activity
             android:name=".WaterActivity"
             android:noHistory="true"
             android:exported="true">
         </activity>
+
+        <service
+            android:name=".complication.TimeZoneComplicationService"
+            android:exported="true"
+            android:icon="@drawable/complication_icon_world"
+            android:label="@string/time_zone_comp_name"
+            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
+        <intent-filter>
+            <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+        </intent-filter>
+        <meta-data
+            android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+            android:value="SHORT_TEXT,LONG_TEXT" />
+        </service>
 
     </application>
 </manifest>

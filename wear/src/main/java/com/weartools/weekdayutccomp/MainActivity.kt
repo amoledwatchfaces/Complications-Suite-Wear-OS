@@ -34,7 +34,7 @@ import androidx.preference.PreferenceManager
 import androidx.wear.compose.material.PositionIndicator
 import androidx.wear.compose.material.Scaffold
 import androidx.wear.compose.material.TimeText
-import androidx.wear.compose.material.rememberScalingLazyListState
+import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
 import androidx.wear.compose.material.scrollAway
 import androidx.wear.watchface.complications.datasource.ComplicationDataSourceService
 import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUpdateRequester

@@ -172,4 +172,7 @@
     <string name="water_comp_name">Ingestão de água</string>
     <string name="water_intake_text">Contar</string>
     <string name="water_intake_goal_text">Alvo</string>
+
+    <!--Time zone-->
+    <string name="time_zone_comp_name">Fuso horário</string>
 </resources>

@@ -562,6 +562,7 @@
     </string-array>
     <string-array name="dateformats">
         <item>EEE, d MMM</item>
+        <item>EEE d MMM</item>
         <item>EEE, MMM d</item>
         <item>MM/dd/YYYY</item>
         <item>dd/MM/YYYY</item>

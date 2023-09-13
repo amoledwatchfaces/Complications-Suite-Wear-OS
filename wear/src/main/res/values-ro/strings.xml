@@ -172,4 +172,7 @@
     <string name="water_comp_name">Aportul de apă</string>
     <string name="water_intake_text">Numara</string>
     <string name="water_intake_goal_text">Ţintă</string>
+
+    <!--Time zone-->
+    <string name="time_zone_comp_name">Fus orar</string>
 </resources>

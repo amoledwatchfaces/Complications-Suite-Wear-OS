@@ -4,16 +4,16 @@ plugins {
     id ("kotlin-parcelize")
 }
 
-@Suppress("UnstableApiUsage") //TODO: CHECK LATER
 android {
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.weartools.weekdayutccomp"
         minSdk = 27
+        //noinspection OldTargetApi
         targetSdk = 33
-        versionCode = 10000266
-        versionName = "2.6.6"
+        versionCode = 10000268
+        versionName = "2.6.8"
         resourceConfigurations += listOf("en", "cs", "de", "el", "es", "it", "pt", "ro", "sk", "zh")
     }
     bundle {
@@ -46,14 +46,14 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.6"
+        kotlinCompilerExtensionVersion = "1.5.1"
     }
     namespace = "com.weartools.weekdayutccomp"
 }
 
 dependencies {
-    val composeUiVersion = rootProject.extra["compose_version"]
-    val composeWearVersion = rootProject.extra["compose_wear_version"]
+    val composeUiVersion = "1.5.1"
+    val composeWearVersion = "1.3.0-alpha05"
 
     // NEW MOON / SUNRISE / SUNSET COMP
     //request permission
@@ -69,13 +69,13 @@ dependencies {
     implementation ("org.shredzone.commons:commons-suncalc:3.7")
 
     // WEAR OS
-    implementation ("com.google.android.gms:play-services-wearable:18.0.0")
+    implementation ("com.google.android.gms:play-services-wearable:18.1.0")
     implementation ("androidx.wear.watchface:watchface-complications-data-source-ktx:1.1.1")
-    implementation ("androidx.wear:wear:1.2.0")
+    implementation ("androidx.wear:wear:1.3.0")
 
     //COMPOSE
-    implementation ("androidx.preference:preference-ktx:1.2.0")
-    implementation ("androidx.core:core-ktx:1.10.1")
+    implementation ("androidx.preference:preference-ktx:1.2.1")
+    implementation ("androidx.core:core-ktx:1.12.0")
     implementation ("androidx.compose.ui:ui:$composeUiVersion")
     implementation ("androidx.wear.compose:compose-material:$composeWearVersion")
     implementation ("androidx.wear.compose:compose-foundation:$composeWearVersion")
@@ -92,7 +92,7 @@ dependencies {
     implementation ("androidx.datastore:datastore-preferences:1.0.0")
 
     //Locale
-    implementation ("androidx.appcompat:appcompat:1.7.0-alpha02")
+    implementation ("androidx.appcompat:appcompat:1.7.0-alpha03")
 
     // INPUT
     implementation ("androidx.wear:wear-input:1.2.0-alpha02")

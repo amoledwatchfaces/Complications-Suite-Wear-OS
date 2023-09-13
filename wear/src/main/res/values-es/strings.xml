@@ -151,4 +151,7 @@
     <string name="water_comp_name">Consumo de agua</string>
     <string name="water_intake_text">Contar</string>
     <string name="water_intake_goal_text">Objetivo</string>
+
+    <!--Time zone-->
+    <string name="time_zone_comp_name">Zona horaria</string>
 </resources>

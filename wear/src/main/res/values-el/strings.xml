@@ -172,4 +172,7 @@
     <string name="water_comp_name">Νερό</string>
     <string name="water_intake_text">Ποτήρια</string>
     <string name="water_intake_goal_text">Στόχος</string>
+
+    <!--Time zone-->
+    <string name="time_zone_comp_name">Ζώνη ώρας</string>
 </resources>

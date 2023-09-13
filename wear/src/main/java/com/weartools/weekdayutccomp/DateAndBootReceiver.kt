@@ -12,6 +12,7 @@ import androidx.work.*
 import com.weartools.weekdayutccomp.complication.MoonPhaseComplicationService
 import com.weartools.weekdayutccomp.complication.SunriseSunsetComplicationService
 import com.weartools.weekdayutccomp.complication.SunriseSunsetRVComplicationService
+import com.weartools.weekdayutccomp.complication.TimeZoneComplicationService
 import java.util.concurrent.TimeUnit
 
 class DateAndBootReceiver: BroadcastReceiver() {
@@ -40,7 +41,7 @@ class DateAndBootReceiver: BroadcastReceiver() {
 
 class ComplicationWorker(private val appContext: Context, workerParams: WorkerParameters) :
     CoroutineWorker(appContext, workerParams) {
-    fun updateComplication(context: Context, cls: Class<out ComplicationDataSourceService>) {
+    private fun updateComplication(context: Context, cls: Class<out ComplicationDataSourceService>) {
         val component = ComponentName(context, cls)
         val req = ComplicationDataSourceUpdateRequester.create(context,component)
         req.requestUpdateAll()
@@ -50,6 +51,7 @@ class ComplicationWorker(private val appContext: Context, workerParams: WorkerPa
         updateComplication(appContext, SunriseSunsetComplicationService::class.java)
         updateComplication(appContext, SunriseSunsetRVComplicationService::class.java)
         updateComplication(appContext, MoonPhaseComplicationService::class.java)
+        updateComplication(appContext, TimeZoneComplicationService::class.java)
         return Result.success()
     }
 }

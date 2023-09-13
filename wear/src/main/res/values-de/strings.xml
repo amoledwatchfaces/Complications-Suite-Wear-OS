@@ -169,4 +169,7 @@
     <string name="water_comp_name">Wasseraufnahme</string>
     <string name="water_intake_text">Anzahl</string>
     <string name="water_intake_goal_text">Ziel</string>
+
+    <!--Time zone-->
+    <string name="time_zone_comp_name">Zeitzone</string>
 </resources>
