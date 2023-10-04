@@ -12,8 +12,8 @@ android {
         minSdk = 27
         //noinspection OldTargetApi
         targetSdk = 33
-        versionCode = 10000268
-        versionName = "2.6.8"
+        versionCode = 10000272
+        versionName = "2.7.2"
         resourceConfigurations += listOf("en", "cs", "de", "el", "es", "it", "pt", "ro", "sk", "zh")
     }
     bundle {
@@ -103,4 +103,6 @@ dependencies {
     // HOROLOGIST
     implementation ("com.google.android.horologist:horologist-composables:0.2.8")
     implementation ("com.google.android.horologist:horologist-audio-ui:0.2.8")
+
+    implementation ("com.google.code.gson:gson:2.8.8")
 }

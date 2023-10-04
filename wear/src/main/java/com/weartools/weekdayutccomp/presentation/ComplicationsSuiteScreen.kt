@@ -495,7 +495,7 @@ fun ComplicationsSuiteScreen(
         val title = if (isTImeZOnClick) stringResource(id = R.string.wc_setting_title) else stringResource(id = R.string.wc2_setting_title)
         val prValue = if (isTImeZOnClick) getCity1
         else getCity2
-        ListItemsWidget(titles = title, preValue = prValue, items = listcity, callback = {
+        ListItemsWidget(focusRequester = focusRequester, titles = title, preValue = prValue, items = listcity, callback = {
             if (it == -1) {
                 isTImeZOnClick = false
                 isTImeZOnClick2 = false
@@ -527,6 +527,7 @@ fun ComplicationsSuiteScreen(
         else if (shortTextFormat) getShortText
         else getShortTitle
         ListItemsWidget(
+            focusRequester = focusRequester,
             titles = title,
             preValue = prValue,
             items = if (longTextFormat) listLongFormat else listShortFormat,
@@ -562,7 +563,11 @@ fun ComplicationsSuiteScreen(
     }
 
     if (openLocale){
-        ListItemsWidget(titles = "Change Locale", items = list, preValue =currentLocale ,
+        ListItemsWidget(
+            focusRequester = focusRequester,
+            titles = "Change Locale",
+            items = list,
+            preValue = currentLocale ,
             callback ={
             if (it!=-1) {
                 pref.updateLocale(strArray[it])
@@ -574,7 +579,11 @@ fun ComplicationsSuiteScreen(
     }
 
     if (timeDiffs){
-        ListItemsWidget(titles = stringResource(id = R.string.countdown_style_style), items = listTimeDiffStyles, preValue = getTimeDiffStyle ,
+        ListItemsWidget(
+            focusRequester = focusRequester,
+            titles = stringResource(id = R.string.countdown_style_style),
+            items = listTimeDiffStyles,
+            preValue = getTimeDiffStyle ,
             callback ={
             if (it!=-1) {
                 val input = listTimeDiffStyles[it]

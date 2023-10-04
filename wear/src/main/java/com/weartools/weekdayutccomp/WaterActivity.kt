@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,13 +16,17 @@ import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.WaterDrop
 import androidx.compose.material.icons.outlined.RestartAlt
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.rotary.onRotaryScrollEvent
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -65,9 +70,12 @@ fun WaterIntakeTheme(
     pref: Pref,
     context: Context,
 ) {
+
+
     var intake by remember { mutableStateOf(pref.getWater()) }
     var intakeGoal by remember { mutableStateOf(pref.getWaterGoal()) }
     var openGoalSetting by remember{ mutableStateOf(false) }
+    val focusRequester1 = remember { FocusRequester() }
 
     val goalString = context.resources.getString(R.string.water_intake_goal_text)
     val intakeString = context.resources.getString(R.string.water_intake_text)
@@ -80,7 +88,30 @@ fun WaterIntakeTheme(
     val currentLocale =if (index!=-1)list[index] else "20"
     var currentGoalString by remember { mutableStateOf(currentLocale) }
 
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+
+    LaunchedEffect(Unit){focusRequester1.requestFocus()}
+
+    fun onVolumeChangeByScroll(pixels: Float) {
+        intake = when {
+            pixels > 0 -> (intake + 1).coerceAtMost(intakeGoal.toInt())
+            pixels < 0 -> Integer.max(intake - 1, 0)
+            else -> {0}
+        }
+        pref.setWater(intake)
+        updateComplication(context, WaterComplicationService::class.java)
+    }
+
+    Box(
+        modifier = Modifier.fillMaxSize()
+            .onRotaryScrollEvent {
+                    onVolumeChangeByScroll(it.verticalScrollPixels)
+                true
+            }
+            .focusRequester(focusRequester1)
+            .focusable(),
+        contentAlignment = Alignment.Center) {
+        //
+
         Stepper(
             value = intake,
             onValueChange = {
@@ -126,7 +157,11 @@ fun WaterIntakeTheme(
             )
 
             if (openGoalSetting){
-                ListItemsWidget(titles = stringResource(id = R.string.water_intake_goal_text), items = list, preValue = currentGoalString ,
+                ListItemsWidget(
+                    focusRequester = focusRequester1,
+                    titles = stringResource(id = R.string.water_intake_goal_text),
+                    items = list,
+                    preValue = currentGoalString ,
                     callback ={
                         if (it!=-1) {
                             pref.setWaterGoal(list[it].toFloat())
@@ -165,7 +200,9 @@ fun WaterIntakeTheme(
             strokeWidth = 5.dp
         )
     }
+
 }
+
 /*
 
 @Preview(widthDp = 300, heightDp = 300)

@@ -20,14 +20,20 @@ import android.content.ComponentName
 import android.graphics.drawable.Icon.createWithResource
 import android.util.Log
 import androidx.preference.PreferenceManager
-import androidx.wear.watchface.complications.data.*
+import androidx.wear.watchface.complications.data.ComplicationData
+import androidx.wear.watchface.complications.data.ComplicationType
+import androidx.wear.watchface.complications.data.MonochromaticImage
+import androidx.wear.watchface.complications.data.PlainComplicationText
+import androidx.wear.watchface.complications.data.RangedValueComplicationData
+import androidx.wear.watchface.complications.data.ShortTextComplicationData
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.R.drawable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.json.JSONObject
 import java.math.RoundingMode
 import java.net.URL
 import java.text.DecimalFormat
@@ -41,14 +47,17 @@ class EthereumPriceComplicationService : SuspendingComplicationDataSourceService
         Log.d(TAG, "onComplicationActivated(): $complicationInstanceId")
     }
 
-    private suspend fun fetchUrl2(ticker2: String): String {
-        try {val result = withContext(Dispatchers.IO) {
-            URL("https://data.binance.com/api/v3/ticker/24hr?symbol=$ticker2").readText()
+    private suspend fun fetchUrl2(): JsonObject? {
+        val url = "https://data-api.binance.vision/api/v3/ticker/24hr?symbol=ETHBUSD"
+
+        return try {
+            val json = withContext(Dispatchers.IO){URL(url).readText()}
+            JsonParser.parseString(json).asJsonObject
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
         }
-            return result
-        }
-        catch (ex: Exception) { Log.d("EXCEPTION", ex.toString()) }
-        return "{\"lastPrice\":\"0.0\",\"lowPrice\":\"0.0\",\"highPrice\":\"0.0\"}"
     }
 
     override fun getPreviewData(type: ComplicationType): ComplicationData? {
@@ -79,41 +88,34 @@ class EthereumPriceComplicationService : SuspendingComplicationDataSourceService
             ComplicationTapBroadcastReceiver.getToggleIntent(context = this, args = args)
 
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val ticker2: String = preferences.getString(getString(R.string.ticker_2), "ETHBUSD").toString()
-        val df = DecimalFormat("#.##K")
-        df.roundingMode = RoundingMode.HALF_UP
+        val df = DecimalFormat("#.#K").apply { RoundingMode.HALF_UP }
 
         //GET LAST PRICE
         val lastPrice = preferences.getFloat(getString(R.string.price_2), 0.0F)
-        val lastPriceString = preferences.getString(getString(R.string.price_2_string), "--").toString()
+        val price: Float
+        val highPrice: Float
+        val lowPrice: Float
 
         //GET CURRENT PRICE
-        val json2 = fetchUrl2(ticker2)
-        val jsonObject2 = JSONObject(json2)
-        val price = jsonObject2.getDouble("lastPrice").toFloat()
-        val highPrice = jsonObject2.getDouble("highPrice").toFloat()
-        val lowPrice = jsonObject2.getDouble("lowPrice").toFloat()
+        val jsonObject = fetchUrl2()
+        val newData: Boolean = jsonObject != null
+        price = jsonObject?.get("lastPrice")?.asFloat ?: lastPrice
+        highPrice = jsonObject?.get("highPrice")?.asFloat ?: lastPrice
+        lowPrice = jsonObject?.get("lowPrice")?.asFloat ?: 0f
 
 
         val priceString = if (price >= 1000.00) {df.format(price/1000.0).toString()}
-        else if (price <= 0) {lastPriceString}
-        else {price.toString() }
+        else if (price <= 0) {"--"}
+        else { price.toString() }
 
-        if (price <= 0) {preferences.edit()
-            .putFloat(getString(R.string.price_2), lastPrice)
-            .putString(getString(R.string.price_2_string), lastPriceString)
-            .apply()}
-        else  {preferences.edit()
-            .putFloat(getString(R.string.price_2), price)
-            .putString(getString(R.string.price_2_string), priceString)
-            .apply()}
+        preferences.edit().putFloat(getString(R.string.price_2), price).apply()
 
-        Log.i(TAG, "Ticker: $ticker2, Price: $priceString")
+        Log.i(TAG, "Ticker: ETHBUSD, Price: $priceString")
 
         return when (request.complicationType) {
 
             ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
-                text = PlainComplicationText.Builder(text = if (price > 0) {priceString} else {"$priceString!"}).build(),
+                text = PlainComplicationText.Builder(text = if (newData) {priceString} else {"$priceString!"}).build(),
                 contentDescription = PlainComplicationText.Builder(text = "ETH").build())
                 .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_ethereum)).build())
                 .setTapAction(complicationPendingIntent)
@@ -124,7 +126,7 @@ class EthereumPriceComplicationService : SuspendingComplicationDataSourceService
                 min = lowPrice,
                 max =  highPrice,
                 contentDescription = PlainComplicationText.Builder(text = "ETH").build())
-                .setText(PlainComplicationText.Builder(text = if (price > 0) {priceString} else {"$priceString!"}).build())
+                .setText(PlainComplicationText.Builder(text = if (newData) {priceString} else {"$priceString!"}).build())
                 .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_ethereum)).build())
                 .setTapAction(complicationPendingIntent)
                 .build()

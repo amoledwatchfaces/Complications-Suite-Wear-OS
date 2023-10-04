@@ -9,7 +9,6 @@ import androidx.compose.foundation.background
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.wear.compose.material.dialog.Dialog
 import com.google.android.horologist.composables.DatePicker
 import com.weartools.weekdayutccomp.complication.DateCountdownComplicationService
 import java.time.LocalDate

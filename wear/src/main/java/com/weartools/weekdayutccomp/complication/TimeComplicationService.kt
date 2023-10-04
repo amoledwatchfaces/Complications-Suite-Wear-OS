@@ -51,34 +51,33 @@ class TimeComplicationService : SuspendingComplicationDataSourceService() {
 
 override fun getPreviewData(type: ComplicationType): ComplicationData? {
     return when (type) {
+
         ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
-        text = PlainComplicationText.Builder(text = "10:08").build(),
-        contentDescription = PlainComplicationText.Builder(text = getString(R.string.time_comp_desc))
+            text = PlainComplicationText.Builder(text = "10:08").build(),
+            contentDescription = PlainComplicationText.Builder(text = getString(R.string.time_comp_desc)).build())
+            .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_clock)).build())
+            .setTapAction(null)
             .build()
-    )
-        .setMonochromaticImage(
-            MonochromaticImage.Builder(
-                image = createWithResource(this, drawable.ic_clock),
-            ).build()
-        )
-        .setTapAction(null)
-        .build()
+
+        ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
+            text = PlainComplicationText.Builder(text = "10:08").build(),
+            contentDescription = PlainComplicationText.Builder(text = getString(R.string.time_comp_desc)).build())
+            .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_clock)).build())
+            .setTapAction(null)
+            .build()
+
         ComplicationType.RANGED_VALUE -> RangedValueComplicationData.Builder(
             value = 608f,
             min = 0f,
             max =  1440f,
-            contentDescription = PlainComplicationText
-                .Builder(text = getString(R.string.time_comp_desc)).build()
-        )
+            contentDescription = PlainComplicationText.Builder(text = getString(R.string.time_comp_desc)).build())
             .setText(PlainComplicationText.Builder(text = "10:08").build())
             .setTitle(PlainComplicationText.Builder(text = "AM").build())
-            .setMonochromaticImage(
-                MonochromaticImage.Builder(
-                    image = createWithResource(this, drawable.ic_clock),
-                ).build()
-            )
+            .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_clock)).build())
             .setTapAction(null)
             .build()
+
+
         else -> {null}
     }
 }
@@ -106,19 +105,21 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
 
         ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
             text = text,
-            contentDescription = PlainComplicationText
-                .Builder(text = getString(R.string.time_comp_desc))
-                .build()
-        )
+            contentDescription = PlainComplicationText.Builder(text = getString(R.string.time_comp_desc)).build())
             .setTitle(
                 if (!ismilitary) { TimeFormatComplicationText.Builder(format = "a").build()}
-                else {PlainComplicationText.Builder(text = "24h").build()}
-            )
-            .setMonochromaticImage(
-                MonochromaticImage.Builder(
-                    image = createWithResource(this, drawable.ic_clock),
-                ).build()
-            )
+                else {PlainComplicationText.Builder(text = "24h").build()})
+            .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_clock)).build())
+            .setTapAction(openScreen())
+            .build()
+
+        ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
+            text = text,
+            contentDescription = PlainComplicationText.Builder(text = getString(R.string.time_comp_desc)).build())
+            .setTitle(
+                if (!ismilitary) { TimeFormatComplicationText.Builder(format = "a").build()}
+                else {PlainComplicationText.Builder(text = "24h").build()})
+            .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_clock)).build())
             .setTapAction(openScreen())
             .build()
 
@@ -126,19 +127,12 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
             value = progressvariable,
             min = 0f,
             max =  1440f,
-            contentDescription = PlainComplicationText
-                .Builder(text = getString(R.string.time_comp_desc)).build()
-        )
+            contentDescription = PlainComplicationText.Builder(text = getString(R.string.time_comp_desc)).build())
             .setText(text)
             .setTitle(
                 if (!ismilitary) { TimeFormatComplicationText.Builder(format = "a").build()}
-                else {PlainComplicationText.Builder(text = "24h").build()}
-            )
-            .setMonochromaticImage(
-                MonochromaticImage.Builder(
-                    image = createWithResource(this, drawable.ic_clock),
-                ).build()
-            )
+                else {PlainComplicationText.Builder(text = "24h").build()})
+            .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_clock)).build())
             .setTapAction(openScreen())
             .build()
 
