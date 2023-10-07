@@ -19,14 +19,27 @@ package com.weartools.weekdayutccomp.complication
 import android.app.PendingIntent
 import android.content.Intent
 import android.util.Log
-import androidx.preference.PreferenceManager
-import androidx.wear.watchface.complications.data.*
+import androidx.datastore.core.DataStore
+import androidx.wear.watchface.complications.data.ComplicationData
+import androidx.wear.watchface.complications.data.ComplicationType
+import androidx.wear.watchface.complications.data.LongTextComplicationData
+import androidx.wear.watchface.complications.data.PlainComplicationText
+import androidx.wear.watchface.complications.data.ShortTextComplicationData
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
-import com.weartools.weekdayutccomp.MainActivity
-import com.weartools.weekdayutccomp.R
+import com.weartools.weekdayutccomp.activity.MainActivity
+import com.weartools.weekdayutccomp.preferences.UserPreferences
+import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class CustomTextComplicationService : SuspendingComplicationDataSourceService() {
+
+    @Inject
+    lateinit var dataStore: DataStore<UserPreferences>
+    private val preferences by lazy { UserPreferencesRepository(dataStore).getPreferences() }
 
     override fun onComplicationActivated(
         complicationInstanceId: Int,
@@ -68,9 +81,8 @@ class CustomTextComplicationService : SuspendingComplicationDataSourceService() 
 
 override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
 
-    val preferences = PreferenceManager.getDefaultSharedPreferences(this)
-    val text: String = preferences.getString(getString(R.string.custom_text), "Text").toString()
-    val title: String = preferences.getString(getString(R.string.custom_title), "Title").toString()
+    val text: String = preferences.first().customText
+    val title: String = preferences.first().customTitle
 
 
     return when (request.complicationType) {

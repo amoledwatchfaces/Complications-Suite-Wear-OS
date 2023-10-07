@@ -16,13 +16,10 @@
  */
 package com.weartools.weekdayutccomp.complication
 
-import android.Manifest
-import android.content.Context
-import android.content.pm.PackageManager
+import android.content.ContentValues.TAG
 import android.graphics.drawable.Icon.createWithResource
 import android.util.Log
-import android.widget.Toast
-import androidx.preference.PreferenceManager
+import androidx.datastore.core.DataStore
 import androidx.wear.watchface.complications.data.ComplicationData
 import androidx.wear.watchface.complications.data.ComplicationType
 import androidx.wear.watchface.complications.data.LongTextComplicationData
@@ -31,73 +28,24 @@ import androidx.wear.watchface.complications.data.PlainComplicationText
 import androidx.wear.watchface.complications.data.ShortTextComplicationData
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
-import com.weartools.weekdayutccomp.MoonPhaseHelper
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.R.drawable
-import kotlinx.coroutines.runBlocking
+import com.weartools.weekdayutccomp.preferences.UserPreferences
+import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
+import com.weartools.weekdayutccomp.utils.MoonPhaseHelper
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class SunriseSunsetComplicationService : SuspendingComplicationDataSourceService() {
 
-    override fun onComplicationActivated(
-        complicationInstanceId: Int,
-        type: ComplicationType
-    ) {
-        Log.d(TAG, "onComplicationActivated(): $complicationInstanceId")
-        reqPermissionFunction(applicationContext)
-    }
+    @Inject
+    lateinit var dataStore: DataStore<UserPreferences>
+    private val preferences by lazy { UserPreferencesRepository(dataStore).getPreferences() }
 
-    private fun reqPermissionFunction(context: Context) {
-
-        runBlocking {
-            val result = context.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
-            if (result == PackageManager.PERMISSION_GRANTED) {
-                Log.i(TAG, "Permission granted")
-            } else {
-                Toast.makeText(context, getString(R.string.enable_permission_toast), Toast.LENGTH_LONG).show()
-            }
-        }
-    }
-/*
-    private fun postNotification() {
-
-        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-        val CHANNEL_ID = BuildConfig.APPLICATION_ID + "_SUN_1"
-        val CHANNEL_NAME = BuildConfig.APPLICATION_ID + "_sunrise_sunset_notification"
-
-        var mChannel = notificationManager.getNotificationChannel(CHANNEL_ID)
-        if (mChannel == null) {
-            mChannel = NotificationChannel(
-                CHANNEL_ID,
-                CHANNEL_NAME,
-                NotificationManager.IMPORTANCE_HIGH
-            )
-            notificationManager.createNotificationChannel(mChannel)
-        }
-        val builder: NotificationCompat.Builder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(drawable.ic_location_not_available)
-            .setContentTitle(getString(R.string.location_notification))
-            .setContentText(getString(R.string.location_notification_desc))
-            .addAction(drawable.ic_launch, getString(R.string.notification_action),
-                openScreen())
-            .setAutoCancel(false)
-
-        val notification: Notification = builder.build()
-        notificationManager.notify(1000002, notification)
-    }
-
-    private fun openScreen(): PendingIntent? {
-        val intent = Intent(this, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
-
-        return PendingIntent.getActivity(
-            this, 0, intent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
-    }
-*/
 override fun getPreviewData(type: ComplicationType): ComplicationData? {
     return when (type) {
         ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
@@ -118,18 +66,17 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
 }
 
 override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
-    Log.d(TAG, "onComplicationRequest() id: ${request.complicationInstanceId}")
 
     MoonPhaseHelper.updateSun(context = this)
 
-    val prefs = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+    val prefs = preferences.first()
 
-    val isSunrise = prefs.getBoolean(getString(R.string.is_sunrise), false)
-    val ismilitary = prefs.getBoolean(getString(R.string.time_ampm_setting_key), true)
-    val leadingzero = prefs.getBoolean(getString(R.string.time_setting_leading_zero_key), true)
-    val coarseEnabled = prefs.getBoolean(getString(R.string.coarse_enabled), false)
-    var icon = prefs.getInt(getString(R.string.sunrise_sunset_icon), drawable.ic_sunrise_3)
-    var time = prefs.getString(getString(R.string.change_time), "0").toString()
+    val isSunrise = prefs.isSunrise
+    val ismilitary = prefs.isMilitaryTime
+    val leadingzero = prefs.isLeadingZeroTime
+    val coarseEnabled = prefs.coarsePermission
+    var icon = if (isSunrise) drawable.ic_sunrise_3 else drawable.ic_sunset_3
+    var time = prefs.changeTime
 
     val text = if (isSunrise) getString(R.string.sunrise) else getString(R.string.sunset)
     val fmt = if (ismilitary && leadingzero) "HH:mm"
@@ -171,14 +118,6 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
 
 
     }
-}
-
-override fun onComplicationDeactivated(complicationInstanceId: Int) {
-    Log.d(TAG, "onComplicationDeactivated(): $complicationInstanceId")
-}
-
-companion object {
-    private const val TAG = "CompDataSourceService"
 }
 }
 

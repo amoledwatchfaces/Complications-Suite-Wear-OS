@@ -186,7 +186,6 @@
         <item>ZAG</item>
         <item>ZRH</item>
     </string-array>
-
     <string-array name="cities_zone">
         <item>UTC</item>
         <item>Accra (ACC)</item>
@@ -373,7 +372,6 @@
         <item>Zagreb (ZAG)</item>
         <item>Zurich (ZRH)</item>
     </string-array>
-
     <string-array name="zoneids">
         <item>Etc/UTC</item>
         <item>Africa/Accra</item>
@@ -603,5 +601,31 @@
         <item>SHORT_DUAL_UNIT</item>
         <item>SHORT_SINGLE_UNIT</item>
         <item>STOPWATCH</item>
+    </string-array>
+
+
+    <string-array name="locales_short">
+        <item>en</item>
+        <item>cs</item>
+        <item>de</item>
+        <item>el</item>
+        <item>es</item>
+        <item>it</item>
+        <item>pt</item>
+        <item>ro</item>
+        <item>sk</item>
+        <item>zh</item>
+    </string-array>
+    <string-array name="locales_long">
+        <item>English</item>
+        <item>Czech</item>
+        <item>German</item>
+        <item>Greek</item>
+        <item>Spanish</item>
+        <item>Italian</item>
+        <item>Portuguese</item>
+        <item>Romanian</item>
+        <item>Slovak</item>
+        <item>Chinese (Simplified)</item>
     </string-array>
 </resources>

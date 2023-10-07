@@ -17,10 +17,11 @@
 package com.weartools.weekdayutccomp.complication
 
 import android.app.PendingIntent
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.drawable.Icon.createWithResource
 import android.util.Log
-import androidx.preference.PreferenceManager
+import androidx.datastore.core.DataStore
 import androidx.wear.watchface.complications.data.ComplicationData
 import androidx.wear.watchface.complications.data.ComplicationType
 import androidx.wear.watchface.complications.data.LongTextComplicationData
@@ -36,16 +37,19 @@ import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.R.drawable
-import com.weartools.weekdayutccomp.WaterActivity
+import com.weartools.weekdayutccomp.activity.WaterActivity
+import com.weartools.weekdayutccomp.preferences.UserPreferences
+import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class WaterComplicationService : SuspendingComplicationDataSourceService() {
 
-    override fun onComplicationActivated(
-        complicationInstanceId: Int,
-        type: ComplicationType
-    ) {
-        Log.d(TAG, "onComplicationActivated(): $complicationInstanceId")
-    }
+    @Inject
+    lateinit var dataStore: DataStore<UserPreferences>
+    private val preferences by lazy { UserPreferencesRepository(dataStore).getPreferences() }
 
     private fun openScreen(): PendingIntent? {
 
@@ -109,14 +113,11 @@ class WaterComplicationService : SuspendingComplicationDataSourceService() {
 
 override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
 
-    val prefs = PreferenceManager.getDefaultSharedPreferences(applicationContext)
-
-    val waterIntake = prefs.getInt(getString(R.string.water_intake), 0)
-    val waterIntakeGoal = prefs.getFloat(getString(R.string.water_intake_goal), 20.0f)
+    val waterIntake = preferences.first().water
+    val waterIntakeGoal = preferences.first().waterGoal
 
     //Log.d(TAG, "WTI: Update, Intake: $waterIntake")
     //Log.d(TAG, "WTI: Update, Goal: $waterIntakeGoal")
-
 
     when (request.complicationType) {
 
@@ -179,14 +180,6 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
             return null
         }
     }
-}
-
-override fun onComplicationDeactivated(complicationInstanceId: Int) {
-    Log.d(TAG, "onComplicationDeactivated(): $complicationInstanceId")
-}
-
-companion object {
-    private const val TAG = "CompDataSourceService"
 }
 }
 

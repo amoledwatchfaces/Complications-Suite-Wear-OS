@@ -17,24 +17,28 @@
 package com.weartools.weekdayutccomp.complication
 
 import android.app.PendingIntent
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.icu.util.TimeZone
 import android.util.Log
-import androidx.preference.PreferenceManager
+import androidx.datastore.core.DataStore
 import androidx.wear.watchface.complications.data.*
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
-import com.weartools.weekdayutccomp.MainActivity
+import com.weartools.weekdayutccomp.activity.MainActivity
 import com.weartools.weekdayutccomp.R
+import com.weartools.weekdayutccomp.preferences.UserPreferences
+import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class WorldClock1ComplicationService : SuspendingComplicationDataSourceService() {
 
-    override fun onComplicationActivated(
-        complicationInstanceId: Int,
-        type: ComplicationType
-    ) {
-        Log.d(TAG, "onComplicationActivated(): $complicationInstanceId")
-    }
+    @Inject
+    lateinit var dataStore: DataStore<UserPreferences>
+    private val preferences by lazy { UserPreferencesRepository(dataStore).getPreferences() }
 
     private fun openScreen(): PendingIntent? {
 
@@ -79,19 +83,18 @@ class WorldClock1ComplicationService : SuspendingComplicationDataSourceService()
     }
 
 override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
-    Log.d(TAG, "onComplicationRequest() id: ${request.complicationInstanceId}")
 
-    // TODO: TU IDU VARIABILNE
-    val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-    val ismilitary = prefs.getBoolean(getString(R.string.wc_ampm_setting_key), true)
-    val leadingzero = prefs.getBoolean(getString(R.string.wc_setting_leading_zero_key), true)
+    val prefs = preferences.first()
+
+    val ismilitary = prefs.isMilitary
+    val leadingzero = prefs.isLeadingZero
 
     val fmt = if (ismilitary && leadingzero) "HH:mm"
     else if (!ismilitary && !leadingzero) "h:mm a"
     else if (ismilitary) "H:mm"
     else "hh:mm a"
 
-    val city = prefs.getString(getString(R.string.wc_setting_key), "UTC").toString()
+    val city = prefs.city1
     val zonearray = resources.getStringArray(R.array.cities).indexOf(city)
     val timezone = resources.getStringArray(R.array.zoneids)[zonearray]
 
@@ -136,14 +139,6 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
         }
 
     }
-}
-
-override fun onComplicationDeactivated(complicationInstanceId: Int) {
-    Log.d(TAG, "onComplicationDeactivated(): $complicationInstanceId")
-}
-
-companion object {
-    private const val TAG = "WorldClock1"
 }
 }
 

@@ -2,6 +2,9 @@ plugins {
     id ("com.android.application")
     id ("org.jetbrains.kotlin.android")
     id ("kotlin-parcelize")
+    id ("kotlinx-serialization")
+    id ("kotlin-kapt")
+    id ("com.google.dagger.hilt.android")
 }
 
 android {
@@ -12,8 +15,8 @@ android {
         minSdk = 27
         //noinspection OldTargetApi
         targetSdk = 33
-        versionCode = 10000272
-        versionName = "2.7.2"
+        versionCode = 10000273
+        versionName = "2.7.3"
         resourceConfigurations += listOf("en", "cs", "de", "el", "es", "it", "pt", "ro", "sk", "zh")
     }
     bundle {
@@ -46,7 +49,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.3"
     }
     namespace = "com.weartools.weekdayutccomp"
 }
@@ -104,5 +107,14 @@ dependencies {
     implementation ("com.google.android.horologist:horologist-composables:0.2.8")
     implementation ("com.google.android.horologist:horologist-audio-ui:0.2.8")
 
-    implementation ("com.google.code.gson:gson:2.8.8")
+    implementation ("com.google.code.gson:gson:2.9.0")
+    implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+
+    implementation ("com.google.dagger:hilt-android:2.47")
+    kapt ("com.google.dagger:hilt-compiler:2.47")
 }
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
+}
+

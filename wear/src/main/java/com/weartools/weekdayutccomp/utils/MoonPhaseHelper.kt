@@ -14,26 +14,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.weartools.weekdayutccomp
+package com.weartools.weekdayutccomp.utils
 
-import android.content.ComponentName
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.util.Log
-import androidx.preference.PreferenceManager
-import androidx.wear.watchface.complications.datasource.ComplicationDataSourceService
-import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUpdateRequester
-import androidx.work.*
+import androidx.datastore.core.DataStore
+import androidx.work.CoroutineWorker
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.WorkerParameters
+import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.R.drawable
-import com.weartools.weekdayutccomp.R.string
 import com.weartools.weekdayutccomp.complication.SunriseSunsetComplicationService
 import com.weartools.weekdayutccomp.complication.SunriseSunsetRVComplicationService
+import com.weartools.weekdayutccomp.preferences.UserPreferences
+import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
 import org.shredzone.commons.suncalc.SunTimes
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
+
+@AndroidEntryPoint
 class MoonPhaseHelper{
 
+  @AndroidEntryPoint
   companion object {
+
+    @Inject
+    lateinit var dataStore: DataStore<UserPreferences>
+    private val preferences by lazy { UserPreferencesRepository(dataStore).getPreferences() }
 
     private fun scheduleSunriseSunsetWorker(context: Context, scheduleTime: Long) {
       Log.i(TAG, "Enqueuing SunriseSunsetWorker!")
@@ -44,18 +57,19 @@ class MoonPhaseHelper{
       val sunriseSunsetWorkRequest = OneTimeWorkRequestBuilder<SunriseSunsetWorker>()
         .setInitialDelay(delay, TimeUnit.MILLISECONDS)
         .build()
+
       WorkManager
         .getInstance(context)
         .enqueueUniqueWork("scheduleSunriseSunsetWorker", ExistingWorkPolicy.REPLACE, sunriseSunsetWorkRequest)
     }
 
-    fun updateSun(context: Context?){
-      val preferences = PreferenceManager.getDefaultSharedPreferences(context!!)
-      val editor = preferences.edit()
+    suspend fun updateSun(context: Context){
 
-      val lat = preferences.getString(context.getString(string.latitude_value), "0.0").toString()
-      val long = preferences.getString(context.getString(string.longitude_value), "0.0").toString()
-      val coarseEnabled = preferences.getBoolean(context.getString(string.coarse_enabled), false)
+      val prefs = preferences.first()
+
+      val lat = prefs.latitude
+      val long = prefs.longitude
+      val coarseEnabled = prefs.coarsePermission
 
       //Log.d(TAG, "Coarse Location: $coarseEnabled")
       val parameters =
@@ -68,18 +82,16 @@ class MoonPhaseHelper{
       val sunset = parameters.set?.toInstant()?.toEpochMilli()
 
       if (sunrise!! < sunset!!){
-        editor
-          .putString(context.getString(string.change_time),parameters.rise.toString())
-          .putInt(context.getString(string.sunrise_sunset_icon),drawable.ic_sunrise_3)
-          .putBoolean(context.getString(string.is_sunrise), true)
-          .apply()
+        dataStore.updateData { it.copy(
+          changeTime = parameters.rise.toString(),
+          isSunrise = true
+        ) }
         scheduleSunriseSunsetWorker(context, sunrise)
       } else {
-        editor
-          .putString(context.getString(string.change_time),parameters.set.toString())
-          .putInt(context.getString(string.sunrise_sunset_icon),drawable.ic_sunset_3)
-          .putBoolean(context.getString(string.is_sunrise), false)
-          .apply()
+        dataStore.updateData { it.copy(
+          changeTime = parameters.set.toString(),
+          isSunrise = false
+        ) }
         scheduleSunriseSunsetWorker(context, sunset)
       }
     }
@@ -130,15 +142,10 @@ class MoonPhaseHelper{
 
 class SunriseSunsetWorker(private val appContext: Context, workerParams: WorkerParameters) :
   CoroutineWorker(appContext, workerParams) {
-  fun updateComplication(context: Context, cls: Class<out ComplicationDataSourceService>) {
-    val component = ComponentName(context, cls)
-    val req = ComplicationDataSourceUpdateRequester.create(context,component)
-    req.requestUpdateAll()
-  }
   override suspend fun doWork(): Result {
     Log.i(TAG, "Worker running")
-    updateComplication(appContext, SunriseSunsetComplicationService::class.java)
-    updateComplication(appContext, SunriseSunsetRVComplicationService::class.java)
+    appContext.updateComplication(SunriseSunsetComplicationService::class.java)
+    appContext.updateComplication(SunriseSunsetRVComplicationService::class.java)
     return Result.success()
   }
 }

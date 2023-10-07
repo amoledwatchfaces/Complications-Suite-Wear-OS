@@ -20,22 +20,24 @@ import android.app.PendingIntent
 import android.content.Intent
 import android.icu.util.TimeZone
 import android.util.Log
-import androidx.preference.PreferenceManager
+import androidx.datastore.core.DataStore
 import androidx.wear.watchface.complications.data.*
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
-import com.weartools.weekdayutccomp.MainActivity
+import com.weartools.weekdayutccomp.activity.MainActivity
 import com.weartools.weekdayutccomp.R
+import com.weartools.weekdayutccomp.preferences.UserPreferences
+import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class WorldClock2ComplicationService : SuspendingComplicationDataSourceService() {
 
-    override fun onComplicationActivated(
-        complicationInstanceId: Int,
-        type: ComplicationType
-    ) {
-        Log.d(TAG, "onComplicationActivated(): $complicationInstanceId")
-    }
-
+    @Inject
+    lateinit var dataStore: DataStore<UserPreferences>
+    private val preferences by lazy { UserPreferencesRepository(dataStore).getPreferences() }
 
     private fun openScreen(): PendingIntent? {
 
@@ -80,19 +82,18 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
 }
 
 override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
-    Log.d(TAG, "onComplicationRequest() id: ${request.complicationInstanceId}")
 
-    // TODO: TU IDU VARIABILNE
-    val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-    val ismilitary = prefs.getBoolean(getString(R.string.wc_ampm_setting_key), true)
-    val leadingzero = prefs.getBoolean(getString(R.string.wc_setting_leading_zero_key), true)
+    val prefs = preferences.first()
+
+    val ismilitary = prefs.isMilitary
+    val leadingzero = prefs.isLeadingZero
 
     val fmt = if (ismilitary && leadingzero) "HH:mm"
     else if (!ismilitary && !leadingzero) "h:mm a"
     else if (ismilitary) "H:mm"
     else "hh:mm a"
 
-    val city2 = prefs.getString(getString(R.string.wc2_setting_key), "UTC").toString()
+    val city2 = prefs.city2
     val zonearray2 = resources.getStringArray(R.array.cities).indexOf(city2)
     val timezone2 = resources.getStringArray(R.array.zoneids)[zonearray2]
 

@@ -1,8 +1,9 @@
-package com.weartools.weekdayutccomp
+package com.weartools.weekdayutccomp.activity
 
 import android.app.Activity
 import android.os.Bundle
 import android.view.WindowManager
+import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.databinding.FlashlightBinding
 
 

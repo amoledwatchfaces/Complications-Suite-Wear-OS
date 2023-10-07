@@ -22,7 +22,7 @@ import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationToken
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.gms.tasks.OnTokenCanceledListener
-import com.weartools.weekdayutccomp.Pref
+import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.theme.wearColorPalette
 import java.text.DecimalFormat
@@ -34,16 +34,12 @@ fun LocationCard(
     modifier: Modifier = Modifier,
     permissionState: PermissionState,
     fusedLocationClient: FusedLocationProviderClient,
-    pref: Pref,
+    viewModel: MainViewModel,
     context: Context,
     latitude: String,
     longitude: String
 ) {
     val df = DecimalFormat("#.#####")
-    var latitudeText by remember { mutableStateOf("0.0") }
-    var longitudeText by remember { mutableStateOf("0.0") }
-    latitudeText = latitude
-    longitudeText = longitude
 
     Card(
         modifier = Modifier
@@ -62,11 +58,7 @@ fun LocationCard(
                         if (it == null) Toast.makeText(context, R.string.no_location, Toast.LENGTH_SHORT).show()
                         else {
                             Toast.makeText(context, "OK!", Toast.LENGTH_SHORT).show()
-                        pref.setLatitude(it.latitude.toString())
-                        pref.setLongitude(it.longitude.toString())
-                        pref.forceRefresh((0..10).random()) // TO REFRESH COMPLICATIONS ON REFRESH BUTTON CLICK
-                            latitudeText = it.latitude.toString()
-                            longitudeText = it.longitude.toString()
+                            viewModel.setLocation(it.latitude.toString(),it.longitude.toString(),context)
 
                         }
                     }
@@ -83,8 +75,8 @@ fun LocationCard(
 
             Column {
                 Text(stringResource(id = R.string.location), color = Color(0xFFF1F1F1))
-                    Text("Lat: ${ df.format(latitudeText.toDouble())}", color =  wearColorPalette.primary, fontSize = 12.sp)
-                    Text("Long: ${ df.format(longitudeText.toDouble())}", color =  wearColorPalette.primary, fontSize = 12.sp)
+                    Text("Lat: ${ df.format(latitude.toDouble())}", color =  wearColorPalette.primary, fontSize = 12.sp)
+                    Text("Long: ${ df.format(longitude.toDouble())}", color =  wearColorPalette.primary, fontSize = 12.sp)
             }
             Icon(
                 imageVector = Icons.Default.Refresh,

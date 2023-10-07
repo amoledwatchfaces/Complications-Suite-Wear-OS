@@ -23,7 +23,7 @@ import android.util.Log
 import androidx.wear.watchface.complications.data.*
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
-import com.weartools.weekdayutccomp.FlashlightActivity
+import com.weartools.weekdayutccomp.activity.FlashlightActivity
 import com.weartools.weekdayutccomp.R.drawable
 
 class FlashlightComplicationService : SuspendingComplicationDataSourceService() {

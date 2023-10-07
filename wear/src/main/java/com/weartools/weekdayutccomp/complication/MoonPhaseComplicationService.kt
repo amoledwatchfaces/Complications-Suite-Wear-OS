@@ -25,7 +25,6 @@ import android.graphics.drawable.Icon.createWithBitmap
 import android.graphics.drawable.Icon.createWithResource
 import android.util.Log
 import android.widget.Toast
-import androidx.preference.PreferenceManager
 import androidx.wear.watchface.complications.data.ComplicationData
 import androidx.wear.watchface.complications.data.ComplicationType
 import androidx.wear.watchface.complications.data.LongTextComplicationData
@@ -39,10 +38,11 @@ import androidx.wear.watchface.complications.data.SmallImageComplicationData
 import androidx.wear.watchface.complications.data.SmallImageType
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
-import com.weartools.weekdayutccomp.DrawMoonBitmap
-import com.weartools.weekdayutccomp.MoonPhaseHelper
+import com.weartools.weekdayutccomp.utils.DrawMoonBitmap
+import com.weartools.weekdayutccomp.utils.MoonPhaseHelper
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.R.drawable
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.runBlocking
 import org.shredzone.commons.suncalc.MoonIllumination
 import org.shredzone.commons.suncalc.MoonPosition
@@ -50,15 +50,10 @@ import java.math.RoundingMode
 import java.text.DecimalFormat
 
 
+@AndroidEntryPoint
 class MoonPhaseComplicationService : SuspendingComplicationDataSourceService() {
 
-    override fun onComplicationActivated(
-        complicationInstanceId: Int,
-        type: ComplicationType
-    ) {
-        Log.d(TAG, "onComplicationActivated(): $complicationInstanceId")
-        reqPermissionFunction(applicationContext)
-    }
+
 
     /** CHECK LOCATION PERMISSION + CONSIDER LOCATION TOAST */
     private fun reqPermissionFunction(context: Context) {
@@ -240,7 +235,8 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
                             MoonPhaseHelper.getSimpleIcon(phaseName = phaseName,isnorthernHemi))
                     }
                     else {
-                        createWithBitmap(DrawMoonBitmap.getLunarPhaseBitmap(
+                        createWithBitmap(
+                            DrawMoonBitmap.getLunarPhaseBitmap(
                             fraction = fraction,
                             angle = angle,
                             parallacticAngle = parallacticAngle,
@@ -265,7 +261,8 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
                         createWithResource(this,
                             MoonPhaseHelper.getSimpleIcon(phaseName = phaseName,isnorthernHemi))
                     }
-                    else {createWithBitmap(DrawMoonBitmap.getLunarPhaseBitmap(
+                    else {createWithBitmap(
+                        DrawMoonBitmap.getLunarPhaseBitmap(
                         fraction = fraction,
                         angle = angle,
                         parallacticAngle = parallacticAngle,
@@ -285,7 +282,8 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
                         createWithResource(this,
                             MoonPhaseHelper.getSimpleIcon(phaseName = phaseName,isnorthernHemi))
                     }
-                    else {createWithBitmap(DrawMoonBitmap.getLunarPhaseBitmap(
+                    else {createWithBitmap(
+                        DrawMoonBitmap.getLunarPhaseBitmap(
                         fraction = fraction,
                         angle = angle,
                         parallacticAngle = parallacticAngle,
@@ -306,7 +304,8 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
                     createWithResource(this,
                         MoonPhaseHelper.getSimpleIcon(phaseName = phaseName,isnorthernHemi))
                 }
-                else {createWithBitmap(DrawMoonBitmap.getLunarPhaseBitmap(
+                else {createWithBitmap(
+                    DrawMoonBitmap.getLunarPhaseBitmap(
                     fraction = fraction,
                     angle = angle,
                     parallacticAngle = parallacticAngle,

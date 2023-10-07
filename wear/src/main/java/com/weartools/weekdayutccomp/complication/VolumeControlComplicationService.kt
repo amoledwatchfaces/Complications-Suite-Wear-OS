@@ -31,7 +31,7 @@ import androidx.wear.watchface.complications.data.SmallImageType
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
 import com.weartools.weekdayutccomp.R.drawable
-import com.weartools.weekdayutccomp.VolumeActivity
+import com.weartools.weekdayutccomp.activity.VolumeActivity
 
 class VolumeControlComplicationService : SuspendingComplicationDataSourceService() {
 

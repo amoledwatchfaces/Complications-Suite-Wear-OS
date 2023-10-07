@@ -17,26 +17,30 @@
 package com.weartools.weekdayutccomp.complication
 
 import android.app.PendingIntent
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.drawable.Icon.createWithResource
 import android.provider.AlarmClock
 import android.util.Log
-import androidx.preference.PreferenceManager
+import androidx.datastore.core.DataStore
 import androidx.wear.watchface.complications.data.*
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.R.drawable
+import com.weartools.weekdayutccomp.preferences.UserPreferences
+import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
 import java.time.LocalDateTime
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class TimeComplicationService : SuspendingComplicationDataSourceService() {
 
-    override fun onComplicationActivated(
-        complicationInstanceId: Int,
-        type: ComplicationType
-    ) {
-        Log.d(TAG, "onComplicationActivated(): $complicationInstanceId")
-    }
+    @Inject
+    lateinit var dataStore: DataStore<UserPreferences>
+    private val preferences by lazy { UserPreferencesRepository(dataStore).getPreferences() }
 
     private fun openScreen(): PendingIntent? {
 
@@ -90,9 +94,8 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
     val min = LocalDateTime.now().minute
     val progressvariable = hour*60+min.toFloat()
 
-    val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-    val ismilitary = prefs.getBoolean(getString(R.string.time_ampm_setting_key), false)
-    val leadingzero = prefs.getBoolean(getString(R.string.time_setting_leading_zero_key), true)
+    val ismilitary = preferences.first().isMilitaryTime
+    val leadingzero = preferences.first().isLeadingZeroTime
 
     val fmt = if (ismilitary && leadingzero) "HH:mm"
     else if (!ismilitary && !leadingzero) "h:mm"
@@ -144,14 +147,6 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
             null
         }
     }
-}
-
-override fun onComplicationDeactivated(complicationInstanceId: Int) {
-    Log.d(TAG, "onComplicationDeactivated(): $complicationInstanceId")
-}
-
-companion object {
-    private const val TAG = "CompDataSourceService"
 }
 }
 

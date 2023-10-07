@@ -19,20 +19,23 @@ package com.weartools.weekdayutccomp.complication
 import android.app.PendingIntent
 import android.content.Intent
 import android.util.Log
-import androidx.preference.PreferenceManager
+import androidx.datastore.core.DataStore
 import androidx.wear.watchface.complications.data.*
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
 import com.weartools.weekdayutccomp.R
+import com.weartools.weekdayutccomp.preferences.UserPreferences
+import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class DateComplicationService : SuspendingComplicationDataSourceService() {
 
-    override fun onComplicationActivated(
-        complicationInstanceId: Int,
-        type: ComplicationType
-    ) {
-        Log.d(TAG, "onComplicationActivated(): $complicationInstanceId")
-    }
+    @Inject
+    lateinit var dataStore: DataStore<UserPreferences>
+    private val preferences by lazy { UserPreferencesRepository(dataStore).getPreferences() }
 
 private fun openScreen(): PendingIntent? {
 
@@ -71,10 +74,10 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
 override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
     Log.d(TAG, "onComplicationRequest() id: ${request.complicationInstanceId}")
 
-    val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-    val format = prefs.getString(getString(R.string.date_long_text_key), "EEE, d MMM").toString()
-    val text = prefs.getString(getString(R.string.date_short_text_key), "d").toString()
-    val title = prefs.getString(getString(R.string.date_short_title_key), "MMM").toString()
+    val prefs = preferences.first()
+    val format = prefs.longText
+    val text = prefs.shortText
+    val title = prefs.shortTitle
 
     return when (request.complicationType) {
 

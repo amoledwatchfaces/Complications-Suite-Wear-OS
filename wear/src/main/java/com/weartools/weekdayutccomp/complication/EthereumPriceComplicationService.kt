@@ -17,9 +17,10 @@
 package com.weartools.weekdayutccomp.complication
 
 import android.content.ComponentName
+import android.content.ContentValues.TAG
 import android.graphics.drawable.Icon.createWithResource
 import android.util.Log
-import androidx.preference.PreferenceManager
+import androidx.datastore.core.DataStore
 import androidx.wear.watchface.complications.data.ComplicationData
 import androidx.wear.watchface.complications.data.ComplicationType
 import androidx.wear.watchface.complications.data.MonochromaticImage
@@ -30,22 +31,24 @@ import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
-import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.R.drawable
+import com.weartools.weekdayutccomp.preferences.UserPreferences
+import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import java.math.RoundingMode
 import java.net.URL
 import java.text.DecimalFormat
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class EthereumPriceComplicationService : SuspendingComplicationDataSourceService() {
 
-    override fun onComplicationActivated(
-        complicationInstanceId: Int,
-        type: ComplicationType
-    ) {
-        Log.d(TAG, "onComplicationActivated(): $complicationInstanceId")
-    }
+    @Inject
+    lateinit var dataStore: DataStore<UserPreferences>
+    private val preferences by lazy { UserPreferencesRepository(dataStore).getPreferences() }
 
     private suspend fun fetchUrl2(): JsonObject? {
         val url = "https://data-api.binance.vision/api/v3/ticker/24hr?symbol=ETHBUSD"
@@ -87,11 +90,10 @@ class EthereumPriceComplicationService : SuspendingComplicationDataSourceService
         val complicationPendingIntent =
             ComplicationTapBroadcastReceiver.getToggleIntent(context = this, args = args)
 
-        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         val df = DecimalFormat("#.#K").apply { RoundingMode.HALF_UP }
 
         //GET LAST PRICE
-        val lastPrice = preferences.getFloat(getString(R.string.price_2), 0.0F)
+        val lastPrice = preferences.first().priceETH
         val price: Float
         val highPrice: Float
         val lowPrice: Float
@@ -108,7 +110,7 @@ class EthereumPriceComplicationService : SuspendingComplicationDataSourceService
         else if (price <= 0) {"--"}
         else { price.toString() }
 
-        preferences.edit().putFloat(getString(R.string.price_2), price).apply()
+        dataStore.updateData { it.copy(priceETH = price) }
 
         Log.i(TAG, "Ticker: ETHBUSD, Price: $priceString")
 
@@ -139,13 +141,6 @@ class EthereumPriceComplicationService : SuspendingComplicationDataSourceService
             }
 
         }
-    }
-
-    override fun onComplicationDeactivated(complicationInstanceId: Int) {
-        Log.d(TAG, "onComplicationDeactivated(): $complicationInstanceId")
-    }
-    companion object {
-        private const val TAG = "EthereumComplication"
     }
 }
 

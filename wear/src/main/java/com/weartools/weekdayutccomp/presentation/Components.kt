@@ -50,9 +50,8 @@ import androidx.wear.input.RemoteInputIntentHelper
 import androidx.wear.input.wearableExtender
 import androidx.wear.watchface.complications.datasource.ComplicationDataSourceService
 import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUpdateRequester
-import com.weartools.weekdayutccomp.Pref
+import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.R
-import com.weartools.weekdayutccomp.complication.CustomTextComplicationService
 import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme
 import com.weartools.weekdayutccomp.theme.wearColorPalette
 import kotlinx.coroutines.launch
@@ -263,7 +262,7 @@ fun SectionText(modifier: Modifier = Modifier, text: String) {
 fun TextInput(
     row1: String,
     row2: String,
-    pref: Pref,
+    viewModel: MainViewModel,
     context: Context,
     isText: Boolean
 ) {
@@ -274,9 +273,8 @@ fun TextInput(
                 val results: Bundle = RemoteInput.getResultsFromIntent(data)
                 val input: CharSequence? = results.getCharSequence("custom_text")
                 secondaryLabel.value = input.toString()
-                if (isText) {pref.setCustomText(input.toString())}
-                else {pref.setCustomTitle(input.toString())}
-                updateComplication(context, CustomTextComplicationService::class.java)
+                if (isText) {viewModel.setCustomText(input.toString(),context)}
+                else {viewModel.setCustomTitle(input.toString(), context)}
             }
         }
         Chip(

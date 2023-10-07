@@ -1,4 +1,4 @@
-package com.weartools.weekdayutccomp
+package com.weartools.weekdayutccomp.utils
 
 import android.graphics.Bitmap
 import android.graphics.Canvas

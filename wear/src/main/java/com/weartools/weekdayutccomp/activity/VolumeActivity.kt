@@ -1,4 +1,4 @@
-package com.weartools.weekdayutccomp
+package com.weartools.weekdayutccomp.activity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

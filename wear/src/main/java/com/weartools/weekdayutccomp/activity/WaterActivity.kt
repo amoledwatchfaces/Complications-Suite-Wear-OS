@@ -1,7 +1,6 @@
-package com.weartools.weekdayutccomp
+package com.weartools.weekdayutccomp.activity
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -17,6 +16,7 @@ import androidx.compose.material.icons.filled.WaterDrop
 import androidx.compose.material.icons.outlined.RestartAlt
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,6 +31,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModelProvider
 import androidx.wear.compose.material.ButtonDefaults
 import androidx.wear.compose.material.Chip
 import androidx.wear.compose.material.ChipDefaults
@@ -40,71 +41,59 @@ import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.OutlinedCompactButton
 import androidx.wear.compose.material.Stepper
 import androidx.wear.compose.material.Text
-import com.weartools.weekdayutccomp.complication.WaterComplicationService
+import com.weartools.weekdayutccomp.MainViewModel
+import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.presentation.ListItemsWidget
 import com.weartools.weekdayutccomp.theme.wearColorPalette
+import dagger.hilt.android.AndroidEntryPoint
 
-class WaterActivity : ComponentActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
+@AndroidEntryPoint
+class WaterActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         setContent {
             val context = LocalContext.current
-            val pref = Pref(context)
             WaterIntakeTheme(
-                pref,
+                viewModel,
                 context
             )
             }
         }
-
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        if (key == "water_intake" || key == "water_intake_goal"){
-            updateComplication(this, WaterComplicationService::class.java)
-
-        }
-    }
 }
 
 @Composable
 fun WaterIntakeTheme(
-    pref: Pref,
+    viewModel: MainViewModel,
     context: Context,
 ) {
 
-
-    var intake by remember { mutableStateOf(pref.getWater()) }
-    var intakeGoal by remember { mutableStateOf(pref.getWaterGoal()) }
+    val preferences = viewModel.preferences.collectAsState()
+    val intake = preferences.value.water
+    val intakeGoal = preferences.value.waterGoal
     var openGoalSetting by remember{ mutableStateOf(false) }
     val focusRequester1 = remember { FocusRequester() }
 
-    val goalString = context.resources.getString(R.string.water_intake_goal_text)
-    val intakeString = context.resources.getString(R.string.water_intake_text)
-
-    var titleGoal by remember { mutableStateOf("Goal: ${intakeGoal.toInt()}") }
-
+    val titleGoal = "Goal: ${intakeGoal.toInt()}"
     val list = arrayListOf("10","15","20","25","30","35","40","45","50")
-
-    val index=list.indexOf(pref.getWaterGoal().toInt().toString())
-    val currentLocale =if (index!=-1)list[index] else "20"
-    var currentGoalString by remember { mutableStateOf(currentLocale) }
-
 
     LaunchedEffect(Unit){focusRequester1.requestFocus()}
 
     fun onVolumeChangeByScroll(pixels: Float) {
-        intake = when {
+        val newWaterIntake = when {
             pixels > 0 -> (intake + 1).coerceAtMost(intakeGoal.toInt())
             pixels < 0 -> Integer.max(intake - 1, 0)
             else -> {0}
         }
-        pref.setWater(intake)
-        updateComplication(context, WaterComplicationService::class.java)
+        viewModel.setWater(newWaterIntake, context)
     }
 
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
             .onRotaryScrollEvent {
-                    onVolumeChangeByScroll(it.verticalScrollPixels)
+                onVolumeChangeByScroll(it.verticalScrollPixels)
                 true
             }
             .focusRequester(focusRequester1)
@@ -115,10 +104,7 @@ fun WaterIntakeTheme(
         Stepper(
             value = intake,
             onValueChange = {
-                pref.setWater(it)
-                intake = it
-                updateComplication(context, WaterComplicationService::class.java)
-                //Log.d(TAG, "$it")
+                viewModel.setWater(it, context)
             },
             valueProgression = IntProgression.fromClosedRange(0, 100, 1),
             decreaseIcon = { Icon(imageVector = Icons.Default.Remove, contentDescription = "Remove", tint = wearColorPalette.secondaryVariant) },
@@ -141,7 +127,7 @@ fun WaterIntakeTheme(
                 ),
                 label = {
                     Text(
-                        text = "$intakeString: $intake",
+                        text = "${stringResource(id = R.string.water_intake_text)}: $intake",
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -161,16 +147,15 @@ fun WaterIntakeTheme(
                     focusRequester = focusRequester1,
                     titles = stringResource(id = R.string.water_intake_goal_text),
                     items = list,
-                    preValue = currentGoalString ,
+                    preValue = intakeGoal.toInt().toString() ,
                     callback ={
-                        if (it!=-1) {
-                            pref.setWaterGoal(list[it].toFloat())
-                            titleGoal = "$goalString: ${list[it]}"
-                            currentGoalString = list[it]
-                            intakeGoal = list[it].toFloat()
-                            updateComplication(context, WaterComplicationService::class.java)
-                        }else
-                            openGoalSetting=false
+                        if (it == -1) {
+                            openGoalSetting = false
+                            return@ListItemsWidget
+                        }else{
+                            viewModel.setWaterGoal(list[it].toFloat(), context)
+                            openGoalSetting = openGoalSetting.not()
+                        }
                     } )
 
             }
@@ -180,9 +165,7 @@ fun WaterIntakeTheme(
             border = ButtonDefaults.buttonBorder(null, null),
             modifier = Modifier.padding(top = 90.dp),
             onClick = {
-                pref.setWater(0)
-                intake = 0
-                updateComplication(context, WaterComplicationService::class.java)
+                viewModel.setWater(0, context)
             }
         ) {
             Icon(imageVector = Icons.Outlined.RestartAlt, contentDescription = "Reset Counter", tint = Color.Gray)
