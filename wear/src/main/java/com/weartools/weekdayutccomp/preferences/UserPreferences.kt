@@ -51,7 +51,6 @@ data class UserPreferences(
     val coarsePermission: Boolean = false,
     val latitude: String = "0.0",
     val longitude: String = "0.0",
-    val forceRefresh: Int = 0,
 
     // LOCALE
     val locale: String = "en",

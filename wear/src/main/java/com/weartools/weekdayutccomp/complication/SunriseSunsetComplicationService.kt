@@ -16,9 +16,13 @@
  */
 package com.weartools.weekdayutccomp.complication
 
+import android.Manifest
 import android.content.ContentValues.TAG
+import android.content.Context
+import android.content.pm.PackageManager
 import android.graphics.drawable.Icon.createWithResource
 import android.util.Log
+import android.widget.Toast
 import androidx.datastore.core.DataStore
 import androidx.wear.watchface.complications.data.ComplicationData
 import androidx.wear.watchface.complications.data.ComplicationType
@@ -35,6 +39,7 @@ import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
 import com.weartools.weekdayutccomp.utils.MoonPhaseHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
@@ -45,6 +50,26 @@ class SunriseSunsetComplicationService : SuspendingComplicationDataSourceService
     @Inject
     lateinit var dataStore: DataStore<UserPreferences>
     private val preferences by lazy { UserPreferencesRepository(dataStore).getPreferences() }
+
+    override fun onComplicationActivated(
+        complicationInstanceId: Int,
+        type: ComplicationType
+    ) {
+        Log.d(TAG, "onComplicationActivated(): $complicationInstanceId")
+        reqPermissionFunction(applicationContext)
+    }
+
+    private fun reqPermissionFunction(context: Context) {
+
+        runBlocking {
+            val result = context.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
+            if (result == PackageManager.PERMISSION_GRANTED) {
+                Log.i(TAG, "Permission granted")
+            } else {
+                Toast.makeText(context, getString(R.string.enable_permission_toast), Toast.LENGTH_LONG).show()
+            }
+        }
+    }
 
 override fun getPreviewData(type: ComplicationType): ComplicationData? {
     return when (type) {
@@ -67,9 +92,9 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
 
 override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
 
-    MoonPhaseHelper.updateSun(context = this)
-
     val prefs = preferences.first()
+
+    MoonPhaseHelper.updateSun(context = this, prefs, dataStore)
 
     val isSunrise = prefs.isSunrise
     val ismilitary = prefs.isMilitaryTime

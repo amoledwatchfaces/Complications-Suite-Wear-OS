@@ -15,8 +15,8 @@ android {
         minSdk = 27
         //noinspection OldTargetApi
         targetSdk = 33
-        versionCode = 10000273
-        versionName = "2.7.3"
+        versionCode = 10000274
+        versionName = "2.7.4"
         resourceConfigurations += listOf("en", "cs", "de", "el", "es", "it", "pt", "ro", "sk", "zh")
     }
     bundle {
@@ -55,12 +55,12 @@ android {
 }
 
 dependencies {
-    val composeUiVersion = "1.5.1"
-    val composeWearVersion = "1.3.0-alpha05"
+    val composeUiVersion = "1.5.2"
+    val composeWearVersion = "1.3.0-alpha06"
 
     // NEW MOON / SUNRISE / SUNSET COMP
     //request permission
-    implementation ("com.google.accompanist:accompanist-permissions:0.25.0")
+    implementation ("com.google.accompanist:accompanist-permissions:0.28.0")
     //location
     implementation ("com.google.android.gms:play-services-location:21.0.1")
 
@@ -84,7 +84,6 @@ dependencies {
     implementation ("androidx.wear.compose:compose-foundation:$composeWearVersion")
     implementation ("androidx.compose.ui:ui-tooling-preview:$composeUiVersion")
     implementation ("androidx.activity:activity-compose:1.7.2")
-    //implementation ("androidx.compose.material:material-icons-core:$composeUiVersion")
     implementation ("androidx.compose.material:material-icons-extended:$composeUiVersion")
 
     androidTestImplementation ("androidx.compose.ui:ui-test-junit4:$composeUiVersion")

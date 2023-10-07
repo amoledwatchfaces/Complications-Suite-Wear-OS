@@ -5,7 +5,6 @@
     <string name="app_name">Complications Suite</string> <!-- Does not need to be translated, but it's recommended -->
     <string name="app_info">App Info</string>
     <string name="version">Version</string>
-    <string name="version_number" translatable="false">v1.6.2</string>
     <string name="settings">Settings</string>
     <string name="language">Language</string>
 
@@ -14,14 +13,7 @@
     <string name="awf_comp_name" translatable="false">Amoled Logo</string>
     <!-- Crypto Complication -->
     <string name="crypto_name_1" translatable="true">BTC Price $</string>
-    <string name="price_1" translatable="false">0.0</string>
-    <string name="price_1_string" translatable="false">BTC</string>
-    <string name="ticker_1" translatable="false">BTCBUSD</string>
-
     <string name="crypto_name_2" translatable="true">ETH Price $</string>
-    <string name="price_2" translatable="false">0.0</string>
-    <string name="price_2_string" translatable="false">ETH</string>
-    <string name="ticker_2" translatable="false">ETHBUSD</string>
 
     <!-- Flashlight Complication -->
     <string name="flashlight_comp_name">Flashlight</string>
@@ -36,9 +28,6 @@
     <!-- Date Complication Preferences -->
     <string name="date_comp_name">Date</string>
     <string name="date_setting_preference_category_title">Date Complication</string>
-    <string name="date_long_text_key" translatable="false">date_format</string>
-    <string name="date_short_text_key" translatable="false">short_text_format</string>
-    <string name="date_short_title_key" translatable="false">short_title_format</string>
     <string name="date_long_text_format">Long Text Format</string>
     <string name="date_short_text_format">Short Text Format</string>
     <string name="date_short_title_format">Short Title Format</string>
@@ -65,16 +54,12 @@
         <item>Waxing Gibbous</item>
     </array>
 
-    <string name="moon_setting_hemi_key" translatable="false">is_northern</string>
     <string name="moon_setting_hemi_title">Hemisphere</string>
     <string name="moon_setting_hemi_on">Northern</string>
     <string name="moon_setting_hemi_off">Southern</string>
-    <string name="moon_setting_simple_icon_key" translatable="false">is_simple_icon</string>
     <string name="moon_setting_simple_icon_title">Moon Icon</string>
     <string name="moon_setting_simple_icon_on">Simple</string>
     <string name="moon_setting_simple_icon_off">Detailed</string>
-    <string name="key_pref_phase_icon" translatable="false">R.drawable.moon0</string>
-    <string name="key_pref_moon_visibility" translatable="false">0.0</string>
 
     <!-- Pay Complication -->
     <string name="pay_comp_name">Pay</string>
@@ -86,13 +71,11 @@
     <!-- Time Complication Preferences -->
     <string name="time_comp_name">Time</string>
     <string name="time_comp_desc">Current Time</string>
-    <string name="time_setting_leading_zero_key" translatable="false">leading_zero_time</string>
     <string name="time_setting_leading_zero_title">Leading zero</string>
     <string name="time_setting_leading_zero_summary_on" translatable="false">09:00</string>
     <string name="time_setting_leading_zero_summary_off" translatable="false">9:00</string>
 
     <string name="time_ampm_setting_preference_category_title">Time / Sun Complication</string>
-    <string name="time_ampm_setting_key" translatable="false">is_military_time</string>
     <string name="time_ampm_setting_title">Hour Format</string>
     <string name="time_ampm_setting_on">24h</string>
     <string name="time_ampm_setting_off">12h</string>
@@ -101,18 +84,15 @@
     <string name="wc_comp_name_1">World Clock 1</string>
     <string name="wc_comp_name_2">World Clock 2</string>
     <string name="wc_setting_preference_category_title">World Clock Complication</string>
-    <string name="wc_setting_leading_zero_key" translatable="false">leading_zero</string>
     <string name="wc_setting_leading_zero_title">Leading zero</string>
     <string name="wc_setting_leading_zero_summary_on" translatable="false">09:00</string>
     <string name="wc_setting_leading_zero_summary_off" translatable="false">9:00</string>
 
-    <string name="wc_ampm_setting_key" translatable="false">is_military</string>
     <string name="wc_ampm_setting_title">Hour Format</string>
     <string name="wc_ampm_setting_on">24h</string>
     <string name="wc_ampm_setting_off">12h</string>
 
-    <string name="wc_setting_key" translatable="false">citiesid</string>
-    <string name="wc2_setting_key" translatable="false">citiesid2</string>
+
     <string name="wc_setting_title">Timezone 1 ID</string>
     <string name="wc2_setting_title">Timezone 2 ID</string>
 
@@ -121,7 +101,6 @@
     <string name="woy_complication_text">Week</string>
     <string name="woy_complication_description">Week of Year</string>
     <string name="woy_setting_preference_category_title">Week of Year Complication</string>
-    <string name="woy_setting_key" translatable="false">is_iso_week</string>
     <string name="woy_setting_title">Format</string>
     <string name="woy_setting_on" translatable="false">ISO</string>
     <string name="woy_setting_off" translatable="false">US</string>
@@ -129,17 +108,10 @@
     <!-- Custom Text + Title -->
     <string name="custom_text_comp_name">Custom Text</string>
     <string name="custom_text_comp_name_category">Custom Text Complication</string>
-    <string name="custom_text" translatable="false">custom_text</string>
-    <string name="custom_title" translatable="false">custom_title</string>
+
     <!--Custom Text + Title 2-->
     <string name="custom_text_p1">Text</string>
     <string name="custom_title_p1">Title</string>
-
-    <string name="latitude_value" translatable="false">latitude_value</string>
-    <string name="longitude_value" translatable="false">longitude_value</string>
-    <!--<string name="altitude_value" translatable="false">altitude_value</string>-->
-    <string name="coarse_enabled" translatable="false">coarse_enabled</string>
-    <string name="force_refresh" translatable="false">force_refresh</string>
 
     <!--translate-->
     <string name="coarse_location_toggle_title">Coarse Location</string>
@@ -147,10 +119,6 @@
     <string name="coarse_secondary_disabled">Disabled</string>
     <string name="coarse_toggle_description">Coarse Location Permission Toggle</string>
 
-    <!-- Sunrise / Sunset -->
-    <string name="change_time" translatable="false">change_time</string>
-    <string name="sunrise_sunset_icon" translatable="false">R.drawable.ic_sunrise</string>
-    <string name="is_sunrise" translatable="false">is_sunrise</string>
     <!--translate-->
     <string name="sunrise_sunset_comp_name">Sunrise &amp; Sunset</string>
     <string name="sunrise_sunset_countdown_comp_name">Sunrise &amp; Sunset Countdown</string>
@@ -164,7 +132,6 @@
     <string name="checking">Checking location…</string>
     <string name="no_location">Cannot get location. Check GPS</string>
 
-    <string name="time_diff_style" translatable="false">time_diff_style</string>
     <string name="countdown_style">Countdown Format</string>
     <string name="countdown_style_style">Format</string>
     <string name="e_g_">e.g.</string>
@@ -180,11 +147,9 @@
     <!--Date Countdown-->
     <string name="date_countdown_comp_name">Countdown to date</string>
     <string name="countdown_text">Time left</string>
-    <string name="date_picked" translatable="false">date_picked</string>
 
     <!--NOTIFICATIONS-->
     <string name="notification_permission_info">Some complications need to show toast messages on Android 13+. App will ask for permission to show them.</string>
-    <string name="notification_permission" translatable="false">notification_permission</string>
 
     <!--VOLUME-->
     <string name="volume_comp_name">Volume Control</string>
@@ -196,9 +161,6 @@
     <string name="water_comp_name">Water intake</string>
     <string name="water_intake_text">Intake</string>
     <string name="water_intake_goal_text">Goal</string>
-
-    <string name="water_intake" translatable="false">water_intake</string>
-    <string name="water_intake_goal" translatable="false">water_intake_goal</string>
 
     <!--Time zone-->
     <string name="time_zone_comp_name">Time zone</string>

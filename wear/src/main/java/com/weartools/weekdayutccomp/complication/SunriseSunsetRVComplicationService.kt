@@ -17,12 +17,13 @@
 package com.weartools.weekdayutccomp.complication
 
 import android.Manifest
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.drawable.Icon.createWithResource
 import android.util.Log
 import android.widget.Toast
-import androidx.preference.PreferenceManager
+import androidx.datastore.core.DataStore
 import androidx.wear.watchface.complications.data.ComplicationData
 import androidx.wear.watchface.complications.data.ComplicationType
 import androidx.wear.watchface.complications.data.CountDownTimeReference
@@ -35,14 +36,24 @@ import androidx.wear.watchface.complications.data.TimeDifferenceComplicationText
 import androidx.wear.watchface.complications.data.TimeDifferenceStyle
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
-import com.weartools.weekdayutccomp.utils.MoonPhaseHelper
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.R.drawable
+import com.weartools.weekdayutccomp.preferences.UserPreferences
+import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
+import com.weartools.weekdayutccomp.utils.MoonPhaseHelper
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.shredzone.commons.suncalc.SunTimes
 import java.time.ZonedDateTime
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class SunriseSunsetRVComplicationService : SuspendingComplicationDataSourceService() {
+
+    @Inject
+    lateinit var dataStore: DataStore<UserPreferences>
+    private val preferences by lazy { UserPreferencesRepository(dataStore).getPreferences() }
 
     override fun onComplicationActivated(
         complicationInstanceId: Int,
@@ -63,45 +74,6 @@ class SunriseSunsetRVComplicationService : SuspendingComplicationDataSourceServi
             }
         }
     }
-/*
-    private fun postNotification() {
-
-        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-        val CHANNEL_ID = BuildConfig.APPLICATION_ID + "_SUN_2"
-        val CHANNEL_NAME = BuildConfig.APPLICATION_ID + "_sunrise_sunset_rv_notification"
-
-        var mChannel = notificationManager.getNotificationChannel(CHANNEL_ID)
-        if (mChannel == null) {
-            mChannel = NotificationChannel(
-                CHANNEL_ID,
-                CHANNEL_NAME,
-                NotificationManager.IMPORTANCE_HIGH
-            )
-            notificationManager.createNotificationChannel(mChannel)
-        }
-        val builder: NotificationCompat.Builder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(drawable.ic_location_not_available)
-            .setContentTitle(getString(R.string.location_notification))
-            .setContentText(getString(R.string.location_notification_desc))
-            .addAction(drawable.ic_launch, getString(R.string.notification_action),
-                openScreen())
-            .setAutoCancel(false)
-
-        val notification: Notification = builder.build()
-        notificationManager.notify(1000003, notification)
-    }
-
-    private fun openScreen(): PendingIntent? {
-        val intent = Intent(this, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
-
-        return PendingIntent.getActivity(
-            this, 0, intent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
-    }
-*/
 
 override fun getPreviewData(type: ComplicationType): ComplicationData? {
     return when (type) {
@@ -135,15 +107,16 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
 
 override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
 
-    MoonPhaseHelper.updateSun(context = this)
-    val prefs = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+    val prefs = preferences.first()
+    MoonPhaseHelper.updateSun(context = this, prefs, dataStore)
 
-    val lat = prefs.getString(getString(R.string.latitude_value), "0.0").toString()
-    val long = prefs.getString(getString(R.string.longitude_value), "0.0").toString()
-    val timeDiffStyle = prefs.getString(getString(R.string.time_diff_style), "SHORT_DUAL_UNIT").toString()
-    val coarseEnabled = prefs.getBoolean(getString(R.string.coarse_enabled), false)
-    var icon = prefs.getInt(getString(R.string.sunrise_sunset_icon), drawable.ic_sunrise_3)
-    val time = prefs.getString(getString(R.string.change_time), "0").toString()
+    val isSunrise = prefs.isSunrise
+    val lat = prefs.latitude
+    val long = prefs.longitude
+    val timeDiffStyle = prefs.timeDiffStyle
+    val coarseEnabled = prefs.coarsePermission
+    var icon = if (isSunrise) drawable.ic_sunrise_3 else drawable.ic_sunset_3
+    val time = prefs.changeTime
 
     if (time=="0" || !coarseEnabled) { icon = drawable.ic_location_not_available }
     val timeInstance = ZonedDateTime.parse(time).toInstant()
@@ -178,7 +151,6 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
 
         }
         ComplicationType.LONG_TEXT -> {
-            val isSunrise = prefs.getBoolean(getString(R.string.is_sunrise), false)
             return LongTextComplicationData.Builder(
                 text = if (coarseEnabled)
                     TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.valueOf(timeDiffStyle), CountDownTimeReference(timeInstance))
@@ -196,7 +168,6 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
                 .build()
         }
         ComplicationType.SHORT_TEXT -> {
-            val isSunrise = prefs.getBoolean(getString(R.string.is_sunrise), false)
             return ShortTextComplicationData.Builder(
                 text = if (coarseEnabled)
                     TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.valueOf(timeDiffStyle), CountDownTimeReference(timeInstance))
@@ -220,14 +191,6 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
             return null
         }
     }
-}
-
-override fun onComplicationDeactivated(complicationInstanceId: Int) {
-    Log.d(TAG, "onComplicationDeactivated(): $complicationInstanceId")
-}
-
-companion object {
-    private const val TAG = "CompDataSourceService"
 }
 }
 

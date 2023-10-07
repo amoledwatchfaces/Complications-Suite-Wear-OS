@@ -30,23 +30,13 @@ import com.weartools.weekdayutccomp.R.drawable
 import com.weartools.weekdayutccomp.complication.SunriseSunsetComplicationService
 import com.weartools.weekdayutccomp.complication.SunriseSunsetRVComplicationService
 import com.weartools.weekdayutccomp.preferences.UserPreferences
-import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
-import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.first
 import org.shredzone.commons.suncalc.SunTimes
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 
 
-@AndroidEntryPoint
 class MoonPhaseHelper{
 
-  @AndroidEntryPoint
   companion object {
-
-    @Inject
-    lateinit var dataStore: DataStore<UserPreferences>
-    private val preferences by lazy { UserPreferencesRepository(dataStore).getPreferences() }
 
     private fun scheduleSunriseSunsetWorker(context: Context, scheduleTime: Long) {
       Log.i(TAG, "Enqueuing SunriseSunsetWorker!")
@@ -63,9 +53,7 @@ class MoonPhaseHelper{
         .enqueueUniqueWork("scheduleSunriseSunsetWorker", ExistingWorkPolicy.REPLACE, sunriseSunsetWorkRequest)
     }
 
-    suspend fun updateSun(context: Context){
-
-      val prefs = preferences.first()
+    suspend fun updateSun(context: Context, prefs: UserPreferences, dataStore: DataStore<UserPreferences>){
 
       val lat = prefs.latitude
       val long = prefs.longitude

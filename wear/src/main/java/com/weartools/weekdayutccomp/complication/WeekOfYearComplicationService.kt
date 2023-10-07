@@ -17,30 +17,40 @@
 package com.weartools.weekdayutccomp.complication
 
 import android.app.PendingIntent
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.drawable.Icon.createWithResource
 import android.util.Log
-import androidx.preference.PreferenceManager
-import androidx.wear.watchface.complications.data.*
+import androidx.datastore.core.DataStore
+import androidx.wear.watchface.complications.data.ComplicationData
+import androidx.wear.watchface.complications.data.ComplicationType
+import androidx.wear.watchface.complications.data.LongTextComplicationData
+import androidx.wear.watchface.complications.data.MonochromaticImage
+import androidx.wear.watchface.complications.data.PlainComplicationText
+import androidx.wear.watchface.complications.data.RangedValueComplicationData
+import androidx.wear.watchface.complications.data.ShortTextComplicationData
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.R.drawable
+import com.weartools.weekdayutccomp.preferences.UserPreferences
+import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeFormatterBuilder
 import java.time.temporal.IsoFields
 import java.time.temporal.WeekFields
-import java.util.*
+import java.util.Locale
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class WeekOfYearComplicationService : SuspendingComplicationDataSourceService() {
 
-    override fun onComplicationActivated(
-        complicationInstanceId: Int,
-        type: ComplicationType
-    ) {
-        Log.d(TAG, "onComplicationActivated(): $complicationInstanceId")
-    }
+    @Inject
+    lateinit var dataStore: DataStore<UserPreferences>
+    private val preferences by lazy { UserPreferencesRepository(dataStore).getPreferences() }
 
 private fun openScreen(): PendingIntent? {
 
@@ -111,8 +121,7 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
 override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
     Log.d(TAG, "onComplicationRequest() id: ${request.complicationInstanceId}")
 
-    val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-    val isiso = prefs.getBoolean(getString(R.string.woy_setting_key), true)
+    val isiso = preferences.first().isISO
 
     // TODO: TU IDU VARIABILNE
     val date: LocalDate = LocalDate.now()
@@ -183,14 +192,6 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
             null
         }
     }
-}
-
-override fun onComplicationDeactivated(complicationInstanceId: Int) {
-    Log.d(TAG, "onComplicationDeactivated(): $complicationInstanceId")
-}
-
-companion object {
-    private const val TAG = "CompDataSourceService"
 }
 }
 

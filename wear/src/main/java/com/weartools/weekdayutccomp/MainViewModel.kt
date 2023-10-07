@@ -6,7 +6,17 @@ import androidx.core.os.LocaleListCompat
 import androidx.datastore.core.DataStore
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.weartools.weekdayutccomp.complication.*
+import com.weartools.weekdayutccomp.complication.CustomTextComplicationService
+import com.weartools.weekdayutccomp.complication.DateComplicationService
+import com.weartools.weekdayutccomp.complication.DateCountdownComplicationService
+import com.weartools.weekdayutccomp.complication.MoonPhaseComplicationService
+import com.weartools.weekdayutccomp.complication.SunriseSunsetComplicationService
+import com.weartools.weekdayutccomp.complication.SunriseSunsetRVComplicationService
+import com.weartools.weekdayutccomp.complication.TimeComplicationService
+import com.weartools.weekdayutccomp.complication.WaterComplicationService
+import com.weartools.weekdayutccomp.complication.WeekOfYearComplicationService
+import com.weartools.weekdayutccomp.complication.WorldClock1ComplicationService
+import com.weartools.weekdayutccomp.complication.WorldClock2ComplicationService
 import com.weartools.weekdayutccomp.preferences.UserPreferences
 import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
 import com.weartools.weekdayutccomp.utils.updateComplication
@@ -30,6 +40,16 @@ class MainViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(),
             initialValue = UserPreferences()
         )
+/*
+        .catch { exception ->
+            if (exception is IOException) {
+                Log.e(TAG, "Error reading sort order preferences.", exception)
+                emit(UserPreferences.getDefaultInstance())
+            } else {
+                throw exception
+            }
+        }
+ */
 
     fun changeLocale(s: String) {
         viewModelScope.launch {
