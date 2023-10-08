@@ -16,10 +16,6 @@ local.properties
 /mobile/
 
 # Project exclude paths
-/mobile/release/
 /wear/release/
-/mobile/build/
 /wear/build/
-/mobile/build/release
-/mobile/build/intermediates/javac/debug/classes/
-/mobile/
+/mobile
