@@ -93,15 +93,15 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
 override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
 
     val prefs = preferences.first()
-
-    MoonPhaseHelper.updateSun(context = this, prefs, dataStore)
-
-    val isSunrise = prefs.isSunrise
     val ismilitary = prefs.isMilitaryTime
     val leadingzero = prefs.isLeadingZeroTime
     val coarseEnabled = prefs.coarsePermission
+
+    val mph = MoonPhaseHelper.updateSun(context = this, prefs, dataStore)
+
+    var time = mph.changeTime
+    val isSunrise = mph.isSunrise
     var icon = if (isSunrise) drawable.ic_sunrise_3 else drawable.ic_sunset_3
-    var time = prefs.changeTime
 
     val text = if (isSunrise) getString(R.string.sunrise) else getString(R.string.sunset)
     val fmt = if (ismilitary && leadingzero) "HH:mm"

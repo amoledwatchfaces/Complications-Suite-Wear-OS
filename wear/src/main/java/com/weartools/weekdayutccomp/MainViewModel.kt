@@ -1,11 +1,21 @@
 package com.weartools.weekdayutccomp
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.location.Address
+import android.location.Geocoder
+import android.os.Build
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import androidx.datastore.core.DataStore
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.Priority
+import com.google.android.gms.tasks.CancellationToken
+import com.google.android.gms.tasks.CancellationTokenSource
+import com.google.android.gms.tasks.OnTokenCanceledListener
 import com.weartools.weekdayutccomp.complication.CustomTextComplicationService
 import com.weartools.weekdayutccomp.complication.DateComplicationService
 import com.weartools.weekdayutccomp.complication.DateCountdownComplicationService
@@ -19,19 +29,28 @@ import com.weartools.weekdayutccomp.complication.WorldClock1ComplicationService
 import com.weartools.weekdayutccomp.complication.WorldClock2ComplicationService
 import com.weartools.weekdayutccomp.preferences.UserPreferences
 import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
+import com.weartools.weekdayutccomp.utils.AddressDataModel
+import com.weartools.weekdayutccomp.utils.AddressDataModelSuccessBlock
 import com.weartools.weekdayutccomp.utils.updateComplication
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
+    private val locationClient: FusedLocationProviderClient,
     repository: UserPreferencesRepository,
     private val dataStore: DataStore<UserPreferences>
 ) : ViewModel() {
+
+    private val loaderStateMutableStateFlow = MutableStateFlow(value = false)
+    val loaderStateStateFlow: StateFlow<Boolean> = loaderStateMutableStateFlow.asStateFlow()
 
     val preferences: StateFlow<UserPreferences> = repository
         .getPreferences()
@@ -50,6 +69,63 @@ class MainViewModel @Inject constructor(
             }
         }
  */
+@SuppressLint("MissingPermission") // TODO: Permission check in Composable
+fun getLocation(context: Context){
+        loaderStateMutableStateFlow.value = true
+        Toast.makeText(context, R.string.checking, Toast.LENGTH_SHORT).show()
+        locationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, object : CancellationToken() {
+            override fun onCanceledRequested(p0: OnTokenCanceledListener) = CancellationTokenSource().token
+            override fun isCancellationRequested() = false
+        })
+            .addOnSuccessListener { location ->
+                if (location == null) Toast.makeText(context, R.string.no_location, Toast.LENGTH_SHORT).show()
+                else {
+                    setLocation(location.latitude, location.longitude,context)
+                    getAddressFromLocation(context, location.latitude, location.longitude)
+                    { addressDataModel ->
+                        viewModelScope.launch {
+                            dataStore.updateData { it.copy(locationName = addressDataModel?.cityName.toString()) }
+                        }
+
+                    }
+                }
+                loaderStateMutableStateFlow.value = false
+            }
+    }
+
+    private fun getAddressFromLocation(
+        context: Context,
+        latitude: Double,
+        longitude: Double,
+        addressDataModelSuccessBlock: AddressDataModelSuccessBlock
+    ) {
+        Geocoder(context, Locale.ENGLISH).apply {
+            try {
+                if (Build.VERSION.SDK_INT >= 33)
+                    getFromLocation(latitude, longitude, 1) { addresses ->
+                        addresses.takeIf { it.isNotEmpty() } ?: return@getFromLocation
+                        addressDataModelSuccessBlock(this@MainViewModel getAddressDataFrom addresses.firstOrNull()) }
+                else
+                    @Suppress("DEPRECATION")
+                    getFromLocation(latitude, longitude, 1)?.let { addresses ->
+                        addresses.takeIf { it.isNotEmpty() } ?: return@let
+                        addressDataModelSuccessBlock(this@MainViewModel getAddressDataFrom addresses.firstOrNull()) }
+            } catch (e: Exception) {
+                addressDataModelSuccessBlock(
+                    null
+                )
+            }
+        }
+    }
+    private infix fun getAddressDataFrom(address: Address?) =
+        if (address != null)
+            AddressDataModel(
+                cityName = if (address.locality != null) address.locality
+                else if (address.subLocality != null) address.subLocality
+                else if (address.subAdminArea != null) address.subAdminArea
+                else "?"
+            )
+        else null
 
     fun changeLocale(s: String) {
         viewModelScope.launch {
@@ -83,14 +159,12 @@ class MainViewModel @Inject constructor(
     fun setCoarsePermission(value: Boolean) { viewModelScope.launch {
         dataStore.updateData { it.copy(coarsePermission = value) } }
     }
-    fun setLocation(lat: String, lon: String, context: Context) { viewModelScope.launch {
+    fun setLocation(lat: Double, lon: Double, context: Context) { viewModelScope.launch {
         dataStore.updateData { it.copy(latitude = lat, longitude = lon) }
         context.updateComplication(SunriseSunsetComplicationService::class.java)
         context.updateComplication(SunriseSunsetRVComplicationService::class.java)
         context.updateComplication(MoonPhaseComplicationService::class.java)
-
-    }
-    }
+    }}
     fun setDateLongTextFormat(value: String, context: Context) { viewModelScope.launch {
         dataStore.updateData { it.copy(longText = value) } }
         context.updateComplication(DateComplicationService::class.java)

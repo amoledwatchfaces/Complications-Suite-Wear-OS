@@ -15,9 +15,7 @@
  */
 package com.weartools.weekdayutccomp.presentation
 
-import android.annotation.SuppressLint
 import android.os.Build
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.gestures.animateScrollBy
@@ -65,11 +63,6 @@ import androidx.wear.compose.material.dialog.Dialog
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.Priority
-import com.google.android.gms.tasks.CancellationToken
-import com.google.android.gms.tasks.CancellationTokenSource
-import com.google.android.gms.tasks.OnTokenCanceledListener
 import com.weartools.weekdayutccomp.BuildConfig
 import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.R
@@ -78,19 +71,18 @@ import com.weartools.weekdayutccomp.utils.openPlayStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@SuppressLint("MissingPermission")
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun ComplicationsSuiteScreen(
     listState: ScalingLazyListState = rememberScalingLazyListState(),
     focusRequester: FocusRequester,
     coroutineScope: CoroutineScope,
-    fusedLocationClient: FusedLocationProviderClient,
     viewModel: MainViewModel
 ) {
     val context = LocalContext.current
     val preferences = viewModel.preferences.collectAsState()
     val coarseEnabled = preferences.value.coarsePermission
+    val loaderState by viewModel.loaderStateStateFlow.collectAsState()
 
     AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(preferences.value.locale))
 
@@ -104,23 +96,11 @@ fun ComplicationsSuiteScreen(
     val localesLongList = stringArrayResource(id = R.array.locales_long).toList()
 
     val permissionStateNotifications = rememberPermissionState(permission = "android.permission.POST_NOTIFICATIONS")
-    val permissionState = rememberPermissionState(permission = "android.permission.ACCESS_COARSE_LOCATION", onPermissionResult = { granted ->
-            if (granted) {
-                viewModel.setCoarsePermission(true) //TODO: Testing permission here instead of in OnSuccessListener
-                Toast.makeText(context, R.string.checking, Toast.LENGTH_SHORT).show()
-                fusedLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, object : CancellationToken() {
-                    override fun onCanceledRequested(p0: OnTokenCanceledListener) = CancellationTokenSource().token
-                    override fun isCancellationRequested() = false
-                })
-                    .addOnSuccessListener {
-                        if (it == null) Toast.makeText(context, R.string.no_location, Toast.LENGTH_SHORT).show()
-                        else {
-                            Toast.makeText(context, "OK!", Toast.LENGTH_SHORT).show()
-                    } }
-            }
-            else {
-                viewModel.setCoarsePermission(false)
-            }
+    val permissionState = rememberPermissionState(
+        permission = "android.permission.ACCESS_COARSE_LOCATION",
+        onPermissionResult = {
+            viewModel.setCoarsePermission(it)
+            viewModel.getLocation(context)
         })
 
 
@@ -168,8 +148,6 @@ fun ComplicationsSuiteScreen(
                 },
             )
         }
-
-
 
         item {
             DialogChip(
@@ -232,7 +210,7 @@ fun ComplicationsSuiteScreen(
             )
         }
 
-        if (preferences.value.isSimpleIcon || !coarseEnabled)
+        if (preferences.value.isSimpleIcon || !permissionState.status.isGranted)
         {
             item {
                 ToggleChip(
@@ -251,32 +229,28 @@ fun ComplicationsSuiteScreen(
         item {
             LocationToggle(
                 checked = coarseEnabled,
-                onCheckedChange = {
-                    if (permissionState.status.isGranted && coarseEnabled) {
-                        viewModel.setCoarsePermission(false)
-                        viewModel.setLocation("0.0","0.0",context)
+                onCheckedChange = { enabled ->
+                    if (enabled){
+                        if (permissionState.status.isGranted){
+                            viewModel.setCoarsePermission(true)
+                            viewModel.getLocation(context)
+                        }
+                        else {permissionState.launchPermissionRequest()}
                     }
-                    else if (permissionState.status.isGranted && !coarseEnabled) {
-                    viewModel.setCoarsePermission(true)
-
-                    Toast.makeText(context, R.string.checking, Toast.LENGTH_SHORT).show()
-                        fusedLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, object : CancellationToken() {
-                            override fun onCanceledRequested(p0: OnTokenCanceledListener) = CancellationTokenSource().token
-                            override fun isCancellationRequested() = false
-                        })
-                            .addOnSuccessListener {
-                                if (it == null) Toast.makeText(context, R.string.no_location, Toast.LENGTH_SHORT).show()
-                                else {
-                                    Toast.makeText(context, "OK!", Toast.LENGTH_SHORT).show()
-                                    viewModel.setLocation(it.latitude.toString(),it.longitude.toString(),context)
-                                }
-                            }
-                }
-                    else {permissionState.launchPermissionRequest()}
+                    else {
+                        viewModel.setCoarsePermission(false)
+                        viewModel.setLocation(0.0,0.0,context)
+                    }
                })
         }
-        if (coarseEnabled) {
-            item { LocationCard(latitude = preferences.value.latitude, longitude = preferences.value.longitude, permissionState = permissionState, fusedLocationClient = fusedLocationClient, viewModel = viewModel, context = context) }
+        if (permissionState.status.isGranted) {
+            item { LocationCard(
+                permissionState = permissionState,
+                viewModel = viewModel,
+                context = context,
+                locationName = preferences.value.locationName,
+                enabled = coarseEnabled
+            ) }
         }
 
         // TIME COMPLICATION PREFERENCE CATEGORY
@@ -419,6 +393,12 @@ fun ComplicationsSuiteScreen(
 
 
     }
+
+    if (loaderState) {
+        LoaderBox()
+    }
+
+
     if (isTImeZOnClick || isTImeZOnClick2) {
         val title = if (isTImeZOnClick) stringResource(id = R.string.wc_setting_title) else stringResource(id = R.string.wc2_setting_title)
         val prValue = if (isTImeZOnClick) listcity[listcityID.indexOf(preferences.value.city1)]

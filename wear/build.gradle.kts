@@ -15,8 +15,8 @@ android {
         minSdk = 27
         //noinspection OldTargetApi
         targetSdk = 33
-        versionCode = 10000274
-        versionName = "2.7.4"
+        versionCode = 10000275
+        versionName = "2.7.5"
         resourceConfigurations += listOf("en", "cs", "de", "el", "es", "it", "pt", "ro", "sk", "zh")
     }
     bundle {
@@ -109,6 +109,8 @@ dependencies {
     implementation ("com.google.code.gson:gson:2.9.0")
     implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
 
+    // HILT
+    implementation ("androidx.hilt:hilt-navigation-compose:1.0.0")
     implementation ("com.google.dagger:hilt-android:2.47")
     kapt ("com.google.dagger:hilt-compiler:2.47")
 }

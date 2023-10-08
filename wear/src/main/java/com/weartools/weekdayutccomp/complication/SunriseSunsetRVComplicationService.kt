@@ -108,15 +108,16 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
 override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
 
     val prefs = preferences.first()
-    MoonPhaseHelper.updateSun(context = this, prefs, dataStore)
-
-    val isSunrise = prefs.isSunrise
     val lat = prefs.latitude
     val long = prefs.longitude
     val timeDiffStyle = prefs.timeDiffStyle
     val coarseEnabled = prefs.coarsePermission
+
+    val mph = MoonPhaseHelper.updateSun(context = this, prefs, dataStore)
+
+    val time = mph.changeTime
+    val isSunrise = mph.isSunrise
     var icon = if (isSunrise) drawable.ic_sunrise_3 else drawable.ic_sunset_3
-    val time = prefs.changeTime
 
     if (time=="0" || !coarseEnabled) { icon = drawable.ic_location_not_available }
     val timeInstance = ZonedDateTime.parse(time).toInstant()
@@ -124,7 +125,7 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
     when (request.complicationType) {
         ComplicationType.RANGED_VALUE -> {
 
-            val times = SunTimes.compute().at(lat.toDouble(),long.toDouble()).today().execute()
+            val times = SunTimes.compute().at(lat,long).today().execute()
             val rise = times.rise?.toInstant()?.toEpochMilli()?.toFloat() ?: 0F
             val set = times.set?.toInstant()?.toEpochMilli()?.toFloat() ?: 0F
 

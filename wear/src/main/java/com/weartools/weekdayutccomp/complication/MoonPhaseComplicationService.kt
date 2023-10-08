@@ -153,8 +153,8 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
         val simpleIcon = prefs.isSimpleIcon
         val isnorthernHemi = prefs.isHemisphere
 
-        val lat = prefs.latitude.toDouble()
-        val long = prefs.longitude.toDouble()
+        val lat = prefs.latitude
+        val long = prefs.longitude
 
         /**
          * CALCULATE MOON

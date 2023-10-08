@@ -49,8 +49,9 @@ data class UserPreferences(
 
     // LOCATION
     val coarsePermission: Boolean = false,
-    val latitude: String = "0.0",
-    val longitude: String = "0.0",
+    val latitude: Double = 0.0,
+    val longitude: Double = 0.0,
+    val locationName: String = "No location",
 
     // LOCALE
     val locale: String = "en",

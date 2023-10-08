@@ -53,34 +53,40 @@ class MoonPhaseHelper{
         .enqueueUniqueWork("scheduleSunriseSunsetWorker", ExistingWorkPolicy.REPLACE, sunriseSunsetWorkRequest)
     }
 
-    suspend fun updateSun(context: Context, prefs: UserPreferences, dataStore: DataStore<UserPreferences>){
+    suspend fun updateSun(context: Context, prefs: UserPreferences, dataStore: DataStore<UserPreferences>): SunriseSunset{
 
       val lat = prefs.latitude
       val long = prefs.longitude
       val coarseEnabled = prefs.coarsePermission
 
-      //Log.d(TAG, "Coarse Location: $coarseEnabled")
+      Log.d(TAG, "MPH Coarse Location: $coarseEnabled")
+      Log.d(TAG, "MPH lat: $lat lon: $long")
       val parameters =
               if (coarseEnabled) { SunTimes.compute()
-                .at(lat.toDouble(),long.toDouble()).now().execute()
+                .at(lat,long).now().execute()
               }
               else { SunTimes.compute().now().execute()}
 
-      val sunrise = parameters.rise?.toInstant()?.toEpochMilli()
-      val sunset = parameters.set?.toInstant()?.toEpochMilli()
+      val sunrise = parameters.rise
+      val sunset = parameters.set
 
       if (sunrise!! < sunset!!){
         dataStore.updateData { it.copy(
           changeTime = parameters.rise.toString(),
           isSunrise = true
         ) }
-        scheduleSunriseSunsetWorker(context, sunrise)
+        scheduleSunriseSunsetWorker(context, sunrise.toInstant().toEpochMilli())
+        return SunriseSunset(true, parameters.rise.toString() )
+
+
+
       } else {
         dataStore.updateData { it.copy(
           changeTime = parameters.set.toString(),
           isSunrise = false
         ) }
-        scheduleSunriseSunsetWorker(context, sunset)
+        scheduleSunriseSunsetWorker(context, sunset.toInstant().toEpochMilli())
+        return SunriseSunset(false, parameters.set.toString() )
       }
     }
 

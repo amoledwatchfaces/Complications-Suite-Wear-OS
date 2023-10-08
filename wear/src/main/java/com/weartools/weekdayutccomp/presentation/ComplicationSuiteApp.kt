@@ -7,19 +7,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
 import androidx.wear.compose.material.PositionIndicator
 import androidx.wear.compose.material.Scaffold
 import androidx.wear.compose.material.TimeText
 import androidx.wear.compose.material.scrollAway
-import com.google.android.gms.location.FusedLocationProviderClient
 import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme
 
+
 @Composable
 fun ComplicationsSuiteApp(
-    fusedLocationClient: FusedLocationProviderClient,
-    viewModel: MainViewModel
+    viewModel: MainViewModel = hiltViewModel()
 ) {
     ComplicationsSuiteTheme {
         val listState = rememberScalingLazyListState()
@@ -36,8 +36,7 @@ fun ComplicationsSuiteApp(
                 viewModel = viewModel,
                 listState = listState,
                 focusRequester = focusRequester,
-                coroutineScope = coroutineScope,
-                fusedLocationClient = fusedLocationClient
+                coroutineScope = coroutineScope
             )
         }
     }

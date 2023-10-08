@@ -13,6 +13,7 @@
 .externalNativeBuild
 .cxx
 local.properties
+/mobile/
 
 # Project exclude paths
 /mobile/release/
@@ -21,3 +22,4 @@ local.properties
 /wear/build/
 /mobile/build/release
 /mobile/build/intermediates/javac/debug/classes/
+/mobile/

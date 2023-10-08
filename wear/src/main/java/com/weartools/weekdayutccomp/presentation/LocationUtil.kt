@@ -1,14 +1,13 @@
 package com.weartools.weekdayutccomp.presentation
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.LocationCity
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -17,75 +16,46 @@ import androidx.wear.compose.material.*
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.isGranted
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.Priority
-import com.google.android.gms.tasks.CancellationToken
-import com.google.android.gms.tasks.CancellationTokenSource
-import com.google.android.gms.tasks.OnTokenCanceledListener
 import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.theme.wearColorPalette
-import java.text.DecimalFormat
 
-@SuppressLint("MissingPermission")
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun LocationCard(
-    modifier: Modifier = Modifier,
     permissionState: PermissionState,
-    fusedLocationClient: FusedLocationProviderClient,
     viewModel: MainViewModel,
     context: Context,
-    latitude: String,
-    longitude: String
+    locationName: String,
+    enabled: Boolean,
 ) {
-    val df = DecimalFormat("#.#####")
-
-    Card(
+    AppCard(
+        enabled = enabled,
+        time = {
+            Icon(
+                    imageVector = Icons.Default.Refresh,
+                    contentDescription = "Refresh Icon",
+                    tint = wearColorPalette.secondary,
+        )},
+        appImage = {            Icon(
+            imageVector = Icons.Default.LocationCity,
+            contentDescription = "Refresh Icon",
+            tint = wearColorPalette.secondary,
+        )},
+        title = {Text(text = locationName, color =  wearColorPalette.primary, fontSize = 12.sp)},
+        appName = {Text(stringResource(id = R.string.location), color = Color(0xFFF1F1F1))},
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 10.dp),
-        enabled = true,
+            .padding(horizontal = 10.dp)
+            .alpha(if (enabled) 1f else 0.5f),
         onClick = {
             if (permissionState.status.isGranted) {
-
-                Toast.makeText(context, R.string.checking, Toast.LENGTH_SHORT).show()
-                fusedLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, object : CancellationToken() {
-                    override fun onCanceledRequested(p0: OnTokenCanceledListener) = CancellationTokenSource().token
-                    override fun isCancellationRequested() = false
-                })
-                    .addOnSuccessListener {
-                        if (it == null) Toast.makeText(context, R.string.no_location, Toast.LENGTH_SHORT).show()
-                        else {
-                            Toast.makeText(context, "OK!", Toast.LENGTH_SHORT).show()
-                            viewModel.setLocation(it.latitude.toString(),it.longitude.toString(),context)
-
-                        }
-                    }
+                viewModel.getLocation(context)
             } else {
                 permissionState.launchPermissionRequest()
             }
         },
-    ){
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-
-            Column {
-                Text(stringResource(id = R.string.location), color = Color(0xFFF1F1F1))
-                    Text("Lat: ${ df.format(latitude.toDouble())}", color =  wearColorPalette.primary, fontSize = 12.sp)
-                    Text("Long: ${ df.format(longitude.toDouble())}", color =  wearColorPalette.primary, fontSize = 12.sp)
-            }
-            Icon(
-                imageVector = Icons.Default.Refresh,
-                contentDescription = "Refresh Icon",
-                tint = wearColorPalette.secondary,
-            )
-        }
-
-    }
+    ){}
 }
 @Composable
 fun LocationToggle(
