@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Translated by: [niksavc]
+                         ͝   -->
+<resources>
+    <!-- Do not translate translatable="false" lines -->
+    <string name="app_name">Complications Suite</string> <!-- Does not need to be translated, but it's recommended -->
+    <string name="app_info">Информация о приложении</string>
+    <string name="version">Версия</string>
+    <string name="settings">Настройки</string>
+    <string name="language">Язык</string>
+
+    <string name="compose_toggle" translatable="false">Toggle</string>
+
+    <string name="awf_comp_name" translatable="false">Amoled Logo</string>
+    <!-- Crypto Complication -->
+    <string name="crypto_name_1" translatable="true">BTC Курс $</string>
+    <string name="crypto_name_2" translatable="true">ETH Курс $</string>
+
+    <!-- Flashlight Complication -->
+    <string name="flashlight_comp_name">Фонарик</string>
+
+    <!-- Alarm Complication Preferences -->
+    <string name="alarm_comp_name">Будильник</string>
+
+    <!-- Assist Complication Preferences -->
+    <string name="assist_comp_name">Ассистент (монохром)</string>
+    <string name="assist_missing">Приложение «Ассистент» не установлен</string>
+
+    <!-- Date Complication Preferences -->
+    <string name="date_comp_name">Дата</string>
+    <string name="date_setting_preference_category_title">Дата Осложнения</string>
+    <string name="date_long_text_format">Длинный Текстовый Формат</string>
+    <string name="date_short_text_format">Краткий Текстовый Формат</string>
+    <string name="date_short_title_format">Краткого Названия Формат</string>
+
+    <!-- Day of Year Complication Preferences -->
+    <string name="doy_comp_name">День в Году</string>
+    <string name="doy_short_title">День</string>
+
+    <!-- Logo Complication Preferences -->
+    <string name="logo_comp_name">Wear OS Лого</string>
+
+    <!-- Moon Phase Complication Preferences -->
+    <string name="moon_comp_name">Лунные Фазы</string>
+    <string name="moon_setting_preference_category_title">Лунное / Солнечное Осложнение</string>
+
+    <array name="moon_phases">
+        <item>Первая Четверть</item>
+        <item>Полнолуние</item>
+        <item>Последняя Четверть</item>
+        <item>Новолуние</item>
+        <item>Стареющая Луна</item>
+        <item>Убывающая Луна</item>
+        <item>Молодая Луна</item>
+        <item>Растущая Луна</item>
+    </array>
+
+    <string name="moon_setting_hemi_title">Полушарие</string>
+    <string name="moon_setting_hemi_on">Северный</string>
+    <string name="moon_setting_hemi_off">Южный</string>
+    <string name="moon_setting_simple_icon_title">Лунная Иконка</string>
+    <string name="moon_setting_simple_icon_on">Простой</string>
+    <string name="moon_setting_simple_icon_off">Детальный</string>
+
+    <!-- Pay Complication -->
+    <string name="pay_comp_name">Оплата</string>
+
+    <!-- Sec Complication -->
+    <string name="sec_comp_name">Секунды</string>
+    <string name="sec_short_title">Сек</string>
+
+    <!-- Time Complication Preferences -->
+    <string name="time_comp_name">Время</string>
+    <string name="time_comp_desc">Текущее Время</string>
+    <string name="time_setting_leading_zero_title">Ведущий ноль</string>
+    <string name="time_setting_leading_zero_summary_on" translatable="false">09:00</string>
+    <string name="time_setting_leading_zero_summary_off" translatable="false">9:00</string>
+
+    <string name="time_ampm_setting_preference_category_title">Время / Солнечное Осложнение</string>
+    <string name="time_ampm_setting_title">Часовой формат</string>
+    <string name="time_ampm_setting_on">24ч</string>
+    <string name="time_ampm_setting_off">12ч</string>
+
+    <!-- World Clock Complication Preferences -->
+    <string name="wc_comp_name_1">Мировые Часы 1</string>
+    <string name="wc_comp_name_2">Мировые Часы 2</string>
+    <string name="wc_setting_preference_category_title">Мировые Часы Осложнение</string>
+    <string name="wc_setting_leading_zero_title">Ведущий ноль</string>
+    <string name="wc_setting_leading_zero_summary_on" translatable="false">09:00</string>
+    <string name="wc_setting_leading_zero_summary_off" translatable="false">9:00</string>
+
+    <string name="wc_ampm_setting_title">Часовой формат</string>
+    <string name="wc_ampm_setting_on">24ч</string>
+    <string name="wc_ampm_setting_off">12ч</string>
+
+
+    <string name="wc_setting_title">Часовой пояс 1 ID</string>
+    <string name="wc2_setting_title">Часовой пояс 2 ID</string>
+
+    <!-- WOY Complication Preferences -->
+    <string name="week_complication_name">Неделя в Году</string>
+    <string name="woy_complication_text">Неделя</string>
+    <string name="woy_complication_description">Неделя в Году</string>
+    <string name="woy_setting_preference_category_title">Неделя в Году Осложнение</string>
+    <string name="woy_setting_title">Формат</string>
+    <string name="woy_setting_on" translatable="false">ISO</string>
+    <string name="woy_setting_off" translatable="false">US</string>
+
+    <!-- Custom Text + Title -->
+    <string name="custom_text_comp_name">Кастомный Текст</string>
+    <string name="custom_text_comp_name_category">Кастомный Текст Осложнение</string>
+
+    <!--Custom Text + Title 2-->
+    <string name="custom_text_p1">Текст</string>
+    <string name="custom_title_p1">Названия</string>
+
+    <!--translate-->
+    <string name="coarse_location_toggle_title">Грубое Расположение</string>
+    <string name="coarse_secondary_enabled">Включен</string>
+    <string name="coarse_secondary_disabled">Отключен</string>
+    <string name="coarse_toggle_description">Грубое Местоположение Разрешение Переключение</string>
+
+    <!--translate-->
+    <string name="sunrise_sunset_comp_name">Восход &amp; Закат</string>
+    <string name="sunrise_sunset_countdown_comp_name">Восход &amp; Закат Обратный Отсчет</string>
+    <string name="sunrise">Восход</string>
+    <string name="sunset">Закат</string>
+    <string name="sunrise_in">Восход в</string>
+    <string name="sunset_in">Закат в</string>
+    <string name="enable_permission_toast">Требуется Грубое Местоположение Разрешение (Приложения Интерфейса)</string>
+    <string name="enable_permission_toast_consider">Включите Местоположение для точного Лунного вращения</string>
+    <string name="location">Местоположение</string>
+    <string name="checking">Проверяем местоположение...</string>
+    <string name="no_location">Не удалось распознать местоположение. Проверьте GPS</string>
+
+    <string name="countdown_style">Обратный Отсчет Формат</string>
+    <string name="countdown_style_style">Формат</string>
+    <string name="e_g_">e.g.</string>
+
+    <!-- translate -->
+    <string name="day_and_week_comp_name">День &amp; Неделя</string>
+    <string name="dayD">Д:</string>
+    <string name="weekW">Н:</string>
+
+    <!-- Developer Options -->
+    <string name="developer_options_comp_name">Для разработчиков</string>
+
+    <!--Date Countdown-->
+    <string name="date_countdown_comp_name">Отсчет времени до даты</string>
+    <string name="countdown_text">Оставшееся время</string>
+
+    <!--NOTIFICATIONS-->
+    <string name="notification_permission_info">Некоторых сложностях необходимо показывать тостовые сообщения на Android 13+. Приложение будет запрашивать разрешение показать их.</string>
+
+    <!--VOLUME-->
+    <string name="volume_comp_name">Звуковое Управление</string>
+
+    <!--DICE-->
+    <string name="dice_comp_name">Кости</string>
+
+    <!--WATER-->
+    <string name="water_comp_name">Потребление Воды</string>
+    <string name="water_intake_text">Потребление</string>
+    <string name="water_intake_goal_text">Цель</string>
+
+    <!--Time zone-->
+    <string name="time_zone_comp_name">Часовой пояс</string>
+</resources>

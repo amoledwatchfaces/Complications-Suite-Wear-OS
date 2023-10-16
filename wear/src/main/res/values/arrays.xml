@@ -615,6 +615,7 @@
         <item>ro</item>
         <item>sk</item>
         <item>zh</item>
+        <item>ru</item>
     </string-array>
     <string-array name="locales_long">
         <item>English</item>
@@ -627,5 +628,6 @@
         <item>Romanian</item>
         <item>Slovak</item>
         <item>Chinese (Simplified)</item>
+        <item>Russian</item>
     </string-array>
 </resources>

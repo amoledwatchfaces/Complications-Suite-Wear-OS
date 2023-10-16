@@ -1,13 +1,5 @@
 package com.weartools.weekdayutccomp.presentation
 
-import android.app.RemoteInput
-import android.content.ComponentName
-import android.content.Context
-import android.content.Intent
-import android.os.Bundle
-import android.view.inputmethod.EditorInfo
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.gestures.scrollBy
@@ -20,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -46,13 +39,7 @@ import androidx.wear.compose.material.ToggleChip
 import androidx.wear.compose.material.ToggleChipDefaults
 import androidx.wear.compose.material.dialog.Alert
 import androidx.wear.compose.material.dialog.Dialog
-import androidx.wear.input.RemoteInputIntentHelper
-import androidx.wear.input.wearableExtender
-import androidx.wear.watchface.complications.datasource.ComplicationDataSourceService
-import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUpdateRequester
-import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.R
-import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme
 import com.weartools.weekdayutccomp.theme.wearColorPalette
 import kotlinx.coroutines.launch
 
@@ -98,9 +85,8 @@ fun ListItemsWidget(
 ) {
     val state = remember { mutableStateOf(true) }
     var position by remember {
-        mutableStateOf(0)
+        mutableIntStateOf(0)
     }
-    ComplicationsSuiteTheme {
         val listState = rememberScalingLazyListState(initialCenterItemIndex = 0)
         val coroutineScope = rememberCoroutineScope()
 
@@ -173,10 +159,6 @@ fun ListItemsWidget(
                     listState.scrollToItem(index = position,120)
                 }
             }
-
-    }
-
-
 }
 
 @Composable
@@ -256,54 +238,6 @@ fun SectionText(modifier: Modifier = Modifier, text: String) {
         text = text,
         style = MaterialTheme.typography.caption3
     )
-}
-
-@Composable
-fun TextInput(
-    row1: String,
-    row2: String,
-    viewModel: MainViewModel,
-    context: Context,
-    isText: Boolean
-) {
-    val secondaryLabel = remember { mutableStateOf(row2)}
-    val launcher =
-        rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            it.data?.let { data ->
-                val results: Bundle = RemoteInput.getResultsFromIntent(data)
-                val input: CharSequence? = results.getCharSequence("custom_text")
-                secondaryLabel.value = input.toString()
-                if (isText) {viewModel.setCustomText(input.toString(),context)}
-                else {viewModel.setCustomTitle(input.toString(), context)}
-            }
-        }
-        Chip(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 10.dp),
-            label = {Text(row1)},
-            secondaryLabel = { Text(secondaryLabel.value, color =  wearColorPalette.primary) },
-            onClick = {
-                val intent: Intent = RemoteInputIntentHelper.createActionRemoteInputIntent()
-                val remoteInputs: List<RemoteInput> = listOf(
-                    RemoteInput.Builder("custom_text")
-                        .setLabel("Input")
-                        .wearableExtender {
-                            setEmojisAllowed(true)
-                            setInputActionType(EditorInfo.IME_ACTION_DONE)
-                        }.build()
-                )
-                RemoteInputIntentHelper.putRemoteInputsExtra(intent, remoteInputs)
-                launcher.launch(intent)
-            },
-            colors = ChipDefaults.primaryChipColors(backgroundColor = Color(0xff2c2c2d))
-        )
-}
-
-fun updateComplication(context: Context, cls: Class<out ComplicationDataSourceService>) {
-    val component = ComponentName(context, cls)
-    val req = ComplicationDataSourceUpdateRequester.create(context,component)
-    req.requestUpdateAll()
 }
 
 

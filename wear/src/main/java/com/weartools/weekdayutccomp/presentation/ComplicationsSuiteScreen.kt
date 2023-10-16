@@ -15,6 +15,7 @@
  */
 package com.weartools.weekdayutccomp.presentation
 
+
 import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.focusable
@@ -42,6 +43,8 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.rotary.onPreRotaryScrollEvent
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
@@ -83,6 +86,8 @@ fun ComplicationsSuiteScreen(
     val preferences = viewModel.preferences.collectAsState()
     val coarseEnabled = preferences.value.coarsePermission
     val loaderState by viewModel.loaderStateStateFlow.collectAsState()
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val focusManager = LocalFocusManager.current
 
     AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(preferences.value.locale))
 
@@ -357,9 +362,24 @@ fun ComplicationsSuiteScreen(
         }
 
         item { PreferenceCategory(title = stringResource(id = R.string.custom_text_comp_name_category)) }
-        item { TextInput(row1 = stringResource(id = R.string.custom_text_p1), row2 = preferences.value.customText, viewModel = viewModel, context = context, isText = true) }
-        item { TextInput(row1 = stringResource(id = R.string.custom_title_p1), row2 = preferences.value.customTitle, viewModel = viewModel, context = context, isText = false) }
-
+        item {ChipWithEditText(
+            row1 = stringResource(id = R.string.custom_text_p1),
+            row2 = preferences.value.customText,
+            viewModel = viewModel,
+            context = context,
+            isText = true,
+            keyboardController = keyboardController,
+            focusManager = focusManager
+        ) }
+        item {ChipWithEditText(
+            row1 = stringResource(id = R.string.custom_title_p1),
+            row2 = preferences.value.customTitle,
+            viewModel = viewModel,
+            context = context,
+            isText = false,
+            keyboardController = keyboardController,
+            focusManager = focusManager
+        ) }
 
         // APP INFO SECTION
         item { PreferenceCategory(title = stringResource(id = R.string.app_info)) }
@@ -492,8 +512,7 @@ fun ComplicationsSuiteScreen(
 
     }
 
-
-    if (Build.VERSION.SDK_INT > 32 && preferences.value.notificationAsked) {
+    if (Build.VERSION.SDK_INT > 32 && !preferences.value.notificationAsked) {
             Box {
                 var showDialog by remember { mutableStateOf(true) }
                 val scrollState = rememberScalingLazyListState()

@@ -15,9 +15,9 @@ android {
         minSdk = 27
         //noinspection OldTargetApi
         targetSdk = 33
-        versionCode = 10000275
-        versionName = "2.7.5"
-        resourceConfigurations += listOf("en", "cs", "de", "el", "es", "it", "pt", "ro", "sk", "zh")
+        versionCode = 10000278
+        versionName = "2.7.8"
+        resourceConfigurations += listOf("en", "cs", "de", "el", "es", "it", "pt", "ro", "sk", "zh", "ru")
     }
     bundle {
         language {
@@ -55,8 +55,8 @@ android {
 }
 
 dependencies {
-    val composeUiVersion = "1.5.2"
-    val composeWearVersion = "1.3.0-alpha06"
+    val composeUiVersion = "1.5.3"
+    val composeWearVersion = "1.3.0-alpha07"
 
     // NEW MOON / SUNRISE / SUNSET COMP
     //request permission
@@ -77,20 +77,19 @@ dependencies {
     implementation ("androidx.wear:wear:1.3.0")
 
     //COMPOSE
-    implementation ("androidx.preference:preference-ktx:1.2.1")
     implementation ("androidx.core:core-ktx:1.12.0")
     implementation ("androidx.compose.ui:ui:$composeUiVersion")
     implementation ("androidx.wear.compose:compose-material:$composeWearVersion")
     implementation ("androidx.wear.compose:compose-foundation:$composeWearVersion")
     implementation ("androidx.compose.ui:ui-tooling-preview:$composeUiVersion")
-    implementation ("androidx.activity:activity-compose:1.7.2")
+    implementation ("androidx.activity:activity-compose:1.8.0")
     implementation ("androidx.compose.material:material-icons-extended:$composeUiVersion")
 
     androidTestImplementation ("androidx.compose.ui:ui-test-junit4:$composeUiVersion")
     debugImplementation ("androidx.compose.ui:ui-tooling:$composeUiVersion")
     debugImplementation ("androidx.compose.ui:ui-test-manifest:$composeUiVersion")
 
-    //Pref
+    //DataStore
     implementation ("androidx.datastore:datastore-preferences:1.0.0")
 
     //Locale
