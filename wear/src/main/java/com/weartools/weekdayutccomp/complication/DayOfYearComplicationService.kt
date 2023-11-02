@@ -156,15 +156,8 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
             value = dayOfYear,
             min = 1f,
             max = dayscount,
-            contentDescription = PlainComplicationText
-                .Builder(text = getString(R.string.doy_comp_name)).build()
-        )
-            .setText(TimeFormatComplicationText.Builder(format = "D").build())
-            .setTitle(
-                PlainComplicationText.Builder(
-                    text = getString(R.string.doy_short_title)
-                ).build()
-            )
+            contentDescription = PlainComplicationText.Builder(text = getString(R.string.doy_comp_name)).build())
+            .setText(TimeFormatComplicationText.Builder(format = "D").build()).setTitle(PlainComplicationText.Builder(text = getString(R.string.doy_short_title)).build())
             .setTapAction(openScreen())
             .build()
 

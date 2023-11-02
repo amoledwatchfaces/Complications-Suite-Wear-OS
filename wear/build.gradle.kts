@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 plugins {
     id ("com.android.application")
     id ("org.jetbrains.kotlin.android")
@@ -15,8 +17,8 @@ android {
         minSdk = 27
         //noinspection OldTargetApi
         targetSdk = 33
-        versionCode = 10000278
-        versionName = "2.7.8"
+        versionCode = 10000282
+        versionName = "2.8.2"
         resourceConfigurations += listOf("en", "cs", "de", "el", "es", "it", "pt", "ro", "sk", "zh", "ru")
     }
     bundle {
@@ -55,8 +57,8 @@ android {
 }
 
 dependencies {
-    val composeUiVersion = "1.5.3"
-    val composeWearVersion = "1.3.0-alpha07"
+    val composeUiVersion = "1.5.4"
+    val composeWearVersion = "1.3.0-alpha08"
 
     // NEW MOON / SUNRISE / SUNSET COMP
     //request permission

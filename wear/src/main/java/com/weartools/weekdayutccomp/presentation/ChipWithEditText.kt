@@ -11,7 +11,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
@@ -28,6 +30,7 @@ import androidx.wear.compose.material.Text
 import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.theme.wearColorPalette
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ChipWithEditText(
     row1: String,
@@ -54,7 +57,7 @@ fun ChipWithEditText(
                     modifier = Modifier.fillMaxWidth(),
                     keyboardActions = KeyboardActions(
                         onAny = { keyboardController?.hide()
-                            focusManager.clearFocus()}
+                            focusManager.moveFocus(FocusDirection.Exit)}
                     ),
                     value = text,
                     onValueChange = { newText ->

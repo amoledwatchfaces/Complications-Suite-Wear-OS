@@ -81,21 +81,14 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
         .build()
         ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
             text = PlainComplicationText.Builder(text = "32").build(),
-            contentDescription = PlainComplicationText
-                .Builder(text = getString(R.string.woy_complication_description))
-                .build()
-        )
-            .setMonochromaticImage(
-                MonochromaticImage.Builder(
-                    image = createWithResource(this, drawable.ic_week),
-                ).build()
-            )
-
-            .setTitle(
-                PlainComplicationText.Builder(
-                    text = getString(R.string.woy_complication_text)
-                ).build()
-            )
+            contentDescription = PlainComplicationText.Builder(text = getString(R.string.woy_complication_description)).build())
+            .setMonochromaticImage(MonochromaticImage.Builder(
+                image = createWithResource(
+                    this,
+                    drawable.ic_week,
+                ),
+            ).build())
+            .setTitle(PlainComplicationText.Builder(text = getString(R.string.woy_complication_text)).build())
             .setTapAction(null)
             .build()
 
@@ -150,22 +143,10 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
             .build()
 
         ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
-            text = PlainComplicationText.Builder(text = week).build(),
-            contentDescription = PlainComplicationText
-                .Builder(text = getString(R.string.woy_complication_description))
-                .build()
-        )
-            .setMonochromaticImage(
-                MonochromaticImage.Builder(
-                    image = createWithResource(this, drawable.ic_week),
-                ).build()
-            )
-
-            .setTitle(
-                PlainComplicationText.Builder(
-                    text = getString(R.string.woy_complication_text)
-                ).build()
-            )
+            text = PlainComplicationText.Builder(text = "${getString(R.string.woy_complication_text)}:$week").build(),
+            contentDescription = PlainComplicationText.Builder(text = getString(R.string.woy_complication_description)).build())
+            .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_week),
+            ).build())
             .setTapAction(openScreen())
             .build()
 
@@ -173,15 +154,9 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
             value = week.toFloat(),
             min = 1f,
             max =  maxweek,
-            contentDescription = PlainComplicationText
-                .Builder(text = getString(R.string.woy_complication_description)).build()
-        )
-            .setText(PlainComplicationText.Builder(text = week).build())
-            .setTitle(
-                PlainComplicationText.Builder(
-                    text = getString(R.string.woy_complication_text)
-                ).build()
-            )
+            contentDescription = PlainComplicationText.Builder(text = getString(R.string.woy_complication_description)).build())
+            .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_week)).build())
+            .setText(PlainComplicationText.Builder(text = "${getString(R.string.woy_complication_text)[0]}:$week").build())
             .setTapAction(openScreen())
             .build()
 

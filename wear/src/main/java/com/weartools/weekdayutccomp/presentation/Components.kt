@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -33,6 +32,7 @@ import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
 import androidx.wear.compose.material.Chip
 import androidx.wear.compose.material.ChipDefaults
 import androidx.wear.compose.material.Icon
+import androidx.wear.compose.material.ListHeader
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.ToggleChip
@@ -199,16 +199,13 @@ fun ToggleChip(
 }
 
 @Composable
-fun SettingsText(modifier: Modifier = Modifier) {
-    Text(
-        modifier = modifier
-            .padding(top = 2.dp, bottom = 2.dp)
-            .offset(y = (-7).dp),
+fun Header() {
+    ListHeader { Text(
         textAlign = TextAlign.Center,
         color = MaterialTheme.colors.primary,
         text = stringResource(id = R.string.settings),
         style = MaterialTheme.typography.title3
-    )
+    )}
 }
 
 @Composable
@@ -217,6 +214,7 @@ fun PreferenceCategory(
     title: String
 ) {
     Text(
+        textAlign = TextAlign.Center,
         text = title,
         modifier = modifier.padding(
             start = 16.dp,
