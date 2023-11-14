@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -24,7 +23,6 @@ fun ComplicationsSuiteApp(
     ComplicationsSuiteTheme {
         val listState = rememberScalingLazyListState()
         val focusRequester = remember { FocusRequester() }
-        val coroutineScope = rememberCoroutineScope()
 
         LaunchedEffect(Unit) {focusRequester.requestFocus()}
         Scaffold(
@@ -36,7 +34,6 @@ fun ComplicationsSuiteApp(
                 viewModel = viewModel,
                 listState = listState,
                 focusRequester = focusRequester,
-                coroutineScope = coroutineScope
             )
         }
     }

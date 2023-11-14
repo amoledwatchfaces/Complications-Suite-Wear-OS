@@ -17,8 +17,8 @@ android {
         minSdk = 27
         //noinspection OldTargetApi
         targetSdk = 33
-        versionCode = 10000282
-        versionName = "2.8.2"
+        versionCode = 10000284
+        versionName = "2.8.4"
         resourceConfigurations += listOf("en", "cs", "de", "el", "es", "it", "pt", "ro", "sk", "zh", "ru")
     }
     bundle {
@@ -107,12 +107,12 @@ dependencies {
     implementation ("com.google.android.horologist:horologist-composables:0.2.8")
     implementation ("com.google.android.horologist:horologist-audio-ui:0.2.8")
 
-    implementation ("com.google.code.gson:gson:2.9.0")
+    implementation ("com.google.code.gson:gson:2.10.1")
     implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
 
     // HILT
-    implementation ("androidx.hilt:hilt-navigation-compose:1.0.0")
-    implementation ("com.google.dagger:hilt-android:2.47")
+    implementation ("androidx.hilt:hilt-navigation-compose:1.1.0")
+    implementation ("com.google.dagger:hilt-android:2.48")
     kapt ("com.google.dagger:hilt-compiler:2.47")
 }
 // Allow references to generated code

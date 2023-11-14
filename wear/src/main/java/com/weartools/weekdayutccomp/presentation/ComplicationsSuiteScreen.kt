@@ -18,9 +18,6 @@ package com.weartools.weekdayutccomp.presentation
 
 import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.compose.foundation.focusable
-import androidx.compose.foundation.gestures.animateScrollBy
-import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -33,9 +30,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.rotary.onPreRotaryScrollEvent
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -58,17 +53,15 @@ import com.google.accompanist.permissions.rememberPermissionState
 import com.weartools.weekdayutccomp.BuildConfig
 import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.R
+import com.weartools.weekdayutccomp.presentation.rotary.rotaryWithScroll
 import com.weartools.weekdayutccomp.theme.wearColorPalette
 import com.weartools.weekdayutccomp.utils.openPlayStore
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun ComplicationsSuiteScreen(
     listState: ScalingLazyListState = rememberScalingLazyListState(),
     focusRequester: FocusRequester,
-    coroutineScope: CoroutineScope,
     viewModel: MainViewModel
 ) {
     val context = LocalContext.current
@@ -115,15 +108,10 @@ fun ComplicationsSuiteScreen(
     ScalingLazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .onPreRotaryScrollEvent {
-                coroutineScope.launch {
-                    listState.scrollBy(it.verticalScrollPixels * 2) //*2 for faster scrolling with animateScrollBy 0f + OnPreRotary?
-                    listState.animateScrollBy(0f)
-                }
-                true
-            }
-            .focusRequester(focusRequester)
-            .focusable(),
+            .rotaryWithScroll(
+                scrollableState = listState,
+                focusRequester = focusRequester
+            ),
         autoCentering = AutoCenteringParams(itemIndex = 1),
         state = listState,
     ) {

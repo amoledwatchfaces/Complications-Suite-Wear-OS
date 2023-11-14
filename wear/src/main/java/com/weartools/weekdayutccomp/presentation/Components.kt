@@ -1,8 +1,5 @@
 package com.weartools.weekdayutccomp.presentation
 
-import androidx.compose.foundation.focusable
-import androidx.compose.foundation.gestures.animateScrollBy
-import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
@@ -19,9 +16,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.rotary.onRotaryScrollEvent
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -40,6 +35,7 @@ import androidx.wear.compose.material.ToggleChipDefaults
 import androidx.wear.compose.material.dialog.Alert
 import androidx.wear.compose.material.dialog.Dialog
 import com.weartools.weekdayutccomp.R
+import com.weartools.weekdayutccomp.presentation.rotary.rotaryWithScroll
 import com.weartools.weekdayutccomp.theme.wearColorPalette
 import kotlinx.coroutines.launch
 
@@ -104,15 +100,10 @@ fun ListItemsWidget(
             }
             Alert(
                 modifier = Modifier
-                    .onRotaryScrollEvent {
-                        coroutineScope.launch {
-                            listState.scrollBy(it.verticalScrollPixels * 2) //*2 for faster scrolling with animateScrollBy 0f + OnPreRotary?
-                            listState.animateScrollBy(0f)
-                        }
-                        true
-                    }
-                    .focusRequester(focusRequester)
-                    .focusable(),
+                    .rotaryWithScroll(
+                        scrollableState = listState,
+                        focusRequester = focusRequester
+                    ),
                 backgroundColor = Color.Black,
                 scrollState = listState,
                 title = { PreferenceCategory(title = titles) },

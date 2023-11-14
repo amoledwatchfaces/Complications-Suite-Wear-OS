@@ -1,8 +1,5 @@
 package com.weartools.weekdayutccomp.presentation
 
-import androidx.compose.foundation.focusable
-import androidx.compose.foundation.gestures.animateScrollBy
-import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.size
@@ -15,14 +12,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.rotary.onRotaryScrollEvent
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -39,7 +33,7 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
 import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.R
-import kotlinx.coroutines.launch
+import com.weartools.weekdayutccomp.presentation.rotary.rotaryWithScroll
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -51,7 +45,6 @@ fun PermissionAskDialog(
     Box {
         var showDialog by remember { mutableStateOf(true) }
         val listState = rememberScalingLazyListState(initialCenterItemIndex = 0)
-        val coroutineScope = rememberCoroutineScope()
 
         LaunchedEffect(Unit) {focusRequester.requestFocus()}
         Dialog(
@@ -66,15 +59,10 @@ fun PermissionAskDialog(
             }
             Alert(
                 modifier = Modifier
-                    .onRotaryScrollEvent {
-                        coroutineScope.launch {
-                            listState.scrollBy(it.verticalScrollPixels) //*2 for faster scrolling with animateScrollBy 0f + OnPreRotary?
-                            listState.animateScrollBy(0f)
-                        }
-                        true
-                    }
-                    .focusRequester(focusRequester)
-                    .focusable(),
+                    .rotaryWithScroll(
+                        scrollableState = listState,
+                        focusRequester = focusRequester
+                    ),
                 scrollState = listState,
                 icon = {
                     Icon(
