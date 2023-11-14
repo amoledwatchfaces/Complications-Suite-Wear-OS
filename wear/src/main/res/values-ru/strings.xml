@@ -130,7 +130,7 @@
     <string name="enable_permission_toast">Требуется Грубое Местоположение Разрешение (Приложения Интерфейса)</string>
     <string name="enable_permission_toast_consider">Включите Местоположение для точного Лунного вращения</string>
     <string name="location">Местоположение</string>
-    <string name="checking">Проверяем местоположение...</string>
+    <string name="checking">Проверяем местоположение…</string>
     <string name="no_location">Не удалось распознать местоположение. Проверьте GPS</string>
 
     <string name="countdown_style">Обратный Отсчет Формат</string>

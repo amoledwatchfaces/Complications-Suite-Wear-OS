@@ -52,12 +52,9 @@
         <item>Waxing Gibbous</item>
     </array>
 
-    <string name="moon_setting_hemi_key" translatable="false">is_northern</string>
     <string name="moon_setting_hemi_title">Hemisphäre</string>
     <string name="moon_setting_hemi_on">Nördlich</string>
     <string name="moon_setting_hemi_off">Süd</string>
-    <string name="key_pref_phase_icon" translatable="false">R.drawable.moon0</string>
-    <string name="key_pref_moon_visibility" translatable="false">0.0</string>
     <string name="moon_setting_simple_icon_title">Symbol</string>
     <string name="moon_setting_simple_icon_on">Einfaches</string>
     <string name="moon_setting_simple_icon_off">Detailliert</string>
@@ -72,13 +69,11 @@
     <!-- Time Complication Preferences -->
     <string name="time_comp_name">Uhrzeit</string>
     <string name="time_comp_desc">Aktuelle Uhrzeit</string>
-    <string name="time_setting_leading_zero_key" translatable="false">leading_zero_time</string>
     <string name="time_setting_leading_zero_title">Führende Null</string>
     <string name="time_setting_leading_zero_summary_on" translatable="false">09:00</string>
     <string name="time_setting_leading_zero_summary_off" translatable="false">9:00</string>
 
     <string name="time_ampm_setting_preference_category_title">Uhrzeit / Sonnenaufgang und Sonnenuntergang Komplikation</string>
-    <string name="time_ampm_setting_key" translatable="false">is_military_time</string>
     <string name="time_ampm_setting_title">24h Format</string>
     <string name="time_ampm_setting_on">AN / 24h</string>
     <string name="time_ampm_setting_off">AUS / 12h</string>
@@ -87,18 +82,14 @@
     <string name="wc_comp_name_1">Weltuhr 1</string>
     <string name="wc_comp_name_2">Weltuhr 2</string>
     <string name="wc_setting_preference_category_title">Weltuhr Komplikation</string>
-    <string name="wc_setting_leading_zero_key" translatable="false">leading_zero</string>
     <string name="wc_setting_leading_zero_title">Führende Null</string>
     <string name="wc_setting_leading_zero_summary_on" translatable="false">09:00</string>
     <string name="wc_setting_leading_zero_summary_off" translatable="false">9:00</string>
 
-    <string name="wc_ampm_setting_key" translatable="false">is_military</string>
     <string name="wc_ampm_setting_title">24h Format</string>
     <string name="wc_ampm_setting_on">AN / 24h</string>
     <string name="wc_ampm_setting_off">AUS / 12h</string>
 
-    <string name="wc_setting_key" translatable="false">citiesid</string>
-    <string name="wc2_setting_key" translatable="false">citiesid2</string>
     <string name="wc_setting_title">Zeitzonen-ID 1</string>
     <string name="wc2_setting_title">Zeitzonen-ID 2</string>
 
@@ -107,7 +98,6 @@
     <string name="woy_complication_text">Woche</string>
     <string name="woy_complication_description">Woche des Jahres</string>
     <string name="woy_setting_preference_category_title">Kalenderwochen-Komplikation</string>
-    <string name="woy_setting_key" translatable="false">is_iso_week</string>
     <string name="woy_setting_title">Format</string>
     <string name="woy_setting_on" translatable="false">ISO</string>
     <string name="woy_setting_off" translatable="false">US</string>
