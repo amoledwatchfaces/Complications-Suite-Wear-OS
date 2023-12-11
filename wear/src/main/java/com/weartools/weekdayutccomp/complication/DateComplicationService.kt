@@ -19,6 +19,7 @@ package com.weartools.weekdayutccomp.complication
 import android.app.PendingIntent
 import android.content.Intent
 import android.util.Log
+import android.widget.Toast
 import androidx.datastore.core.DataStore
 import androidx.wear.watchface.complications.data.*
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
@@ -75,28 +76,47 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
     Log.d(TAG, "onComplicationRequest() id: ${request.complicationInstanceId}")
 
     val prefs = preferences.first()
-    val format = prefs.longText
+    val longText = prefs.longText
     val text = prefs.shortText
     val title = prefs.shortTitle
+
+
+
 
     return when (request.complicationType) {
 
         ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
-            text = TimeFormatComplicationText.Builder(format = text).build(),
+            text = try {
+                TimeFormatComplicationText.Builder(format = text).build()
+            } catch (e: IllegalArgumentException) {
+                // Inform the user that the format is invalid
+                Toast.makeText(this, "Text: Wrong format! Check SimpleDateFormat", Toast.LENGTH_LONG).show()
+                PlainComplicationText.Builder(text="?").build()
+            },
             contentDescription = PlainComplicationText
                 .Builder(text = getString(R.string.date_comp_name))
                 .build()
         )
             .setTitle(
-                TimeFormatComplicationText.Builder(
-                    format = title
-                ).build()
+                try {
+                    TimeFormatComplicationText.Builder(format = title).build()
+                } catch (e: IllegalArgumentException) {
+                    // Inform the user that the format is invalid
+                    Toast.makeText(this, "Title: Wrong format! Check SimpleDateFormat", Toast.LENGTH_LONG).show()
+                    PlainComplicationText.Builder(text="?").build()
+                }
             )
             .setTapAction(openScreen())
             .build()
 
         ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
-            text = TimeFormatComplicationText.Builder(format = format).build(),
+            text = try {
+                TimeFormatComplicationText.Builder(format = longText).build()
+            } catch (e: IllegalArgumentException) {
+                // Inform the user that the format is invalid
+                Toast.makeText(this, "Wrong format! Check SimpleDateFormat patters", Toast.LENGTH_LONG).show()
+                PlainComplicationText.Builder(text="?").build()
+            },
             contentDescription = PlainComplicationText
                 .Builder(text = getString(R.string.date_comp_name))
                 .build()

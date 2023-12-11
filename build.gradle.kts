@@ -10,7 +10,7 @@ tasks.register("clean", Delete::class){
 
 buildscript {
     dependencies {
-        classpath ("com.android.tools.build:gradle:8.1.3")
+        classpath ("com.android.tools.build:gradle:8.2.0")
         classpath ("org.jetbrains.kotlin:kotlin-serialization:1.9.10")
     }
     repositories {

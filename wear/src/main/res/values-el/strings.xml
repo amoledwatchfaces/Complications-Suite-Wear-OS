@@ -25,6 +25,7 @@
 
     <!-- Προτημήσεις Complication Ημέρας -->
     <string name="date_comp_name">Ημέρα (Suite)</string>
+    <string name="date_custom_format">Προσαρμοσμένη μορφή</string>
     <string name="date_setting_preference_category_title">Complication Ημέρας</string>
     <string name="date_long_text_format">Long Text Format</string>
     <string name="date_short_text_format">Short Text Format</string>

@@ -26,7 +26,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -53,6 +58,7 @@ import com.google.accompanist.permissions.rememberPermissionState
 import com.weartools.weekdayutccomp.BuildConfig
 import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.R
+import com.weartools.weekdayutccomp.enums.DateFormat
 import com.weartools.weekdayutccomp.presentation.rotary.rotaryWithScroll
 import com.weartools.weekdayutccomp.theme.wearColorPalette
 import com.weartools.weekdayutccomp.utils.openPlayStore
@@ -354,6 +360,7 @@ fun ComplicationsSuiteScreen(
             viewModel = viewModel,
             context = context,
             isText = false,
+            isTitle = true,
             keyboardController = keyboardController,
             focusManager = focusManager
         ) }
@@ -419,15 +426,17 @@ fun ComplicationsSuiteScreen(
     }
 
     if (longTextFormat || shortTextFormat || shortTitleFormat) {
-        val title = if (longTextFormat) stringResource(id = R.string.date_long_text_format)
-        else if (shortTextFormat) stringResource(id = R.string.date_short_text_format)
-        else stringResource(id = R.string.date_short_title_format)
         val prValue = if (longTextFormat) preferences.value.longText
         else if (shortTextFormat) preferences.value.shortText
         else preferences.value.shortTitle
-        ListItemsWidget(
+
+        DateFormatListPicker(
+            dateFormat = if (shortTextFormat) DateFormat.SHORT_TEXT_FORMAT else if (shortTitleFormat) DateFormat.SHORT_TITLE_FORMAT else DateFormat.LONG_TEXT_FORMAT,
+            viewModel = viewModel,
+            context = context,
+            focusManager = focusManager,
             focusRequester = focusRequester,
-            titles = title,
+            keyboardController = keyboardController,
             preValue = prValue,
             items = if (longTextFormat) listLongFormat else listShortFormat,
             callback = {
@@ -435,24 +444,8 @@ fun ComplicationsSuiteScreen(
                     longTextFormat = false
                     shortTextFormat = false
                     shortTitleFormat = false
-                    return@ListItemsWidget
+                    return@DateFormatListPicker
                 }
-                if (longTextFormat) {
-                    viewModel.setDateLongTextFormat(listLongFormat[it],context)
-                    longTextFormat = longTextFormat.not()
-                }
-                else {
-                    val format = listShortFormat[it]
-                    if (shortTextFormat) {
-                        viewModel.setDateShortTextFormat(format,context)
-                        shortTextFormat = shortTextFormat.not()
-                    } else {
-                        viewModel.setDateShortTitleFormat(format,context)
-                        shortTitleFormat = shortTitleFormat.not()
-                    }
-                }
-
-
             })
     }
 

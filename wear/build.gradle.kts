@@ -17,8 +17,8 @@ android {
         minSdk = 27
         //noinspection OldTargetApi
         targetSdk = 33
-        versionCode = 10000284
-        versionName = "2.8.4"
+        versionCode = 10000291
+        versionName = "2.9.1"
         resourceConfigurations += listOf("en", "cs", "de", "el", "es", "it", "pt", "ro", "sk", "zh", "ru")
     }
     bundle {
@@ -58,7 +58,7 @@ android {
 
 dependencies {
     val composeUiVersion = "1.5.4"
-    val composeWearVersion = "1.3.0-alpha08"
+    val composeWearVersion = "1.3.0-beta01"
 
     // NEW MOON / SUNRISE / SUNSET COMP
     //request permission
@@ -67,15 +67,15 @@ dependencies {
     implementation ("com.google.android.gms:play-services-location:21.0.1")
 
     // Used for WorkManager
-    implementation ("androidx.work:work-runtime:2.8.1")
-    implementation ("androidx.work:work-runtime-ktx:2.8.1")
+    implementation ("androidx.work:work-runtime:2.9.0")
+    implementation ("androidx.work:work-runtime-ktx:2.9.0")
 
     // MOON PHASE HELPER
     implementation ("org.shredzone.commons:commons-suncalc:3.7")
 
     // WEAR OS
     implementation ("com.google.android.gms:play-services-wearable:18.1.0")
-    implementation ("androidx.wear.watchface:watchface-complications-data-source-ktx:1.1.1")
+    implementation ("androidx.wear.watchface:watchface-complications-data-source-ktx:1.2.0")
     implementation ("androidx.wear:wear:1.3.0")
 
     //COMPOSE
@@ -84,7 +84,7 @@ dependencies {
     implementation ("androidx.wear.compose:compose-material:$composeWearVersion")
     implementation ("androidx.wear.compose:compose-foundation:$composeWearVersion")
     implementation ("androidx.compose.ui:ui-tooling-preview:$composeUiVersion")
-    implementation ("androidx.activity:activity-compose:1.8.0")
+    implementation ("androidx.activity:activity-compose:1.8.1")
     implementation ("androidx.compose.material:material-icons-extended:$composeUiVersion")
 
     androidTestImplementation ("androidx.compose.ui:ui-test-junit4:$composeUiVersion")

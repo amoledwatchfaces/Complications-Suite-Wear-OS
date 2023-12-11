@@ -25,6 +25,7 @@
 
     <!-- Date Complication Preferences -->
     <string name="date_comp_name">Datum</string>
+    <string name="date_custom_format">Vlastní formát</string>
     <string name="date_setting_preference_category_title">Datum - Komplikace</string>
     <string name="date_long_text_format">Long Text Formát</string>
     <string name="date_short_title_format">Short Title Formát</string>

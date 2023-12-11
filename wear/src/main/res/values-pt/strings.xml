@@ -25,6 +25,7 @@
 
     <!-- Date Complication Preferences -->
     <string name="date_comp_name">Data (Suite)</string>
+    <string name="date_custom_format">Formato personalizado</string>
     <string name="date_setting_preference_category_title">Complicação de data</string>
     <string name="date_long_text_format">Formato de texto longo</string>
     <string name="date_short_text_format">Formato de texto curto</string>

@@ -24,6 +24,7 @@
 
     <!-- Date Complication Preferences -->
     <string name="date_comp_name">日期系列组件</string>
+    <string name="date_custom_format">自定义格式</string>
     <string name="date_setting_preference_category_title">日期组件</string>
     <string name="date_long_text_format">长文本格式</string>
     <string name="date_short_text_format">短文本格式</string>

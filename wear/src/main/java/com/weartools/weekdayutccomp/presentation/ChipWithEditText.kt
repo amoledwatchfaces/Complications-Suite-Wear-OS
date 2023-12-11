@@ -1,6 +1,7 @@
 package com.weartools.weekdayutccomp.presentation
 
 import android.content.Context
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
@@ -15,8 +16,10 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusManager
+import androidx.compose.ui.focus.focusTarget
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -26,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.wear.compose.material.Chip
 import androidx.wear.compose.material.ChipDefaults
+import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
 import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.theme.wearColorPalette
@@ -37,11 +41,16 @@ fun ChipWithEditText(
     row2: String,
     viewModel: MainViewModel,
     context: Context,
-    isText: Boolean,
+    isText: Boolean = true,
+    isTitle: Boolean = false,
+    isDateFormat: Boolean = false,
+    isCustomFormatUsed: Boolean = false,
     keyboardController: SoftwareKeyboardController?,
-    focusManager: FocusManager
+    focusManager: FocusManager,
+    callback: ((String) -> Unit)? = null
 ) {
     var text by remember { mutableStateOf(row2) }
+
 
 
     Chip(
@@ -49,21 +58,28 @@ fun ChipWithEditText(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 10.dp),
-            colors = ChipDefaults.primaryChipColors(backgroundColor = Color(0xff2c2c2d)),
+            colors = if (isCustomFormatUsed) {ChipDefaults.gradientBackgroundChipColors(
+                startBackgroundColor = MaterialTheme.colors.surface.copy(alpha = 0f)
+                    .compositeOver(MaterialTheme.colors.surface),
+                endBackgroundColor = wearColorPalette.primaryVariant
+            )}
+                    else {ChipDefaults.primaryChipColors(backgroundColor = Color(0xff2c2c2d))},
             label = { Text(row1) },
             secondaryLabel = {
 
                 BasicTextField(
                     modifier = Modifier.fillMaxWidth(),
                     keyboardActions = KeyboardActions(
-                        onAny = { keyboardController?.hide()
-                            focusManager.moveFocus(FocusDirection.Exit)}
+                        onDone  = { keyboardController?.hide()
+                            focusManager.moveFocus(FocusDirection.Exit)
+                            if (isText){viewModel.setCustomText(text, context)}
+                            if (isTitle) {viewModel.setCustomTitle(text, context)}
+                            if (isDateFormat){ callback?.invoke(text) }
+                        }
                     ),
                     value = text,
                     onValueChange = { newText ->
                         text = newText
-                        if (isText){viewModel.setCustomText(newText, context)}
-                        else {viewModel.setCustomTitle(newText, context)}
                     },
                     textStyle = TextStyle(
                         fontWeight = FontWeight.Medium,

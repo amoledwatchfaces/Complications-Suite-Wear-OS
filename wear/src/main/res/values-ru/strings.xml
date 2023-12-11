@@ -28,6 +28,7 @@
 
     <!-- Date Complication Preferences -->
     <string name="date_comp_name">Дата</string>
+    <string name="date_custom_format">Пользовательский формат</string>
     <string name="date_setting_preference_category_title">Дата Осложнения</string>
     <string name="date_long_text_format">Длинный Текстовый Формат</string>
     <string name="date_short_text_format">Краткий Текстовый Формат</string>
