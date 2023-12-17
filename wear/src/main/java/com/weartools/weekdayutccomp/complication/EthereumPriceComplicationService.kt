@@ -51,7 +51,7 @@ class EthereumPriceComplicationService : SuspendingComplicationDataSourceService
     private val preferences by lazy { UserPreferencesRepository(dataStore).getPreferences() }
 
     private suspend fun fetchUrl2(): JsonObject? {
-        val url = "https://data-api.binance.vision/api/v3/ticker/24hr?symbol=ETHBUSD"
+        val url = "https://data-api.binance.vision/api/v3/ticker/24hr?symbol=ETHUSDT"
 
         return try {
             val json = withContext(Dispatchers.IO){URL(url).readText()}
@@ -112,7 +112,7 @@ class EthereumPriceComplicationService : SuspendingComplicationDataSourceService
 
         dataStore.updateData { it.copy(priceETH = price) }
 
-        Log.i(TAG, "Ticker: ETHBUSD, Price: $priceString")
+        Log.i(TAG, "Ticker: ETHUSDT, Price: $priceString")
 
         return when (request.complicationType) {
 

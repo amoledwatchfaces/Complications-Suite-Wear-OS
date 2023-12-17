@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 pluginManagement {
     repositories {
         google()
@@ -13,4 +15,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Complications Suite"
-include(":mobile", ":wear")
+include(":wear")

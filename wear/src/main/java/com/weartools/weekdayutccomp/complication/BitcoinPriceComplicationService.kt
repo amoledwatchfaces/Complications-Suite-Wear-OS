@@ -51,7 +51,7 @@ class BitcoinPriceComplicationService : SuspendingComplicationDataSourceService(
     private val preferences by lazy { UserPreferencesRepository(dataStore).getPreferences() }
 
     private suspend fun fetchUrl1(): JsonObject? {
-        val url = "https://data-api.binance.vision/api/v3/ticker/24hr?symbol=BTCBUSD"
+        val url = "https://data-api.binance.vision/api/v3/ticker/24hr?symbol=BTCUSDT"
 
         return try {
             val json = withContext(Dispatchers.IO){URL(url).readText()}
@@ -112,7 +112,7 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
 
     dataStore.updateData { it.copy(priceBTC = price) }
 
-    Log.i(TAG, "Ticker: BTCBUSD, Price: $priceString")
+    Log.i(TAG, "Ticker: BTCUSDT, Price: $priceString")
 
     return when (request.complicationType) {
 

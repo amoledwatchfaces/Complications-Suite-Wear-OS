@@ -95,11 +95,7 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
             .build()
 
         ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
-            text = text,
-            contentDescription = PlainComplicationText
-                .Builder(text = getString(R.string.sec_short_title))
-                .build()
-        )
+            text = text, contentDescription = PlainComplicationText.Builder(text = getString(R.string.sec_short_title)).build())
             .setTapAction(openScreen())
             .build()
 
