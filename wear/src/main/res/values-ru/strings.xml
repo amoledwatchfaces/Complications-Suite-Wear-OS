@@ -63,6 +63,11 @@
     <string name="moon_setting_simple_icon_on">Простой</string>
     <string name="moon_setting_simple_icon_off">Детальный</string>
 
+    <string name="icon_type">Лунная Иконка</string>
+    <string name="icon_type_0">Простой</string>
+    <string name="icon_type_1">Детальный RGB</string>
+    <string name="icon_type_2">Детальный ARGB</string>
+
     <!-- Pay Complication -->
     <string name="pay_comp_name">Оплата</string>
 

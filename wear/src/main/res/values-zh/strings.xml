@@ -59,6 +59,11 @@
     <string name="moon_setting_simple_icon_on">简单</string>
     <string name="moon_setting_simple_icon_off">详细</string>
 
+    <string name="icon_type">月相图标</string>
+    <string name="icon_type_0">简单</string>
+    <string name="icon_type_1">详细 RGB</string>
+    <string name="icon_type_2">详细 ARGB</string>
+
     <!-- Pay Complication -->
     <string name="pay_comp_name">支付</string>
 

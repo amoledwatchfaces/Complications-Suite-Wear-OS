@@ -4,7 +4,10 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
 import android.graphics.RectF
+import com.weartools.weekdayutccomp.enums.MoonIconType
 
 object DrawMoonBitmap {
     /**
@@ -19,7 +22,8 @@ object DrawMoonBitmap {
         angle: Float,
         parallacticAngle: Float,
         lat: Double,
-        hemi: Boolean
+        hemi: Boolean,
+        iconType: MoonIconType
     ): Bitmap {
         /**
          * Set Bitmap SIZE
@@ -75,9 +79,11 @@ object DrawMoonBitmap {
         val bitmap = Bitmap.createBitmap(targetSize, targetSize, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
 
-        /** DRAW MOON BACKGROUND */
+        /** DRAW MOON BACKGROUND IN DEFAULT ICON TYPE */
         // draw dark part / background. Moons shadow part needs to be in the background due to bad image look on watch faces
-        canvas.drawCircle(radius, radius, radius, shadowPaint)
+        if (iconType == MoonIconType.DEFAULT) {
+            canvas.drawCircle(radius, radius, radius, shadowPaint)
+        }
 
         /** ROTATE CANVAS */
         canvas.save()
@@ -98,12 +104,22 @@ object DrawMoonBitmap {
                 true,
                 brightPaint
             )
-            // draw a dark oval to hide rest of the illuminated part (using shadowPaint)
+
+            // Set Xfermode for masking only when transparent icon type
+            if (iconType == MoonIconType.TRANSPARENT){
+                brightPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_OUT)
+            }
+
+            // draw a dark oval to hide rest of the illuminated part (using DST_OUT mask)
             val ovalBounds = RectF()
             val ovalLeft = (0f + 2 * radius * percentIlluminated).toFloat()
             val ovalRight = (targetSizeFloat - 2 * radius * percentIlluminated).toFloat()
             ovalBounds[ovalLeft, 0f, ovalRight] = targetSizeFloat
-            canvas.drawOval(ovalBounds, shadowPaint)
+
+            if (iconType == MoonIconType.DEFAULT){
+                canvas.drawOval(ovalBounds, shadowPaint)
+            } else canvas.drawOval(ovalBounds, brightPaint)
+
 
         }
         /** DRAW MOON LOOK FROM 50 --> 100% ILLUMINATION */
@@ -131,6 +147,15 @@ object DrawMoonBitmap {
         /** RESTORE CANVAS AFTER ROTATION */
         canvas.restore()
         canvas.save()
+
+
+        /** DRAW MOON OVERLAY WHEN TRANSPARENT */
+        // draw dark part / background. Moons shadow part needs to be in the background due to bad image look on watch faces
+        if (iconType == MoonIconType.TRANSPARENT){
+            brightPaint.xfermode = null
+            brightPaint.alpha = 50
+            canvas.drawCircle(radius, radius, radius, brightPaint)
+        }
 
         /** DRAW CRATERS - OPTIONAL */
 /*

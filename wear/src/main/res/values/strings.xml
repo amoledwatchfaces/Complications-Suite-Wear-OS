@@ -8,6 +8,11 @@
     <string name="settings">Settings</string>
     <string name="language">Language</string>
 
+    <string name="icon_type">Icon Type</string>
+    <string name="icon_type_0">Simple</string>
+    <string name="icon_type_1">Default RGB</string>
+    <string name="icon_type_2">Default ARGB</string>
+
     <string name="compose_toggle" translatable="false">Toggle</string>
 
     <string name="awf_comp_name" translatable="false">Amoled Logo</string>

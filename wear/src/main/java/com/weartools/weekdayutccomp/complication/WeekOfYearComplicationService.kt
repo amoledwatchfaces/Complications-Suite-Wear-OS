@@ -29,6 +29,9 @@ import androidx.wear.watchface.complications.data.MonochromaticImage
 import androidx.wear.watchface.complications.data.PlainComplicationText
 import androidx.wear.watchface.complications.data.RangedValueComplicationData
 import androidx.wear.watchface.complications.data.ShortTextComplicationData
+import androidx.wear.watchface.complications.data.SmallImage
+import androidx.wear.watchface.complications.data.SmallImageComplicationData
+import androidx.wear.watchface.complications.data.SmallImageType
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
 import com.weartools.weekdayutccomp.R
@@ -44,6 +47,13 @@ import java.time.temporal.IsoFields
 import java.time.temporal.WeekFields
 import java.util.Locale
 import javax.inject.Inject
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Typeface
+import android.graphics.drawable.Icon.createWithBitmap
+import androidx.wear.watchface.complications.data.MonochromaticImageComplicationData
 
 @AndroidEntryPoint
 class WeekOfYearComplicationService : SuspendingComplicationDataSourceService() {
@@ -66,19 +76,30 @@ private fun openScreen(): PendingIntent? {
 
 override fun getPreviewData(type: ComplicationType): ComplicationData? {
     return when (type) {
+
+        ComplicationType.MONOCHROMATIC_IMAGE -> MonochromaticImageComplicationData.Builder(
+            monochromaticImage = MonochromaticImage.Builder(createWithBitmap(createBitmapWithCircleAndNumber(7))).build(),
+            contentDescription = PlainComplicationText.Builder(text = "LOGO.").build())
+            .setTapAction(null)
+            .build()
+
+        ComplicationType.SMALL_IMAGE -> SmallImageComplicationData.Builder(
+            smallImage = SmallImage.Builder(
+                image = createWithBitmap(createBitmapWithCircleAndNumber(7)),
+                type = SmallImageType.ICON).build(),
+            contentDescription = PlainComplicationText.Builder(text = "LOGO.").build())
+            .setTapAction(null)
+            .build()
+
         ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
         text = PlainComplicationText.Builder(text = "32").build(),
         contentDescription = PlainComplicationText.Builder(text = getString(R.string.woy_complication_text))
-            .build()
-    )
+            .build())
             .setTitle(PlainComplicationText.Builder(text = getString(R.string.woy_complication_text)).build())
-        .setMonochromaticImage(
-            MonochromaticImage.Builder(
-                image = createWithResource(this, drawable.ic_week),
-            ).build()
-        )
-        .setTapAction(null)
-        .build()
+            .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_week),).build())
+            .setTapAction(null)
+            .build()
+
         ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
             text = PlainComplicationText.Builder(text = "32").build(),
             contentDescription = PlainComplicationText.Builder(text = getString(R.string.woy_complication_description)).build())
@@ -128,6 +149,25 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
 
     return when (request.complicationType) {
 
+
+        ComplicationType.MONOCHROMATIC_IMAGE -> MonochromaticImageComplicationData.Builder(
+            monochromaticImage = MonochromaticImage.Builder(createWithBitmap(createBitmapWithCircleAndNumber(week.toInt()))).build(),
+            contentDescription = PlainComplicationText.Builder(text = "LOGO.").build())
+            .setTapAction(null)
+            .build()
+
+        ComplicationType.SMALL_IMAGE -> SmallImageComplicationData.Builder(
+            smallImage = SmallImage.Builder(
+                image = createWithBitmap(createBitmapWithCircleAndNumber(week.toInt())),
+                type = SmallImageType.ICON).build(),
+            contentDescription = PlainComplicationText.Builder(text = "LOGO.").build())
+            .setTapAction(null)
+            .build()
+
+
+
+
+
         ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
             text = PlainComplicationText.Builder(text = week).build(),
             contentDescription = PlainComplicationText.Builder(text = getString(R.string.woy_complication_description)).build())
@@ -169,4 +209,37 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
     }
 }
 }
+
+fun createBitmapWithCircleAndNumber(number: Int): Bitmap {
+    // Define the bitmap size
+    val bitmapSize = 72
+
+    // Create a bitmap with the specified size and configure a canvas
+    val bitmap = Bitmap.createBitmap(bitmapSize, bitmapSize, Bitmap.Config.ARGB_8888)
+    val canvas = Canvas(bitmap)
+
+    // Draw a white circle in the center
+    val centerX = bitmapSize / 2f
+    val centerY = bitmapSize / 2f
+    val radius = bitmapSize / 2f
+    val paintCircle = Paint().apply {
+        color = Color.WHITE
+        style = Paint.Style.FILL
+    }
+    canvas.drawCircle(centerX, centerY, radius, paintCircle)
+
+    // Draw the number in the center
+    val paintText = Paint().apply {
+        color = Color.BLACK
+        textAlign = Paint.Align.CENTER
+        textSize = 48f
+        typeface = Typeface.DEFAULT_BOLD
+    }
+
+    val textY = centerY + 1 - (paintText.descent() + paintText.ascent()) / 2
+    canvas.drawText(number.toString(), centerX, textY, paintText)
+
+    return Bitmap.createScaledBitmap(bitmap, bitmapSize, bitmapSize, true)
+}
+
 

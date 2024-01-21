@@ -42,6 +42,7 @@ import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.R.drawable
+import com.weartools.weekdayutccomp.enums.MoonIconType
 import com.weartools.weekdayutccomp.preferences.UserPreferences
 import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
 import com.weartools.weekdayutccomp.utils.DrawMoonBitmap
@@ -103,7 +104,7 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
         )
             .setMonochromaticImage(
                 MonochromaticImage.Builder(
-                    image = createWithResource(this, drawable.x_moon_full),
+                    image = createWithResource(this, drawable.ic_settings_moon_detailed),
                 ).build()
             )
             .setTapAction(null)
@@ -116,14 +117,14 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
             contentDescription = PlainComplicationText.Builder(text = "Visibility").build()
             )
             .setMonochromaticImage(
-                MonochromaticImage.Builder(createWithResource(this, drawable.x_moon_first_quarter)).build()
+                MonochromaticImage.Builder(createWithResource(this, drawable.ic_settings_moon_detailed)).build()
             )
             .setTapAction(null)
             .build()
 
         ComplicationType.MONOCHROMATIC_IMAGE -> MonochromaticImageComplicationData.Builder(
             monochromaticImage = MonochromaticImage.Builder(
-                createWithResource(this, drawable.x_moon_full)
+                createWithResource(this, drawable.ic_settings_moon_detailed)
             )
                 .build(),
             contentDescription = PlainComplicationText.Builder(text = "MONO_IMG.").build()
@@ -134,7 +135,7 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
 
         ComplicationType.SMALL_IMAGE -> SmallImageComplicationData.Builder(
             smallImage = SmallImage.Builder(
-                image = createWithResource(this, drawable.x_moon_full),
+                image = createWithResource(this, drawable.ic_settings_moon_detailed),
                 type = SmallImageType.ICON
             ).build(),
             contentDescription = PlainComplicationText.Builder(text = "SMALL_IMAGE.").build()
@@ -150,7 +151,7 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
     override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
 
         val prefs = preferences.first()
-        val simpleIcon = prefs.isSimpleIcon
+        val moonIconType = prefs.moonIconType
         val isnorthernHemi = prefs.isHemisphere
 
         val lat = prefs.latitude
@@ -180,7 +181,7 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
 
             .setMonochromaticImage(
                 MonochromaticImage.Builder(
-                    if (simpleIcon) {
+                    if (moonIconType == MoonIconType.SIMPLE) {
                         createWithResource(this,
                             MoonPhaseHelper.getSimpleIcon(phaseName = phaseName,isnorthernHemi))
                     }
@@ -191,7 +192,10 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
                                 angle = angle,
                                 parallacticAngle = parallacticAngle,
                                 lat = lat,
-                                hemi = isnorthernHemi))
+                                hemi = isnorthernHemi,
+                                iconType = moonIconType
+                            )
+                        )
                     }
                 ).build()
             )
@@ -204,7 +208,7 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
             .setTitle(PlainComplicationText.Builder(text = MoonPhaseHelper.getMoonPhaseName(phaseName = phaseName, context = this)).build())
             .setMonochromaticImage(
                 MonochromaticImage.Builder(
-                    if (simpleIcon) {
+                    if (moonIconType == MoonIconType.SIMPLE) {
                         createWithResource(this,
                             MoonPhaseHelper.getSimpleIcon(phaseName = phaseName,isnorthernHemi))
                     }
@@ -215,7 +219,10 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
                             angle = angle,
                             parallacticAngle = parallacticAngle,
                             lat = lat,
-                            hemi = isnorthernHemi))
+                            hemi = isnorthernHemi,
+                            iconType = moonIconType
+                            )
+                        )
                     }
                 ).build()
             )
@@ -231,17 +238,19 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
         )
             .setMonochromaticImage(
                 MonochromaticImage.Builder(
-                    if (simpleIcon) {
+                    if (moonIconType == MoonIconType.SIMPLE) {
                         createWithResource(this,
                             MoonPhaseHelper.getSimpleIcon(phaseName = phaseName,isnorthernHemi))
                     }
                     else {createWithBitmap(
                         DrawMoonBitmap.getLunarPhaseBitmap(
-                        fraction = fraction,
-                        angle = angle,
-                        parallacticAngle = parallacticAngle,
-                        lat = lat,
-                        hemi = isnorthernHemi))
+                            fraction = fraction,
+                            angle = angle,
+                            parallacticAngle = parallacticAngle,
+                            lat = lat,
+                            hemi = isnorthernHemi,
+                            iconType = moonIconType
+                        ))
                     }
                 ).build()
             )
@@ -252,7 +261,7 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
 
             MonochromaticImageComplicationData.Builder(
                 monochromaticImage = MonochromaticImage.Builder(
-                    if (simpleIcon) {
+                    if (moonIconType == MoonIconType.SIMPLE) {
                         createWithResource(this,
                             MoonPhaseHelper.getSimpleIcon(phaseName = phaseName,isnorthernHemi))
                     }
@@ -262,7 +271,10 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
                         angle = angle,
                         parallacticAngle = parallacticAngle,
                         lat = lat,
-                        hemi = isnorthernHemi))
+                            hemi = isnorthernHemi,
+                            iconType = moonIconType
+                        )
+                    )
                     }).build(),
                 contentDescription = PlainComplicationText.Builder(text = "MONO_IMG.").build()
             )
@@ -274,7 +286,7 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
 
         ComplicationType.SMALL_IMAGE -> SmallImageComplicationData.Builder(
             smallImage = SmallImage.Builder(
-                image = if (simpleIcon) {
+                image = if (moonIconType == MoonIconType.SIMPLE) {
                     createWithResource(this,
                         MoonPhaseHelper.getSimpleIcon(phaseName = phaseName,isnorthernHemi))
                 }
@@ -284,7 +296,10 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
                     angle = angle,
                     parallacticAngle = parallacticAngle,
                     lat = lat,
-                    hemi = isnorthernHemi))
+                        hemi = isnorthernHemi,
+                        iconType = moonIconType
+                    )
+                )
                      },
                 type = SmallImageType.ICON
             ).build(),

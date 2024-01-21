@@ -59,6 +59,11 @@
     <string name="moon_setting_simple_icon_on">Simplă</string>
     <string name="moon_setting_simple_icon_off">Detaliat</string>
 
+    <string name="icon_type">Pictogramă</string>
+    <string name="icon_type_0">Simplă</string>
+    <string name="icon_type_1">Detaliat RGB</string>
+    <string name="icon_type_2">Detaliat ARGB</string>
+
     <!-- Pay Complication -->
     <string name="pay_comp_name">Pay</string>
 

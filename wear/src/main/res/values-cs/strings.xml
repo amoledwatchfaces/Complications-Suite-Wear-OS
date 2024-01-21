@@ -60,6 +60,11 @@
     <string name="moon_setting_simple_icon_on">Jednoduchá</string>
     <string name="moon_setting_simple_icon_off">Detailní</string>
 
+    <string name="icon_type">Ikona</string>
+    <string name="icon_type_0">Jednoduchá</string>
+    <string name="icon_type_1">Detailní RGB</string>
+    <string name="icon_type_2">Detailní ARGB</string>
+
     <!-- Pay Complication -->
     <string name="pay_comp_name">Pay</string>
 

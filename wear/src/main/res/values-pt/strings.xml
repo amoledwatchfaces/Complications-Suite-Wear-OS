@@ -60,6 +60,11 @@
     <string name="moon_setting_simple_icon_on">Simples</string>
     <string name="moon_setting_simple_icon_off">Detalhada</string>
 
+    <string name="icon_type">Ícone</string>
+    <string name="icon_type_0">Simples</string>
+    <string name="icon_type_1">Detalhada RGB</string>
+    <string name="icon_type_2">Detalhada ARGB</string>
+
     <!-- Pay Complication -->
     <string name="pay_comp_name">Pay</string>
 

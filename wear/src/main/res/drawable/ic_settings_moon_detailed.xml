@@ -6,7 +6,7 @@
     <group
         android:pivotX="36"
         android:pivotY="35"
-        android:rotation="45"
+        android:rotation="35"
         >
     <path
         android:pathData="M69,36c0,-18.23 -14.77,-33 -33,-33 -18.23,0 -33,14.77 -33,33 0,18.23 14.77,33 33,33s33,-14.77 33,-33Z"

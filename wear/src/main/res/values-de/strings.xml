@@ -61,6 +61,11 @@
     <string name="moon_setting_simple_icon_on">Einfaches</string>
     <string name="moon_setting_simple_icon_off">Detailliert</string>
 
+    <string name="icon_type">Symbol</string>
+    <string name="icon_type_0">Einfaches</string>
+    <string name="icon_type_1">Detailliert RGB</string>
+    <string name="icon_type_2">Detailliert ARGB</string>
+
     <!-- Pay Complication -->
     <string name="pay_comp_name">Pay</string>
 

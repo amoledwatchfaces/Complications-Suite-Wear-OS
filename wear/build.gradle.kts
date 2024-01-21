@@ -17,8 +17,8 @@ android {
         minSdk = 27
         //noinspection OldTargetApi
         targetSdk = 33
-        versionCode = 10000292
-        versionName = "2.9.2"
+        versionCode = 10000294
+        versionName = "2.9.4"
         resourceConfigurations += listOf("en", "cs", "de", "el", "es", "it", "pt", "ro", "sk", "zh", "ru")
     }
     bundle {
@@ -51,14 +51,14 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.3"
+        kotlinCompilerExtensionVersion = "1.5.8"
     }
     namespace = "com.weartools.weekdayutccomp"
 }
 
 dependencies {
     val composeUiVersion = "1.5.4"
-    val composeWearVersion = "1.3.0-beta01"
+    val composeWearVersion = "1.3.0-rc01"
 
     // NEW MOON / SUNRISE / SUNSET COMP
     //request permission
@@ -84,7 +84,7 @@ dependencies {
     implementation ("androidx.wear.compose:compose-material:$composeWearVersion")
     implementation ("androidx.wear.compose:compose-foundation:$composeWearVersion")
     implementation ("androidx.compose.ui:ui-tooling-preview:$composeUiVersion")
-    implementation ("androidx.activity:activity-compose:1.8.1")
+    implementation ("androidx.activity:activity-compose:1.8.2")
     implementation ("androidx.compose.material:material-icons-extended:$composeUiVersion")
 
     androidTestImplementation ("androidx.compose.ui:ui-test-junit4:$composeUiVersion")

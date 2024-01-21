@@ -9,6 +9,11 @@
     <string name="app_info">Info o aplikácii</string>
     <string name="version">Verzia</string>
 
+    <string name="icon_type">Typ Ikony</string>
+    <string name="icon_type_0">Jednoduchá</string>
+    <string name="icon_type_1">Detailná RGB</string>
+    <string name="icon_type_2">Detailná ARGB</string>
+
     <!-- Crypto Complication -->
     <string name="crypto_name_1" translatable="true">BTC Cena $</string>
     <string name="crypto_name_2" translatable="true">ETH Cena $</string>

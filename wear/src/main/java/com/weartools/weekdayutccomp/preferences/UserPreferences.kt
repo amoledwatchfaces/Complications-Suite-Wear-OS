@@ -3,6 +3,7 @@ package com.weartools.weekdayutccomp.preferences
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.Serializer
+import com.weartools.weekdayutccomp.enums.MoonIconType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
@@ -70,7 +71,9 @@ data class UserPreferences(
 
     // BITCOIN / ETH
     val priceBTC: Float = 0f,
-    val priceETH: Float = 0f
+    val priceETH: Float = 0f,
+
+    val moonIconType: MoonIconType = MoonIconType.DEFAULT
 
 )
 

@@ -110,7 +110,7 @@
 
             <meta-data
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-                android:value="SHORT_TEXT,RANGED_VALUE,LONG_TEXT" />
+                android:value="SHORT_TEXT,RANGED_VALUE,LONG_TEXT,ICON,SMALL_IMAGE" />
         </service>
         <service
             android:name=".complication.DateComplicationService"
@@ -303,7 +303,7 @@
         <service
             android:name=".complication.MoonPhaseComplicationService"
             android:exported="true"
-            android:icon="@drawable/ic_settings_moon_simple"
+            android:icon="@drawable/ic_settings_moon_detailed"
             android:label="@string/moon_comp_name"
             android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
             <intent-filter>

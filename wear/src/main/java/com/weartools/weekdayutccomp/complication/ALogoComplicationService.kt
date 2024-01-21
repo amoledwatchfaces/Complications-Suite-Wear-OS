@@ -46,7 +46,8 @@ class ALogoComplicationService : SuspendingComplicationDataSourceService() {
 
         val intent = Intent(Intent.ACTION_VIEW).apply {
             data = Uri.parse(
-                "https://play.google.com/store/search?q=dev:amoledwatchfaces™")
+                "https://play.google.com/store/apps/dev?id=5591589606735981545")
+              //  "https://play.google.com/store/search?q=dev:amoledwatchfaces™")
             //"https://play.google.com/store/search?q=amoledwatchfaces™&c=apps")
             setPackage("com.android.vending")
         }

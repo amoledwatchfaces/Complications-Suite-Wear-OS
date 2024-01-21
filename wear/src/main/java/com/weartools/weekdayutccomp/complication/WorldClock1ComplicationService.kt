@@ -43,7 +43,6 @@ class WorldClock1ComplicationService : SuspendingComplicationDataSourceService()
     private fun openScreen(): PendingIntent? {
 
         val intent = Intent(this, MainActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
 
         return PendingIntent.getActivity(
             this, 0, intent,
@@ -55,27 +54,14 @@ class WorldClock1ComplicationService : SuspendingComplicationDataSourceService()
         return when (type) {
             ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
                 text = PlainComplicationText.Builder(text = "10:00").build(),
-                contentDescription = PlainComplicationText.Builder(text = getString(R.string.wc_comp_name_1))
-                    .build()
-            )
-                .setTitle(
-                    PlainComplicationText.Builder(
-                        text = "UTC"
-                    ).build()
-                )
+                contentDescription = PlainComplicationText.Builder(text = getString(R.string.wc_comp_name_1)).build())
+                .setTitle(PlainComplicationText.Builder(text = "UTC").build())
                 .setTapAction(null)
                 .build()
             ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
                 text = PlainComplicationText.Builder(text = "10:00").build(),
-                contentDescription = PlainComplicationText
-                    .Builder(text = getString(R.string.wc_comp_name_1))
-                    .build()
-            )
-                .setTitle(
-                    PlainComplicationText.Builder(
-                        text = "UTC"
-                    ).build()
-                )
+                contentDescription = PlainComplicationText.Builder(text = getString(R.string.wc_comp_name_1)).build())
+                .setTitle(PlainComplicationText.Builder(text = "UTC").build())
                 .setTapAction(null)
                 .build()
             else -> {null}
@@ -106,28 +92,15 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
 
         ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
             text = text,
-            contentDescription = PlainComplicationText.Builder(text = getString(R.string.wc_comp_name_1))
-                .build()
-        )
-            .setTitle(
-                PlainComplicationText.Builder(
-                    text = city
-                ).build()
-            )
+            contentDescription = PlainComplicationText.Builder(text = getString(R.string.wc_comp_name_1)).build())
+            .setTitle(PlainComplicationText.Builder(text = city).build())
             .setTapAction(openScreen())
             .build()
 
         ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
             text = text,
-            contentDescription = PlainComplicationText
-                .Builder(text = getString(R.string.wc_comp_name_1))
-                .build()
-        )
-            .setTitle(
-                PlainComplicationText.Builder(
-                    text = city
-                ).build()
-            )
+            contentDescription = PlainComplicationText.Builder(text = getString(R.string.wc_comp_name_1)).build())
+            .setTitle(PlainComplicationText.Builder(text = city).build())
             .setTapAction(openScreen())
             .build()
 

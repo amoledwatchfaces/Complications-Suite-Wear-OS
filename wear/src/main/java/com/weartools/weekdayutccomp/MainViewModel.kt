@@ -27,6 +27,7 @@ import com.weartools.weekdayutccomp.complication.WaterComplicationService
 import com.weartools.weekdayutccomp.complication.WeekOfYearComplicationService
 import com.weartools.weekdayutccomp.complication.WorldClock1ComplicationService
 import com.weartools.weekdayutccomp.complication.WorldClock2ComplicationService
+import com.weartools.weekdayutccomp.enums.MoonIconType
 import com.weartools.weekdayutccomp.preferences.UserPreferences
 import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
 import com.weartools.weekdayutccomp.utils.AddressDataModel
@@ -138,19 +139,16 @@ fun getLocation(context: Context){
     fun setDatePicked(value: String, context: Context) { viewModelScope.launch {
         dataStore.updateData { it.copy(datePicker = value) }
         context.updateComplication(DateCountdownComplicationService::class.java)
-    }
-    }
+    }}
 
     fun setWater(value: Int, context: Context) { viewModelScope.launch {
         dataStore.updateData { it.copy(water = value) }
         context.updateComplication(WaterComplicationService::class.java)
-    }
-    }
+    }}
     fun setWaterGoal(value: Float, context: Context) { viewModelScope.launch {
         dataStore.updateData { it.copy(waterGoal = value) }
         context.updateComplication(WaterComplicationService::class.java)
-    }
-    }
+    }}
 
     fun setNotificationAsked(value: Boolean) { viewModelScope.launch {
         dataStore.updateData { it.copy(notificationAsked = value) } }
@@ -166,72 +164,70 @@ fun getLocation(context: Context){
         context.updateComplication(MoonPhaseComplicationService::class.java)
     }}
     fun setDateLongTextFormat(value: String, context: Context) { viewModelScope.launch {
-        dataStore.updateData { it.copy(longText = value) } }
+        dataStore.updateData { it.copy(longText = value) }
         context.updateComplication(DateComplicationService::class.java)
-    }
+    }}
     fun setDateShortTextFormat(value: String, context: Context) { viewModelScope.launch {
-        dataStore.updateData { it.copy(shortText = value) } }
+        dataStore.updateData { it.copy(shortText = value) }
         context.updateComplication(DateComplicationService::class.java)
-    }
+    }}
     fun setDateShortTitleFormat(value: String, context: Context) { viewModelScope.launch {
-        dataStore.updateData { it.copy(shortTitle = value) } }
+        dataStore.updateData { it.copy(shortTitle = value) }
         context.updateComplication(DateComplicationService::class.java)
-    }
+    }}
 
     fun setTimeDiffStyle(value: String, context: Context) { viewModelScope.launch {
-        dataStore.updateData { it.copy(timeDiffStyle = value) } }
+        dataStore.updateData { it.copy(timeDiffStyle = value) }
         context.updateComplication(SunriseSunsetRVComplicationService::class.java)
-    }
+    }}
     fun setMilitary(value: Boolean, context: Context) { viewModelScope.launch {
-        dataStore.updateData { it.copy(isMilitary = value) } }
+        dataStore.updateData { it.copy(isMilitary = value) }
         context.updateComplication(WorldClock1ComplicationService::class.java)
         context.updateComplication(WorldClock2ComplicationService::class.java)
-    }
+    }}
     fun setMilitaryTime(value: Boolean, context: Context) { viewModelScope.launch {
-        dataStore.updateData { it.copy(isMilitaryTime = value) } }
+        dataStore.updateData { it.copy(isMilitaryTime = value) }
         context.updateComplication(TimeComplicationService::class.java)
         context.updateComplication(SunriseSunsetComplicationService::class.java)
-    }
+    }}
     fun setISO(value: Boolean, context: Context) { viewModelScope.launch {
-        dataStore.updateData { it.copy(isISO = value) } }
+        dataStore.updateData { it.copy(isISO = value) }
         context.updateComplication(WeekOfYearComplicationService::class.java)
-    }
+    }}
     fun setWorldClock1(value: String, context: Context) { viewModelScope.launch {
-        dataStore.updateData { it.copy(city1 = value) } }
+        dataStore.updateData { it.copy(city1 = value) }
         context.updateComplication(WorldClock1ComplicationService::class.java)
-    }
+    }}
     fun setWorldClock2(value: String, context: Context) { viewModelScope.launch {
-        dataStore.updateData { it.copy(city2 = value) } }
+        dataStore.updateData { it.copy(city2 = value) }
         context.updateComplication(WorldClock2ComplicationService::class.java)
-    }
+    }}
 
     fun setHemisphere(value: Boolean,context: Context) { viewModelScope.launch {
-        dataStore.updateData { it.copy(isHemisphere = value) } }
+        dataStore.updateData { it.copy(isHemisphere = value) }
         context.updateComplication(MoonPhaseComplicationService::class.java)
-    }
-    fun setSimpleIcon(value: Boolean, context: Context) { viewModelScope.launch {
-        dataStore.updateData { it.copy(isSimpleIcon = value) }
+    }}
+    fun setMoonIcon(value: MoonIconType, context: Context) { viewModelScope.launch {
+        dataStore.updateData { it.copy(moonIconType = value) }
         context.updateComplication(MoonPhaseComplicationService::class.java)
-
-    } }
+    }}
     fun setLeadingZero(value: Boolean, context: Context) { viewModelScope.launch {
         dataStore.updateData { it.copy(isLeadingZero = value) }
         context.updateComplication(WorldClock1ComplicationService::class.java)
         context.updateComplication(WorldClock2ComplicationService::class.java)
-    } }
+    }}
 
     fun setLeadingZeroTime(value: Boolean, context: Context) { viewModelScope.launch {
         dataStore.updateData { it.copy(isLeadingZeroTime = value) }
         context.updateComplication(TimeComplicationService::class.java)
         context.updateComplication(SunriseSunsetComplicationService::class.java)
-    } }
+    }}
     fun setCustomText(value: String, context: Context) { viewModelScope.launch {
         dataStore.updateData { it.copy(customText = value) }
         context.updateComplication(CustomTextComplicationService::class.java)
-    } }
+    }}
     fun setCustomTitle(value: String, context: Context) { viewModelScope.launch {
         dataStore.updateData { it.copy(customTitle = value) }
         context.updateComplication(CustomTextComplicationService::class.java)
-    } }
-
+    }}
 }

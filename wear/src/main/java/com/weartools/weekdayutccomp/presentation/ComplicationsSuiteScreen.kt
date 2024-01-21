@@ -59,6 +59,7 @@ import com.weartools.weekdayutccomp.BuildConfig
 import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.enums.DateFormat
+import com.weartools.weekdayutccomp.enums.MoonIconType
 import com.weartools.weekdayutccomp.presentation.rotary.rotaryWithScroll
 import com.weartools.weekdayutccomp.theme.wearColorPalette
 import com.weartools.weekdayutccomp.utils.openPlayStore
@@ -96,6 +97,9 @@ fun ComplicationsSuiteScreen(
             viewModel.getLocation(context)
         })
 
+    /** ICONS **/
+    val moonIconTypeList = listOf(MoonIconType.SIMPLE,MoonIconType.DEFAULT,MoonIconType.TRANSPARENT)
+    val moonIconTypeStringList = stringArrayResource(id = R.array.iconTypesArray).toList()
 
     /** LOCALE **/
     val index = localesShortList.indexOf(preferences.value.locale)
@@ -110,6 +114,7 @@ fun ComplicationsSuiteScreen(
     var isTImeZOnClick2 by remember { mutableStateOf(false) }
     var timeDiffs by remember { mutableStateOf(false) }
     var openLocale by remember{ mutableStateOf(false) }
+    var moonIconChange by remember{ mutableStateOf(false) }
 
     ScalingLazyColumn(
         modifier = Modifier
@@ -176,13 +181,10 @@ fun ComplicationsSuiteScreen(
         item { PreferenceCategory(title = stringResource(id = R.string.moon_setting_preference_category_title)) }
 
         item {
-            ToggleChip(
-                label = stringResource(id = R.string.moon_setting_simple_icon_title),
-                secondaryLabelOn = stringResource(id = R.string.moon_setting_simple_icon_on),
-                secondaryLabelOff = stringResource(id = R.string.moon_setting_simple_icon_off),
-                checked = preferences.value.isSimpleIcon,
+            DialogChip(
+                text = stringResource(id = R.string.moon_setting_simple_icon_title),
                 icon = {
-                    if (preferences.value.isSimpleIcon) Icon(
+                    if (preferences.value.moonIconType == MoonIconType.SIMPLE) Icon(
                         painter = painterResource(id = R.drawable.ic_settings_moon_simple),
                         contentDescription = "Simple Moon Icon"
                     )
@@ -191,14 +193,15 @@ fun ComplicationsSuiteScreen(
                         contentDescription = "Detailed Moon Icon",
                         tint = Color.Unspecified
                     )
-                       },
-                onCheckedChange = {
-                    viewModel.setSimpleIcon(it, context)
+                },
+                title = moonIconTypeStringList[moonIconTypeList.indexOf(preferences.value.moonIconType)],
+                onClick = {
+                    moonIconChange = moonIconChange.not()
                 }
             )
         }
 
-        if (preferences.value.isSimpleIcon || !permissionState.status.isGranted)
+        if (preferences.value.moonIconType == MoonIconType.SIMPLE || !permissionState.status.isGranted)
         {
             item {
                 ToggleChip(
@@ -462,6 +465,24 @@ fun ComplicationsSuiteScreen(
                 openLocale=false
         } )
 
+    }
+
+    if (moonIconChange){
+        ListItemsWidget(
+            focusRequester = focusRequester,
+            titles = stringResource(id = R.string.icon_type),
+            items = moonIconTypeStringList,
+            preValue = moonIconTypeStringList[moonIconTypeList.indexOf(preferences.value.moonIconType)],
+            callback ={
+                if (it == -1) {
+                    moonIconChange=false
+                    return@ListItemsWidget
+                }else {
+                    viewModel.setMoonIcon(moonIconTypeList[it],context)
+                    moonIconChange = moonIconChange.not()
+                }
+            }
+        )
     }
 
     if (timeDiffs){

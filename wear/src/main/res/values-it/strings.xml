@@ -59,6 +59,11 @@
     <string name="moon_setting_simple_icon_on">Semplice</string>
     <string name="moon_setting_simple_icon_off">Dettagliata</string>
 
+    <string name="icon_type">Icona</string>
+    <string name="icon_type_0">Semplice</string>
+    <string name="icon_type_1">Dettagliata RGB</string>
+    <string name="icon_type_2">Dettagliata ARGB</string>
+
     <!-- Pay Complication -->
     <string name="pay_comp_name">Pay</string>
 

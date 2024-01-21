@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <array name="iconTypesArray">
+        <item>@string/icon_type_0</item>
+        <item>@string/icon_type_1</item>
+        <item>@string/icon_type_2</item>
+    </array>
+
     <string-array name="cities">
         <item>UTC</item>
         <item>ACC</item>
