@@ -113,6 +113,9 @@ dependencies {
     // HILT
     implementation ("androidx.hilt:hilt-navigation-compose:1.1.0")
     implementation ("com.google.dagger:hilt-android:2.48")
+
+    implementation("com.github.samanzamani:persiandate:1.7.1")
+
     kapt ("com.google.dagger:hilt-compiler:2.47")
 }
 // Allow references to generated code
