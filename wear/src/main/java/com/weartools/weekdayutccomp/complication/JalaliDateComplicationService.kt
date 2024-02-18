@@ -80,14 +80,14 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
     val prefs = preferences.first()
     val longText = prefs.longText
     val persianDate = PersianDate()
-    val persianDateText = PersianDateFormat("d").format(persianDate)
+    val persianDayText = PersianDateFormat("d").format(persianDate)
     val persianMonthText = PersianDateFormat("m").format(persianDate)
 
     return when (request.complicationType) {
         ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
 
             text = try {
-                PlainComplicationText.Builder(persianDateText.toString()).build()
+                PlainComplicationText.Builder(persianDayText.toString()).build()
             } catch (e: IllegalArgumentException) {
                 // Inform the user that the format is invalid
                 Toast.makeText(this, "Text: Wrong format! Check SimpleDateFormat", Toast.LENGTH_LONG).show()
