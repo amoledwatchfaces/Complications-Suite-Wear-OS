@@ -18,6 +18,8 @@ package com.weartools.weekdayutccomp.complication
 
 import android.app.PendingIntent
 import android.content.Intent
+import android.icu.util.IslamicCalendar
+import android.icu.util.ULocale
 import android.util.Log
 import android.widget.Toast
 import androidx.datastore.core.DataStore
@@ -29,9 +31,7 @@ import com.weartools.weekdayutccomp.preferences.UserPreferences
 import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
-import com.ibm.icu.util.Calendar
-import com.ibm.icu.util.IslamicCalendar
-import com.ibm.icu.util.ULocale
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -60,7 +60,7 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
         contentDescription = PlainComplicationText
             .Builder(text = getString(R.string.date_comp_name))
             .build())
-        .setTitle(PlainComplicationText.Builder(text = "04").build())
+        .setTitle(PlainComplicationText.Builder(text = "شعبان").build())
         .setTapAction(null)
         .build()
         ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
@@ -81,8 +81,23 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
     val prefs = preferences.first()
     val longText = prefs.longText
     val islamicCalendar = IslamicCalendar(ULocale.US)
-    val islamicMonth = islamicCalendar.get(Calendar.MONTH) + 1  // months are zero-based
+    val islamicMonth = islamicCalendar.get(Calendar.MONTH)  // months are zero-based
     val islamicDay = islamicCalendar.get(Calendar.DAY_OF_MONTH)
+    val islamicMonths = arrayOf(
+        "محرم",
+        "صفر",
+        "ربيع الأول",
+        "ربيع الثاني",
+        "جمادى الأولى",
+        "جمادى الثانية",
+        "رجب",
+        "شعبان",
+        "رمضان",
+        "شوال",
+        "ذو القعدة",
+        "ذو الحجة"
+    )
+    val month_name = islamicMonths[islamicMonth]
 
     return when (request.complicationType) {
         ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
@@ -100,7 +115,7 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
         )
             .setTitle(
                 try {
-                    PlainComplicationText.Builder(islamicMonth.toString()).build()
+                    PlainComplicationText.Builder(month_name).build()
                 } catch (e: IllegalArgumentException) {
                     // Inform the user that the format is invalid
                     Toast.makeText(this, "Title: Wrong format! Check SimpleDateFormat", Toast.LENGTH_LONG).show()

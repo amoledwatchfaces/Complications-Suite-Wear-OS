@@ -115,6 +115,7 @@ dependencies {
     implementation ("com.google.dagger:hilt-android:2.48")
 
     implementation("com.github.samanzamani:persiandate:1.7.1")
+    implementation("com.jakewharton.threetenabp:threetenabp:1.3.1")
 
     kapt ("com.google.dagger:hilt-compiler:2.47")
 }
