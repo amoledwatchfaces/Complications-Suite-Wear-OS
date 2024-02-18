@@ -59,7 +59,7 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
         contentDescription = PlainComplicationText
             .Builder(text = getString(R.string.date_comp_name))
             .build())
-        .setTitle(PlainComplicationText.Builder(text = "04").build())
+        .setTitle(PlainComplicationText.Builder(text = "تیر").build())
         .setTapAction(null)
         .build()
         ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
@@ -81,7 +81,7 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
     val longText = prefs.longText
     val persianDate = PersianDate()
     val persianDayText = PersianDateFormat("d").format(persianDate)
-    val persianMonthText = PersianDateFormat("m").format(persianDate)
+    val persianMonthText = persianDate.monthName
 
     return when (request.complicationType) {
         ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
