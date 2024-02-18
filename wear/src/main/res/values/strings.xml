@@ -28,6 +28,7 @@
     <!-- Date Complication Preferences -->
     <string name="date_comp_name">Date</string>
     <string name="date_comp_jalali_name" translatable="false">Date Jalali</string>
+    <string name="date_comp_hijri_name" translatable="false">Date Hijri</string>
     <string name="date_custom_format">Custom format</string>
     <string name="date_setting_preference_category_title">Date Complication</string>
     <string name="date_long_text_format">Long Text Format</string>
