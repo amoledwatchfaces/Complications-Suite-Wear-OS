@@ -18,6 +18,7 @@ package com.weartools.weekdayutccomp.complication
 
 import android.app.PendingIntent
 import android.content.Intent
+import android.graphics.drawable.Icon
 import android.icu.util.TimeZone
 import android.util.Log
 import androidx.datastore.core.DataStore
@@ -103,6 +104,7 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
             text = text,
             contentDescription = PlainComplicationText.Builder(text = getString(R.string.wc_comp_name_1)).build())
             .setTitle(PlainComplicationText.Builder(text = city2).build())
+            .setMonochromaticImage(MonochromaticImage.Builder(Icon.createWithResource(this, R.drawable.ic_timezone)).build())
             .setTapAction(openScreen())
             .build()
 

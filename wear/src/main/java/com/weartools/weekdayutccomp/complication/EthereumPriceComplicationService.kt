@@ -90,7 +90,7 @@ class EthereumPriceComplicationService : SuspendingComplicationDataSourceService
         val complicationPendingIntent =
             ComplicationTapBroadcastReceiver.getToggleIntent(context = this, args = args)
 
-        val df = DecimalFormat("#.#K").apply { RoundingMode.HALF_UP }
+        val df = DecimalFormat("#.##K").apply { RoundingMode.HALF_UP }
 
         //GET LAST PRICE
         val lastPrice = preferences.first().priceETH
@@ -106,7 +106,7 @@ class EthereumPriceComplicationService : SuspendingComplicationDataSourceService
         lowPrice = jsonObject?.get("lowPrice")?.asFloat ?: 0f
 
 
-        val priceString = if (price >= 1000.00) {df.format(price/1000.0).toString()}
+        val priceString = if (price >= 1000.00) {df.format(price/1000.00).toString()}
         else if (price <= 0) {"--"}
         else { price.toString() }
 

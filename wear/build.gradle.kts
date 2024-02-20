@@ -17,8 +17,8 @@ android {
         minSdk = 27
         //noinspection OldTargetApi
         targetSdk = 33
-        versionCode = 10000294
-        versionName = "2.9.4"
+        versionCode = 10000296
+        versionName = "2.9.6"
         resourceConfigurations += listOf("en", "cs", "de", "el", "es", "it", "pt", "ro", "sk", "zh", "ru")
     }
     bundle {

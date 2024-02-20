@@ -236,6 +236,7 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
             contentDescription = PlainComplicationText
                 .Builder(text = "Visibility").build()
         )
+            .setText(PlainComplicationText.Builder(text = "${phase.toInt()}°").build())
             .setMonochromaticImage(
                 MonochromaticImage.Builder(
                     if (moonIconType == MoonIconType.SIMPLE) {
