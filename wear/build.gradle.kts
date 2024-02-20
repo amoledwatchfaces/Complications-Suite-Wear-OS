@@ -17,8 +17,8 @@ android {
         minSdk = 27
         //noinspection OldTargetApi
         targetSdk = 33
-        versionCode = 10000296
-        versionName = "2.9.6"
+        versionCode = 10000297
+        versionName = "2.9.7"
         resourceConfigurations += listOf("en", "cs", "de", "el", "es", "it", "pt", "ro", "sk", "zh", "ru")
     }
     bundle {
@@ -57,14 +57,14 @@ android {
 }
 
 dependencies {
-    val composeUiVersion = "1.5.4"
-    val composeWearVersion = "1.3.0-rc01"
+    val composeUiVersion = "1.6.1"
+    val composeWearVersion = "1.3.0"
 
     // NEW MOON / SUNRISE / SUNSET COMP
     //request permission
     implementation ("com.google.accompanist:accompanist-permissions:0.28.0")
     //location
-    implementation ("com.google.android.gms:play-services-location:21.0.1")
+    implementation ("com.google.android.gms:play-services-location:21.1.0")
 
     // Used for WorkManager
     implementation ("androidx.work:work-runtime:2.9.0")
@@ -75,7 +75,7 @@ dependencies {
 
     // WEAR OS
     implementation ("com.google.android.gms:play-services-wearable:18.1.0")
-    implementation ("androidx.wear.watchface:watchface-complications-data-source-ktx:1.2.0")
+    implementation ("androidx.wear.watchface:watchface-complications-data-source-ktx:1.2.1")
     implementation ("androidx.wear:wear:1.3.0")
 
     //COMPOSE
