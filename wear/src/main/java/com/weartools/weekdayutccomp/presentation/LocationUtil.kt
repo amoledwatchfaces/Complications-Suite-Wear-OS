@@ -46,7 +46,6 @@ fun LocationCard(
         appName = {Text(stringResource(id = R.string.location), color = Color(0xFFF1F1F1))},
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 10.dp)
             .alpha(if (enabled) 1f else 0.5f),
         onClick = {
             if (permissionState.status.isGranted) {
@@ -65,8 +64,7 @@ fun LocationToggle(
 ) {
     ToggleChip(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 10.dp),
+            .fillMaxWidth(),
         checked = checked,
         colors = ToggleChipDefaults.toggleChipColors(
             checkedEndBackgroundColor = wearColorPalette.primaryVariant,

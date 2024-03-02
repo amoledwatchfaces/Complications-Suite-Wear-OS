@@ -133,6 +133,7 @@
 
         <service
             android:name=".complication.JalaliDateComplicationService"
+            android:enabled="false"
             android:exported="true"
             android:icon="@drawable/ic_date"
             android:label="@string/date_comp_jalali_name"
@@ -149,6 +150,7 @@
 
         <service
             android:name=".complication.HijriDateComplicationService"
+            android:enabled="false"
             android:exported="true"
             android:icon="@drawable/ic_date"
             android:label="@string/date_comp_hijri_name"

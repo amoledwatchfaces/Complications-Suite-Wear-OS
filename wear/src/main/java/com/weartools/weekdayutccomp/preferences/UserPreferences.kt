@@ -73,7 +73,10 @@ data class UserPreferences(
     val priceBTC: Float = 0f,
     val priceETH: Float = 0f,
 
-    val moonIconType: MoonIconType = MoonIconType.DEFAULT
+    val moonIconType: MoonIconType = MoonIconType.DEFAULT,
+
+    // JALALI / HIJRI DATE
+    val jalaliHijriDateComplications: Boolean = false,
 
 )
 

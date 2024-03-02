@@ -55,6 +55,7 @@ import androidx.wear.compose.material.Text
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
+import com.google.android.horologist.annotations.ExperimentalHorologistApi
 import com.weartools.weekdayutccomp.BuildConfig
 import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.R
@@ -64,7 +65,7 @@ import com.weartools.weekdayutccomp.presentation.rotary.rotaryWithScroll
 import com.weartools.weekdayutccomp.theme.wearColorPalette
 import com.weartools.weekdayutccomp.utils.openPlayStore
 
-@OptIn(ExperimentalPermissionsApi::class)
+@OptIn(ExperimentalPermissionsApi::class, ExperimentalHorologistApi::class)
 @Composable
 fun ComplicationsSuiteScreen(
     listState: ScalingLazyListState = rememberScalingLazyListState(),
@@ -275,8 +276,7 @@ fun ComplicationsSuiteScreen(
         item {
             Card(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 10.dp),
+                    .fillMaxWidth(),
                 onClick = {
                     timeDiffs = timeDiffs.not()
                 },
@@ -343,6 +343,19 @@ fun ComplicationsSuiteScreen(
                 title = preferences.value.shortTitle,
                 onClick = {
                     shortTitleFormat = shortTitleFormat.not()
+                }
+            )
+        }
+        /** Jalali / Hijri Complications Toggle **/
+        item {
+            ToggleChip(
+                label = stringResource(id = R.string.date_comp_jalali_hijri_settings),
+                secondaryLabelOn = "Complications",
+                secondaryLabelOff = "Complications",
+                checked = preferences.value.jalaliHijriDateComplications,
+                icon = {},
+                onCheckedChange = {
+                    viewModel.setJalaliHijriComplicationsState(context, it)
                 }
             )
         }

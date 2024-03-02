@@ -34,6 +34,7 @@ import androidx.wear.compose.material.ToggleChip
 import androidx.wear.compose.material.ToggleChipDefaults
 import androidx.wear.compose.material.dialog.Alert
 import androidx.wear.compose.material.dialog.Dialog
+import com.google.android.horologist.annotations.ExperimentalHorologistApi
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.presentation.rotary.rotaryWithScroll
 import com.weartools.weekdayutccomp.theme.wearColorPalette
@@ -48,8 +49,7 @@ fun DialogChip(
 ) {
     Chip(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 10.dp),
+            .fillMaxWidth(),
         onClick = {
             onClick?.invoke()
         },
@@ -71,6 +71,7 @@ fun DialogChip(
     )
 }
 
+@OptIn(ExperimentalHorologistApi::class)
 @Composable
 fun ListItemsWidget(
     focusRequester: FocusRequester,
@@ -119,8 +120,7 @@ fun ListItemsWidget(
                     itemsIndexed(items) { index, i ->
                         ToggleChip(
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 10.dp),
+                                .fillMaxWidth(),
                             checked = preValue == items[index],
                             colors = ToggleChipDefaults.toggleChipColors(
                                 checkedEndBackgroundColor = wearColorPalette.primaryVariant,
@@ -163,8 +163,7 @@ fun ToggleChip(
 ) {
     ToggleChip(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 10.dp),
+            .fillMaxWidth(),
         checked = checked,
         colors = ToggleChipDefaults.toggleChipColors(
             checkedEndBackgroundColor = wearColorPalette.primaryVariant,

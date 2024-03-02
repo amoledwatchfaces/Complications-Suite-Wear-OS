@@ -97,7 +97,7 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
         "ذو القعدة",
         "ذو الحجة"
     )
-    val month_name = islamicMonths[islamicMonth]
+    val monthName = islamicMonths[islamicMonth]
 
     return when (request.complicationType) {
         ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
@@ -115,7 +115,7 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
         )
             .setTitle(
                 try {
-                    PlainComplicationText.Builder(month_name).build()
+                    PlainComplicationText.Builder(monthName).build()
                 } catch (e: IllegalArgumentException) {
                     // Inform the user that the format is invalid
                     Toast.makeText(this, "Title: Wrong format! Check SimpleDateFormat", Toast.LENGTH_LONG).show()

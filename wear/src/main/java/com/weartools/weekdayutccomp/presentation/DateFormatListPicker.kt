@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -29,6 +28,7 @@ import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.ToggleChipDefaults
 import androidx.wear.compose.material.dialog.Alert
 import androidx.wear.compose.material.dialog.Dialog
+import com.google.android.horologist.annotations.ExperimentalHorologistApi
 import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.enums.DateFormat
@@ -36,6 +36,7 @@ import com.weartools.weekdayutccomp.presentation.rotary.rotaryWithScroll
 import com.weartools.weekdayutccomp.theme.wearColorPalette
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalHorologistApi::class)
 @Composable
 fun DateFormatListPicker(
     items: List<String>,
@@ -99,8 +100,7 @@ fun DateFormatListPicker(
                 { index, i ->
                     androidx.wear.compose.material.ToggleChip(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 10.dp),
+                            .fillMaxWidth(),
                         checked = preValue == items[index],
                         colors = ToggleChipDefaults.toggleChipColors(
                             checkedEndBackgroundColor = wearColorPalette.primaryVariant,

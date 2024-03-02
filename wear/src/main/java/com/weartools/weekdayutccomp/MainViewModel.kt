@@ -1,7 +1,9 @@
 package com.weartools.weekdayutccomp
 
 import android.annotation.SuppressLint
+import android.content.ComponentName
 import android.content.Context
+import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
 import android.os.Build
@@ -230,4 +232,37 @@ fun getLocation(context: Context){
         dataStore.updateData { it.copy(customTitle = value) }
         context.updateComplication(CustomTextComplicationService::class.java)
     }}
+
+    private fun disableClass(context: Context, className: String){
+        viewModelScope.launch {
+            val packageManager = context.packageManager
+            val componentName = ComponentName(context, className)
+            packageManager.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP)
+
+        }
+    }
+    private fun enableClass(context: Context, className: String){
+        viewModelScope.launch {
+            val packageManager = context.packageManager
+            val componentName = ComponentName(context, className)
+            packageManager.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP)
+
+        }
+    }
+
+    fun setJalaliHijriComplicationsState(context: Context, state: Boolean) {
+        viewModelScope.launch {
+            dataStore.updateData { it.copy(jalaliHijriDateComplications = state) }
+            if (state){
+                /** DISABLE ALL CLASSES AND USE NEW PLATFORM COMPLICATION **/
+                enableClass(context = context, "com.weartools.weekdayutccomp.complication.HijriDateComplicationService")
+                enableClass(context = context, "com.weartools.weekdayutccomp.complication.JalaliDateComplicationService")
+            }
+            else {
+                /** ENABLE ALL CLASSES AND DISABLE NEW PLATFORM COMPLICATION **/
+                disableClass(context = context, "com.weartools.weekdayutccomp.complication.HijriDateComplicationService")
+                disableClass(context = context, "com.weartools.weekdayutccomp.complication.JalaliDateComplicationService")
+            }
+        }
+    }
 }

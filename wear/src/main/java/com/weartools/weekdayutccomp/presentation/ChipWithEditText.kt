@@ -56,8 +56,7 @@ fun ChipWithEditText(
     Chip(
             onClick = {},
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 10.dp),
+                .fillMaxWidth(),
             colors = if (isCustomFormatUsed) {ChipDefaults.gradientBackgroundChipColors(
                 startBackgroundColor = MaterialTheme.colors.surface.copy(alpha = 0f)
                     .compositeOver(MaterialTheme.colors.surface),
