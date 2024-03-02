@@ -57,7 +57,7 @@ android {
 }
 
 dependencies {
-    val composeUiVersion = "1.6.1"
+    val composeUiVersion = "1.6.2"
     val composeWearVersion = "1.3.0"
 
     // NEW MOON / SUNRISE / SUNSET COMP
@@ -111,8 +111,8 @@ dependencies {
     implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
 
     // HILT
-    implementation ("androidx.hilt:hilt-navigation-compose:1.1.0")
-    implementation ("com.google.dagger:hilt-android:2.48")
+    implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
+    implementation ("com.google.dagger:hilt-android:2.49")
     kapt ("com.google.dagger:hilt-compiler:2.47")
 }
 // Allow references to generated code
