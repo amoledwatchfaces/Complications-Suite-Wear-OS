@@ -54,7 +54,8 @@
         <activity
             android:name=".activity.MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.App.Starting">
+            android:theme="@style/Theme.App.Starting"
+            android:taskAffinity="">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -64,7 +65,8 @@
         <activity
             android:name=".activity.PickDateActivity"
             android:exported="true"
-            android:theme="@android:style/Theme.DeviceDefault">
+            android:theme="@android:style/Theme.DeviceDefault"
+            android:taskAffinity="">
             <intent-filter>
                 <action android:name="com.weartools.weekdayutccomp.CONFIG_COMPLICATION" />
                 <category android:name="android.support.wearable.complications.category.PROVIDER_CONFIG" />
@@ -75,7 +77,8 @@
         <activity
             android:name=".activity.VolumeActivity"
             android:noHistory="true"
-            android:exported="true">
+            android:exported="true"
+            android:taskAffinity="">
         </activity>
 
         <service
@@ -409,7 +412,8 @@
 
         <activity
             android:name=".activity.FlashlightActivity"
-            android:exported="true">
+            android:exported="true"
+            android:taskAffinity="">
         </activity>
 
         <service
@@ -501,7 +505,8 @@
         <activity
             android:name=".activity.WaterActivity"
             android:noHistory="true"
-            android:exported="true">
+            android:exported="true"
+            android:taskAffinity="">
         </activity>
 
         <service
