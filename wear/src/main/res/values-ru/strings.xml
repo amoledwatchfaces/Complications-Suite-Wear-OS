@@ -34,6 +34,11 @@
     <string name="date_short_text_format">Краткий Текстовый Формат</string>
     <string name="date_short_title_format">Краткого Названия Формат</string>
 
+    <!-- Persian Date -->
+    <string name="persian_date_complications">Персидский финик - Осложнения</string>
+    <string name="date_comp_jalali_name">Дата Jalali</string>
+    <string name="date_comp_hijri_name">Дата Hijri</string>
+
     <!-- Day of Year Complication Preferences -->
     <string name="doy_comp_name">День в Году</string>
     <string name="doy_short_title">День</string>

@@ -17,7 +17,6 @@ package com.weartools.weekdayutccomp.presentation
 
 
 import android.os.Build
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -44,7 +43,6 @@ import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.os.LocaleListCompat
 import androidx.wear.compose.foundation.lazy.AutoCenteringParams
 import androidx.wear.compose.foundation.lazy.ScalingLazyColumn
 import androidx.wear.compose.foundation.lazy.ScalingLazyListState
@@ -79,7 +77,7 @@ fun ComplicationsSuiteScreen(
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
 
-    AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(preferences.value.locale))
+    //AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(preferences.value.locale))
 
     /** LISTS **/
     val listcity = stringArrayResource(id = R.array.cities_zone).toList()
@@ -350,8 +348,8 @@ fun ComplicationsSuiteScreen(
         item {
             ToggleChip(
                 label = stringResource(id = R.string.date_comp_jalali_hijri_settings),
-                secondaryLabelOn = "Complications",
-                secondaryLabelOff = "Complications",
+                secondaryLabelOn = stringResource(id = R.string.persian_date_complications),
+                secondaryLabelOff = stringResource(id = R.string.persian_date_complications),
                 checked = preferences.value.jalaliHijriDateComplications,
                 icon = {},
                 onCheckedChange = {
@@ -472,10 +470,14 @@ fun ComplicationsSuiteScreen(
             items = localesLongList,
             preValue = currentLocale ,
             callback ={
-            if (it!=-1) {
-                viewModel.changeLocale(localesShortList[it])
-            }else
-                openLocale=false
+            if (it == -1) {
+                openLocale = false
+                return@ListItemsWidget
+            }
+            else {
+                viewModel.changeLocale(localesShortList[it], context)
+                openLocale = openLocale.not()
+            }
         } )
 
     }

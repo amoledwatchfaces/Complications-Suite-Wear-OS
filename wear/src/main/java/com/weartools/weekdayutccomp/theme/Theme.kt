@@ -25,15 +25,12 @@ import androidx.wear.compose.material.Colors
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Typography
 
-val Blue200 = Color(0xFFb7cfff)
-val Blue500 = Color(0xFF8fb4ff)
-val Blue700 = Color(0xFF5075bf)
-val Teal200 = Color(0xFFb7cfff)
+val Blue700 = Color(0xFF615145)
+val Teal200 = Color(0xFFccecff)
 val Red400 = Color(0xFFCF6679)
-val Yellow = Color(0xFFffd215)
 
 internal val wearColorPalette: Colors = Colors(
-    primary = Blue200,
+    primary = Teal200,
     primaryVariant = Blue700,
     secondary = Teal200,
     secondaryVariant = Teal200,

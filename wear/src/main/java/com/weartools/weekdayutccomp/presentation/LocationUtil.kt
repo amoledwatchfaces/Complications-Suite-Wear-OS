@@ -68,7 +68,7 @@ fun LocationToggle(
         checked = checked,
         colors = ToggleChipDefaults.toggleChipColors(
             checkedEndBackgroundColor = wearColorPalette.primaryVariant,
-            checkedToggleControlColor = Color(0xFFffd215)
+            checkedToggleControlColor = Color(0xFFBFE7FF)
         ),
         onCheckedChange = { enabled ->
             onCheckedChange(enabled)

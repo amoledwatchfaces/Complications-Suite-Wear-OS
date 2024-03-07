@@ -1,12 +1,14 @@
 package com.weartools.weekdayutccomp
 
 import android.annotation.SuppressLint
+import android.app.LocaleManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
 import android.os.Build
+import android.os.LocaleList
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
@@ -130,11 +132,17 @@ fun getLocation(context: Context){
             )
         else null
 
-    fun changeLocale(s: String) {
+    fun changeLocale(s: String, context: Context) {
         viewModelScope.launch {
             dataStore.updateData { it.copy(locale = s) }
-            val appLocale: LocaleListCompat = LocaleListCompat.forLanguageTags(s)
-            AppCompatDelegate.setApplicationLocales(appLocale)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                val localeManager = context.getSystemService(LocaleManager::class.java)
+                localeManager.applicationLocales = LocaleList.forLanguageTags(preferences.value.locale)
+            } else {
+                val appLocale: LocaleListCompat = LocaleListCompat.forLanguageTags(s)
+                AppCompatDelegate.setApplicationLocales(appLocale)
+            }
+
         }
     }
 
@@ -249,7 +257,6 @@ fun getLocation(context: Context){
 
         }
     }
-
     fun setJalaliHijriComplicationsState(context: Context, state: Boolean) {
         viewModelScope.launch {
             dataStore.updateData { it.copy(jalaliHijriDateComplications = state) }

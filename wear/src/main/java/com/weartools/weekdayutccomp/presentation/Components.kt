@@ -124,7 +124,7 @@ fun ListItemsWidget(
                             checked = preValue == items[index],
                             colors = ToggleChipDefaults.toggleChipColors(
                                 checkedEndBackgroundColor = wearColorPalette.primaryVariant,
-                                checkedToggleControlColor = Color(0xFFffd215)
+                                checkedToggleControlColor = Color(0xFFBFE7FF)
                             ),
                             toggleControl = {
                                 Icon(
@@ -167,7 +167,7 @@ fun ToggleChip(
         checked = checked,
         colors = ToggleChipDefaults.toggleChipColors(
             checkedEndBackgroundColor = wearColorPalette.primaryVariant,
-            checkedToggleControlColor = Color(0xFFffd215),
+            checkedToggleControlColor = Color(0xFFBFE7FF),
         ),
         appIcon = icon,
         onCheckedChange = { enabled ->

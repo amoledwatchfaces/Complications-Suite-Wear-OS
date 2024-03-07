@@ -31,6 +31,11 @@
     <string name="date_short_text_format">Short Text Format</string>
     <string name="date_short_title_format">Short Title Format</string>
 
+    <!-- Persian Date -->
+    <string name="persian_date_complications">Περσική ημερομηνία</string>
+    <string name="date_comp_jalali_name">Jalali</string>
+    <string name="date_comp_hijri_name">Hijri</string>
+
     <!-- Προτημήσεις Complication Ημέρας του Χρόνου -->
     <string name="doy_comp_name">Ημέρα του Χρόνου</string>
     <string name="doy_short_title">Ημέρα</string>

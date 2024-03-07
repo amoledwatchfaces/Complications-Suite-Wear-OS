@@ -30,6 +30,11 @@
     <string name="date_short_text_format">短文本格式</string>
     <string name="date_short_title_format">短标题格式</string>
 
+    <!-- Persian Date -->
+    <string name="persian_date_complications">波斯日期组件</string>
+    <string name="date_comp_jalali_name">日期 Jalali</string>
+    <string name="date_comp_hijri_name">日期 Hijri</string>
+
     <!-- Day of Year Complication Preferences -->
     <string name="doy_comp_name">一年中的第几天</string>
     <string name="doy_short_title">日</string>

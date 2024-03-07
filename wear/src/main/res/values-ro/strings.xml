@@ -30,6 +30,11 @@
     <string name="date_short_text_format">Format De Text Scurt</string>
     <string name="date_short_title_format">Format De Titlu Scurt</string>
 
+    <!-- Persian Date -->
+    <string name="persian_date_complications">Data persană - Complicaţie</string>
+    <string name="date_comp_jalali_name">Data Jalali</string>
+    <string name="date_comp_hijri_name">Data Hijri</string>
+
     <!-- Day of Year Complication Preferences -->
     <string name="doy_comp_name">Ziua Anului</string>
     <string name="doy_short_title">Ziua</string>
