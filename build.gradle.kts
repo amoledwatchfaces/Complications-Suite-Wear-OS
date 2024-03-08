@@ -4,14 +4,14 @@ plugins {
     id ("com.google.dagger.hilt.android") version "2.47" apply false
 }
 
-tasks.register("clean", Delete::class){
-    delete(rootProject.buildDir)
+tasks.register("clean", Delete::class) {
+    delete(rootProject.layout.buildDirectory)
 }
 
 buildscript {
     dependencies {
         classpath ("com.android.tools.build:gradle:8.3.0")
-        classpath ("org.jetbrains.kotlin:kotlin-serialization:1.9.10")
+        classpath ("org.jetbrains.kotlin:kotlin-serialization:1.9.22")
     }
     repositories {
         google()

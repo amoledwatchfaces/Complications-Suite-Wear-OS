@@ -1,5 +1,3 @@
-@file:Suppress("UnstableApiUsage")
-
 plugins {
     id ("com.android.application")
     id ("org.jetbrains.kotlin.android")
@@ -57,7 +55,7 @@ android {
 }
 
 dependencies {
-    val composeUiVersion = "1.6.2"
+    val composeUiVersion = "1.6.3"
     val composeWearVersion = "1.3.0"
 
     // NEW MOON / SUNRISE / SUNSET COMP
