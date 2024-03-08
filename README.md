@@ -29,7 +29,7 @@ Download the package (.apk) to side-load from <a href="https://github.com/amoled
 * Developer options
 * Dice
 * Flashlight
-* Hijri / Jalali Date (optional)
+* Hijri / Jalali Date (optional) by [@hamedsh](https://github.com/hamedsh)
 * Wear OS logo
 * Moon phase
 * Google Pay (Wallet)
