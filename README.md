@@ -1,6 +1,6 @@
-# Complications Suite - Wear OS
+#  <img src="https://github.com/amoledwatchfaces/Complications-Suite-Wear-OS/assets/92080649/aba6bc3f-a0b1-4556-ac56-5645103c3435" width=15% height=15%> ‎‎ ‎ ‎ ‎Complications Suite - Wear OS
 
-Day/Week of Year, Seconds, World Clock, Time, Assistant, Moon phase, Bitcoin & Ethereum complications for Wear OS
+###### Day/Week of Year, Seconds, World Clock, Time, Assistant, Moon phase, Bitcoin & Ethereum complications for Wear OS
 
 ## Preview
 
@@ -13,6 +13,34 @@ Day/Week of Year, Seconds, World Clock, Time, Assistant, Moon phase, Bitcoin & E
 <b>OR</b>
 
 Download the package (.apk) to side-load from <a href="https://github.com/amoledwatchfaces/Complications-Suite-Wear-OS/releases">HERE</a>
+
+## List of custom complications:
+* Date
+* Alarm
+* Logo
+* Assistant
+* Bitcoin Price
+* Ethereum Price
+* Custom Text / Title
+* Date
+* Date Countdown
+* Day & Week
+* Day of Year
+* Developer options
+* Dice
+* Flashlight
+* Hijri / Jalali Date (optional) by [@hamedsh](https://github.com/hamedsh)
+* Wear OS logo
+* Moon phase
+* Google Pay (Wallet)
+* Seconds
+* Sunset / Sunrise + Countdown
+* Digital Time
+* Time zone
+* Volume control
+* Water intake
+* Week of Year
+* World Clock (2x)
 
 ## Help us with translations:
 
