@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 plugins {
     id ("com.android.application")
     id ("org.jetbrains.kotlin.android")
@@ -15,8 +17,8 @@ android {
         minSdk = 27
         //noinspection OldTargetApi
         targetSdk = 33
-        versionCode = 10000310
-        versionName = "3.1.0"
+        versionCode = 10000325
+        versionName = "3.2.5"
         resourceConfigurations += listOf("en", "cs", "de", "el", "es", "it", "pt", "ro", "sk", "zh", "ru")
     }
     bundle {
@@ -62,7 +64,7 @@ dependencies {
     //request permission
     implementation ("com.google.accompanist:accompanist-permissions:0.28.0")
     //location
-    implementation ("com.google.android.gms:play-services-location:21.1.0")
+    implementation ("com.google.android.gms:play-services-location:21.2.0")
 
     // Used for WorkManager
     implementation ("androidx.work:work-runtime:2.9.0")

@@ -312,7 +312,7 @@ private class Wear3point5RotaryHapticFeedback(private val view: View) : RotaryHa
     }
 
     private companion object {
-        // Hidden constants from HapticFeedbackConstants.java specific for Wear 3.5
+        // Hidden constants from HapticFeedbackConstants.kotlin specific for Wear 3.5
         // API 30, Wear 3.5
         const val WEAR_SCROLL_TICK: Int = 10002
         const val WEAR_SCROLL_ITEM_FOCUS: Int = 10003
@@ -346,7 +346,7 @@ private class Wear4AtLeastRotaryHapticFeedback(private val view: View) : RotaryH
     }
 
     private companion object {
-        // Hidden constants from HapticFeedbackConstants.java
+        // Hidden constants from HapticFeedbackConstants.kotlin
         // API 33
         const val ROTARY_SCROLL_TICK: Int = 18
         const val ROTARY_SCROLL_ITEM_FOCUS: Int = 19
