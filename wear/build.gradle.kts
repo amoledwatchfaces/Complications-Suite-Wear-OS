@@ -17,8 +17,8 @@ android {
         minSdk = 27
         //noinspection OldTargetApi
         targetSdk = 33
-        versionCode = 10000325
-        versionName = "3.2.5"
+        versionCode = 10000326
+        versionName = "3.2.6"
         resourceConfigurations += listOf("en", "cs", "de", "el", "es", "it", "pt", "ro", "sk", "zh", "ru")
     }
     bundle {
@@ -57,8 +57,8 @@ android {
 }
 
 dependencies {
-    val composeUiVersion = "1.6.3"
-    val composeWearVersion = "1.3.0"
+    val composeUiVersion = "1.6.5"
+    val composeWearVersion = "1.3.1"
 
     // NEW MOON / SUNRISE / SUNSET COMP
     //request permission
@@ -111,16 +111,14 @@ dependencies {
     implementation ("com.google.code.gson:gson:2.10.1")
     implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
 
-    // HILT
-    implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
-    implementation ("com.google.dagger:hilt-android:2.49")
-
+    // PERSIAN DATE
     implementation("com.github.samanzamani:persiandate:1.7.1")
     implementation("com.jakewharton.threetenabp:threetenabp:1.3.1")
 
+    // HILT
     implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
-    implementation ("com.google.dagger:hilt-android:2.49")
-    kapt ("com.google.dagger:hilt-compiler:2.47")
+    implementation ("com.google.dagger:hilt-android:2.51")
+    kapt ("com.google.dagger:hilt-compiler:2.51")
 }
 // Allow references to generated code
 kapt {

@@ -34,6 +34,14 @@ import com.weartools.weekdayutccomp.R.drawable
 
 class DiceComplicationService : SuspendingComplicationDataSourceService() {
 
+    private val myImageList = intArrayOf(
+        drawable.dice_1,
+        drawable.dice_2,
+        drawable.dice_3,
+        drawable.dice_4,
+        drawable.dice_5,
+        drawable.dice_6)
+
     override fun onComplicationActivated(
         complicationInstanceId: Int,
         type: ComplicationType
@@ -70,21 +78,13 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
     val args = ComplicationToggleArgs(providerComponent = ComponentName(this, javaClass), complicationInstanceId = request.complicationInstanceId)
     val complicationPendingIntent = ComplicationTapBroadcastReceiver.getToggleIntent(context = this, args = args)
 
-    val myImageList = intArrayOf(
-        drawable.dice_1,
-        drawable.dice_2,
-        drawable.dice_3,
-        drawable.dice_4,
-        drawable.dice_5,
-        drawable.dice_6)
-
     return when (request.complicationType) {
 
         ComplicationType.MONOCHROMATIC_IMAGE -> MonochromaticImageComplicationData.Builder(
             monochromaticImage = MonochromaticImage.Builder(
-                createWithResource(this, myImageList[(0..5).random()])
+                createWithResource(this, myImageList.random())
             )
-                .setAmbientImage(createWithResource(this, myImageList[(0..5).random()]))
+                .setAmbientImage(createWithResource(this, myImageList.random()))
                 .build(),
             contentDescription = PlainComplicationText.Builder(text = "MONO_IMG.").build()
         )
@@ -94,7 +94,7 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
 
         ComplicationType.SMALL_IMAGE -> SmallImageComplicationData.Builder(
             smallImage = SmallImage.Builder(
-                image = createWithResource(this, myImageList[(0..5).random()]),
+                image = createWithResource(this, myImageList.random()),
                 type = SmallImageType.ICON
             ).build(),
             contentDescription = PlainComplicationText.Builder(text = "SMALL_IMAGE.").build()
