@@ -173,4 +173,7 @@
 
     <!--Time zone-->
     <string name="time_zone_comp_name">Fuso horário</string>
+
+    <!-- Dynamic Calendar Icon -->
+    <string name="dynamic_calendar_icon_comp_name">Ícone do calendário dinâmico</string>
 </resources>

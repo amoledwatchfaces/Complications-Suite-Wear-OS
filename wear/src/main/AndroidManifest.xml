@@ -499,10 +499,26 @@
             <intent-filter>
                 <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
             </intent-filter>
+            <meta-data android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS" android:value="2100"/>
 
             <meta-data
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
                 android:value="SHORT_TEXT,RANGED_VALUE,LONG_TEXT,ICON,SMALL_IMAGE" />
+        </service>
+        <service
+            android:name=".complication.DynamicCalendarIconComplicationService"
+            android:exported="true"
+            android:icon="@drawable/ic_cal_31"
+            android:label="@string/dynamic_calendar_icon_comp_name"
+            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
+            <meta-data android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS" android:value="3600"/>
+
+            <meta-data
+                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+                android:value="ICON,SMALL_IMAGE" />
         </service>
         <activity
             android:name=".activity.WaterActivity"

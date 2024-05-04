@@ -42,7 +42,10 @@ import com.weartools.weekdayutccomp.preferences.UserPreferences
 import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
+import java.time.LocalDate
 import javax.inject.Inject
+
+var lastUpdateDate: LocalDate = LocalDate.now()
 
 @AndroidEntryPoint
 class WaterComplicationService : SuspendingComplicationDataSourceService() {
@@ -113,11 +116,20 @@ class WaterComplicationService : SuspendingComplicationDataSourceService() {
 
 override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
 
+    /** Logic to reset water intake when on date change **/
+    val refreshDate = LocalDate.now()
+    if (refreshDate != lastUpdateDate){
+        lastUpdateDate = refreshDate
+        dataStore.updateData { it.copy(water = 0) }
+    }
+
     val waterIntake = preferences.first().water
     val waterIntakeGoal = preferences.first().waterGoal
 
     //Log.d(TAG, "WTI: Update, Intake: $waterIntake")
     //Log.d(TAG, "WTI: Update, Goal: $waterIntakeGoal")
+
+
 
     when (request.complicationType) {
 

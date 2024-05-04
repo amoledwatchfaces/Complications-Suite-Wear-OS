@@ -165,4 +165,7 @@
 
     <!--Time zone-->
     <string name="time_zone_comp_name">时区</string>
+
+    <!-- Dynamic Calendar Icon -->
+    <string name="dynamic_calendar_icon_comp_name">动态日历图标</string>
 </resources>

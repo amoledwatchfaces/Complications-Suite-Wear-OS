@@ -9,6 +9,7 @@ import android.util.Log
 import androidx.wear.watchface.complications.datasource.ComplicationDataSourceService
 import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUpdateRequester
 import androidx.work.*
+import com.weartools.weekdayutccomp.complication.DynamicCalendarIconComplicationService
 import com.weartools.weekdayutccomp.complication.MoonPhaseComplicationService
 import com.weartools.weekdayutccomp.complication.SunriseSunsetComplicationService
 import com.weartools.weekdayutccomp.complication.SunriseSunsetRVComplicationService
@@ -52,6 +53,7 @@ class ComplicationWorker(private val appContext: Context, workerParams: WorkerPa
         updateComplication(appContext, SunriseSunsetRVComplicationService::class.java)
         updateComplication(appContext, MoonPhaseComplicationService::class.java)
         updateComplication(appContext, TimeZoneComplicationService::class.java)
+        updateComplication(appContext, DynamicCalendarIconComplicationService::class.java)
         return Result.success()
     }
 }
