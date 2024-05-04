@@ -501,7 +501,7 @@
             </intent-filter>
             <meta-data
                 android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
-                android:value="300"/>
+                android:value="2100"/>
 
             <meta-data
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
@@ -518,7 +518,7 @@
             </intent-filter>
             <meta-data
                 android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
-                android:value="300"/>
+                android:value="2100"/>
 
             <meta-data
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
