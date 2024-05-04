@@ -75,15 +75,15 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
     Log.d(TAG, "onComplicationRequest() id: ${request.complicationInstanceId}")
 
     val icon = when (LocalDate.now().dayOfMonth){
-        1 -> drawable.ic_cal_1
-        2 -> drawable.ic_cal_2
-        3 -> drawable.ic_cal_3
-        4 -> drawable.ic_cal_4
-        5 -> drawable.ic_cal_5
-        6 -> drawable.ic_cal_6
-        7 -> drawable.ic_cal_7
-        8 -> drawable.ic_cal_8
-        9 -> drawable.ic_cal_9
+        1 -> drawable.ic_cal_01
+        2 -> drawable.ic_cal_02
+        3 -> drawable.ic_cal_03
+        4 -> drawable.ic_cal_04
+        5 -> drawable.ic_cal_05
+        6 -> drawable.ic_cal_06
+        7 -> drawable.ic_cal_07
+        8 -> drawable.ic_cal_08
+        9 -> drawable.ic_cal_09
         10 -> drawable.ic_cal_10
         11 -> drawable.ic_cal_11
         12 -> drawable.ic_cal_12

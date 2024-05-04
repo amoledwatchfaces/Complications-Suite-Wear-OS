@@ -17,8 +17,8 @@ android {
         minSdk = 27
         //noinspection OldTargetApi
         targetSdk = 33
-        versionCode = 10000326
-        versionName = "3.2.6"
+        versionCode = 10000327
+        versionName = "3.2.7"
         resourceConfigurations += listOf("en", "cs", "de", "el", "es", "it", "pt", "ro", "sk", "zh", "ru")
     }
     bundle {
@@ -57,7 +57,7 @@ android {
 }
 
 dependencies {
-    val composeUiVersion = "1.6.5"
+    val composeUiVersion = "1.6.6"
     val composeWearVersion = "1.3.1"
 
     // NEW MOON / SUNRISE / SUNSET COMP
@@ -79,12 +79,12 @@ dependencies {
     implementation ("androidx.wear:wear:1.3.0")
 
     //COMPOSE
-    implementation ("androidx.core:core-ktx:1.12.0")
+    implementation ("androidx.core:core-ktx:1.13.0")
     implementation ("androidx.compose.ui:ui:$composeUiVersion")
     implementation ("androidx.wear.compose:compose-material:$composeWearVersion")
     implementation ("androidx.wear.compose:compose-foundation:$composeWearVersion")
     implementation ("androidx.compose.ui:ui-tooling-preview:$composeUiVersion")
-    implementation ("androidx.activity:activity-compose:1.8.2")
+    implementation ("androidx.activity:activity-compose:1.9.0")
     implementation ("androidx.compose.material:material-icons-extended:$composeUiVersion")
 
     androidTestImplementation ("androidx.compose.ui:ui-test-junit4:$composeUiVersion")
@@ -92,10 +92,10 @@ dependencies {
     debugImplementation ("androidx.compose.ui:ui-test-manifest:$composeUiVersion")
 
     //DataStore
-    implementation ("androidx.datastore:datastore-preferences:1.0.0")
+    implementation ("androidx.datastore:datastore-preferences:1.1.0")
 
     //Locale
-    implementation ("androidx.appcompat:appcompat:1.7.0-alpha03")
+    implementation ("androidx.appcompat:appcompat:1.7.0-beta01")
 
     // INPUT
     implementation ("androidx.wear:wear-input:1.2.0-alpha02")
