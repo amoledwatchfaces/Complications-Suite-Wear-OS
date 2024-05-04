@@ -104,6 +104,7 @@ class WaterComplicationService : SuspendingComplicationDataSourceService() {
                     contentDescription = PlainComplicationText
                         .Builder(text = getString(R.string.water_comp_name)).build()
                 )
+                    .setText(PlainComplicationText.Builder(text = "10").build())
                     .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_water)).build())
                     .setTapAction(openScreen())
                     .build()
