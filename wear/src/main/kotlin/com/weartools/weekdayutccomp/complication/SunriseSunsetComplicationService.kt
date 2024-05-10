@@ -16,10 +16,9 @@
  */
 package com.weartools.weekdayutccomp.complication
 
-import android.Manifest
+import android.app.PendingIntent
 import android.content.ContentValues.TAG
-import android.content.Context
-import android.content.pm.PackageManager
+import android.content.Intent
 import android.graphics.drawable.Icon.createWithResource
 import android.util.Log
 import android.widget.Toast
@@ -34,12 +33,16 @@ import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.R.drawable
+import com.weartools.weekdayutccomp.activity.MainActivity
 import com.weartools.weekdayutccomp.preferences.UserPreferences
 import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
 import com.weartools.weekdayutccomp.utils.MoonPhaseHelper
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
@@ -55,20 +58,24 @@ class SunriseSunsetComplicationService : SuspendingComplicationDataSourceService
         complicationInstanceId: Int,
         type: ComplicationType
     ) {
-        Log.d(TAG, "onComplicationActivated(): $complicationInstanceId")
-        reqPermissionFunction(applicationContext)
-    }
-
-    private fun reqPermissionFunction(context: Context) {
-
-        runBlocking {
-            val result = context.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
-            if (result == PackageManager.PERMISSION_GRANTED) {
-                Log.i(TAG, "Permission granted")
-            } else {
-                Toast.makeText(context, getString(R.string.enable_permission_toast), Toast.LENGTH_LONG).show()
+        /** CHECK IF LOCATION IS SET + CONSIDER LOCATION TOAST */
+        CoroutineScope(Dispatchers.IO).launch {
+            val hasPermission = preferences.first().coarsePermission
+            withContext(Dispatchers.Main) {
+                if (hasPermission.not()) {
+                    Toast.makeText(applicationContext, getString(R.string.enable_permission_toast), Toast.LENGTH_LONG).show()
+                }
             }
         }
+    }
+    private fun openScreen(): PendingIntent? {
+
+        val intent = Intent(this, MainActivity::class.java)
+
+        return PendingIntent.getActivity(
+            this, 0, intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
     }
 
 override fun getPreviewData(type: ComplicationType): ComplicationData? {
@@ -124,13 +131,13 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
             text = PlainComplicationText.Builder(text = time).build(),
             contentDescription = PlainComplicationText.Builder(text = "$text: $time").build())
             .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, icon)).build())
-            .setTapAction(null)
+            .setTapAction(if (coarseEnabled) null else openScreen())
             .build()
 
         ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
             text = PlainComplicationText.Builder(text = "$text: $time").build(),
             contentDescription = PlainComplicationText.Builder(text = "$text: $time").build())
-            .setTapAction(null)
+            .setTapAction(if (coarseEnabled) null else openScreen())
             .build()
 
 

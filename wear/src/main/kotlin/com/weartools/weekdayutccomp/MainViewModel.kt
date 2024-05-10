@@ -114,6 +114,7 @@ class MainViewModel @Inject constructor(
                     else {
                         viewModelScope.launch {
                             setLocation(it.latitude, it.longitude,context)
+                            setCoarsePermission(true)
                             val addressName = addressProvider.getAddressFromLocation(it.latitude,it.longitude)
                             if (addressName != null){
                                 Log.i(ContentValues.TAG, "$addressName")
@@ -190,6 +191,7 @@ class MainViewModel @Inject constructor(
                             prefs.copy(locationName = prediction.getPrimaryText(StyleSpan(Typeface.BOLD)).toString())
                         }
                         setLocation(latLng.latitude,latLng.longitude,context)
+                        setCoarsePermission(true)
                     }}
                 loaderStateMutableStateFlow.value = false
 

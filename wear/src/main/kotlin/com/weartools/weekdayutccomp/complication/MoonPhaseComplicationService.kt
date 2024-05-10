@@ -16,12 +16,9 @@
  */
 package com.weartools.weekdayutccomp.complication
 
-import android.Manifest
 import android.app.PendingIntent
 import android.content.ContentValues.TAG
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.drawable.Icon.createWithBitmap
 import android.graphics.drawable.Icon.createWithResource
 import android.util.Log
@@ -48,8 +45,11 @@ import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
 import com.weartools.weekdayutccomp.utils.DrawMoonBitmap
 import com.weartools.weekdayutccomp.utils.MoonPhaseHelper
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.shredzone.commons.suncalc.MoonIllumination
 import org.shredzone.commons.suncalc.MoonPosition
 import java.math.RoundingMode
@@ -66,19 +66,13 @@ class MoonPhaseComplicationService : SuspendingComplicationDataSourceService() {
         complicationInstanceId: Int,
         type: ComplicationType
     ) {
-        Log.d(TAG, "onComplicationActivated(): $complicationInstanceId")
-        reqPermissionFunction(applicationContext)
-    }
-
-    /** CHECK LOCATION PERMISSION + CONSIDER LOCATION TOAST */
-    private fun reqPermissionFunction(context: Context) {
-
-        runBlocking {
-            val result = context.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
-            if (result == PackageManager.PERMISSION_GRANTED) {
-                Log.i(TAG, "Permission granted")
-            } else {
-                Toast.makeText(context, getString(R.string.enable_permission_toast_consider), Toast.LENGTH_LONG).show()
+        /** CHECK IF LOCATION IS SET + CONSIDER LOCATION TOAST */
+        CoroutineScope(Dispatchers.IO).launch {
+            val hasPermission = preferences.first().coarsePermission
+            withContext(Dispatchers.Main) {
+                if (hasPermission.not()) {
+                    Toast.makeText(applicationContext, getString(R.string.enable_permission_toast_consider), Toast.LENGTH_LONG).show()
+                }
             }
         }
     }

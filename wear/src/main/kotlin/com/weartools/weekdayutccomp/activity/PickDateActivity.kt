@@ -1,6 +1,5 @@
 package com.weartools.weekdayutccomp.activity
 
-import android.app.Activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -30,7 +29,7 @@ class PickDateActivity : ComponentActivity(){
                 modifier = Modifier.background(color = Color.Black),
                 onDateConfirm = {
                     viewModel.setDatePicked(it.toString(),context)
-                    setResult(Activity.RESULT_OK) // OK! (use whatever code you want)
+                    setResult(RESULT_OK) // OK! (use whatever code you want)
                     finish()
                 },
                 date = LocalDate.parse(preferences.value.datePicker)

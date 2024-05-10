@@ -138,8 +138,8 @@
     <string name="sunset">Sunset</string>
     <string name="sunrise_in">Sunrise in</string>
     <string name="sunset_in">Sunset in</string>
-    <string name="enable_permission_toast">Needs coarse location permission (App UI)</string>
-    <string name="enable_permission_toast_consider">Enable location for precise Moon rotation</string>
+    <string name="enable_permission_toast">Coarse location needed (App UI)</string>
+    <string name="enable_permission_toast_consider">Set location for precise Moon rotation</string>
     <string name="location">Location</string>
     <string name="checking">Checking location…</string>
     <string name="no_location">Cannot get location. Check GPS</string>

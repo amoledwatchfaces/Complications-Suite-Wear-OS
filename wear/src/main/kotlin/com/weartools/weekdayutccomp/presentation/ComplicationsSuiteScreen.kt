@@ -56,7 +56,6 @@ import androidx.wear.compose.material.Card
 import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.Text
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.weartools.weekdayutccomp.BuildConfig
 import com.weartools.weekdayutccomp.MainViewModel
@@ -140,6 +139,7 @@ fun ComplicationsSuiteScreen(
         autoCentering = AutoCenteringParams(itemIndex = 1),
         state = listState,
     ) {
+
         //SETTINGS TEST
         item { Header() }
 
@@ -215,7 +215,7 @@ fun ComplicationsSuiteScreen(
             )
         }
 
-        if (preferences.value.moonIconType == MoonIconType.SIMPLE || !permissionState.status.isGranted)
+        if (preferences.value.moonIconType == MoonIconType.SIMPLE || preferences.value.coarsePermission.not())
         {
             item {
                 ToggleChip(
@@ -231,25 +231,6 @@ fun ComplicationsSuiteScreen(
             }
         }
 
-        /*
-        item {
-            LocationToggle(
-                checked = coarseEnabled,
-                onCheckedChange = { enabled ->
-                    if (enabled){
-                        if (permissionState.status.isGranted){
-                            viewModel.setCoarsePermission(true)
-                            viewModel.getLocation(context)
-                        }
-                        else {permissionState.launchPermissionRequest()}
-                    }
-                    else {
-                        viewModel.setCoarsePermission(false)
-                        viewModel.setLocation(0.0,0.0,context)
-                    }
-               })
-        }
-         */
         item {
             AppCard(
                 enabled = true,
@@ -547,7 +528,8 @@ fun ComplicationsSuiteScreen(
                     return@LocationChooseDialog
                 }else
                     openLocationChoose = openLocationChoose.not()
-            })
+            }
+        )
     }
 
     if (timeDiffs){
