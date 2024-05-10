@@ -102,7 +102,7 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
                     PlainComplicationText.Builder(persianMonthText.toString()).build()
                 } catch (e: IllegalArgumentException) {
                     // Inform the user that the format is invalid
-                    Toast.makeText(this, "Title: Wrong format! Check SimpleDateFormat", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Title: Wrong format! Check SimpleDateFormat patterns", Toast.LENGTH_LONG).show()
                     PlainComplicationText.Builder(text="?").build()
                 }
             )
@@ -114,7 +114,7 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
                 TimeFormatComplicationText.Builder(format = longText).build()
             } catch (e: IllegalArgumentException) {
                 // Inform the user that the format is invalid
-                Toast.makeText(this, "Wrong format! Check SimpleDateFormat patters", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Wrong format! Check SimpleDateFormat patterns", Toast.LENGTH_LONG).show()
                 PlainComplicationText.Builder(text="?").build()
             },
             contentDescription = PlainComplicationText
