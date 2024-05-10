@@ -24,6 +24,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddLocation
+import androidx.compose.material.icons.filled.EditLocation
+import androidx.compose.material.icons.filled.LocationCity
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -37,6 +40,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringArrayResource
@@ -47,13 +51,13 @@ import androidx.wear.compose.foundation.lazy.AutoCenteringParams
 import androidx.wear.compose.foundation.lazy.ScalingLazyColumn
 import androidx.wear.compose.foundation.lazy.ScalingLazyListState
 import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
+import androidx.wear.compose.material.AppCard
 import androidx.wear.compose.material.Card
 import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.Text
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
-import com.google.android.horologist.annotations.ExperimentalHorologistApi
 import com.weartools.weekdayutccomp.BuildConfig
 import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.R
@@ -66,6 +70,7 @@ import com.weartools.weekdayutccomp.presentation.ui.DialogChip
 import com.weartools.weekdayutccomp.presentation.ui.Header
 import com.weartools.weekdayutccomp.presentation.ui.ListItemsWidget
 import com.weartools.weekdayutccomp.presentation.ui.LoaderBox
+import com.weartools.weekdayutccomp.presentation.ui.LocationChooseDialog
 import com.weartools.weekdayutccomp.presentation.ui.PermissionAskDialog
 import com.weartools.weekdayutccomp.presentation.ui.PreferenceCategory
 import com.weartools.weekdayutccomp.presentation.ui.SectionText
@@ -73,7 +78,7 @@ import com.weartools.weekdayutccomp.presentation.ui.ToggleChip
 import com.weartools.weekdayutccomp.theme.wearColorPalette
 import com.weartools.weekdayutccomp.utils.openPlayStore
 
-@OptIn(ExperimentalPermissionsApi::class, ExperimentalHorologistApi::class)
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun ComplicationsSuiteScreen(
     listState: ScalingLazyListState = rememberScalingLazyListState(),
@@ -81,8 +86,8 @@ fun ComplicationsSuiteScreen(
     viewModel: MainViewModel
 ) {
     val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
     val preferences = viewModel.preferences.collectAsState()
-    val coarseEnabled = preferences.value.coarsePermission
     val loaderState by viewModel.loaderStateStateFlow.collectAsState()
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
@@ -103,7 +108,6 @@ fun ComplicationsSuiteScreen(
         permission = "android.permission.ACCESS_COARSE_LOCATION",
         onPermissionResult = {
             viewModel.setCoarsePermission(it)
-            viewModel.getLocation(context)
         })
 
     /** ICONS **/
@@ -124,6 +128,7 @@ fun ComplicationsSuiteScreen(
     var timeDiffs by remember { mutableStateOf(false) }
     var openLocale by remember{ mutableStateOf(false) }
     var moonIconChange by remember{ mutableStateOf(false) }
+    var openLocationChoose by remember{ mutableStateOf(false) }
 
     ScalingLazyColumn(
         modifier = Modifier
@@ -226,6 +231,7 @@ fun ComplicationsSuiteScreen(
             }
         }
 
+        /*
         item {
             LocationToggle(
                 checked = coarseEnabled,
@@ -243,14 +249,29 @@ fun ComplicationsSuiteScreen(
                     }
                })
         }
-        if (permissionState.status.isGranted) {
-            item { LocationCard(
-                permissionState = permissionState,
-                viewModel = viewModel,
-                context = context,
-                locationName = preferences.value.locationName,
-                enabled = coarseEnabled
-            ) }
+         */
+        item {
+            AppCard(
+                enabled = true,
+                time = {
+                    Icon(
+                        imageVector = if (preferences.value.locationName == "No location set") Icons.Default.AddLocation else Icons.Default.EditLocation,
+                        contentDescription = "Refresh Icon",
+                        tint = wearColorPalette.secondary,
+                    )},
+                appImage = { Icon(
+                    imageVector = Icons.Default.LocationCity,
+                    contentDescription = "Refresh Icon",
+                    tint = wearColorPalette.secondary,
+                )},
+                title = {Text(text = preferences.value.locationName, color =  wearColorPalette.primary, fontSize = 12.sp)},
+                appName = {Text(stringResource(id = R.string.location), color = Color(0xFFF1F1F1))},
+                modifier = Modifier
+                    .fillMaxWidth(),
+                onClick = {
+                    openLocationChoose = openLocationChoose.not()
+                },
+            ){}
         }
 
         // TIME COMPLICATION PREFERENCE CATEGORY
@@ -510,6 +531,23 @@ fun ComplicationsSuiteScreen(
                 }
             }
         )
+    }
+
+    if (openLocationChoose){
+        viewModel.setLocationDialogState(true)
+        LocationChooseDialog(
+            lifecycleOwner = lifecycleOwner,
+            focusRequester = focusRequester,
+            permissionState = permissionState,
+            viewModel = viewModel,
+            context = context,
+            callback ={
+                if (it == -1) {
+                    openLocationChoose = false
+                    return@LocationChooseDialog
+                }else
+                    openLocationChoose = openLocationChoose.not()
+            })
     }
 
     if (timeDiffs){

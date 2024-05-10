@@ -1,4 +1,7 @@
 @file:Suppress("UnstableApiUsage")
+import java.io.FileInputStream
+import java.util.Properties
+
 
 plugins {
     id ("com.android.application")
@@ -27,12 +30,25 @@ android {
         }
     }
     buildTypes {
+        val apis = Properties().apply{
+            load(FileInputStream(file("C:\\Users\\amoledwatchfaces\\workspace\\Projects\\apps\\(x) 4 - Complications Suite Wear OS APP\\APIs\\apis.properties")))
+        }
         release {
             isMinifyEnabled = true
             isShrinkResources = true
+            buildConfigField(type ="String", name = "PLACES_API_KEY", value = apis.getProperty("PLACES_API_KEY"))
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
+        getByName("debug")  {
+            isMinifyEnabled = false
+            isShrinkResources = false
+            proguardFiles(getDefaultProguardFile(name = "proguard-android-optimize.txt"), "proguard-rules.pro")
+            buildConfigField(type ="String", name = "PLACES_API_KEY", value = apis.getProperty("PLACES_API_KEY"))
+            signingConfig = signingConfigs.getByName("debug")
+            isDebuggable = true
+        }
     }
+    testBuildType = "debug"
 
     buildFeatures {
         viewBinding = true
@@ -57,7 +73,7 @@ android {
 }
 
 dependencies {
-    val composeUiVersion = "1.6.6"
+    val composeUiVersion = "1.6.7"
     val composeWearVersion = "1.3.1"
 
     // NEW MOON / SUNRISE / SUNSET COMP
@@ -79,7 +95,7 @@ dependencies {
     implementation ("androidx.wear:wear:1.3.0")
 
     //COMPOSE
-    implementation ("androidx.core:core-ktx:1.13.0")
+    implementation ("androidx.core:core-ktx:1.13.1")
     implementation ("androidx.compose.ui:ui:$composeUiVersion")
     implementation ("androidx.wear.compose:compose-material:$composeWearVersion")
     implementation ("androidx.wear.compose:compose-foundation:$composeWearVersion")
@@ -92,7 +108,7 @@ dependencies {
     debugImplementation ("androidx.compose.ui:ui-test-manifest:$composeUiVersion")
 
     //DataStore
-    implementation ("androidx.datastore:datastore-preferences:1.1.0")
+    implementation ("androidx.datastore:datastore-preferences:1.1.1")
 
     //Locale
     implementation ("androidx.appcompat:appcompat:1.7.0-beta01")
@@ -119,6 +135,12 @@ dependencies {
     implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
     implementation ("com.google.dagger:hilt-android:2.51")
     kapt ("com.google.dagger:hilt-compiler:2.51")
+
+    // Google Places
+    implementation ("com.google.android.libraries.places:places:3.4.0")
+
+    // INPUT
+    implementation("androidx.compose.material3:material3:1.2.1")
 }
 // Allow references to generated code
 kapt {

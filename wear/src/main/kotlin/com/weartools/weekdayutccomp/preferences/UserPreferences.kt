@@ -52,7 +52,7 @@ data class UserPreferences(
     val coarsePermission: Boolean = false,
     val latitude: Double = 0.0,
     val longitude: Double = 0.0,
-    val locationName: String = "No location",
+    val locationName: String = "No location set",
 
     // LOCALE
     val locale: String = "en",

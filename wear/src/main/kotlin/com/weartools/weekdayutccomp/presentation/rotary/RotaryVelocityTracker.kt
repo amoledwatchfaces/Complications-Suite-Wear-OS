@@ -1,3 +1,5 @@
+package com.weartools.weekdayutccomp.presentation.rotary
+
 /*
  * Copyright 2022 The Android Open Source Project
  *
@@ -13,8 +15,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package com.weartools.weekdayutccomp.presentation.rotary
 
 import androidx.compose.ui.input.pointer.util.VelocityTracker1D
 
@@ -45,4 +45,10 @@ class RotaryVelocityTracker {
         velocityTracker.addDataPoint(currentTime, delta)
     }
 
+    /**
+     * Stop tracking motion.
+     */
+    fun end() {
+        velocityTracker.resetTracking()
+    }
 }

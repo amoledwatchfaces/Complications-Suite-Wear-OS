@@ -1,14 +1,19 @@
 package com.weartools.weekdayutccomp
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.LocaleManager
 import android.content.ComponentName
+import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Address
-import android.location.Geocoder
+import android.graphics.Typeface
 import android.os.Build
 import android.os.LocaleList
+import android.provider.Settings
+import android.text.style.StyleSpan
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
@@ -20,6 +25,12 @@ import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationToken
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.gms.tasks.OnTokenCanceledListener
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.AutocompletePrediction
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.api.model.PlaceTypes
+import com.google.android.libraries.places.api.net.FetchPlaceRequest
+import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
 import com.weartools.weekdayutccomp.complication.CustomTextComplicationService
 import com.weartools.weekdayutccomp.complication.DateComplicationService
 import com.weartools.weekdayutccomp.complication.DateCountdownComplicationService
@@ -34,8 +45,8 @@ import com.weartools.weekdayutccomp.complication.WorldClock2ComplicationService
 import com.weartools.weekdayutccomp.enums.MoonIconType
 import com.weartools.weekdayutccomp.preferences.UserPreferences
 import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
-import com.weartools.weekdayutccomp.utils.AddressDataModel
-import com.weartools.weekdayutccomp.utils.AddressDataModelSuccessBlock
+import com.weartools.weekdayutccomp.utils.AddressProvider
+import com.weartools.weekdayutccomp.utils.arePermissionsGranted
 import com.weartools.weekdayutccomp.utils.updateComplication
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -50,12 +61,18 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val locationClient: FusedLocationProviderClient,
+    private val addressProvider: AddressProvider,
     repository: UserPreferencesRepository,
     private val dataStore: DataStore<UserPreferences>
 ) : ViewModel() {
 
     private val loaderStateMutableStateFlow = MutableStateFlow(value = false)
     val loaderStateStateFlow: StateFlow<Boolean> = loaderStateMutableStateFlow.asStateFlow()
+
+    private val locationDialogStateMutableStateFlow = MutableStateFlow(value = true)
+    val locationDialogStateStateFlow: StateFlow<Boolean> = locationDialogStateMutableStateFlow.asStateFlow()
+
+    fun setLocationDialogState(state: Boolean) { locationDialogStateMutableStateFlow.value = state }
 
     val preferences: StateFlow<UserPreferences> = repository
         .getPreferences()
@@ -74,63 +91,114 @@ class MainViewModel @Inject constructor(
             }
         }
  */
-@SuppressLint("MissingPermission") // TODO: Permission check in Composable
-fun getLocation(context: Context){
-        loaderStateMutableStateFlow.value = true
-        Toast.makeText(context, R.string.checking, Toast.LENGTH_SHORT).show()
-        locationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, object : CancellationToken() {
-            override fun onCanceledRequested(p0: OnTokenCanceledListener) = CancellationTokenSource().token
-            override fun isCancellationRequested() = false
-        })
-            .addOnSuccessListener { location ->
-                if (location == null) Toast.makeText(context, R.string.no_location, Toast.LENGTH_SHORT).show()
-                else {
-                    setLocation(location.latitude, location.longitude,context)
-                    getAddressFromLocation(context, location.latitude, location.longitude)
-                    { addressDataModel ->
-                        viewModelScope.launch {
-                            dataStore.updateData { it.copy(locationName = addressDataModel?.cityName.toString()) }
-                        }
 
+    @SuppressLint("MissingPermission")
+    fun requestLocation(
+        context: Context,
+    ) {
+        if (context.arePermissionsGranted(Manifest.permission.ACCESS_COARSE_LOCATION))
+        {
+            loaderStateMutableStateFlow.value = true
+            locationClient
+                .getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, object : CancellationToken() {
+                    override fun onCanceledRequested(p0: OnTokenCanceledListener) = CancellationTokenSource().token
+                    override fun isCancellationRequested() = false
+                })
+                .addOnSuccessListener {
+                    if (it == null) {
+                        loaderStateMutableStateFlow.value = false
+                        locationDialogStateMutableStateFlow.value = true
+                        Toast.makeText(context, R.string.no_location, Toast.LENGTH_SHORT).show()
+                        context.startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+                    }
+                    else {
+                        viewModelScope.launch {
+                            setLocation(it.latitude, it.longitude,context)
+                            val addressName = addressProvider.getAddressFromLocation(it.latitude,it.longitude)
+                            if (addressName != null){
+                                Log.i(ContentValues.TAG, "$addressName")
+                                dataStore.updateData { prefs ->
+                                    prefs.copy(locationName = addressName)
+                                }
+                                loaderStateMutableStateFlow.value = false
+                            }
+                            else {
+                                // showing coordinates only
+                                val formattedString = "%.3f, %.3f"  // Define the format string
+                                val locale = Locale.US  // Explicitly specify US locale (or any desired locale)
+                                val locationString = String.format(locale, formattedString, it.latitude, it.longitude)
+                                dataStore.updateData { prefs ->
+                                    prefs.copy(locationName = locationString)
+                                }
+                                loaderStateMutableStateFlow.value = false
+                            }
+                        }
                     }
                 }
+        }
+    }
+
+    fun searchLocation(
+        context: Context,
+        query: String,
+        callback: (MutableList<AutocompletePrediction>) -> Unit
+    ){
+
+        loaderStateMutableStateFlow.value = true
+        Places.initialize(context, BuildConfig.PLACES_API_KEY)
+        val placesClient = Places.createClient(context)
+
+        val request = FindAutocompletePredictionsRequest.builder()
+            .setQuery(query)
+            .setTypesFilter(listOf(PlaceTypes.CITIES))
+            .build()
+
+        placesClient.findAutocompletePredictions(request)
+            .addOnSuccessListener { response ->
+                Log.i(ContentValues.TAG, "{${response.autocompletePredictions}}")
+                //Toast.makeText(context, "Success!", Toast.LENGTH_LONG).show()
                 loaderStateMutableStateFlow.value = false
+                callback.invoke(response.autocompletePredictions)
+            }
+            .addOnFailureListener {
+                loaderStateMutableStateFlow.value = false
+                Toast.makeText(context, "Failure!", Toast.LENGTH_LONG).show()
             }
     }
 
-    private fun getAddressFromLocation(
-        context: Context,
-        latitude: Double,
-        longitude: Double,
-        addressDataModelSuccessBlock: AddressDataModelSuccessBlock
-    ) {
-        Geocoder(context, Locale.ENGLISH).apply {
-            try {
-                if (Build.VERSION.SDK_INT >= 33)
-                    getFromLocation(latitude, longitude, 1) { addresses ->
-                        addresses.takeIf { it.isNotEmpty() } ?: return@getFromLocation
-                        addressDataModelSuccessBlock(this@MainViewModel getAddressDataFrom addresses.firstOrNull()) }
-                else
-                    @Suppress("DEPRECATION")
-                    getFromLocation(latitude, longitude, 1)?.let { addresses ->
-                        addresses.takeIf { it.isNotEmpty() } ?: return@let
-                        addressDataModelSuccessBlock(this@MainViewModel getAddressDataFrom addresses.firstOrNull()) }
-            } catch (e: Exception) {
-                addressDataModelSuccessBlock(
-                    null
-                )
+    fun getLocationCoordinates(prediction: AutocompletePrediction, context: Context) {
+
+        loaderStateMutableStateFlow.value = true
+
+        Places.initialize(context, BuildConfig.PLACES_API_KEY)
+        val placesClient = Places.createClient(context)
+
+        val placeId = prediction.placeId
+        val placeFields = listOf(Place.Field.LAT_LNG)
+
+        val request = FetchPlaceRequest.builder(placeId, placeFields)
+            .build()
+
+        placesClient.fetchPlace(request)
+            .addOnSuccessListener { response ->
+                val latLng = response.place.latLng
+                Log.i(ContentValues.TAG, "LAT: ${latLng?.latitude} LON: ${latLng?.longitude}")
+
+                if (latLng != null){
+                    viewModelScope.launch {
+                        dataStore.updateData { prefs ->
+                            prefs.copy(locationName = prediction.getPrimaryText(StyleSpan(Typeface.BOLD)).toString())
+                        }
+                        setLocation(latLng.latitude,latLng.longitude,context)
+                    }}
+                loaderStateMutableStateFlow.value = false
+
             }
-        }
+            .addOnFailureListener {
+                loaderStateMutableStateFlow.value = false
+                Toast.makeText(context, "Failure!", Toast.LENGTH_LONG).show()
+            }
     }
-    private infix fun getAddressDataFrom(address: Address?) =
-        if (address != null)
-            AddressDataModel(
-                cityName = if (address.locality != null) address.locality
-                else if (address.subLocality != null) address.subLocality
-                else if (address.subAdminArea != null) address.subAdminArea
-                else "?"
-            )
-        else null
 
     fun changeLocale(s: String, context: Context) {
         viewModelScope.launch {
@@ -167,7 +235,7 @@ fun getLocation(context: Context){
     fun setCoarsePermission(value: Boolean) { viewModelScope.launch {
         dataStore.updateData { it.copy(coarsePermission = value) } }
     }
-    fun setLocation(lat: Double, lon: Double, context: Context) { viewModelScope.launch {
+    private fun setLocation(lat: Double, lon: Double, context: Context) { viewModelScope.launch {
         dataStore.updateData { it.copy(latitude = lat, longitude = lon) }
         context.updateComplication(SunriseSunsetComplicationService::class.java)
         context.updateComplication(SunriseSunsetRVComplicationService::class.java)
