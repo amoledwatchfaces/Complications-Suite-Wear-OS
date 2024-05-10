@@ -43,7 +43,7 @@ import androidx.wear.compose.material.Stepper
 import androidx.wear.compose.material.Text
 import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.R
-import com.weartools.weekdayutccomp.presentation.ListItemsWidget
+import com.weartools.weekdayutccomp.presentation.ui.ListItemsWidget
 import com.weartools.weekdayutccomp.theme.wearColorPalette
 import dagger.hilt.android.AndroidEntryPoint
 

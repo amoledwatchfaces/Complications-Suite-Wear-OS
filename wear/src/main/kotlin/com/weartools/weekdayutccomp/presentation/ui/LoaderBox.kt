@@ -1,4 +1,4 @@
-package com.weartools.weekdayutccomp.presentation
+package com.weartools.weekdayutccomp.presentation.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

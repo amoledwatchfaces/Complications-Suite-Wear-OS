@@ -1,4 +1,4 @@
-package com.weartools.weekdayutccomp.presentation
+package com.weartools.weekdayutccomp.presentation.ui
 
 import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
@@ -33,6 +33,8 @@ import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.enums.DateFormat
 import com.weartools.weekdayutccomp.presentation.rotary.rotaryWithScroll
+import com.weartools.weekdayutccomp.presentation.ui.ChipWithEditText
+import com.weartools.weekdayutccomp.presentation.ui.PreferenceCategory
 import com.weartools.weekdayutccomp.theme.wearColorPalette
 import kotlinx.coroutines.launch
 

@@ -60,6 +60,16 @@ import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.enums.DateFormat
 import com.weartools.weekdayutccomp.enums.MoonIconType
 import com.weartools.weekdayutccomp.presentation.rotary.rotaryWithScroll
+import com.weartools.weekdayutccomp.presentation.ui.ChipWithEditText
+import com.weartools.weekdayutccomp.presentation.ui.DateFormatListPicker
+import com.weartools.weekdayutccomp.presentation.ui.DialogChip
+import com.weartools.weekdayutccomp.presentation.ui.Header
+import com.weartools.weekdayutccomp.presentation.ui.ListItemsWidget
+import com.weartools.weekdayutccomp.presentation.ui.LoaderBox
+import com.weartools.weekdayutccomp.presentation.ui.PermissionAskDialog
+import com.weartools.weekdayutccomp.presentation.ui.PreferenceCategory
+import com.weartools.weekdayutccomp.presentation.ui.SectionText
+import com.weartools.weekdayutccomp.presentation.ui.ToggleChip
 import com.weartools.weekdayutccomp.theme.wearColorPalette
 import com.weartools.weekdayutccomp.utils.openPlayStore
 
@@ -359,7 +369,8 @@ fun ComplicationsSuiteScreen(
         }
 
         item { PreferenceCategory(title = stringResource(id = R.string.custom_text_comp_name_category)) }
-        item {ChipWithEditText(
+        item {
+            ChipWithEditText(
             row1 = stringResource(id = R.string.custom_text_p1),
             row2 = preferences.value.customText,
             viewModel = viewModel,
@@ -368,7 +379,8 @@ fun ComplicationsSuiteScreen(
             keyboardController = keyboardController,
             focusManager = focusManager
         ) }
-        item {ChipWithEditText(
+        item {
+            ChipWithEditText(
             row1 = stringResource(id = R.string.custom_title_p1),
             row2 = preferences.value.customTitle,
             viewModel = viewModel,

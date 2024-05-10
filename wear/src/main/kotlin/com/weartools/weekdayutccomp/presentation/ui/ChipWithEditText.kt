@@ -1,4 +1,4 @@
-package com.weartools.weekdayutccomp.presentation
+package com.weartools.weekdayutccomp.presentation.ui
 
 import android.content.Context
 import androidx.compose.foundation.focusable
