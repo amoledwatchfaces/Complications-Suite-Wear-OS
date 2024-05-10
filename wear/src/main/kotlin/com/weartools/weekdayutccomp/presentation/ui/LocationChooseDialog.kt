@@ -153,6 +153,7 @@ fun LocationChooseDialog(
                                     else {
                                         permissionState.launchPermissionRequest()
                                         viewModel.setLocationDialogState(false)
+                                        callback(-1)
                                     }
 
                                 } else {

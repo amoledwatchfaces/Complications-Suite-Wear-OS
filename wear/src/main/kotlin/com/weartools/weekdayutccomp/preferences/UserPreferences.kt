@@ -49,6 +49,7 @@ data class UserPreferences(
     val customTitle: String = "Title",
 
     // LOCATION
+    // TODO: Rename coarsePermission to hasLocation
     val coarsePermission: Boolean = false,
     val latitude: Double = 0.0,
     val longitude: Double = 0.0,

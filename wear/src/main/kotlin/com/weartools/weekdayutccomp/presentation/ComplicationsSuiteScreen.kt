@@ -17,6 +17,7 @@ package com.weartools.weekdayutccomp.presentation
 
 
 import android.os.Build
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -106,8 +107,17 @@ fun ComplicationsSuiteScreen(
     val permissionState = rememberPermissionState(
         permission = "android.permission.ACCESS_COARSE_LOCATION",
         onPermissionResult = {
-            viewModel.setCoarsePermission(it)
-        })
+            if (it){
+                viewModel.setLocationDialogState(false)
+                viewModel.requestLocation(context = context)
+            }
+            else{
+                Toast.makeText(context, "Permissions Denied!", Toast.LENGTH_LONG).show()
+                viewModel.setLocationDialogState(true)
+            }
+
+        }
+    )
 
     /** ICONS **/
     val moonIconTypeList = listOf(MoonIconType.SIMPLE,MoonIconType.DEFAULT,MoonIconType.TRANSPARENT)
