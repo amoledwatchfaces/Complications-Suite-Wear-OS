@@ -8,8 +8,9 @@ plugins {
     id ("org.jetbrains.kotlin.android")
     id ("kotlin-parcelize")
     id ("kotlinx-serialization")
-    id ("kotlin-kapt")
+    id ("com.google.devtools.ksp")
     id ("com.google.dagger.hilt.android")
+    id ("org.jetbrains.kotlin.plugin.compose")
 }
 
 android {
@@ -18,7 +19,6 @@ android {
     defaultConfig {
         applicationId = "com.weartools.weekdayutccomp"
         minSdk = 27
-        //noinspection OldTargetApi
         targetSdk = 33
         versionCode = 10000331
         versionName = "3.3.1"
@@ -53,22 +53,17 @@ android {
     buildFeatures {
         viewBinding = true
         compose = true
+        buildConfig = true
     }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-
-    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions {
-            jvmTarget = "11"
-        }
+    kotlinOptions {
+        jvmTarget = "11"
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.8"
-    }
     namespace = "com.weartools.weekdayutccomp"
 }
 
@@ -80,17 +75,16 @@ dependencies {
     //request permission
     implementation ("com.google.accompanist:accompanist-permissions:0.28.0")
     //location
-    implementation ("com.google.android.gms:play-services-location:21.2.0")
+    implementation ("com.google.android.gms:play-services-location:21.3.0")
 
     // Used for WorkManager
-    implementation ("androidx.work:work-runtime:2.9.0")
     implementation ("androidx.work:work-runtime-ktx:2.9.0")
 
     // MOON PHASE HELPER
     implementation ("org.shredzone.commons:commons-suncalc:3.7")
 
     // WEAR OS
-    implementation ("com.google.android.gms:play-services-wearable:18.1.0")
+    implementation ("com.google.android.gms:play-services-wearable:18.2.0")
     implementation ("androidx.wear.watchface:watchface-complications-data-source-ktx:1.2.1")
     implementation ("androidx.wear:wear:1.3.0")
 
@@ -111,7 +105,7 @@ dependencies {
     implementation ("androidx.datastore:datastore-preferences:1.1.1")
 
     //Locale
-    implementation ("androidx.appcompat:appcompat:1.7.0-beta01")
+    implementation ("androidx.appcompat:appcompat:1.7.0")
 
     // INPUT
     implementation ("androidx.wear:wear-input:1.2.0-alpha02")
@@ -134,16 +128,13 @@ dependencies {
     // HILT
     implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
     implementation ("com.google.dagger:hilt-android:2.51")
-    kapt ("com.google.dagger:hilt-compiler:2.51")
+    ksp ("com.google.dagger:hilt-compiler:2.51")
 
     // Google Places
-    implementation ("com.google.android.libraries.places:places:3.4.0")
+    implementation ("com.google.android.libraries.places:places:3.5.0")
 
     // INPUT
     implementation("androidx.compose.material3:material3:1.2.1")
 }
-// Allow references to generated code
-kapt {
-    correctErrorTypes = true
-}
+
 
