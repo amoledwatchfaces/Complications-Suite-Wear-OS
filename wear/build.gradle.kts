@@ -19,10 +19,10 @@ android {
     defaultConfig {
         applicationId = "com.weartools.weekdayutccomp"
         minSdk = 27
-        targetSdk = 33
-        versionCode = 10000333
-        versionName = "3.3.3"
-        resourceConfigurations += listOf("en", "cs", "de", "el", "es", "it", "pt", "ro", "sk", "zh", "ru")
+        targetSdk = 34
+        versionCode = 10000335
+        versionName = "3.3.5"
+        resourceConfigurations += listOf("en", "cs", "de", "el", "es", "it", "pt","pl", "ro", "sk", "zh", "ru")
     }
     bundle {
         language {
@@ -68,12 +68,12 @@ android {
 }
 
 dependencies {
-    val composeUiVersion = "1.6.7"
+    val composeUiVersion = "1.6.8"
     val composeWearVersion = "1.3.1"
 
     // NEW MOON / SUNRISE / SUNSET COMP
     //request permission
-    implementation ("com.google.accompanist:accompanist-permissions:0.28.0")
+    implementation ("com.google.accompanist:accompanist-permissions:0.34.0")
     //location
     implementation ("com.google.android.gms:play-services-location:21.3.0")
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright 2022 amoledwatchfaces™
+  ~ Copyright 2024 amoledwatchfaces™
   ~ support@amoledwatchfaces.com
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,8 +19,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- For checking connection -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- For directing to Wi-fi settings -->

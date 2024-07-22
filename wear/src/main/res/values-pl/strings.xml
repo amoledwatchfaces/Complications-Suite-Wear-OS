@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Do not translate translatable="false" lines -->
+    <string name="app_name">Complications Suite</string> <!-- Does not need to be translated, but it's recommended -->
+    <string name="app_info">Informacje o aplikacji</string>
+    <string name="version">Wersja</string>
+    <string name="settings">Ustawienia</string>
+    <string name="language">Język</string>
+
+    <string name="icon_type">Rodzaj ikony</string>
+    <string name="icon_type_0">Prosta</string>
+    <string name="icon_type_1">Domyślna RGB</string>
+    <string name="icon_type_2">Domyślna ARGB</string>
+
+    <string name="compose_toggle" translatable="false">Toggle</string>
+
+    <string name="awf_comp_name" translatable="false">Amoled Logo</string>
+    <!-- Crypto Complication -->
+    <string name="crypto_name_1" translatable="true">Cena BTC ($)</string>
+    <string name="crypto_name_2" translatable="true">Cena ETH ($)</string>
+
+    <!-- Flashlight Complication -->
+    <string name="flashlight_comp_name">Latarka</string>
+
+    <!-- Alarm Complication Preferences -->
+    <string name="alarm_comp_name">Budzik</string>
+
+    <!-- Assist Complication Preferences -->
+    <string name="assist_comp_name">Asystent Google (Monochrom)</string>
+    <string name="assist_missing">Aplikacja Asystent Google - nie zainstalowana </string>
+
+    <!-- Date Complication Preferences -->
+    <string name="date_comp_name">Data</string>
+    <string name="date_custom_format">Domyślny format</string>
+    <string name="date_setting_preference_category_title">Rodzaj daty</string>
+    <string name="date_long_text_format">Format długiego tekstu</string>
+    <string name="date_short_text_format">Format krótkiego tekstu</string>
+    <string name="date_short_title_format">Krótki tytuł</string>
+
+    <!-- Persian Date -->
+    <string name="persian_date_complications">Kalendarz Perski</string>
+    <string name="date_comp_jalali_hijri_settings" translatable="false">Jalali / Hijri</string>
+    <string name="date_comp_jalali_name">Kalendarz Dżalali</string>
+    <string name="date_comp_hijri_name">Kalendarz Hijri</string>
+
+    <!-- Day of Year Complication Preferences -->
+    <string name="doy_comp_name">Dzień roku</string>
+    <string name="doy_short_title">Dzień</string>
+
+    <!-- Logo Complication Preferences -->
+    <string name="logo_comp_name">Logo Wear OS</string>
+
+    <!-- Moon Phase Complication Preferences -->
+    <string name="moon_comp_name">Faza księżyca</string>
+    <string name="moon_setting_preference_category_title">Księżyc / Słońce - ustawienia</string>
+
+    <array name="moon_phases">
+        <item>Kwadra piwrwsza</item>
+        <item>Pełnia</item>
+        <item>Ostatnia kwadra</item>
+        <item>Nów</item>
+        <item>Ubywający sierp</item>
+        <item>Ubywajacy garb</item>
+        <item>Rosnący sierp</item>
+        <item>Rosnacy garb</item>
+    </array>
+
+    <string name="moon_setting_hemi_title">Półkula</string>
+    <string name="moon_setting_hemi_on">Północna</string>
+    <string name="moon_setting_hemi_off">Południowa</string>
+    <string name="moon_setting_simple_icon_title">Ikona księżyca</string>
+    <string name="moon_setting_simple_icon_on">Prosta</string>
+    <string name="moon_setting_simple_icon_off">Szczegółowa</string>
+
+    <!-- Pay Complication -->
+    <string name="pay_comp_name">Płatności</string>
+
+    <!-- Sec Complication -->
+    <string name="sec_comp_name">Sekundy</string>
+    <string name="sec_short_title">sek.</string>
+
+    <!-- Time Complication Preferences -->
+    <string name="time_comp_name">Godzina</string>
+    <string name="time_comp_desc">Aktualna godzina</string>
+    <string name="time_setting_leading_zero_title">Zero na początku</string>
+    <string name="time_setting_leading_zero_summary_on" translatable="false">09:00</string>
+    <string name="time_setting_leading_zero_summary_off" translatable="false">9:00</string>
+
+    <string name="time_ampm_setting_preference_category_title">Godzina / Słońce - ustawienia</string>
+    <string name="time_ampm_setting_title">Format godziny</string>
+    <string name="time_ampm_setting_on">24h</string>
+    <string name="time_ampm_setting_off">12h</string>
+
+    <!-- World Clock Complication Preferences -->
+    <string name="wc_comp_name_1">Zegar światowy 1</string>
+    <string name="wc_comp_name_2">Zegar światowy 2</string>
+    <string name="wc_setting_preference_category_title">Zegar światowy - ustawienia</string>
+    <string name="wc_setting_leading_zero_title">Zero na początku</string>
+    <string name="wc_setting_leading_zero_summary_on" translatable="false">09:00</string>
+    <string name="wc_setting_leading_zero_summary_off" translatable="false">9:00</string>
+
+    <string name="wc_ampm_setting_title">Format godziny</string>
+    <string name="wc_ampm_setting_on">24h</string>
+    <string name="wc_ampm_setting_off">12h</string>
+
+
+    <string name="wc_setting_title">Strefa czasowa 1</string>
+    <string name="wc2_setting_title">Strefa czasowa 2</string>
+
+    <!-- WOY Complication Preferences -->
+    <string name="week_complication_name">Tydzien roku</string>
+    <string name="woy_complication_text">Tydzień</string>
+    <string name="woy_complication_description">Tydzień roku</string>
+    <string name="woy_setting_preference_category_title">Tydzień roku - ustawienia</string>
+    <string name="woy_setting_title">Format</string>
+    <string name="woy_setting_on" translatable="false">ISO</string>
+    <string name="woy_setting_off" translatable="false">US</string>
+
+    <!-- Custom Text + Title -->
+    <string name="custom_text_comp_name">Twój tekst</string>
+    <string name="custom_text_comp_name_category">Twój tekst - ustawienia</string>
+
+    <!--Custom Text + Title 2-->
+    <string name="custom_text_p1">Tekst</string>
+    <string name="custom_title_p1">Tytuł</string>
+
+    <!--translate-->
+    <string name="coarse_location_toggle_title">Przybliżona lokalizacja</string>
+    <string name="coarse_secondary_enabled">Włączona</string>
+    <string name="coarse_secondary_disabled">Wyłączona</string>
+    <string name="coarse_toggle_description">Nadaj uprawnienia do lokalizacji przybliżonej</string>
+
+    <!--translate-->
+    <string name="sunrise_sunset_comp_name">Wschód i zachód słońca</string>
+    <string name="sunrise_sunset_countdown_comp_name">Odliczanie do wschodu i zachodu słońca</string>
+    <string name="sunrise">Wschód</string>
+    <string name="sunset">Zachód</string>
+    <string name="sunrise_in">Wschód o</string>
+    <string name="sunset_in">Zachód o</string>
+    <string name="enable_permission_toast">Wymagana przybliżona lokalizacja(App UI)</string>
+    <string name="enable_permission_toast_consider">Ustaw lokalizacje aby precyzyjnie określić położenie księżyca</string>
+    <string name="location">Lokalizacja</string>
+    <string name="checking">Sprawdzam lokalizacje…</string>
+    <string name="no_location">Nie mogę ustalić lokalizacji. Sprawdź GPS</string>
+
+    <string name="countdown_style">Format</string>
+    <string name="countdown_style_style">Format odliczania</string>
+    <string name="e_g_">Przykład</string>
+
+    <!-- translate -->
+    <string name="day_and_week_comp_name">(D)zień i (T)dzień</string>
+    <string name="dayD">D:</string>
+    <string name="weekW">T:</string>
+
+    <!-- Developer Options -->
+    <string name="developer_options_comp_name">Opcje programisty</string>
+
+    <!--Date Countdown-->
+    <string name="date_countdown_comp_name">Odliczanie do daty</string>
+    <string name="countdown_text">Pozostało</string>
+
+    <!--NOTIFICATIONS-->
+    <string name="notification_permission_info">Niektóre ustawienia wymagają wyświetlenia wiadomości wyskakujących (toast) od Android 13+. Aplikacja poprosi o pozwolenie na ich pokazanie.</string>
+
+    <!--VOLUME-->
+    <string name="volume_comp_name">Głośność</string>
+
+    <!--DICE-->
+    <string name="dice_comp_name">Kostka do gry</string>
+
+    <!--WATER-->
+    <string name="water_comp_name">Wypita woda</string>
+    <string name="water_intake_text">Wypita</string>
+    <string name="water_intake_goal_text">Cel</string>
+
+    <!--Time zone-->
+    <string name="time_zone_comp_name">Strefa czasowa</string>
+
+    <!-- Dynamic Calendar Icon -->
+    <string name="dynamic_calendar_icon_comp_name">Dzisiejsza kartka z kalendarza</string>
+</resources>
