@@ -94,7 +94,7 @@ dependencies {
     implementation ("androidx.wear.compose:compose-material:$composeWearVersion")
     implementation ("androidx.wear.compose:compose-foundation:$composeWearVersion")
     implementation ("androidx.compose.ui:ui-tooling-preview:$composeUiVersion")
-    implementation ("androidx.activity:activity-compose:1.9.0")
+    implementation ("androidx.activity:activity-compose:1.9.1")
     implementation ("androidx.compose.material:material-icons-extended:$composeUiVersion")
 
     androidTestImplementation ("androidx.compose.ui:ui-test-junit4:$composeUiVersion")
