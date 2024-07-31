@@ -79,6 +79,9 @@ data class UserPreferences(
     // JALALI / HIJRI DATE
     val jalaliHijriDateComplications: Boolean = false,
 
+    // BAROMETER
+    //val sensorUpdateTime: Long = 0L,
+    //val barometricPressure: Float = 0f,
 )
 
 

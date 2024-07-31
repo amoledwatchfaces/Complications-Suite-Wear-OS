@@ -51,6 +51,8 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
 import android.graphics.Typeface
 import android.graphics.drawable.Icon.createWithBitmap
 import androidx.wear.watchface.complications.data.MonochromaticImageComplicationData
@@ -79,7 +81,7 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
 
         ComplicationType.MONOCHROMATIC_IMAGE -> MonochromaticImageComplicationData.Builder(
             monochromaticImage = MonochromaticImage.Builder(createWithBitmap(createBitmapWithCircleAndNumber(7))).build(),
-            contentDescription = PlainComplicationText.Builder(text = "LOGO.").build())
+            contentDescription = PlainComplicationText.Builder(text = getString(R.string.woy_complication_text)).build())
             .setTapAction(null)
             .build()
 
@@ -87,7 +89,7 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
             smallImage = SmallImage.Builder(
                 image = createWithBitmap(createBitmapWithCircleAndNumber(7)),
                 type = SmallImageType.ICON).build(),
-            contentDescription = PlainComplicationText.Builder(text = "LOGO.").build())
+            contentDescription = PlainComplicationText.Builder(text = getString(R.string.woy_complication_text)).build())
             .setTapAction(null)
             .build()
 
@@ -153,7 +155,7 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
         ComplicationType.MONOCHROMATIC_IMAGE -> MonochromaticImageComplicationData.Builder(
             monochromaticImage = MonochromaticImage.Builder(createWithBitmap(createBitmapWithCircleAndNumber(week.toInt()))).build(),
             contentDescription = PlainComplicationText.Builder(text = "LOGO.").build())
-            .setTapAction(null)
+            .setTapAction(openScreen())
             .build()
 
         ComplicationType.SMALL_IMAGE -> SmallImageComplicationData.Builder(
@@ -161,7 +163,7 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
                 image = createWithBitmap(createBitmapWithCircleAndNumber(week.toInt())),
                 type = SmallImageType.ICON).build(),
             contentDescription = PlainComplicationText.Builder(text = "LOGO.").build())
-            .setTapAction(null)
+            .setTapAction(openScreen())
             .build()
 
 
@@ -214,11 +216,9 @@ fun createBitmapWithCircleAndNumber(number: Int): Bitmap {
     // Define the bitmap size
     val bitmapSize = 72
 
-    // Create a bitmap with the specified size and configure a canvas
-    val bitmap = Bitmap.createBitmap(bitmapSize, bitmapSize, Bitmap.Config.ARGB_8888)
-    val canvas = Canvas(bitmap)
-
-    // Draw a white circle in the center
+    // Create a solid circle bitmap
+    val circleBitmap = Bitmap.createBitmap(bitmapSize, bitmapSize, Bitmap.Config.ARGB_8888)
+    val circleCanvas = Canvas(circleBitmap)
     val centerX = bitmapSize / 2f
     val centerY = bitmapSize / 2f
     val radius = bitmapSize / 2f
@@ -226,20 +226,36 @@ fun createBitmapWithCircleAndNumber(number: Int): Bitmap {
         color = Color.WHITE
         style = Paint.Style.FILL
     }
-    canvas.drawCircle(centerX, centerY, radius, paintCircle)
+    circleCanvas.drawCircle(centerX, centerY, radius, paintCircle)
 
+    // Create a text bitmap
+    val textBitmap = Bitmap.createBitmap(bitmapSize, bitmapSize, Bitmap.Config.ARGB_8888)
+    val textCanvas = Canvas(textBitmap)
+    // ... (draw the number as in your original code, but with a white background)
     // Draw the number in the center
     val paintText = Paint().apply {
         color = Color.BLACK
         textAlign = Paint.Align.CENTER
-        textSize = 48f
+        textSize = if (number >= 10) 40f else 48f
         typeface = Typeface.DEFAULT_BOLD
     }
 
     val textY = centerY + 1 - (paintText.descent() + paintText.ascent()) / 2
-    canvas.drawText(number.toString(), centerX, textY, paintText)
+    textCanvas.drawText(number.toString(), centerX, textY, paintText)
 
-    return Bitmap.createScaledBitmap(bitmap, bitmapSize, bitmapSize, true)
+    // Create a mask bitmap
+    val maskBitmap = Bitmap.createBitmap(bitmapSize, bitmapSize, Bitmap.Config.ALPHA_8)
+    val maskCanvas = Canvas(maskBitmap)
+    maskCanvas.drawBitmap(textBitmap, 0f, 0f, null)
+
+    // Create a paint to combine bitmaps
+    val paint = Paint()
+    paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_OUT)
+
+    // Combine the circle and mask bitmaps
+    circleCanvas.drawBitmap(maskBitmap, 0f, 0f, paint)
+
+    return circleBitmap
 }
 
 
