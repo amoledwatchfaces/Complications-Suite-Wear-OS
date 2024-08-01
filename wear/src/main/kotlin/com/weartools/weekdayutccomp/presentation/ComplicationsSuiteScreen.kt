@@ -403,6 +403,20 @@ fun ComplicationsSuiteScreen(
             focusManager = focusManager
         ) }
 
+        item { PreferenceCategory(title = stringResource(id = R.string.barometer_category)) }
+        item {
+            ToggleChip(
+                label = stringResource(id = R.string.barometer_use_hpa),
+                secondaryLabelOn = stringResource(id = R.string.barometer_hpa),
+                secondaryLabelOff = stringResource(id = R.string.barometer_inHg),
+                checked = preferences.value.pressureHPA,
+                icon = {},
+                onCheckedChange = {
+                    viewModel.setBarometerHPA(it, context)
+                }
+            )
+        }
+
         // APP INFO SECTION
         item { PreferenceCategory(title = stringResource(id = R.string.app_info)) }
         item {

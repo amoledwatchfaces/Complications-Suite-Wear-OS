@@ -545,12 +545,11 @@
             android:value="SHORT_TEXT,LONG_TEXT" />
         </service>
 
-        <!--
         <service
             android:name=".complication.BarometerComplicationService"
             android:exported="true"
-            android:icon="@drawable/ic_barometer"
-            android:label="Barometer"
+            android:icon="@drawable/ic_barometer_2"
+            android:label="@string/barometer_comp_name"
             android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
             <intent-filter>
                 <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
@@ -562,7 +561,5 @@
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
                 android:value="SHORT_TEXT" />
         </service>
-        -->
-
     </application>
 </manifest>

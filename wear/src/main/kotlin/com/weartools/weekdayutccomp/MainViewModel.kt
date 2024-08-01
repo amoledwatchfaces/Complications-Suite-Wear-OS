@@ -31,6 +31,7 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.model.PlaceTypes
 import com.google.android.libraries.places.api.net.FetchPlaceRequest
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
+import com.weartools.weekdayutccomp.complication.BarometerComplicationService
 import com.weartools.weekdayutccomp.complication.CustomTextComplicationService
 import com.weartools.weekdayutccomp.complication.DateComplicationService
 import com.weartools.weekdayutccomp.complication.DateCountdownComplicationService
@@ -295,6 +296,10 @@ class MainViewModel @Inject constructor(
         dataStore.updateData { it.copy(isLeadingZero = value) }
         context.updateComplication(WorldClock1ComplicationService::class.java)
         context.updateComplication(WorldClock2ComplicationService::class.java)
+    }}
+    fun setBarometerHPA(value: Boolean, context: Context) { viewModelScope.launch {
+        dataStore.updateData { it.copy(pressureHPA = value) }
+        context.updateComplication(BarometerComplicationService::class.java)
     }}
 
     fun setLeadingZeroTime(value: Boolean, context: Context) { viewModelScope.launch {

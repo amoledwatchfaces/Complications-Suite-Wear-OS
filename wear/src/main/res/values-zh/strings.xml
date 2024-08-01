@@ -168,4 +168,9 @@
 
     <!-- Dynamic Calendar Icon -->
     <string name="dynamic_calendar_icon_comp_name">动态日历图标</string>
+
+    <!-- Barometer -->
+    <string name="barometer_comp_name">气压计</string>
+    <string name="barometer_category">气压计复杂功能</string>
+    <string name="barometer_use_hpa">单位</string>
 </resources>

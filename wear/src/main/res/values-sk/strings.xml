@@ -169,4 +169,9 @@
 
     <!-- Dynamic Calendar Icon -->
     <string name="dynamic_calendar_icon_comp_name">Dynamická ikona kalendára</string>
+
+    <!-- Barometer -->
+    <string name="barometer_comp_name">Barometer</string>
+    <string name="barometer_category">Barometer</string>
+    <string name="barometer_use_hpa">Jednotky</string>
 </resources>

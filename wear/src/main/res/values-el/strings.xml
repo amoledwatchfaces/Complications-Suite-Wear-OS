@@ -176,4 +176,9 @@
 
     <!-- Dynamic Calendar Icon -->
     <string name="dynamic_calendar_icon_comp_name">Κινούμενο εικονίδιο ημερολογίου</string>
+
+    <!-- Barometer -->
+    <string name="barometer_comp_name">Βαρόμετρο</string>
+    <string name="barometer_category">Complication βαρόμετρου</string>
+    <string name="barometer_use_hpa">Μονάδες</string>
 </resources>

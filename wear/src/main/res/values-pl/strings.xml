@@ -179,4 +179,9 @@
 
     <!-- Dynamic Calendar Icon -->
     <string name="dynamic_calendar_icon_comp_name">Dzisiejsza kartka z kalendarza</string>
+
+    <!-- Barometer -->
+    <string name="barometer_comp_name">Barometr</string>
+    <string name="barometer_category">Barometr - ustawienia</string>
+    <string name="barometer_use_hpa">Jednostki</string>
 </resources>

@@ -80,8 +80,9 @@ data class UserPreferences(
     val jalaliHijriDateComplications: Boolean = false,
 
     // BAROMETER
-    //val sensorUpdateTime: Long = 0L,
-    //val barometricPressure: Float = 0f,
+    val sensorUpdateTime: Long = 0L,
+    val barometricPressure: Float = 0f,
+    val pressureHPA: Boolean = true // true = hPa, false = inHg
 )
 
 

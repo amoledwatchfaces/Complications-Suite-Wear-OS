@@ -179,4 +179,9 @@
 
     <!-- Dynamic Calendar Icon -->
     <string name="dynamic_calendar_icon_comp_name">Динамический значок календаря</string>
+
+    <!-- Barometer -->
+    <string name="barometer_comp_name">Барометр</string>
+    <string name="barometer_category">Осложнение барометра</string>
+    <string name="barometer_use_hpa">Единицы</string>
 </resources>

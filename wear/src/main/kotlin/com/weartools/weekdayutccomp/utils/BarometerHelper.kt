@@ -1,7 +1,5 @@
-/*
 package com.weartools.weekdayutccomp.utils
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -40,8 +38,6 @@ class BarometerHelper(
         sensorManager.unregisterListener(this)
     }
 
-
-    @SuppressLint("MissingPermission")
     override fun onSensorChanged(event: SensorEvent) {
         if (event.sensor.type == Sensor.TYPE_PRESSURE) {
             Log.i("BarometerHelper", "Pressure sensor changed: ${event.values[0]}")
@@ -51,7 +47,7 @@ class BarometerHelper(
             if (readingCount >= 3) {
 
                 // Calculate average pressure and store it
-                Log.i("BarometerHelper", "Average pressure sensor value: ${pressureReadings.average().toFloat()}")
+                Log.i("BarometerHelper", "Average pressure sensor value: ${pressureReadings.max()}")
                 runBlocking { dataStore.updateData { it.copy(
                     sensorUpdateTime = System.currentTimeMillis(),
                     barometricPressure = pressureReadings.max(),
@@ -66,5 +62,3 @@ class BarometerHelper(
         // Handle accuracy changes if needed
     }
 }
-
- */

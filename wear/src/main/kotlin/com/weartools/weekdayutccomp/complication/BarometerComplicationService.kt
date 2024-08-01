@@ -1,4 +1,3 @@
-/*
 package com.weartools.weekdayutccomp.complication
 
 import android.content.ContentValues.TAG
@@ -12,12 +11,14 @@ import androidx.wear.watchface.complications.data.PlainComplicationText
 import androidx.wear.watchface.complications.data.ShortTextComplicationData
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
+import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.R.drawable
 import com.weartools.weekdayutccomp.preferences.UserPreferences
 import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
 import com.weartools.weekdayutccomp.utils.BarometerHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
+import java.text.DecimalFormat
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -31,8 +32,8 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
     return when (type) {
         ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
             text = PlainComplicationText.Builder(text = "1013").build(),
-            contentDescription = PlainComplicationText.Builder(text = "Barometer").build())
-            .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_barometer),).build())
+            contentDescription = PlainComplicationText.Builder(text = getString(R.string.barometer_comp_name)).build())
+            .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_barometer_2)).build())
             .setTitle(PlainComplicationText.Builder(text = "hPa").build())
             .setTapAction(null)
             .build()
@@ -46,6 +47,7 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
 
         val prefs = preferences.first()
         val pressure = prefs.barometricPressure
+        val pressureHPA = prefs.pressureHPA
 
         if (System.currentTimeMillis() - prefs.sensorUpdateTime >= 60000) {
             val barometerHelper = BarometerHelper(this, dataStore)
@@ -55,10 +57,14 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
         return when (request.complicationType) {
 
         ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
-            text = PlainComplicationText.Builder(text = "${pressure.toInt()}").build(),
-            contentDescription = PlainComplicationText.Builder(text = "Barometer").build())
-            .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_barometer)).build())
-            .setTitle(PlainComplicationText.Builder(text = "hPa").build())
+            text = PlainComplicationText.Builder(text = if (pressureHPA)
+                "${pressure.toInt()}" else
+                DecimalFormat("#.00").format(pressure * 0.02953)
+
+            ).build(),
+            contentDescription = PlainComplicationText.Builder(text = getString(R.string.barometer_comp_name)).build())
+            .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_barometer_2)).build())
+            .setTitle(PlainComplicationText.Builder(text = if (pressureHPA)"hPa" else "inHg").build())
             .setTapAction(null)
             .build()
 
@@ -68,9 +74,6 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
             }
             null
         }
-
-    }
+    } }
 }
-}
- */
 

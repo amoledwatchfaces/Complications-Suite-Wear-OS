@@ -179,4 +179,11 @@
 
     <!-- Dynamic Calendar Icon -->
     <string name="dynamic_calendar_icon_comp_name">Dynamic Calendar Icon</string>
+
+    <!-- Barometer -->
+    <string name="barometer_comp_name">Barometer</string>
+    <string name="barometer_category">Barometer Complication</string>
+    <string name="barometer_use_hpa">Units</string>
+    <string name="barometer_hpa" translatable="false">hPa</string>
+    <string name="barometer_inHg" translatable="false">inHg</string>
 </resources>
