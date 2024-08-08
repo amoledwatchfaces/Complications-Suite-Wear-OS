@@ -78,7 +78,7 @@ dependencies {
     implementation ("com.google.android.gms:play-services-location:21.3.0")
 
     // Used for WorkManager
-    implementation ("androidx.work:work-runtime-ktx:2.9.0")
+    implementation ("androidx.work:work-runtime-ktx:2.9.1")
 
     // MOON PHASE HELPER
     implementation ("org.shredzone.commons:commons-suncalc:3.7")
@@ -123,7 +123,6 @@ dependencies {
 
     // PERSIAN DATE
     implementation("com.github.samanzamani:persiandate:1.7.1")
-    implementation("com.jakewharton.threetenabp:threetenabp:1.3.1")
 
     // HILT
     implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
@@ -135,6 +134,13 @@ dependencies {
 
     // INPUT
     implementation("androidx.compose.material3:material3:1.2.1")
+
+    // Ktor + OkHttp + Kotlinx.Serialization
+    val ktorVersion = "2.3.11"
+    implementation ("io.ktor:ktor-client-logging:$ktorVersion")
+    implementation ("io.ktor:ktor-client-okhttp:$ktorVersion")
+    implementation ("io.ktor:ktor-client-content-negotiation:$ktorVersion")
+    implementation ("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
 }
 
 

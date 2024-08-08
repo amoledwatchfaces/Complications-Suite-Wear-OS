@@ -29,17 +29,14 @@ import androidx.wear.watchface.complications.data.RangedValueComplicationData
 import androidx.wear.watchface.complications.data.ShortTextComplicationData
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
 import com.weartools.weekdayutccomp.R.drawable
+import com.weartools.weekdayutccomp.network.ApiService
 import com.weartools.weekdayutccomp.preferences.UserPreferences
 import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
+import com.weartools.weekdayutccomp.utils.isOnline
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.withContext
 import java.math.RoundingMode
-import java.net.URL
 import java.text.DecimalFormat
 import javax.inject.Inject
 
@@ -50,18 +47,12 @@ class BitcoinPriceComplicationService : SuspendingComplicationDataSourceService(
     lateinit var dataStore: DataStore<UserPreferences>
     private val preferences by lazy { UserPreferencesRepository(dataStore).getPreferences() }
 
-    private suspend fun fetchUrl1(): JsonObject? {
-        val url = "https://data-api.binance.vision/api/v3/ticker/24hr?symbol=BTCUSDT"
+    @Inject
+    lateinit var apiService: ApiService
 
-        return try {
-            val json = withContext(Dispatchers.IO){URL(url).readText()}
-            JsonParser.parseString(json).asJsonObject
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-            null
-        }
-    }
+    private var price = 0f
+    private var highPrice = 0f
+    private var lowPrice = 0f
 
     override fun getPreviewData(type: ComplicationType): ComplicationData? {
         return when (type) {
@@ -89,35 +80,31 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
     val args = ComplicationToggleArgs(providerComponent = ComponentName(this, javaClass), complicationInstanceId = request.complicationInstanceId)
     val complicationPendingIntent = ComplicationTapBroadcastReceiver.getToggleIntent(context = this, args = args)
 
-
-    val df = DecimalFormat("#.#K").apply { RoundingMode.HALF_UP }
-
-    //GET LAST PRICE
-    val lastPrice = preferences.first().priceBTC
-    val price: Float
-    val highPrice: Float
-    val lowPrice: Float
-
     //GET CURRENT PRICE
-    val jsonObject = fetchUrl1()
-    val newData: Boolean = jsonObject != null
-    price = jsonObject?.get("lastPrice")?.asFloat ?: lastPrice
-    highPrice = jsonObject?.get("highPrice")?.asFloat ?: lastPrice
-    lowPrice = jsonObject?.get("lowPrice")?.asFloat ?: 0f
+    val currentPriceObject = if (this.isOnline())  apiService.requestBitcoinPrices() else null
+    if (currentPriceObject != null){
+        price = currentPriceObject.lastPrice
+        highPrice = currentPriceObject.highPrice
+        lowPrice = currentPriceObject.lowPrice
+    }
+    else {
+        price = preferences.first().priceBTC
+    }
+    var priceString = if (price >= 1000.00) {
+        val df = DecimalFormat("#.#K").apply { RoundingMode.HALF_UP }
+        df.format(price/1000.0).toString()
+        }
+    else if (price <= 0) {"--"}
+    else { price.toString() }
 
+    if (currentPriceObject != null){ dataStore.updateData { it.copy(priceBTC = price) } } else priceString = "$priceString!"
 
-    val priceString = if (price >= 1000.00) {df.format(price/1000.0).toString()}
-                      else if (price <= 0) {"--"}
-                      else { price.toString() }
-
-    dataStore.updateData { it.copy(priceBTC = price) }
-
-    Log.i(TAG, "Ticker: BTCUSDT, Price: $priceString")
+    //Log.i(TAG, "Ticker: BTCUSDT, Price: $priceString")
 
     return when (request.complicationType) {
 
         ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
-            text = PlainComplicationText.Builder(text = if (newData) {priceString} else {"$priceString!"}).build(),
+            text = PlainComplicationText.Builder(text = priceString).build(),
             contentDescription = PlainComplicationText.Builder(text = "BTC").build())
             .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_btc)).build())
             .setTapAction(complicationPendingIntent)
@@ -128,7 +115,7 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
             min = lowPrice,
             max =  highPrice,
             contentDescription = PlainComplicationText.Builder(text = "BTC").build())
-            .setText(PlainComplicationText.Builder(text = if (newData) {priceString} else {"$priceString!"}).build())
+            .setText(PlainComplicationText.Builder(text = priceString).build())
             .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_btc)).build())
             .setTapAction(complicationPendingIntent)
             .build()

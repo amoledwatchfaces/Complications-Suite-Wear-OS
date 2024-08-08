@@ -20,7 +20,6 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUpdateRequester
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -62,16 +61,9 @@ class ComplicationTapBroadcastReceiver : BroadcastReceiver() {
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
         }
-        private fun Intent.getArgs(): ComplicationToggleArgs =
-            when {
-                Build.VERSION.SDK_INT >= 33 ->
-                    requireNotNull(
-                        extras?.getParcelable(EXTRA_ARGS, ComplicationToggleArgs::class.java)
-                    )
-                else -> requireNotNull(
-                    @Suppress("DEPRECATION")
-                    extras?.getParcelable(EXTRA_ARGS)
-                )
-            }
+        private fun Intent.getArgs(): ComplicationToggleArgs = requireNotNull(
+            @Suppress("DEPRECATION")
+            extras?.getParcelable(EXTRA_ARGS)
+        )
     }
 }
