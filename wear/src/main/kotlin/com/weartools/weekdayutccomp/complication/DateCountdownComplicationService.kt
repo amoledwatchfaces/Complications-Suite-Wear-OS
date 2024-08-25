@@ -64,18 +64,23 @@ class DateCountdownComplicationService : SuspendingComplicationDataSourceService
 override fun getPreviewData(type: ComplicationType): ComplicationData? {
     return when (type) {
 
-        ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
-            text = PlainComplicationText.Builder(text = "17d").build(),
-            contentDescription = PlainComplicationText.Builder(text = getString(R.string.date_countdown_comp_name)).build())
-            .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_date_countdown)).build())
-            .setTapAction(null)
-            .build()
-
-        ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
-            text = PlainComplicationText.Builder(text = "Countdown: 17 days").build(),
-            contentDescription = PlainComplicationText.Builder(text = getString(R.string.date_countdown_comp_name)).build())
-            .setTapAction(null)
-            .build()
+        ComplicationType.SHORT_TEXT -> {
+            ShortTextComplicationData.Builder(
+                text = PlainComplicationText.Builder(text = "17d").build(),
+                contentDescription = PlainComplicationText.Builder(text = getString(R.string.date_countdown_comp_name)).build())
+                .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_date_countdown)).build())
+                .setTapAction(null)
+                .build()
+        }
+        ComplicationType.LONG_TEXT -> {
+            LongTextComplicationData.Builder(
+                text = PlainComplicationText.Builder(text = getString(R.string.countdown_text)).build(),
+                contentDescription = PlainComplicationText.Builder(text = getString(R.string.date_countdown_comp_name)).build())
+                .setTitle(PlainComplicationText.Builder(text = "17 days").build())
+                .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_date_countdown)).build())
+                .setTapAction(null)
+                .build()
+        }
 
         else -> {null}
     }
@@ -98,13 +103,15 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
                 .setTapAction(openScreen())
                 .build()
         }
-
         ComplicationType.LONG_TEXT -> {
             return LongTextComplicationData.Builder(
-                text = TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.WORDS_SINGLE_UNIT, CountDownTimeReference(timeInstance))
-                        .setText("${getString(R.string.countdown_text)}: ^1")
-                        .build(),
+                text = PlainComplicationText.Builder(text = getString(R.string.countdown_text)).build(),
                 contentDescription = PlainComplicationText.Builder(text = "Date Countdown").build())
+                .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_date_countdown)).build())
+                .setTitle(
+                    TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.WORDS_SINGLE_UNIT, CountDownTimeReference(timeInstance))
+                    .setText("^1")
+                    .build())
                 .setTapAction(openScreen())
                 .build()
         }

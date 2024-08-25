@@ -148,6 +148,8 @@
     <string name="day_and_week_comp_name">Giorno e Settimana</string>
     <string name="dayD">G:</string>
     <string name="weekW">S:</string>
+    <string name="dayDlong">Giorno</string>
+    <string name="weekWlong">Settimana</string>
 
     <!-- Developer Options -->
     <string name="developer_options_comp_name">Opzioni sviluppatore</string>

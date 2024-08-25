@@ -45,7 +45,6 @@ class TimeComplicationService : SuspendingComplicationDataSourceService() {
     private fun openScreen(): PendingIntent? {
 
         val mClockIntent = Intent(AlarmClock.ACTION_SHOW_ALARMS)
-        mClockIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
 
         return PendingIntent.getActivity(
             this, 0, mClockIntent,
@@ -53,100 +52,105 @@ class TimeComplicationService : SuspendingComplicationDataSourceService() {
         )
     }
 
-override fun getPreviewData(type: ComplicationType): ComplicationData? {
-    return when (type) {
+    override fun getPreviewData(type: ComplicationType): ComplicationData? {
+        return when (type) {
 
-        ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
-            text = PlainComplicationText.Builder(text = "10:08").build(),
-            contentDescription = PlainComplicationText.Builder(text = getString(R.string.time_comp_desc)).build())
-            .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_clock)).build())
-            .setTapAction(null)
-            .build()
-
-        ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
-            text = PlainComplicationText.Builder(text = "10:08").build(),
-            contentDescription = PlainComplicationText.Builder(text = getString(R.string.time_comp_desc)).build())
-            .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_clock)).build())
-            .setTapAction(null)
-            .build()
-
-        ComplicationType.RANGED_VALUE -> RangedValueComplicationData.Builder(
-            value = 608f,
-            min = 0f,
-            max =  1440f,
-            contentDescription = PlainComplicationText.Builder(text = getString(R.string.time_comp_desc)).build())
-            .setText(PlainComplicationText.Builder(text = "10:08").build())
-            .setTitle(PlainComplicationText.Builder(text = "AM").build())
-            .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_clock)).build())
-            .setTapAction(null)
-            .build()
-
-
-        else -> {null}
-    }
-}
-
-override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
-    Log.d(TAG, "onComplicationRequest() id: ${request.complicationInstanceId}")
-
-    // TODO: TU IDU VARIABILNE
-    val hour = LocalDateTime.now().hour
-    val min = LocalDateTime.now().minute
-    val progressvariable = hour*60+min.toFloat()
-
-    val ismilitary = preferences.first().isMilitaryTime
-    val leadingzero = preferences.first().isLeadingZeroTime
-
-    val fmt = if (ismilitary && leadingzero) "HH:mm"
-    else if (!ismilitary && !leadingzero) "h:mm"
-    else if (ismilitary) "H:mm"
-    else "hh:mm"
-
-    val text = TimeFormatComplicationText.Builder(format = fmt).build()
-
-    return when (request.complicationType) {
-
-        ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
-            text = text,
-            contentDescription = PlainComplicationText.Builder(text = getString(R.string.time_comp_desc)).build())
-            .setTitle(
-                if (!ismilitary) { TimeFormatComplicationText.Builder(format = "a").build()}
-                else {PlainComplicationText.Builder(text = "24h").build()})
-            .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_clock)).build())
-            .setTapAction(openScreen())
-            .build()
-
-        ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
-            text = text,
-            contentDescription = PlainComplicationText.Builder(text = getString(R.string.time_comp_desc)).build())
-            .setTitle(
-                if (!ismilitary) { TimeFormatComplicationText.Builder(format = "a").build()}
-                else {PlainComplicationText.Builder(text = "24h").build()})
-            .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_clock)).build())
-            .setTapAction(openScreen())
-            .build()
-
-        ComplicationType.RANGED_VALUE -> RangedValueComplicationData.Builder(
-            value = progressvariable,
-            min = 0f,
-            max =  1440f,
-            contentDescription = PlainComplicationText.Builder(text = getString(R.string.time_comp_desc)).build())
-            .setText(text)
-            .setTitle(
-                if (!ismilitary) { TimeFormatComplicationText.Builder(format = "a").build()}
-                else {PlainComplicationText.Builder(text = "24h").build()})
-            .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_clock)).build())
-            .setTapAction(openScreen())
-            .build()
-
-
-        else -> {
-            if (Log.isLoggable(TAG, Log.WARN)) {
-                Log.w(TAG, "Unexpected complication type ${request.complicationType}")
+            ComplicationType.SHORT_TEXT -> {
+                ShortTextComplicationData.Builder(
+                    text = PlainComplicationText.Builder(text = "10:08").build(),
+                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.time_comp_desc)).build())
+                    .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_clock)).build())
+                    .setTapAction(null)
+                    .build()
             }
-            null
+            ComplicationType.LONG_TEXT -> {
+                LongTextComplicationData.Builder(
+                    text = PlainComplicationText.Builder(text = "10:08:35").build(),
+                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.time_comp_desc)).build())
+                    .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_clock)).build())
+                    .setTitle(PlainComplicationText.Builder(text = "AM").build())
+                    .setTapAction(null)
+                    .build()
+            }
+            ComplicationType.RANGED_VALUE -> {
+                RangedValueComplicationData.Builder(
+                    value = 608f,
+                    min = 0f,
+                    max =  1440f,
+                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.time_comp_desc)).build())
+                    .setText(PlainComplicationText.Builder(text = "10:08").build())
+                    .setTitle(PlainComplicationText.Builder(text = "AM").build())
+                    .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_clock)).build())
+                    .setTapAction(null)
+                    .build()
+            }
+
+            else -> {null}
         }
     }
-}
+
+    override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
+
+        val hour = LocalDateTime.now().hour
+        val min = LocalDateTime.now().minute
+        val progressvariable = hour*60+min.toFloat()
+
+        val ismilitary = preferences.first().isMilitaryTime
+        val leadingzero = preferences.first().isLeadingZeroTime
+
+        val fmt = if (ismilitary && leadingzero) "HH:mm"
+        else if (!ismilitary && !leadingzero) "h:mm"
+        else if (ismilitary) "H:mm"
+        else "hh:mm"
+
+        val text = TimeFormatComplicationText.Builder(format = fmt).build()
+
+        return when (request.complicationType) {
+
+            ComplicationType.SHORT_TEXT -> {
+                ShortTextComplicationData.Builder(
+                    text = text,
+                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.time_comp_desc)).build())
+                    .setTitle(
+                        if (!ismilitary) { TimeFormatComplicationText.Builder(format = "a").build()}
+                        else {PlainComplicationText.Builder(text = "24h").build()})
+                    .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_clock)).build())
+                    .setTapAction(openScreen())
+                    .build()
+            }
+            ComplicationType.LONG_TEXT -> {
+                LongTextComplicationData.Builder(
+                    text = TimeFormatComplicationText.Builder(format = "$fmt:ss").build(),
+                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.time_comp_desc)).build())
+                    .setTitle(
+                        if (!ismilitary) { TimeFormatComplicationText.Builder(format = "a").build()}
+                        else {PlainComplicationText.Builder(text = "24h").build()})
+                    .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_clock)).build())
+                    .setTapAction(openScreen())
+                    .build()
+            }
+            ComplicationType.RANGED_VALUE -> {
+                RangedValueComplicationData.Builder(
+                    value = progressvariable,
+                    min = 0f,
+                    max =  1440f,
+                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.time_comp_desc)).build())
+                    .setText(text)
+                    .setTitle(
+                        if (!ismilitary) { TimeFormatComplicationText.Builder(format = "a").build()}
+                        else {PlainComplicationText.Builder(text = "24h").build()})
+                    .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_clock)).build())
+                    .setTapAction(openScreen())
+                    .build()
+            }
+
+            else -> {
+                if (Log.isLoggable(TAG, Log.WARN)) {
+                    Log.w(TAG, "Unexpected complication type ${request.complicationType}")
+                }
+                null
+            }
+        }
+    }
 }
 

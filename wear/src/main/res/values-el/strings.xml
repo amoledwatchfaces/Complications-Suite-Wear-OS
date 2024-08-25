@@ -149,6 +149,8 @@
     <string name="day_and_week_comp_name">Ημέρα και Εβδομάδα</string>
     <string name="dayD">Η:</string>
     <string name="weekW">Ε:</string>
+    <string name="dayDlong">Ημέρα</string>
+    <string name="weekWlong">Εβδομάδα</string>
 
     <!-- Developer Options -->
     <string name="developer_options_comp_name">Επιλογές Προγραμματιστή</string>

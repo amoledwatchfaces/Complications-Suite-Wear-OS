@@ -62,7 +62,8 @@ class MoonPhaseComplicationService : SuspendingComplicationDataSourceService() {
     @Inject
     lateinit var dataStore: DataStore<UserPreferences>
     private val preferences by lazy { UserPreferencesRepository(dataStore).getPreferences() }
-    override fun onComplicationActivated(
+
+    override fun onComplicationActivated (
         complicationInstanceId: Int,
         type: ComplicationType
     ) {
@@ -77,7 +78,7 @@ class MoonPhaseComplicationService : SuspendingComplicationDataSourceService() {
         }
     }
 
-private fun openScreen(): PendingIntent? {
+    private fun openScreen(): PendingIntent? {
 
     val calendarIntent = Intent()
     calendarIntent.action = Intent.ACTION_MAIN
@@ -89,58 +90,53 @@ private fun openScreen(): PendingIntent? {
     )
 }
 
-override fun getPreviewData(type: ComplicationType): ComplicationData? {
+    override fun getPreviewData(type: ComplicationType): ComplicationData? {
     return when (type) {
-        ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
-            text = PlainComplicationText.Builder(text = "100%").build(),
-            contentDescription = PlainComplicationText.Builder(text = "100%")
+        ComplicationType.SHORT_TEXT -> {
+            ShortTextComplicationData.Builder(
+                text = PlainComplicationText.Builder(text = "40%").build(),
+                contentDescription = PlainComplicationText.Builder(text = getString(R.string.moon_comp_name)).build())
+                .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_settings_moon_detailed)).build())
+                .setTapAction(null)
                 .build()
-        )
-            .setMonochromaticImage(
-                MonochromaticImage.Builder(
-                    image = createWithResource(this, drawable.ic_settings_moon_detailed),
-                ).build()
-            )
-            .setTapAction(null)
-            .build()
-
-        ComplicationType.RANGED_VALUE -> RangedValueComplicationData.Builder(
-            value = 50f,
-            min = 0f,
-            max =  100f,
-            contentDescription = PlainComplicationText.Builder(text = "Visibility").build()
-            )
-            .setMonochromaticImage(
-                MonochromaticImage.Builder(createWithResource(this, drawable.ic_settings_moon_detailed)).build()
-            )
-            .setTapAction(null)
-            .build()
-
-        ComplicationType.MONOCHROMATIC_IMAGE -> MonochromaticImageComplicationData.Builder(
-            monochromaticImage = MonochromaticImage.Builder(
-                createWithResource(this, drawable.ic_settings_moon_detailed)
-            )
-                .build(),
-            contentDescription = PlainComplicationText.Builder(text = "MONO_IMG.").build()
-        )
-            .setTapAction(null)
-            .build()
-
-
-        ComplicationType.SMALL_IMAGE -> SmallImageComplicationData.Builder(
-            smallImage = SmallImage.Builder(
-                image = createWithResource(this, drawable.ic_settings_moon_detailed),
-                type = SmallImageType.ICON
-            ).build(),
-            contentDescription = PlainComplicationText.Builder(text = "SMALL_IMAGE.").build()
-        )
-            .setTapAction(null)
-            .build()
-
-        else -> {null}
+        }
+        ComplicationType.LONG_TEXT -> {
+            LongTextComplicationData.Builder(
+                text = PlainComplicationText.Builder(text = MoonPhaseHelper.getMoonPhaseName(phaseName = "WAXING_CRESCENT", context = this)).build(),
+                contentDescription = PlainComplicationText.Builder(text = getString(R.string.moon_comp_name)).build())
+                .setTitle(PlainComplicationText.Builder(text = "40%").build())
+                .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_settings_moon_detailed)).build())
+                .setTapAction(openScreen())
+                .build()
+        }
+        ComplicationType.RANGED_VALUE -> {
+            RangedValueComplicationData.Builder(
+                value = -135f,
+                min = -180.0f,
+                max =  180.0f,
+                contentDescription = PlainComplicationText.Builder(text = getString(R.string.moon_comp_name)).build())
+                .setText(PlainComplicationText.Builder(text = "-105°").build())
+                .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_settings_moon_detailed)).build())
+                .setTapAction(null)
+                .build()
+        }
+        ComplicationType.MONOCHROMATIC_IMAGE -> {
+            MonochromaticImageComplicationData.Builder(
+                monochromaticImage = MonochromaticImage.Builder(createWithResource(this, drawable.ic_settings_moon_detailed)).build(),
+                contentDescription = PlainComplicationText.Builder(text = getString(R.string.moon_comp_name)).build())
+                .setTapAction(null)
+                .build()
+        }
+        ComplicationType.SMALL_IMAGE -> {
+            SmallImageComplicationData.Builder(
+                smallImage = SmallImage.Builder(image = createWithResource(this, drawable.ic_settings_moon_detailed), type = SmallImageType.ICON).build(),
+                contentDescription = PlainComplicationText.Builder(text = getString(R.string.moon_comp_name)).build())
+                .setTapAction(null)
+                .build()
+        }
+        else -> { null }
     }
 }
-
 
     override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
 
@@ -154,6 +150,7 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
         /**
          * CALCULATE MOON
          */
+
         val set1 = MoonPosition.compute().now().at(lat,long).execute()
         val set2 = MoonIllumination.compute().now().execute()
 
@@ -169,18 +166,75 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
 
     return when (request.complicationType) {
 
-        ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
-            text = PlainComplicationText.Builder(text = "$visibilityok%").build(),
-            contentDescription = PlainComplicationText.Builder(text = getString(R.string.moon_comp_name)).build())
-
-            .setMonochromaticImage(
-                MonochromaticImage.Builder(
-                    if (moonIconType == MoonIconType.SIMPLE) {
-                        createWithResource(this,
-                            MoonPhaseHelper.getSimpleIcon(phaseName = phaseName,isnorthernHemi))
-                    }
-                    else {
-                        createWithBitmap(
+        ComplicationType.SHORT_TEXT -> {
+            ShortTextComplicationData.Builder(
+                text = PlainComplicationText.Builder(text = "$visibilityok%").build(),
+                contentDescription = PlainComplicationText.Builder(text = getString(R.string.moon_comp_name)).build())
+                .setMonochromaticImage(
+                    MonochromaticImage.Builder(
+                        if (moonIconType == MoonIconType.SIMPLE) {
+                            createWithResource(this,
+                                MoonPhaseHelper.getSimpleIcon(phaseName = phaseName,isnorthernHemi))
+                        }
+                        else {
+                            createWithBitmap(
+                                DrawMoonBitmap.getLunarPhaseBitmap(
+                                    fraction = fraction,
+                                    angle = angle,
+                                    parallacticAngle = parallacticAngle,
+                                    lat = lat,
+                                    hemi = isnorthernHemi,
+                                    iconType = moonIconType
+                                )
+                            )
+                        }
+                    ).build()
+                )
+                .setTapAction(openScreen())
+                .build()
+        }
+        ComplicationType.LONG_TEXT -> {
+            LongTextComplicationData.Builder(
+                text = PlainComplicationText.Builder(text = MoonPhaseHelper.getMoonPhaseName(phaseName = phaseName, context = this)).build(),
+                contentDescription = PlainComplicationText.Builder(text = getString(R.string.moon_comp_name)).build())
+                .setTitle(PlainComplicationText.Builder(text = "$visibilityok%").build())
+                .setMonochromaticImage(
+                    MonochromaticImage.Builder(
+                        if (moonIconType == MoonIconType.SIMPLE) {
+                            createWithResource(this,
+                                MoonPhaseHelper.getSimpleIcon(phaseName = phaseName,isnorthernHemi))
+                        }
+                        else {
+                            createWithBitmap(
+                                DrawMoonBitmap.getLunarPhaseBitmap(
+                                    fraction = fraction,
+                                    angle = angle,
+                                    parallacticAngle = parallacticAngle,
+                                    lat = lat,
+                                    hemi = isnorthernHemi,
+                                    iconType = moonIconType
+                                )
+                            )
+                        }
+                    ).build()
+                )
+                .setTapAction(openScreen())
+                .build()
+        }
+        ComplicationType.RANGED_VALUE -> {
+            RangedValueComplicationData.Builder(
+                value = phase,
+                min = -180.0f,
+                max =  180.0f,
+                contentDescription = PlainComplicationText.Builder(text = "Visibility").build())
+                .setText(PlainComplicationText.Builder(text = "${phase.toInt()}°").build())
+                .setMonochromaticImage(
+                    MonochromaticImage.Builder(
+                        if (moonIconType == MoonIconType.SIMPLE) {
+                            createWithResource(this,
+                                MoonPhaseHelper.getSimpleIcon(phaseName = phaseName,isnorthernHemi))
+                        }
+                        else {createWithBitmap(
                             DrawMoonBitmap.getLunarPhaseBitmap(
                                 fraction = fraction,
                                 angle = angle,
@@ -188,72 +242,14 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
                                 lat = lat,
                                 hemi = isnorthernHemi,
                                 iconType = moonIconType
-                            )
-                        )
-                    }
-                ).build()
-            )
-            .setTapAction(openScreen())
-            .build()
-        ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
-            text = PlainComplicationText.Builder(text = "$visibilityok %").build(),
-            contentDescription = PlainComplicationText.Builder(text = getString(R.string.moon_comp_name)).build())
-
-            .setTitle(PlainComplicationText.Builder(text = MoonPhaseHelper.getMoonPhaseName(phaseName = phaseName, context = this)).build())
-            .setMonochromaticImage(
-                MonochromaticImage.Builder(
-                    if (moonIconType == MoonIconType.SIMPLE) {
-                        createWithResource(this,
-                            MoonPhaseHelper.getSimpleIcon(phaseName = phaseName,isnorthernHemi))
-                    }
-                    else {
-                        createWithBitmap(
-                            DrawMoonBitmap.getLunarPhaseBitmap(
-                            fraction = fraction,
-                            angle = angle,
-                            parallacticAngle = parallacticAngle,
-                            lat = lat,
-                            hemi = isnorthernHemi,
-                            iconType = moonIconType
-                            )
-                        )
-                    }
-                ).build()
-            )
-            .setTapAction(openScreen())
-            .build()
-
-        ComplicationType.RANGED_VALUE -> RangedValueComplicationData.Builder(
-            value = phase,
-            min = -180.0f,
-            max =  180.0f,
-            contentDescription = PlainComplicationText
-                .Builder(text = "Visibility").build()
-        )
-            .setText(PlainComplicationText.Builder(text = "${phase.toInt()}°").build())
-            .setMonochromaticImage(
-                MonochromaticImage.Builder(
-                    if (moonIconType == MoonIconType.SIMPLE) {
-                        createWithResource(this,
-                            MoonPhaseHelper.getSimpleIcon(phaseName = phaseName,isnorthernHemi))
-                    }
-                    else {createWithBitmap(
-                        DrawMoonBitmap.getLunarPhaseBitmap(
-                            fraction = fraction,
-                            angle = angle,
-                            parallacticAngle = parallacticAngle,
-                            lat = lat,
-                            hemi = isnorthernHemi,
-                            iconType = moonIconType
-                        ))
-                    }
-                ).build()
-            )
-            .setTapAction(openScreen())
-            .build()
-
+                            ))
+                        }
+                    ).build()
+                )
+                .setTapAction(openScreen())
+                .build()
+        }
         ComplicationType.MONOCHROMATIC_IMAGE -> {
-
             MonochromaticImageComplicationData.Builder(
                 monochromaticImage = MonochromaticImage.Builder(
                     if (moonIconType == MoonIconType.SIMPLE) {
@@ -277,31 +273,28 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
 
                 .build()
         }
-
-
-        ComplicationType.SMALL_IMAGE -> SmallImageComplicationData.Builder(
-            smallImage = SmallImage.Builder(
-                image = if (moonIconType == MoonIconType.SIMPLE) {
-                    createWithResource(this,
-                        MoonPhaseHelper.getSimpleIcon(phaseName = phaseName,isnorthernHemi))
-                }
-                else {createWithBitmap(
-                    DrawMoonBitmap.getLunarPhaseBitmap(
-                    fraction = fraction,
-                    angle = angle,
-                    parallacticAngle = parallacticAngle,
-                    lat = lat,
-                        hemi = isnorthernHemi,
-                        iconType = moonIconType
-                    )
-                )
-                     },
-                type = SmallImageType.ICON
-            ).build(),
-            contentDescription = PlainComplicationText.Builder(text = "SMALL_IMAGE.").build()
-        )
-            .setTapAction(openScreen())
-            .build()
+        ComplicationType.SMALL_IMAGE -> {
+            SmallImageComplicationData.Builder(
+                smallImage = SmallImage.Builder(
+                    image = if (moonIconType == MoonIconType.SIMPLE) { createWithResource(this, MoonPhaseHelper.getSimpleIcon(phaseName = phaseName,isnorthernHemi)) }
+                    else {
+                        createWithBitmap(
+                            DrawMoonBitmap.getLunarPhaseBitmap(
+                                fraction = fraction,
+                                angle = angle,
+                                parallacticAngle = parallacticAngle,
+                                lat = lat,
+                                hemi = isnorthernHemi,
+                                iconType = moonIconType
+                            )
+                        )
+                    },
+                    type = SmallImageType.ICON).build(),
+                contentDescription = PlainComplicationText.Builder(text = "SMALL_IMAGE.").build()
+            )
+                .setTapAction(openScreen())
+                .build()
+        }
 
         else -> {
             if (Log.isLoggable(TAG, Log.WARN)) {

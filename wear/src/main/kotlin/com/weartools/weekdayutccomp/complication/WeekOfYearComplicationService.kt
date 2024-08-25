@@ -1,19 +1,3 @@
-/*
- * Copyright 2022 amoledwatchfaces™
- * support@amoledwatchfaces.com
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.weartools.weekdayutccomp.complication
 
 import android.app.PendingIntent
@@ -65,133 +49,145 @@ class WeekOfYearComplicationService : SuspendingComplicationDataSourceService() 
     lateinit var dataStore: DataStore<UserPreferences>
     private val preferences by lazy { UserPreferencesRepository(dataStore).getPreferences() }
 
-private fun openScreen(): PendingIntent? {
+    private fun openScreen(): PendingIntent? {
 
-    val calendarIntent = Intent()
-    calendarIntent.action = Intent.ACTION_MAIN
-    calendarIntent.addCategory(Intent.CATEGORY_APP_CALENDAR)
+        val calendarIntent = Intent()
+        calendarIntent.action = Intent.ACTION_MAIN
+        calendarIntent.addCategory(Intent.CATEGORY_APP_CALENDAR)
 
-    return PendingIntent.getActivity(
-        this, 0, calendarIntent,
-        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-    )
-}
-
-override fun getPreviewData(type: ComplicationType): ComplicationData? {
-    return when (type) {
-
-        ComplicationType.MONOCHROMATIC_IMAGE -> MonochromaticImageComplicationData.Builder(
-            monochromaticImage = MonochromaticImage.Builder(createWithBitmap(createBitmapWithCircleAndNumber(7))).build(),
-            contentDescription = PlainComplicationText.Builder(text = getString(R.string.woy_complication_text)).build())
-            .setTapAction(null)
-            .build()
-
-        ComplicationType.SMALL_IMAGE -> SmallImageComplicationData.Builder(
-            smallImage = SmallImage.Builder(
-                image = createWithBitmap(createBitmapWithCircleAndNumber(7)),
-                type = SmallImageType.ICON).build(),
-            contentDescription = PlainComplicationText.Builder(text = getString(R.string.woy_complication_text)).build())
-            .setTapAction(null)
-            .build()
-
-        ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
-        text = PlainComplicationText.Builder(text = "32").build(),
-        contentDescription = PlainComplicationText.Builder(text = getString(R.string.woy_complication_text))
-            .build())
-            .setTitle(PlainComplicationText.Builder(text = getString(R.string.woy_complication_text)).build())
-            .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_week)).build())
-            .setTapAction(null)
-            .build()
-
-        ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
-            text = PlainComplicationText.Builder(text = "32").build(),
-            contentDescription = PlainComplicationText.Builder(text = getString(R.string.woy_complication_description)).build())
-            .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_week)).build())
-            .setTitle(PlainComplicationText.Builder(text = getString(R.string.woy_complication_text)).build())
-            .setTapAction(null)
-            .build()
-
-        ComplicationType.RANGED_VALUE -> RangedValueComplicationData.Builder(
-            value = 32f,
-            min = 1f,
-            max =  52f,
-            contentDescription = PlainComplicationText.Builder(text = getString(R.string.woy_complication_description)).build())
-            .setText(PlainComplicationText.Builder(text = "32").build())
-            .setTitle(PlainComplicationText.Builder(text = getString(R.string.woy_complication_text)).build())
-            .setTapAction(null)
-            .build()
-        else -> {null}
+        return PendingIntent.getActivity(
+            this, 0, calendarIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
     }
-}
 
-override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
+    override fun getPreviewData(type: ComplicationType): ComplicationData? {
+        return when (type) {
 
-    val isiso = preferences.first().isISO
-
-    // TODO: TU IDU VARIABILNE
-    val date: LocalDate = LocalDate.now()
-    val weekFields: WeekFields =
-        if (isiso) WeekFields.of(DayOfWeek.MONDAY, 4)
-        else WeekFields.of(DayOfWeek.SUNDAY, 1)
-
-    val fmt: DateTimeFormatter = DateTimeFormatterBuilder()
-        .appendValue(weekFields.weekOfWeekBasedYear(), 1,2,SignStyle.NORMAL)
-        .toFormatter()
-
-    val week = fmt.format(date).toInt()
-    val maxWeek = if (Year.isLeap(date.year.toLong())) 53F else 52F
-
-    return when (request.complicationType) {
-
-        ComplicationType.MONOCHROMATIC_IMAGE -> MonochromaticImageComplicationData.Builder(
-            monochromaticImage = MonochromaticImage.Builder(createWithBitmap(createBitmapWithCircleAndNumber(week))).build(),
-            contentDescription = PlainComplicationText.Builder(text = getString(R.string.woy_complication_description)).build())
-            .setTapAction(openScreen())
-            .build()
-
-        ComplicationType.SMALL_IMAGE -> SmallImageComplicationData.Builder(
-            smallImage = SmallImage.Builder(
-                image = createWithBitmap(createBitmapWithCircleAndNumber(week)),
-                type = SmallImageType.ICON).build(),
-            contentDescription = PlainComplicationText.Builder(text = getString(R.string.woy_complication_description)).build())
-            .setTapAction(openScreen())
-            .build()
-
-        ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
-            text = PlainComplicationText.Builder(text = "$week").build(),
-            contentDescription = PlainComplicationText.Builder(text = getString(R.string.woy_complication_description)).build())
-            .setTitle(PlainComplicationText.Builder(text = getString(R.string.woy_complication_text)).build())
-            .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_week)).build())
-            .setTapAction(openScreen())
-            .build()
-
-        ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
-            text = PlainComplicationText.Builder(text = getString(R.string.woy_complication_text)).build(),
-            contentDescription = PlainComplicationText.Builder(text = getString(R.string.woy_complication_description)).build())
-            .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_week)).build())
-            .setTitle(PlainComplicationText.Builder(text = "$week").build())
-            .setTapAction(openScreen())
-            .build()
-
-        ComplicationType.RANGED_VALUE -> RangedValueComplicationData.Builder(
-            value = week.toFloat(),
-            min = 1f,
-            max =  maxWeek,
-            contentDescription = PlainComplicationText.Builder(text = getString(R.string.woy_complication_description)).build())
-            .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_week)).build())
-            .setText(PlainComplicationText.Builder(text = "$week").build())
-            .setTitle(PlainComplicationText.Builder(text = getString(R.string.woy_complication_text)).build())
-            .setTapAction(openScreen())
-            .build()
-
-        else -> {
-            if (Log.isLoggable(TAG, Log.WARN)) {
-                Log.w(TAG, "Unexpected complication type ${request.complicationType}")
+            ComplicationType.MONOCHROMATIC_IMAGE -> {
+                MonochromaticImageComplicationData.Builder(
+                    monochromaticImage = MonochromaticImage.Builder(createWithBitmap(createBitmapWithCircleAndNumber(7))).build(),
+                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.woy_complication_text)).build())
+                    .setTapAction(null)
+                    .build()
             }
-            null
+            ComplicationType.SMALL_IMAGE -> {
+                SmallImageComplicationData.Builder(
+                    smallImage = SmallImage.Builder(
+                        image = createWithBitmap(createBitmapWithCircleAndNumber(7)),
+                        type = SmallImageType.ICON).build(),
+                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.woy_complication_text)).build())
+                    .setTapAction(null)
+                    .build()
+            }
+            ComplicationType.SHORT_TEXT -> {
+                ShortTextComplicationData.Builder(
+                    text = PlainComplicationText.Builder(text = "32").build(),
+                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.woy_complication_text))
+                        .build())
+                    .setTitle(PlainComplicationText.Builder(text = getString(R.string.woy_complication_text)).build())
+                    .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_week)).build())
+                    .setTapAction(null)
+                    .build()
+            }
+            ComplicationType.LONG_TEXT -> {
+                LongTextComplicationData.Builder(
+                    text = PlainComplicationText.Builder(text = getString(R.string.woy_complication_text)).build(),
+                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.woy_complication_description)).build())
+                    .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_week)).build())
+                    .setTitle(PlainComplicationText.Builder(text = "32").build())
+                    .setTapAction(null)
+                    .build()
+            }
+            ComplicationType.RANGED_VALUE -> {
+                RangedValueComplicationData.Builder(
+                    value = 32f,
+                    min = 1f,
+                    max =  52f,
+                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.woy_complication_description)).build())
+                    .setText(PlainComplicationText.Builder(text = "32").build())
+                    .setTitle(PlainComplicationText.Builder(text = getString(R.string.woy_complication_text)).build())
+                    .setTapAction(null)
+                    .build()
+            }
+
+            else -> { null }
         }
     }
-}
+
+    override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
+
+        val isiso = preferences.first().isISO
+
+        val date: LocalDate = LocalDate.now()
+        val weekFields: WeekFields =
+            if (isiso) WeekFields.of(DayOfWeek.MONDAY, 4)
+            else WeekFields.of(DayOfWeek.SUNDAY, 1)
+
+        val fmt: DateTimeFormatter = DateTimeFormatterBuilder()
+            .appendValue(weekFields.weekOfWeekBasedYear(), 1,2,SignStyle.NORMAL)
+            .toFormatter()
+
+        val week = fmt.format(date).toInt()
+        val maxWeek = if (Year.isLeap(date.year.toLong())) 53F else 52F
+
+        return when (request.complicationType) {
+
+            ComplicationType.MONOCHROMATIC_IMAGE -> {
+                MonochromaticImageComplicationData.Builder(
+                    monochromaticImage = MonochromaticImage.Builder(createWithBitmap(createBitmapWithCircleAndNumber(week))).build(),
+                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.woy_complication_description)).build())
+                    .setTapAction(openScreen())
+                    .build()
+            }
+            ComplicationType.SMALL_IMAGE -> {
+                SmallImageComplicationData.Builder(
+                    smallImage = SmallImage.Builder(
+                        image = createWithBitmap(createBitmapWithCircleAndNumber(week)),
+                        type = SmallImageType.ICON).build(),
+                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.woy_complication_description)).build())
+                    .setTapAction(openScreen())
+                    .build()
+            }
+            ComplicationType.SHORT_TEXT -> {
+                ShortTextComplicationData.Builder(
+                    text = PlainComplicationText.Builder(text = "$week").build(),
+                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.woy_complication_description)).build())
+                    .setTitle(PlainComplicationText.Builder(text = getString(R.string.woy_complication_text)).build())
+                    .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_week)).build())
+                    .setTapAction(openScreen())
+                    .build()
+            }
+            ComplicationType.LONG_TEXT -> {
+                LongTextComplicationData.Builder(
+                    text = PlainComplicationText.Builder(text = getString(R.string.woy_complication_text)).build(),
+                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.woy_complication_description)).build())
+                    .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_week)).build())
+                    .setTitle(PlainComplicationText.Builder(text = "$week").build())
+                    .setTapAction(openScreen())
+                    .build()
+            }
+            ComplicationType.RANGED_VALUE -> {
+                RangedValueComplicationData.Builder(
+                    value = week.toFloat(),
+                    min = 1f,
+                    max =  maxWeek,
+                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.woy_complication_description)).build())
+                    .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_week)).build())
+                    .setText(PlainComplicationText.Builder(text = "$week").build())
+                    .setTitle(PlainComplicationText.Builder(text = getString(R.string.woy_complication_text)).build())
+                    .setTapAction(openScreen())
+                    .build()
+            }
+
+            else -> {
+                if (Log.isLoggable(TAG, Log.WARN)) {
+                    Log.w(TAG, "Unexpected complication type ${request.complicationType}")
+                }
+                null
+            }
+        }
+    }
 }
 
 fun createBitmapWithCircleAndNumber(number: Int): Bitmap {

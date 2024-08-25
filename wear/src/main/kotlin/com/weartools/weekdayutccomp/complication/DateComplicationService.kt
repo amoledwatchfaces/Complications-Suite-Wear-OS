@@ -17,6 +17,7 @@
 package com.weartools.weekdayutccomp.complication
 
 import android.app.PendingIntent
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.util.Log
 import android.widget.Toast
@@ -38,108 +39,107 @@ class DateComplicationService : SuspendingComplicationDataSourceService() {
     lateinit var dataStore: DataStore<UserPreferences>
     private val preferences by lazy { UserPreferencesRepository(dataStore).getPreferences() }
 
-private fun openScreen(): PendingIntent? {
+    private fun openScreen(): PendingIntent? {
 
-    val calendarIntent = Intent()
-    calendarIntent.action = Intent.ACTION_MAIN
-    calendarIntent.addCategory(Intent.CATEGORY_APP_CALENDAR)
+        val calendarIntent = Intent()
+        calendarIntent.action = Intent.ACTION_MAIN
+        calendarIntent.addCategory(Intent.CATEGORY_APP_CALENDAR)
 
-    return PendingIntent.getActivity(
-        this, 0, calendarIntent,
-        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-    )
-}
-
-override fun getPreviewData(type: ComplicationType): ComplicationData? {
-    return when (type) {
-        ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
-        text = PlainComplicationText.Builder(text = "1").build(),
-        contentDescription = PlainComplicationText
-            .Builder(text = getString(R.string.date_comp_name))
-            .build())
-        .setTitle(PlainComplicationText.Builder(text = "Jan").build())
-        .setTapAction(null)
-        .build()
-        ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
-            text = PlainComplicationText.Builder(text = "01/01/2025").build(),
-            contentDescription = PlainComplicationText
-                .Builder(text = getString(R.string.date_comp_name))
-                .build()
+        return PendingIntent.getActivity(
+            this, 0, calendarIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
-            .setTapAction(openScreen())
-            .build()
-        else -> {null}
     }
-}
 
-override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
-    Log.d(TAG, "onComplicationRequest() id: ${request.complicationInstanceId}")
-
-    val prefs = preferences.first()
-    val longText = prefs.longText
-    val text = prefs.shortText
-    val title = prefs.shortTitle
-
-
-
-
-    return when (request.complicationType) {
-
-        ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
-            text = try {
-                TimeFormatComplicationText.Builder(format = text).build()
-            } catch (e: IllegalArgumentException) {
-                // Inform the user that the format is invalid
-                Toast.makeText(this, "Text: Wrong format! Check SimpleDateFormat", Toast.LENGTH_LONG).show()
-                PlainComplicationText.Builder(text="?").build()
-            },
-            contentDescription = PlainComplicationText
-                .Builder(text = getString(R.string.date_comp_name))
-                .build()
-        )
-            .setTitle(
-                try {
-                    TimeFormatComplicationText.Builder(format = title).build()
-                } catch (e: IllegalArgumentException) {
-                    // Inform the user that the format is invalid
-                    Toast.makeText(this, "Title: Wrong format! Check SimpleDateFormat", Toast.LENGTH_LONG).show()
-                    PlainComplicationText.Builder(text="?").build()
-                }
-            )
-            .setTapAction(openScreen())
-            .build()
-
-        ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
-            text = try {
-                TimeFormatComplicationText.Builder(format = longText).build()
-            } catch (e: IllegalArgumentException) {
-                // Inform the user that the format is invalid
-                Toast.makeText(this, "Wrong format! Check SimpleDateFormat patters", Toast.LENGTH_LONG).show()
-                PlainComplicationText.Builder(text="?").build()
-            },
-            contentDescription = PlainComplicationText
-                .Builder(text = getString(R.string.date_comp_name))
-                .build()
-        )
-            .setTapAction(openScreen())
-            .build()
-
-        else -> {
-            if (Log.isLoggable(TAG, Log.WARN)) {
-                Log.w(TAG, "Unexpected complication type ${request.complicationType}")
+    override fun getPreviewData(type: ComplicationType): ComplicationData? {
+        return when (type) {
+            ComplicationType.SHORT_TEXT -> {
+                ShortTextComplicationData.Builder(
+                    text = PlainComplicationText.Builder(text = "1").build(),
+                    contentDescription = PlainComplicationText
+                        .Builder(text = getString(R.string.date_comp_name))
+                        .build())
+                    .setTitle(PlainComplicationText.Builder(text = "Jan").build())
+                    .setTapAction(null)
+                    .build()
             }
-            null
+            ComplicationType.LONG_TEXT -> {
+                LongTextComplicationData.Builder(
+                    text = PlainComplicationText.Builder(text = "January 1, 2027").build(),
+                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.date_comp_name)).build())
+                    .setTitle(PlainComplicationText.Builder(text = "Friday").build())
+                    .setTapAction(null)
+                    .build()
+            }
+            else -> { null }
         }
-
     }
-}
 
-override fun onComplicationDeactivated(complicationInstanceId: Int) {
-    Log.d(TAG, "onComplicationDeactivated(): $complicationInstanceId")
-}
+    override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
 
-companion object {
-    private const val TAG = "CompDataSourceService"
-}
+        val prefs = preferences.first()
+        val longText = prefs.longText
+        val text = prefs.shortText
+        val title = prefs.shortTitle
+
+        return when (request.complicationType) {
+
+            ComplicationType.SHORT_TEXT -> {
+                ShortTextComplicationData.Builder(
+                    text = try {
+                        TimeFormatComplicationText.Builder(format = text).build()
+                    } catch (e: IllegalArgumentException) {
+                        // Inform the user that the format is invalid
+                        Toast.makeText(this, "Text: Wrong format! Check SimpleDateFormat", Toast.LENGTH_LONG).show()
+                        PlainComplicationText.Builder(text="?").build()
+                    },
+                    contentDescription = PlainComplicationText
+                        .Builder(text = getString(R.string.date_comp_name))
+                        .build()
+                )
+                    .setTitle(
+                        try {
+                            TimeFormatComplicationText.Builder(format = title).build()
+                        } catch (e: IllegalArgumentException) {
+                            // Inform the user that the format is invalid
+                            Toast.makeText(this, "Title: Wrong format! Check SimpleDateFormat", Toast.LENGTH_LONG).show()
+                            PlainComplicationText.Builder(text="?").build()
+                        }
+                    )
+                    .setTapAction(openScreen())
+                    .build()
+            }
+            ComplicationType.LONG_TEXT -> {
+                LongTextComplicationData.Builder(
+                    text = try {
+                        TimeFormatComplicationText.Builder(format = longText).build()
+                    } catch (e: IllegalArgumentException) {
+                        // Inform the user that the format is invalid
+                        Toast.makeText(this, "Wrong format! Check SimpleDateFormat patters", Toast.LENGTH_LONG).show()
+                        PlainComplicationText.Builder(text="?").build()
+                    },
+                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.date_comp_name)).build())
+                    .setTitle(
+                        try {
+                            TimeFormatComplicationText.Builder(format = title).build()
+                        } catch (e: IllegalArgumentException) {
+                            // Inform the user that the format is invalid
+                            Toast.makeText(this, "Title: Wrong format! Check SimpleDateFormat", Toast.LENGTH_LONG).show()
+                            PlainComplicationText.Builder(text="?").build()
+                        }
+                    )
+                    .setTapAction(openScreen())
+                    .build()
+            }
+
+            else -> {
+                if (Log.isLoggable(TAG, Log.WARN)) {
+                    Log.w(TAG, "Unexpected complication type ${request.complicationType}")
+                }
+                null
+            }
+        }
+    }
+
 }
 

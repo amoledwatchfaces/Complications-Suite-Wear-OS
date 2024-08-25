@@ -150,6 +150,8 @@
     <string name="day_and_week_comp_name">Tag und Woche</string>
     <string name="dayD">T:</string>
     <string name="weekW">W:</string>
+    <string name="dayDlong">Tag</string>
+    <string name="weekWlong">Woche</string>
 
     <!-- Developer Options -->
     <string name="developer_options_comp_name">Entwickleroptionen</string>

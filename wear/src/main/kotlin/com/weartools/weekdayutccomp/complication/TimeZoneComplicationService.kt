@@ -24,81 +24,74 @@ import androidx.wear.watchface.complications.data.*
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
 import com.weartools.weekdayutccomp.R
+import android.content.ContentValues.TAG
 
 class TimeZoneComplicationService : SuspendingComplicationDataSourceService() {
 
-    override fun onComplicationActivated(
-        complicationInstanceId: Int,
-        type: ComplicationType
-    ) {
-        Log.d(TAG, "onComplicationActivated(): $complicationInstanceId")
+    private fun openScreen(): PendingIntent? {
+
+        val calendarIntent = Intent()
+        calendarIntent.action = Intent.ACTION_MAIN
+        calendarIntent.addCategory(Intent.CATEGORY_APP_CALENDAR)
+
+        return PendingIntent.getActivity(
+            this, 0, calendarIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
     }
 
+    override fun getPreviewData(type: ComplicationType): ComplicationData? {
+        return when (type) {
+            ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
+                text = PlainComplicationText.Builder(text = "PST").build(),
+                contentDescription = PlainComplicationText.Builder(text = getString(R.string.time_zone_comp_name)).build())
+                .setMonochromaticImage(MonochromaticImage.Builder(image = Icon.createWithResource(this, R.drawable.ic_world)).build())
+                .setTapAction(null)
+                .build()
 
-private fun openScreen(): PendingIntent? {
-
-    val calendarIntent = Intent()
-    calendarIntent.action = Intent.ACTION_MAIN
-    calendarIntent.addCategory(Intent.CATEGORY_APP_CALENDAR)
-
-    return PendingIntent.getActivity(
-        this, 0, calendarIntent,
-        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-    )
-}
-
-override fun getPreviewData(type: ComplicationType): ComplicationData? {
-    return when (type) {
-        ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
-            text = PlainComplicationText.Builder(text = "PDT").build(),
-            contentDescription = PlainComplicationText.Builder(text = getString(R.string.time_zone_comp_name)).build())
-            .setMonochromaticImage(MonochromaticImage.Builder(image = Icon.createWithResource(this, R.drawable.ic_world)).build())
-            .setTapAction(null)
-            .build()
-
-        ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
-            text = PlainComplicationText.Builder(text = "${getString(R.string.time_zone_comp_name)}: PDT").build(),
-            contentDescription = PlainComplicationText.Builder(text = getString(R.string.time_zone_comp_name)).build())
-            .setTapAction(null)
-            .build()
-        else -> {null}
-    }
-}
-
-override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
-    Log.d(TAG, "onComplicationRequest() id: ${request.complicationInstanceId}")
-
-    return when (request.complicationType) {
-
-        ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
-            text = TimeFormatComplicationText.Builder(format = "z").build(),
-            contentDescription = TimeFormatComplicationText.Builder(format = "'${getString(R.string.time_zone_comp_name)}: 'z").build())
-            .setMonochromaticImage(MonochromaticImage.Builder(image = Icon.createWithResource(this, R.drawable.ic_world)).build())
-            .setTapAction(openScreen())
-            .build()
-
-        ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
-            text = TimeFormatComplicationText.Builder(format = "z").build(),
-            contentDescription = TimeFormatComplicationText.Builder(format = "'${getString(R.string.time_zone_comp_name)}: 'z").build())
-            .setTapAction(openScreen())
-            .build()
-
-        else -> {
-            if (Log.isLoggable(TAG, Log.WARN)) {
-                Log.w(TAG, "Unexpected complication type ${request.complicationType}")
-            }
-            null
+            ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
+                text = PlainComplicationText.Builder(text = "-08:00").build(),
+                contentDescription = PlainComplicationText.Builder(text = getString(R.string.time_zone_comp_name)).build())
+                .setMonochromaticImage(MonochromaticImage.Builder(image = Icon.createWithResource(this, R.drawable.ic_world)).build())
+                .setTitle(PlainComplicationText.Builder(text = "PST").build())
+                .setTapAction(null)
+                .build()
+            else -> {null}
         }
-
     }
-}
 
-override fun onComplicationDeactivated(complicationInstanceId: Int) {
-    Log.d(TAG, "onComplicationDeactivated(): $complicationInstanceId")
-}
+    override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
 
-companion object {
-    private const val TAG = "CompDataSourceService"
-}
+        return when (request.complicationType) {
+
+            ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
+                text = TimeFormatComplicationText.Builder(format = "z").build(),
+                contentDescription = TimeFormatComplicationText.Builder(format = "'${getString(R.string.time_zone_comp_name)}: 'z").build())
+                .setMonochromaticImage(MonochromaticImage.Builder(image = Icon.createWithResource(this, R.drawable.ic_world)).build())
+                .setTapAction(openScreen())
+                .build()
+
+            ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
+                text = TimeFormatComplicationText.Builder(format = "ZZZ").build(),
+                contentDescription = TimeFormatComplicationText.Builder(format = "'${getString(R.string.time_zone_comp_name)}: 'z").build())
+                .setMonochromaticImage(MonochromaticImage.Builder(image = Icon.createWithResource(this, R.drawable.ic_world)).build())
+                .setTitle(TimeFormatComplicationText.Builder(format = "z").build())
+                .setTapAction(openScreen())
+                .build()
+
+            else -> {
+                if (Log.isLoggable(TAG, Log.WARN)) {
+                    Log.w(TAG, "Unexpected complication type ${request.complicationType}")
+                }
+                null
+            }
+
+        }
+    }
+
+    override fun onComplicationDeactivated(complicationInstanceId: Int) {
+        Log.d(TAG, "onComplicationDeactivated(): $complicationInstanceId")
+    }
+
 }
 

@@ -58,10 +58,7 @@ class SunriseSunsetRVComplicationService : SuspendingComplicationDataSourceServi
     lateinit var dataStore: DataStore<UserPreferences>
     private val preferences by lazy { UserPreferencesRepository(dataStore).getPreferences() }
 
-    override fun onComplicationActivated(
-        complicationInstanceId: Int,
-        type: ComplicationType
-    ) {
+    override fun onComplicationActivated(complicationInstanceId: Int, type: ComplicationType) {
         /** CHECK IF LOCATION IS SET + CONSIDER LOCATION TOAST */
         CoroutineScope(Dispatchers.IO).launch {
             val hasPermission = preferences.first().coarsePermission
@@ -72,6 +69,7 @@ class SunriseSunsetRVComplicationService : SuspendingComplicationDataSourceServi
             }
         }
     }
+
     private fun openScreen(): PendingIntent? {
 
         val intent = Intent(this, MainActivity::class.java)
@@ -85,120 +83,126 @@ class SunriseSunsetRVComplicationService : SuspendingComplicationDataSourceServi
     override fun getPreviewData(type: ComplicationType): ComplicationData? {
     return when (type) {
 
-        ComplicationType.RANGED_VALUE -> RangedValueComplicationData.Builder(
-            value = 40f,
-            min = 0f,
-            max =  100f,
-            contentDescription = PlainComplicationText.Builder(text = getString(R.string.sunrise_sunset_countdown_comp_name)).build())
-            .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_sunset_3)).build())
-            .setText(PlainComplicationText.Builder(text = "6h 45m").build())
-            .setTapAction(null)
-            .build()
-        ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
-            text = PlainComplicationText.Builder(text = "6h 45m").build(),
-            contentDescription = PlainComplicationText.Builder(text = getString(R.string.sunrise_sunset_countdown_comp_name)).build())
-            .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_sunset_3)).build())
-            .setTapAction(null)
-            .build()
-
-        ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
-            text = PlainComplicationText.Builder(text = "${getString(R.string.sunset_in)}: 6h 45m").build(),
-            contentDescription = PlainComplicationText.Builder(text = getString(R.string.sunrise_sunset_countdown_comp_name)).build())
-            .setTapAction(null)
-            .build()
+        ComplicationType.RANGED_VALUE -> {
+            RangedValueComplicationData.Builder(
+                value = 40f,
+                min = 0f,
+                max =  100f,
+                contentDescription = PlainComplicationText.Builder(text = getString(R.string.sunrise_sunset_countdown_comp_name)).build())
+                .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_sunset_3)).build())
+                .setText(PlainComplicationText.Builder(text = "6h 45m").build())
+                .setTapAction(null)
+                .build()
+        }
+        ComplicationType.LONG_TEXT -> {
+            LongTextComplicationData.Builder(
+                text = PlainComplicationText.Builder(text = "${getString(R.string.sunset_in)}: 6h 45m").build(),
+                contentDescription = PlainComplicationText.Builder(text = getString(R.string.sunrise_sunset_countdown_comp_name)).build())
+                .setTapAction(null)
+                .build()
+        }
+        ComplicationType.SHORT_TEXT -> {
+            ShortTextComplicationData.Builder(
+                text = PlainComplicationText.Builder(text = "6h 45m").build(),
+                contentDescription = PlainComplicationText.Builder(text = getString(R.string.sunrise_sunset_countdown_comp_name)).build())
+                .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_sunset_3)).build())
+                .setTapAction(null)
+                .build()
+        }
 
         else -> {null}
     }
 }
 
+    override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
 
-override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
+        val prefs = preferences.first()
+        val lat = prefs.latitude
+        val long = prefs.longitude
+        val timeDiffStyle = prefs.timeDiffStyle
+        val coarseEnabled = prefs.coarsePermission
 
-    val prefs = preferences.first()
-    val lat = prefs.latitude
-    val long = prefs.longitude
-    val timeDiffStyle = prefs.timeDiffStyle
-    val coarseEnabled = prefs.coarsePermission
+        val mph = MoonPhaseHelper.updateSun(context = this, prefs, dataStore)
 
-    val mph = MoonPhaseHelper.updateSun(context = this, prefs, dataStore)
+        val time = mph.changeTime
+        val isSunrise = mph.isSunrise
+        var icon = if (isSunrise) drawable.ic_sunrise_3 else drawable.ic_sunset_3
 
-    val time = mph.changeTime
-    val isSunrise = mph.isSunrise
-    var icon = if (isSunrise) drawable.ic_sunrise_3 else drawable.ic_sunset_3
+        if (time=="0" || !coarseEnabled) { icon = drawable.ic_location_not_available }
+        val timeInstance = ZonedDateTime.parse(time).toInstant()
 
-    if (time=="0" || !coarseEnabled) { icon = drawable.ic_location_not_available }
-    val timeInstance = ZonedDateTime.parse(time).toInstant()
+        when (request.complicationType) {
 
-    when (request.complicationType) {
-        ComplicationType.RANGED_VALUE -> {
+            ComplicationType.RANGED_VALUE -> {
 
-            val times = SunTimes.compute().at(lat,long).today().execute()
-            val rise = times.rise?.toInstant()?.toEpochMilli()?.toFloat() ?: 0F
-            val set = times.set?.toInstant()?.toEpochMilli()?.toFloat() ?: 0F
+                val times = SunTimes.compute().at(lat,long).today().execute()
+                val rise = times.rise?.toInstant()?.toEpochMilli()?.toFloat() ?: 0F
+                val set = times.set?.toInstant()?.toEpochMilli()?.toFloat() ?: 0F
 
-            val max = timeInstance.toEpochMilli()
-            val current = System.currentTimeMillis()
-            val min = if (current <= rise) set-86400000
-                      else if (current > rise && current <= set) rise
-                      else set
+                val max = timeInstance.toEpochMilli()
+                val current = System.currentTimeMillis()
+                val min = if (current <= rise) set-86400000
+                          else if (current > rise && current <= set) rise
+                          else set
 
-            val length = (max-min)/60000F
-            val progress = (max-current)/60000F
+                val length = (max-min)/60000F
+                val progress = (max-current)/60000F
 
-            return RangedValueComplicationData.Builder(
-                value = progress,
-                min = 0f,
-                max = length,
-                contentDescription = PlainComplicationText.Builder(text = getString(R.string.sunrise_sunset_countdown_comp_name)).build())
-                .setText(
-                    if (coarseEnabled) TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.valueOf(timeDiffStyle), CountDownTimeReference(timeInstance)).build()
-                    else PlainComplicationText.Builder(text = "-").build())
-                .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this,icon)).build())
-                .setTapAction(if (coarseEnabled) null else openScreen())
-                .build()
+                return RangedValueComplicationData.Builder(
+                    value = progress,
+                    min = 0f,
+                    max = length,
+                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.sunrise_sunset_countdown_comp_name)).build())
+                    .setText(
+                        if (coarseEnabled) TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.valueOf(timeDiffStyle), CountDownTimeReference(timeInstance)).build()
+                        else PlainComplicationText.Builder(text = "-").build())
+                    .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this,icon)).build())
+                    .setTapAction(if (coarseEnabled) null else openScreen())
+                    .build()
 
-        }
-        ComplicationType.LONG_TEXT -> {
-            return LongTextComplicationData.Builder(
-                text = if (coarseEnabled)
-                    TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.valueOf(timeDiffStyle), CountDownTimeReference(timeInstance))
-                        .setText(if (isSunrise) "${getString(R.string.sunrise_in)}: ^1" else "${getString(R.string.sunset_in)}: ^1")
-                        .build()
-                else PlainComplicationText.Builder(text = "${getString(R.string.sunrise_in)}: -:-").build(),
-
-                contentDescription = if (coarseEnabled)
-                    TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.valueOf(timeDiffStyle), CountDownTimeReference(timeInstance))
-                        .setText(if (isSunrise) "${getString(R.string.sunrise_in)}: ^1" else "${getString(R.string.sunset_in)}: ^1")
-                        .build()
-                else PlainComplicationText.Builder(text = "${getString(R.string.sunrise_in)}: -:-").build())
-
-                .setTapAction(if (coarseEnabled) null else openScreen())
-                .build()
-        }
-        ComplicationType.SHORT_TEXT -> {
-            return ShortTextComplicationData.Builder(
-                text = if (coarseEnabled)
-                    TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.valueOf(timeDiffStyle), CountDownTimeReference(timeInstance))
-                        .build()
-                else PlainComplicationText.Builder(text = "-").build(),
-
-                contentDescription = if (coarseEnabled)
-                    TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.valueOf(timeDiffStyle), CountDownTimeReference(timeInstance))
-                        .setText(if (isSunrise) "${getString(R.string.sunrise_in)}: ^1" else "${getString(R.string.sunset_in)}: ^1")
-                        .build()
-                else PlainComplicationText.Builder(text = "${getString(R.string.sunrise_in)}: -:-").build()) //TODO: TRANSLATE
-
-                .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this,icon)).build())
-                .setTapAction(if (coarseEnabled) null else openScreen())
-                .build()
-        }
-        else -> {
-            if (Log.isLoggable(TAG, Log.WARN)) {
-                Log.w(TAG, "Unexpected complication type ${request.complicationType}")
             }
-            return null
+            ComplicationType.LONG_TEXT -> {
+                return LongTextComplicationData.Builder(
+                    text = if (coarseEnabled)
+                        TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.valueOf(timeDiffStyle), CountDownTimeReference(timeInstance))
+                            .setText(if (isSunrise) "${getString(R.string.sunrise_in)}: ^1" else "${getString(R.string.sunset_in)}: ^1")
+                            .build()
+                    else PlainComplicationText.Builder(text = "${getString(R.string.sunrise_in)}: -:-").build(),
+
+                    contentDescription = if (coarseEnabled)
+                        TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.valueOf(timeDiffStyle), CountDownTimeReference(timeInstance))
+                            .setText(if (isSunrise) "${getString(R.string.sunrise_in)}: ^1" else "${getString(R.string.sunset_in)}: ^1")
+                            .build()
+                    else PlainComplicationText.Builder(text = "${getString(R.string.sunrise_in)}: -:-").build())
+
+                    .setTapAction(if (coarseEnabled) null else openScreen())
+                    .build()
+            }
+            ComplicationType.SHORT_TEXT -> {
+                return ShortTextComplicationData.Builder(
+                    text = if (coarseEnabled)
+                        TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.valueOf(timeDiffStyle), CountDownTimeReference(timeInstance))
+                            .build()
+                    else PlainComplicationText.Builder(text = "-").build(),
+
+                    contentDescription = if (coarseEnabled)
+                        TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.valueOf(timeDiffStyle), CountDownTimeReference(timeInstance))
+                            .setText(if (isSunrise) "${getString(R.string.sunrise_in)}: ^1" else "${getString(R.string.sunset_in)}: ^1")
+                            .build()
+                    else PlainComplicationText.Builder(text = "${getString(R.string.sunrise_in)}: -:-").build()) //TODO: TRANSLATE
+
+                    .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this,icon)).build())
+                    .setTapAction(if (coarseEnabled) null else openScreen())
+                    .build()
+            }
+
+            else -> {
+                if (Log.isLoggable(TAG, Log.WARN)) {
+                    Log.w(TAG, "Unexpected complication type ${request.complicationType}")
+                }
+                return null
+            }
         }
     }
-}
 }
 

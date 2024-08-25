@@ -54,10 +54,7 @@ class SunriseSunsetComplicationService : SuspendingComplicationDataSourceService
     lateinit var dataStore: DataStore<UserPreferences>
     private val preferences by lazy { UserPreferencesRepository(dataStore).getPreferences() }
 
-    override fun onComplicationActivated(
-        complicationInstanceId: Int,
-        type: ComplicationType
-    ) {
+    override fun onComplicationActivated(complicationInstanceId: Int, type: ComplicationType) {
         /** CHECK IF LOCATION IS SET + CONSIDER LOCATION TOAST */
         CoroutineScope(Dispatchers.IO).launch {
             val hasPermission = preferences.first().coarsePermission
@@ -68,6 +65,7 @@ class SunriseSunsetComplicationService : SuspendingComplicationDataSourceService
             }
         }
     }
+
     private fun openScreen(): PendingIntent? {
 
         val intent = Intent(this, MainActivity::class.java)
@@ -78,78 +76,86 @@ class SunriseSunsetComplicationService : SuspendingComplicationDataSourceService
         )
     }
 
-override fun getPreviewData(type: ComplicationType): ComplicationData? {
-    return when (type) {
-        ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
-            text = PlainComplicationText.Builder(text = "19:00").build(),
-            contentDescription = PlainComplicationText.Builder(text = getString(R.string.sunrise_sunset_comp_name)).build())
-            .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_sunset_3)).build())
-            .setTapAction(null)
-            .build()
+    override fun getPreviewData(type: ComplicationType): ComplicationData? {
+        return when (type) {
 
-        ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
-            text = PlainComplicationText.Builder(text = "${getString(R.string.sunset)}: 19:00").build(),
-            contentDescription = PlainComplicationText.Builder(text = getString(R.string.sunrise_sunset_comp_name)).build())
-            .setTapAction(null)
-            .build()
-
-        else -> {null}
-    }
-}
-
-override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
-
-    val prefs = preferences.first()
-    val ismilitary = prefs.isMilitaryTime
-    val leadingzero = prefs.isLeadingZeroTime
-    val coarseEnabled = prefs.coarsePermission
-
-    val mph = MoonPhaseHelper.updateSun(context = this, prefs, dataStore)
-
-    var time = mph.changeTime
-    val isSunrise = mph.isSunrise
-    var icon = if (isSunrise) drawable.ic_sunrise_3 else drawable.ic_sunset_3
-
-    val text = if (isSunrise) getString(R.string.sunrise) else getString(R.string.sunset)
-    val fmt = if (ismilitary && leadingzero) "HH:mm"
-    else if (!ismilitary && !leadingzero) "h:mm a"
-    else if (ismilitary) "H:mm"
-    else "hh:mm"
-    val dateTimeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern(fmt)
-
-    if (time=="0" || !coarseEnabled) {
-        icon = drawable.ic_location_not_available
-        time = "-"
-    }
-    else {
-        time = ZonedDateTime.parse(time).format(dateTimeFormatter)
-    }
-
-    return when (request.complicationType) {
-
-        ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
-            text = PlainComplicationText.Builder(text = time).build(),
-            contentDescription = PlainComplicationText.Builder(text = "$text: $time").build())
-            .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, icon)).build())
-            .setTapAction(if (coarseEnabled) null else openScreen())
-            .build()
-
-        ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
-            text = PlainComplicationText.Builder(text = "$text: $time").build(),
-            contentDescription = PlainComplicationText.Builder(text = "$text: $time").build())
-            .setTapAction(if (coarseEnabled) null else openScreen())
-            .build()
-
-
-        else -> {
-            if (Log.isLoggable(TAG, Log.WARN)) {
-                Log.w(TAG, "Unexpected complication type ${request.complicationType}")
+            ComplicationType.SHORT_TEXT -> {
+                ShortTextComplicationData.Builder(
+                    text = PlainComplicationText.Builder(text = "19:00").build(),
+                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.sunrise_sunset_comp_name)).build())
+                    .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_sunset_3)).build())
+                    .setTapAction(null)
+                    .build()
             }
-            null
+            ComplicationType.LONG_TEXT -> {
+                LongTextComplicationData.Builder(
+                    text = PlainComplicationText.Builder(text = "19:00").build(),
+                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.sunrise_sunset_comp_name)).build())
+                    .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_sunset_3)).build())
+                    .setTitle(PlainComplicationText.Builder(text = getString(R.string.sunset)).build())
+                    .setTapAction(null)
+                    .build()
+            }
+
+            else -> { null }
+        }
+    }
+
+    override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
+
+        val prefs = preferences.first()
+        val ismilitary = prefs.isMilitaryTime
+        val leadingzero = prefs.isLeadingZeroTime
+        val coarseEnabled = prefs.coarsePermission
+
+        val mph = MoonPhaseHelper.updateSun(context = this, prefs, dataStore)
+
+        var time = mph.changeTime
+        val isSunrise = mph.isSunrise
+        var icon = if (isSunrise) drawable.ic_sunrise_3 else drawable.ic_sunset_3
+
+        val text = if (isSunrise) getString(R.string.sunrise) else getString(R.string.sunset)
+        val fmt = if (ismilitary && leadingzero) "HH:mm"
+        else if (!ismilitary && !leadingzero) "h:mm a"
+        else if (ismilitary) "H:mm"
+        else "hh:mm"
+        val dateTimeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern(fmt)
+
+        if (time=="0" || !coarseEnabled) {
+            icon = drawable.ic_location_not_available
+            time = "-"
+        }
+        else {
+            time = ZonedDateTime.parse(time).format(dateTimeFormatter)
         }
 
+        return when (request.complicationType) {
 
+            ComplicationType.SHORT_TEXT -> {
+                ShortTextComplicationData.Builder(
+                    text = PlainComplicationText.Builder(text = time).build(),
+                    contentDescription = PlainComplicationText.Builder(text = "$text: $time").build())
+                    .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, icon)).build())
+                    .setTapAction(if (coarseEnabled) null else openScreen())
+                    .build()
+            }
+            ComplicationType.LONG_TEXT -> {
+                LongTextComplicationData.Builder(
+                    text = PlainComplicationText.Builder(text = time).build(),
+                    contentDescription = PlainComplicationText.Builder(text = "$text: $time").build())
+                    .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, icon)).build())
+                    .setTitle(PlainComplicationText.Builder(text = text).build())
+                    .setTapAction(if (coarseEnabled) null else openScreen())
+                    .build()
+            }
+
+            else -> {
+                if (Log.isLoggable(TAG, Log.WARN)) {
+                    Log.w(TAG, "Unexpected complication type ${request.complicationType}")
+                }
+                null
+            }
+        }
     }
-}
 }
 

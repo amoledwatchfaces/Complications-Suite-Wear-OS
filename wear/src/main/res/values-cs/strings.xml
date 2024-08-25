@@ -142,6 +142,8 @@
     <string name="day_and_week_comp_name">Den a Týden</string>
     <string name="dayD">D:</string>
     <string name="weekW">T:</string>
+    <string name="dayDlong">Den</string>
+    <string name="weekWlong">Týden</string>
 
     <!-- Developer Options -->
     <string name="developer_options_comp_name">Vývojářské možnosti</string>
