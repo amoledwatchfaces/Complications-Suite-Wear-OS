@@ -395,7 +395,7 @@
             <meta-data android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS" android:value="600"/>
             <meta-data
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-                android:value="SHORT_TEXT,RANGED_VALUE" />
+                android:value="SHORT_TEXT,LONG_TEXT,RANGED_VALUE" />
         </service>
         <service
             android:name=".complication.EthereumPriceComplicationService"
@@ -409,7 +409,7 @@
             <meta-data android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS" android:value="600"/>
             <meta-data
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-                android:value="SHORT_TEXT,RANGED_VALUE" />
+                android:value="SHORT_TEXT,LONG_TEXT,RANGED_VALUE" />
         </service>
         <receiver android:name=".complication.ComplicationTapBroadcastReceiver" />
 

@@ -68,6 +68,7 @@ class DayOfYearComplicationService : SuspendingComplicationDataSourceService() {
                     min = 1f,
                     max = 365f,
                     contentDescription = PlainComplicationText.Builder(text = getString(R.string.doy_comp_name)).build())
+                    .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_day)).build())
                     .setText(PlainComplicationText.Builder(text = "165").build())
                     .setTitle(PlainComplicationText.Builder(text = getString(R.string.doy_short_title)).build())
                     .setTapAction(null)
@@ -108,6 +109,7 @@ class DayOfYearComplicationService : SuspendingComplicationDataSourceService() {
                     min = 1f,
                     max = dayscount.toFloat(),
                     contentDescription = PlainComplicationText.Builder(text = getString(R.string.doy_comp_name)).build())
+                    .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_day)).build())
                     .setText(TimeFormatComplicationText.Builder(format = "D").build())
                     .setTitle(PlainComplicationText.Builder(text = getString(R.string.doy_short_title)).build())
                     .setTapAction(openScreen())
