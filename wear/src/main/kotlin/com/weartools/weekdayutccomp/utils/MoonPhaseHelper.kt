@@ -31,6 +31,7 @@ import com.weartools.weekdayutccomp.complication.SunriseSunsetComplicationServic
 import com.weartools.weekdayutccomp.complication.SunriseSunsetRVComplicationService
 import com.weartools.weekdayutccomp.preferences.UserPreferences
 import org.shredzone.commons.suncalc.SunTimes
+import java.time.ZonedDateTime
 import java.util.concurrent.TimeUnit
 
 
@@ -67,16 +68,16 @@ class MoonPhaseHelper{
               }
               else { SunTimes.compute().now().execute()}
 
-      val sunrise = parameters.rise
-      val sunset = parameters.set
+      val sunrise = parameters.rise?: ZonedDateTime.now()
+      val sunset = parameters.set?: ZonedDateTime.now()
 
-      if (sunrise!! < sunset!!){
+      if (sunrise < sunset){
         dataStore.updateData { it.copy(
           changeTime = parameters.rise.toString(),
           isSunrise = true
         ) }
         scheduleSunriseSunsetWorker(context, sunrise.toInstant().toEpochMilli())
-        return SunriseSunset(true, parameters.rise.toString() )
+        return SunriseSunset(true, parameters.rise.toString(), parameters.set.toString() )
 
 
 
@@ -86,7 +87,7 @@ class MoonPhaseHelper{
           isSunrise = false
         ) }
         scheduleSunriseSunsetWorker(context, sunset.toInstant().toEpochMilli())
-        return SunriseSunset(false, parameters.set.toString() )
+        return SunriseSunset(false, parameters.set.toString(), parameters.rise.toString() )
       }
     }
 

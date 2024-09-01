@@ -24,6 +24,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.datastore.core.DataStore
 import androidx.wear.watchface.complications.data.ComplicationData
+import androidx.wear.watchface.complications.data.ComplicationText
 import androidx.wear.watchface.complications.data.ComplicationType
 import androidx.wear.watchface.complications.data.LongTextComplicationData
 import androidx.wear.watchface.complications.data.MonochromaticImage
@@ -82,18 +83,16 @@ class SunriseSunsetComplicationService : SuspendingComplicationDataSourceService
             ComplicationType.SHORT_TEXT -> {
                 ShortTextComplicationData.Builder(
                     text = PlainComplicationText.Builder(text = "19:00").build(),
-                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.sunrise_sunset_comp_name)).build())
+                    contentDescription = ComplicationText.EMPTY)
                     .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_sunset_3)).build())
-                    .setTapAction(null)
                     .build()
             }
             ComplicationType.LONG_TEXT -> {
                 LongTextComplicationData.Builder(
                     text = PlainComplicationText.Builder(text = "19:00").build(),
-                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.sunrise_sunset_comp_name)).build())
+                    contentDescription = ComplicationText.EMPTY)
                     .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_sunset_3)).build())
                     .setTitle(PlainComplicationText.Builder(text = getString(R.string.sunset)).build())
-                    .setTapAction(null)
                     .build()
             }
 
@@ -104,48 +103,45 @@ class SunriseSunsetComplicationService : SuspendingComplicationDataSourceService
     override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
 
         val prefs = preferences.first()
+        if (prefs.coarsePermission.not()) return NoDataComplication.getPlaceholder(request, this)
         val ismilitary = prefs.isMilitaryTime
         val leadingzero = prefs.isLeadingZeroTime
-        val coarseEnabled = prefs.coarsePermission
 
         val mph = MoonPhaseHelper.updateSun(context = this, prefs, dataStore)
+        val icon = if (mph.isSunrise) drawable.ic_sunrise_3 else drawable.ic_sunset_3
+        val text = if (mph.isSunrise) getString(R.string.sunrise) else getString(R.string.sunset)
 
-        var time = mph.changeTime
-        val isSunrise = mph.isSunrise
-        var icon = if (isSunrise) drawable.ic_sunrise_3 else drawable.ic_sunset_3
-
-        val text = if (isSunrise) getString(R.string.sunrise) else getString(R.string.sunset)
         val fmt = if (ismilitary && leadingzero) "HH:mm"
-        else if (!ismilitary && !leadingzero) "h:mm a"
+        else if (!ismilitary && !leadingzero) "h:mm"
         else if (ismilitary) "H:mm"
         else "hh:mm"
         val dateTimeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern(fmt)
 
-        if (time=="0" || !coarseEnabled) {
-            icon = drawable.ic_location_not_available
-            time = "-"
-        }
-        else {
-            time = ZonedDateTime.parse(time).format(dateTimeFormatter)
-        }
+        val time = ZonedDateTime.parse(mph.changeTime).format(dateTimeFormatter)
 
         return when (request.complicationType) {
 
             ComplicationType.SHORT_TEXT -> {
+
                 ShortTextComplicationData.Builder(
                     text = PlainComplicationText.Builder(text = time).build(),
                     contentDescription = PlainComplicationText.Builder(text = "$text: $time").build())
                     .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, icon)).build())
-                    .setTapAction(if (coarseEnabled) null else openScreen())
+                    .setTapAction(openScreen())
                     .build()
             }
             ComplicationType.LONG_TEXT -> {
+                /** Dual Solution
+                 * @param ambientImage: Inverted Icon, Sunset when Sunrise, Sunrise when Sunset
+                 * @param time2: Next Sunrise/Sunset after time1.
+                 * **/
+                val time2 = ZonedDateTime.parse(mph.changeTime2).format(dateTimeFormatter)
+
                 LongTextComplicationData.Builder(
-                    text = PlainComplicationText.Builder(text = time).build(),
+                    text = PlainComplicationText.Builder(text = "$time /.. $time2").build(),
                     contentDescription = PlainComplicationText.Builder(text = "$text: $time").build())
-                    .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, icon)).build())
-                    .setTitle(PlainComplicationText.Builder(text = text).build())
-                    .setTapAction(if (coarseEnabled) null else openScreen())
+                    .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, icon)).setAmbientImage(createWithResource(this, if (mph.isSunrise) drawable.ic_sunset_3 else drawable.ic_sunrise_3)).build())
+                    .setTapAction(openScreen())
                     .build()
             }
 
