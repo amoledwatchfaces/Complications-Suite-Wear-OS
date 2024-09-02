@@ -69,7 +69,7 @@ android {
 
 dependencies {
     val composeMaterial = "1.6.8"
-    val wearCompose = "1.3.1"
+    //val wearCompose = "1.3.1"
     val wearComposeBeta = "1.4.0-rc01"
 
     // NEW MOON / SUNRISE / SUNSET COMP
