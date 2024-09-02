@@ -8,7 +8,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -17,12 +16,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
+import androidx.wear.compose.foundation.rotary.RotaryScrollableDefaults
+import androidx.wear.compose.foundation.rotary.rotaryScrollable
 import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.ButtonDefaults
 import androidx.wear.compose.material.Icon
@@ -31,12 +31,11 @@ import androidx.wear.compose.material.dialog.Alert
 import androidx.wear.compose.material.dialog.Dialog
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
-import com.google.android.horologist.annotations.ExperimentalHorologistApi
 import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.R
-import com.weartools.weekdayutccomp.presentation.rotary.rotaryWithScroll
 
-@OptIn(ExperimentalPermissionsApi::class, ExperimentalHorologistApi::class)
+
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun PermissionAskDialog(
     focusRequester: FocusRequester,
@@ -47,21 +46,15 @@ fun PermissionAskDialog(
         var showDialog by remember { mutableStateOf(true) }
         val listState = rememberScalingLazyListState(initialCenterItemIndex = 0)
 
-        LaunchedEffect(Unit) {focusRequester.requestFocus()}
         Dialog(
             showDialog = showDialog,
             onDismissRequest = { showDialog = false },
             scrollState = listState,
         ) {
-            LocalView.current.viewTreeObserver.addOnWindowFocusChangeListener {
-                if (it) {
-                    focusRequester.requestFocus()
-                }
-            }
             Alert(
                 modifier = Modifier
-                    .rotaryWithScroll(
-                        scrollableState = listState,
+                    .rotaryScrollable(
+                        RotaryScrollableDefaults.behavior(scrollableState = listState),
                         focusRequester = focusRequester
                     ),
                 scrollState = listState,

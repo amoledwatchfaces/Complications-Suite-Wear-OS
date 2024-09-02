@@ -20,8 +20,8 @@ android {
         applicationId = "com.weartools.weekdayutccomp"
         minSdk = 27
         targetSdk = 34
-        versionCode = 10000344
-        versionName = "3.4.4"
+        versionCode = 10000345
+        versionName = "3.4.5"
         resourceConfigurations += listOf("en", "cs", "de", "el", "es", "it", "pt","pl", "ro", "sk", "zh", "ru")
     }
     bundle {
@@ -68,8 +68,9 @@ android {
 }
 
 dependencies {
-    val composeUiVersion = "1.6.8"
-    val composeWearVersion = "1.3.1"
+    val composeMaterial = "1.6.8"
+    val wearCompose = "1.3.1"
+    val wearComposeBeta = "1.4.0-rc01"
 
     // NEW MOON / SUNRISE / SUNSET COMP
     //request permission
@@ -90,16 +91,16 @@ dependencies {
 
     //COMPOSE
     implementation ("androidx.core:core-ktx:1.13.1")
-    implementation ("androidx.compose.ui:ui:$composeUiVersion")
-    implementation ("androidx.wear.compose:compose-material:$composeWearVersion")
-    implementation ("androidx.wear.compose:compose-foundation:$composeWearVersion")
-    implementation ("androidx.compose.ui:ui-tooling-preview:$composeUiVersion")
+    implementation ("androidx.compose.ui:ui:$composeMaterial")
+    implementation ("androidx.wear.compose:compose-material:$wearComposeBeta")
+    implementation ("androidx.wear.compose:compose-foundation:$wearComposeBeta")
+    implementation ("androidx.compose.ui:ui-tooling-preview:$composeMaterial")
     implementation ("androidx.activity:activity-compose:1.9.1")
-    implementation ("androidx.compose.material:material-icons-extended:$composeUiVersion")
+    implementation ("androidx.compose.material:material-icons-extended:$composeMaterial")
 
-    androidTestImplementation ("androidx.compose.ui:ui-test-junit4:$composeUiVersion")
-    debugImplementation ("androidx.compose.ui:ui-tooling:$composeUiVersion")
-    debugImplementation ("androidx.compose.ui:ui-test-manifest:$composeUiVersion")
+    androidTestImplementation ("androidx.compose.ui:ui-test-junit4:$composeMaterial")
+    debugImplementation ("androidx.compose.ui:ui-tooling:$composeMaterial")
+    debugImplementation ("androidx.compose.ui:ui-test-manifest:$composeMaterial")
 
     //DataStore
     implementation ("androidx.datastore:datastore-preferences:1.1.1")
@@ -116,7 +117,6 @@ dependencies {
     // HOROLOGIST
     implementation ("com.google.android.horologist:horologist-composables:0.2.8")
     implementation ("com.google.android.horologist:horologist-audio-ui:0.2.8")
-    implementation ("com.google.android.horologist:horologist-annotations:0.6.3")
 
     implementation ("com.google.code.gson:gson:2.10.1")
     implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")

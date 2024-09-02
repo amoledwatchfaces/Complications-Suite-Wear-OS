@@ -41,7 +41,6 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringArrayResource
@@ -52,6 +51,8 @@ import androidx.wear.compose.foundation.lazy.AutoCenteringParams
 import androidx.wear.compose.foundation.lazy.ScalingLazyColumn
 import androidx.wear.compose.foundation.lazy.ScalingLazyListState
 import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
+import androidx.wear.compose.foundation.rotary.RotaryScrollableDefaults
+import androidx.wear.compose.foundation.rotary.rotaryScrollable
 import androidx.wear.compose.material.AppCard
 import androidx.wear.compose.material.Card
 import androidx.wear.compose.material.Icon
@@ -63,7 +64,6 @@ import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.enums.DateFormat
 import com.weartools.weekdayutccomp.enums.MoonIconType
-import com.weartools.weekdayutccomp.presentation.rotary.rotaryWithScroll
 import com.weartools.weekdayutccomp.presentation.ui.ChipWithEditText
 import com.weartools.weekdayutccomp.presentation.ui.DateFormatListPicker
 import com.weartools.weekdayutccomp.presentation.ui.DialogChip
@@ -86,7 +86,6 @@ fun ComplicationsSuiteScreen(
     viewModel: MainViewModel
 ) {
     val context = LocalContext.current
-    val lifecycleOwner = LocalLifecycleOwner.current
     val preferences = viewModel.preferences.collectAsState()
     val loaderState by viewModel.loaderStateStateFlow.collectAsState()
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -142,8 +141,8 @@ fun ComplicationsSuiteScreen(
     ScalingLazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .rotaryWithScroll(
-                scrollableState = listState,
+            .rotaryScrollable(
+                RotaryScrollableDefaults.behavior(scrollableState = listState),
                 focusRequester = focusRequester
             ),
         autoCentering = AutoCenteringParams(itemIndex = 1),
@@ -541,7 +540,6 @@ fun ComplicationsSuiteScreen(
     if (openLocationChoose){
         viewModel.setLocationDialogState(true)
         LocationChooseDialog(
-            lifecycleOwner = lifecycleOwner,
             focusRequester = focusRequester,
             permissionState = permissionState,
             viewModel = viewModel,

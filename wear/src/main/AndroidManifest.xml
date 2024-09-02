@@ -44,6 +44,14 @@
         android:localeConfig="@xml/locales_config"
         android:theme="@style/Theme.App.Starting"
         tools:targetApi="tiramisu">
+
+        <!-- If you want to disable android.startup completely. -->
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            tools:node="remove">
+        </provider>
+
         <uses-library
             android:name="com.google.android.wearable"
             android:required="true" />

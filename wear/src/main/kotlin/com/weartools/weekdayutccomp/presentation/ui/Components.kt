@@ -17,13 +17,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.foundation.lazy.itemsIndexed
 import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
+import androidx.wear.compose.foundation.rotary.RotaryScrollableDefaults
+import androidx.wear.compose.foundation.rotary.rotaryScrollable
 import androidx.wear.compose.material.Chip
 import androidx.wear.compose.material.ChipDefaults
 import androidx.wear.compose.material.Icon
@@ -34,9 +35,7 @@ import androidx.wear.compose.material.ToggleChip
 import androidx.wear.compose.material.ToggleChipDefaults
 import androidx.wear.compose.material.dialog.Alert
 import androidx.wear.compose.material.dialog.Dialog
-import com.google.android.horologist.annotations.ExperimentalHorologistApi
 import com.weartools.weekdayutccomp.R
-import com.weartools.weekdayutccomp.presentation.rotary.rotaryWithScroll
 import com.weartools.weekdayutccomp.theme.wearColorPalette
 import kotlinx.coroutines.launch
 
@@ -71,7 +70,6 @@ fun DialogChip(
     )
 }
 
-@OptIn(ExperimentalHorologistApi::class)
 @Composable
 fun ListItemsWidget(
     focusRequester: FocusRequester,
@@ -94,15 +92,10 @@ fun ListItemsWidget(
             onDismissRequest = { callback.invoke(-1) }
         )
         {
-            LocalView.current.viewTreeObserver.addOnWindowFocusChangeListener {
-                if (it) {
-                    focusRequester.requestFocus()
-                }
-            }
             Alert(
                 modifier = Modifier
-                    .rotaryWithScroll(
-                        scrollableState = listState,
+                    .rotaryScrollable(
+                        RotaryScrollableDefaults.behavior(scrollableState = listState),
                         focusRequester = focusRequester
                     ),
                 backgroundColor = Color.Black,

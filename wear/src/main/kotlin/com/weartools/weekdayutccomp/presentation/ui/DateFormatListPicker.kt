@@ -17,28 +17,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.foundation.lazy.itemsIndexed
 import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
+import androidx.wear.compose.foundation.rotary.RotaryScrollableDefaults
+import androidx.wear.compose.foundation.rotary.rotaryScrollable
 import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.ToggleChipDefaults
 import androidx.wear.compose.material.dialog.Alert
 import androidx.wear.compose.material.dialog.Dialog
-import com.google.android.horologist.annotations.ExperimentalHorologistApi
 import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.enums.DateFormat
-import com.weartools.weekdayutccomp.presentation.rotary.rotaryWithScroll
-import com.weartools.weekdayutccomp.presentation.ui.ChipWithEditText
-import com.weartools.weekdayutccomp.presentation.ui.PreferenceCategory
 import com.weartools.weekdayutccomp.theme.wearColorPalette
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalHorologistApi::class)
 @Composable
 fun DateFormatListPicker(
     items: List<String>,
@@ -68,22 +64,15 @@ fun DateFormatListPicker(
     }
 
     Dialog(
-        modifier = Modifier,
         showDialog = state.value,
         scrollState = listState,
         onDismissRequest = { callback.invoke(-1) }
     )
     {
-        LocalView.current.viewTreeObserver.addOnWindowFocusChangeListener {
-            if (it) {
-                focusRequester.requestFocus()
-            }
-        }
-
         Alert(
             modifier = Modifier
-                .rotaryWithScroll(
-                    scrollableState = listState,
+                .rotaryScrollable(
+                    RotaryScrollableDefaults.behavior(scrollableState = listState),
                     focusRequester = focusRequester
                 ),
             backgroundColor = Color.Black,

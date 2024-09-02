@@ -20,10 +20,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
+import androidx.wear.compose.foundation.rotary.RotaryScrollableDefaults
+import androidx.wear.compose.foundation.rotary.rotaryScrollable
 import androidx.wear.compose.material.Chip
 import androidx.wear.compose.material.ChipDefaults
 import androidx.wear.compose.material.Text
@@ -31,7 +32,6 @@ import androidx.wear.compose.material.dialog.Alert
 import androidx.wear.compose.material.dialog.Dialog
 import com.google.android.libraries.places.api.model.AutocompletePrediction
 import com.weartools.weekdayutccomp.MainViewModel
-import com.weartools.weekdayutccomp.presentation.rotary.rotaryWithScroll
 import com.weartools.weekdayutccomp.theme.wearColorPalette
 
 @Composable
@@ -54,16 +54,10 @@ fun LocationsList(
         onDismissRequest = { callback.invoke(-1) }
     )
     {
-        LocalView.current.viewTreeObserver.addOnWindowFocusChangeListener {
-            if (it) {
-                focusRequester.requestFocus()
-            }
-        }
         Alert(
             modifier = Modifier
-                .fillMaxSize()
-                .rotaryWithScroll(
-                    scrollableState = listState,
+                .rotaryScrollable(
+                    RotaryScrollableDefaults.behavior(scrollableState = listState),
                     focusRequester = focusRequester
                 ),
             backgroundColor = Color.Black,

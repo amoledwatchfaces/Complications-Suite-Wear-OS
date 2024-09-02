@@ -1,11 +1,9 @@
 package com.weartools.weekdayutccomp.presentation.ui
 
 import android.Manifest
-import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.provider.Settings
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -20,7 +18,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MyLocation
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,10 +32,9 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
+import androidx.wear.compose.foundation.rotary.RotaryScrollableDefaults
+import androidx.wear.compose.foundation.rotary.rotaryScrollable
 import androidx.wear.compose.material.CircularProgressIndicator
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.OutlinedChip
@@ -48,19 +44,17 @@ import androidx.wear.compose.material.dialog.Dialog
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
 import com.google.android.libraries.places.api.model.AutocompletePrediction
-import com.weartools.weekdayutccomp.presentation.rotary.rotaryWithScroll
-import com.weartools.weekdayutccomp.utils.arePermissionsGranted
-import com.weartools.weekdayutccomp.utils.isLocationEnabled
-import com.weartools.weekdayutccomp.utils.isOnline
 import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme
 import com.weartools.weekdayutccomp.theme.wearColorPalette
+import com.weartools.weekdayutccomp.utils.arePermissionsGranted
+import com.weartools.weekdayutccomp.utils.isLocationEnabled
+import com.weartools.weekdayutccomp.utils.isOnline
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun LocationChooseDialog(
     focusRequester: FocusRequester,
-    lifecycleOwner: LifecycleOwner,
     context: Context,
     callback: (Int) -> Unit,
     viewModel: MainViewModel,
@@ -79,12 +73,6 @@ fun LocationChooseDialog(
         val listState = rememberScalingLazyListState()
 
         Dialog(
-            modifier = Modifier
-                .fillMaxSize()
-                .rotaryWithScroll(
-                    scrollableState = listState,
-                    focusRequester = focusRequester
-                ),
             showDialog = showDialog,
             scrollState = listState,
             onDismissRequest = {
@@ -92,16 +80,12 @@ fun LocationChooseDialog(
             }
         )
         {
-            LaunchedEffect(Unit) {
-                lifecycleOwner.repeatOnLifecycle(state = Lifecycle.State.RESUMED) {
-                    try {
-                        focusRequester.requestFocus()
-                    } catch (ise: IllegalStateException) {
-                        Log.w(ContentValues.TAG, "Focus Requester not installed", ise)
-                    }
-                }}
-
             Alert(
+                modifier = Modifier
+                    .rotaryScrollable(
+                        RotaryScrollableDefaults.behavior(scrollableState = listState),
+                        focusRequester = focusRequester
+                    ),
                 backgroundColor = Color.Black,
                 scrollState = listState,
                 verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterVertically),
