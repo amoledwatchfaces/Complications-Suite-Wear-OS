@@ -79,7 +79,7 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
                 max =  10f,
                 contentDescription = ComplicationText.EMPTY)
                 .setText(PlainComplicationText.Builder(text = "5:59").build())
-                .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_timer_2)).build())
+                .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_timer_4)).build())
                 .build()
         }
 
@@ -127,7 +127,7 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
             context = this,
             request = request,
             placeHolderText = "- -",
-            placeHolderIcon = createWithResource(this, drawable.ic_timer_2),
+            placeHolderIcon = createWithResource(this, drawable.ic_timer_3),
             tapAction = openScreen()
         )
     }
@@ -141,7 +141,7 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
                 max =  timeRange.toFloat(),
                 contentDescription = ComplicationText.EMPTY)
                 .setText(TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.STOPWATCH, CountDownTimeReference(timeInstance)).build())
-                .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_timer_2)).build())
+                .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_timer_4)).build())
                 .setTapAction(openScreen())
                 .build()
         }

@@ -20,8 +20,8 @@ android {
         applicationId = "com.weartools.weekdayutccomp"
         minSdk = 27
         targetSdk = 34
-        versionCode = 10000346
-        versionName = "3.4.6"
+        versionCode = 10000347
+        versionName = "3.4.7"
         resourceConfigurations += listOf("en", "cs", "de", "el", "es", "it", "pt","pl", "ro", "sk", "zh", "ru")
     }
     bundle {
