@@ -182,4 +182,7 @@
     <string name="barometer_comp_name">Barometro</string>
     <string name="barometer_category">Complicazione barometro</string>
     <string name="barometer_use_hpa">Unità</string>
+
+    <!-- Timer -->
+    <string name="timer_comp_name">Timer</string>
 </resources>

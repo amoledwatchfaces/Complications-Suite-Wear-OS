@@ -188,4 +188,7 @@
     <string name="barometer_use_hpa">Units</string>
     <string name="barometer_hpa" translatable="false">hPa</string>
     <string name="barometer_inHg" translatable="false">inHg</string>
+
+    <!-- Timer -->
+    <string name="timer_comp_name">Timer</string>
 </resources>

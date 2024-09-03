@@ -82,7 +82,11 @@ data class UserPreferences(
     // BAROMETER
     val sensorUpdateTime: Long = 0L,
     val barometricPressure: Float = 0f,
-    val pressureHPA: Boolean = true // true = hPa, false = inHg
+    val pressureHPA: Boolean = true, // true = hPa, false = inHg
+
+    // TIMER / TIME PICKER
+    val startTime: Long = System.currentTimeMillis(),
+    val timePicker: String = LocalDate.now().toString(),
 )
 
 

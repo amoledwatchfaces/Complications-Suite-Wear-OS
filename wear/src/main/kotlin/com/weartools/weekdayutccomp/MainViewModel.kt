@@ -39,6 +39,7 @@ import com.weartools.weekdayutccomp.complication.MoonPhaseComplicationService
 import com.weartools.weekdayutccomp.complication.SunriseSunsetComplicationService
 import com.weartools.weekdayutccomp.complication.SunriseSunsetRVComplicationService
 import com.weartools.weekdayutccomp.complication.TimeComplicationService
+import com.weartools.weekdayutccomp.complication.TimerComplicationService
 import com.weartools.weekdayutccomp.complication.WaterComplicationService
 import com.weartools.weekdayutccomp.complication.WeekOfYearComplicationService
 import com.weartools.weekdayutccomp.complication.WorldClock1ComplicationService
@@ -220,6 +221,14 @@ class MainViewModel @Inject constructor(
     fun setDatePicked(value: String, context: Context) { viewModelScope.launch {
         dataStore.updateData { it.copy(datePicker = value) }
         context.updateComplication(DateCountdownComplicationService::class.java)
+    }}
+
+    fun setTimePicked(value: String, context: Context) { viewModelScope.launch {
+        dataStore.updateData { it.copy(
+            startTime = System.currentTimeMillis(),
+            timePicker = value)
+        }
+        context.updateComplication(TimerComplicationService::class.java)
     }}
 
     fun setWater(value: Int, context: Context) { viewModelScope.launch {

@@ -32,25 +32,26 @@ class NoDataComplication {
         fun getPlaceholder (
             request: ComplicationRequest,
             context: Context,
-            placeHolderText: String = "Coarse Location not set",
-            placeHolderIcon: Icon = Icon.createWithResource(context, R.drawable.ic_location_not_available)
+            placeHolderText: String = "- -",
+            placeHolderIcon: Icon = Icon.createWithResource(context, R.drawable.ic_location_not_available),
+            tapAction: PendingIntent? = openScreen(context)
         ): ComplicationData{
 
             return when (request.complicationType) {
 
                 ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
-                    text = PlainComplicationText.Builder(text = "- -").build(),
+                    text = PlainComplicationText.Builder(text = placeHolderText).build(),
                     contentDescription = PlainComplicationText.Builder(text = placeHolderText).build())
                     .setMonochromaticImage(MonochromaticImage.Builder(image = placeHolderIcon).build())
-                    .setTapAction(openScreen(context))
+                    .setTapAction(tapAction)
                     .build()
 
                 ComplicationType.LONG_TEXT -> {
                     LongTextComplicationData.Builder(
-                        text = PlainComplicationText.Builder(text = "- -").build(),
+                        text = PlainComplicationText.Builder(text = placeHolderText).build(),
                         contentDescription = PlainComplicationText.Builder(text = placeHolderText).build())
                         .setMonochromaticImage(MonochromaticImage.Builder(image = placeHolderIcon).build())
-                        .setTapAction(openScreen(context))
+                        .setTapAction(tapAction)
                         .build()
                 }
 
@@ -60,9 +61,9 @@ class NoDataComplication {
                         min = 0f,
                         max = 1f,
                         contentDescription = PlainComplicationText.Builder(text = placeHolderText).build())
-                        .setText(PlainComplicationText.Builder(text = "- -").build())
+                        .setText(PlainComplicationText.Builder(text = placeHolderText).build())
                         .setMonochromaticImage(MonochromaticImage.Builder(image = placeHolderIcon).build())
-                        .setTapAction(openScreen(context))
+                        .setTapAction(tapAction)
                         .build()
                 }
 
@@ -70,14 +71,14 @@ class NoDataComplication {
                     MonochromaticImageComplicationData.Builder(
                         monochromaticImage = MonochromaticImage.Builder(placeHolderIcon).build(),
                         contentDescription = PlainComplicationText.Builder(text = placeHolderText).build())
-                        .setTapAction(openScreen(context))
+                        .setTapAction(tapAction)
                         .build() }
 
                 ComplicationType.SMALL_IMAGE -> {
                     SmallImageComplicationData.Builder(
                         smallImage = SmallImage.Builder(image = placeHolderIcon, type = SmallImageType.ICON).build(),
                         contentDescription = PlainComplicationText.Builder(text = placeHolderText).build())
-                        .setTapAction(openScreen(context))
+                        .setTapAction(tapAction)
                         .build()
                 }
 

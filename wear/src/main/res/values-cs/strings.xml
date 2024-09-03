@@ -176,4 +176,7 @@
     <string name="barometer_comp_name">Barometr</string>
     <string name="barometer_category">Barometr - Komplikace</string>
     <string name="barometer_use_hpa">Jednotky</string>
+
+    <!-- Timer -->
+    <string name="timer_comp_name">Časovač</string>
 </resources>

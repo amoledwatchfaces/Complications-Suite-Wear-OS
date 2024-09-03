@@ -183,4 +183,7 @@
     <string name="barometer_comp_name">Βαρόμετρο</string>
     <string name="barometer_category">Complication βαρόμετρου</string>
     <string name="barometer_use_hpa">Μονάδες</string>
+
+    <!-- Timer -->
+    <string name="timer_comp_name">Χρονόμετρο</string>
 </resources>

@@ -182,4 +182,7 @@
     <string name="barometer_comp_name">Barometru</string>
     <string name="barometer_category">Barometru - Complicație</string>
     <string name="barometer_use_hpa">Unități</string>
+
+    <!-- Timer -->
+    <string name="timer_comp_name">Cronometru</string>
 </resources>

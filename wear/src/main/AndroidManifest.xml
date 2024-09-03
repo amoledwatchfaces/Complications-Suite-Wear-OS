@@ -569,5 +569,31 @@
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
                 android:value="SHORT_TEXT" />
         </service>
+
+
+        <activity
+            android:name=".activity.PickTimeActivity"
+            android:exported="true"
+            android:theme="@android:style/Theme.DeviceDefault"
+            android:taskAffinity="">
+            <intent-filter>
+                <action android:name="com.weartools.weekdayutccomp.CONFIG_COMPLICATION_PICK_TIME" />
+                <category android:name="android.support.wearable.complications.category.PROVIDER_CONFIG" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <service
+            android:name=".complication.TimerComplicationService"
+            android:exported="true"
+            android:icon="@drawable/ic_timer_2"
+            android:label="@string/timer_comp_name"
+            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
+
+            <meta-data android:name="android.support.wearable.complications.SUPPORTED_TYPES" android:value="RANGED_VALUE" />
+            <meta-data android:name="android.support.wearable.complications.PROVIDER_CONFIG_ACTION" android:value="com.weartools.weekdayutccomp.CONFIG_COMPLICATION_PICK_TIME" />
+        </service>
     </application>
 </manifest>

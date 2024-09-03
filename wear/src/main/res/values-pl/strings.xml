@@ -186,4 +186,7 @@
     <string name="barometer_comp_name">Barometr</string>
     <string name="barometer_category">Barometr - ustawienia</string>
     <string name="barometer_use_hpa">Jednostki</string>
+
+    <!-- Timer -->
+    <string name="timer_comp_name">Timer</string>
 </resources>

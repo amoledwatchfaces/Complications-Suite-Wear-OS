@@ -184,4 +184,6 @@
     <string name="barometer_comp_name">Barometer</string>
     <string name="barometer_category">Barometer-Komplikation</string>
     <string name="barometer_use_hpa">Einheiten</string>
+
+    <string name="timer_comp_name">Timer</string>
 </resources>

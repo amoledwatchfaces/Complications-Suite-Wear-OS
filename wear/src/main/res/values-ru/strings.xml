@@ -186,4 +186,7 @@
     <string name="barometer_comp_name">Барометр</string>
     <string name="barometer_category">Осложнение барометра</string>
     <string name="barometer_use_hpa">Единицы</string>
+
+    <!-- Timer -->
+    <string name="timer_comp_name">Таймер</string>
 </resources>
