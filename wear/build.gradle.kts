@@ -21,7 +21,7 @@ android {
         minSdk = 27
         targetSdk = 34
         versionCode = 10000349
-        versionName = "3.4.8"
+        versionName = "3.4.9"
         resourceConfigurations += listOf("en", "cs", "de", "el", "es", "it", "pt","pl", "ro", "sk", "zh", "ru")
     }
     bundle {
