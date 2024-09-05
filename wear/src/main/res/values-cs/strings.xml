@@ -28,6 +28,7 @@
     <string name="date_custom_format">Vlastní formát</string>
     <string name="date_setting_preference_category_title">Datum - Komplikace</string>
     <string name="date_long_text_format">Long Text Formát</string>
+    <string name="date_long_title_format">Long Title Formát</string>
     <string name="date_short_title_format">Short Title Formát</string>
     <string name="date_short_text_format">Short Text Formát</string>
 

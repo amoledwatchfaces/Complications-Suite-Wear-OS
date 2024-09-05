@@ -27,6 +27,7 @@
     <string name="date_custom_format">Formato personalizado</string>
     <string name="date_setting_preference_category_title">Complicación de Fecha</string>
     <string name="date_long_text_format">Formato Texto Largo</string>
+    <string name="date_long_title_format">Formato Título Largo</string>
     <string name="date_short_text_format">Formato Texto Corto</string>
     <string name="date_short_title_format">Formato Título Corto</string>
 

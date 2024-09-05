@@ -29,6 +29,7 @@
     <string name="date_custom_format">Individuelles Format</string>
     <string name="date_setting_preference_category_title">Datums-Komplikation</string>
     <string name="date_long_text_format">Long Text Format</string>
+    <string name="date_long_title_format">Long Title Format</string>
     <string name="date_short_text_format">Short Text Format</string>
     <string name="date_short_title_format">Short Title Format</string>
 

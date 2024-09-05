@@ -35,6 +35,7 @@
     <string name="date_custom_format">Domyślny format</string>
     <string name="date_setting_preference_category_title">Rodzaj daty</string>
     <string name="date_long_text_format">Format długiego tekstu</string>
+    <string name="date_long_title_format">Długi tytuł</string>
     <string name="date_short_text_format">Format krótkiego tekstu</string>
     <string name="date_short_title_format">Krótki tytuł</string>
 
