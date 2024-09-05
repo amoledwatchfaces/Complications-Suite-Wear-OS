@@ -96,7 +96,7 @@ fun ComplicationsSuiteScreen(
     /** LISTS **/
     val listcity = stringArrayResource(id = R.array.cities_zone).toList()
     val listcityID = stringArrayResource(id = R.array.cities).toList()
-    val listLongFormat = stringArrayResource(id = R.array.dateformats).toList()
+    val listLongFormat = stringArrayResource(id = R.array.longformats).toList()
     val listShortFormat = stringArrayResource(id = R.array.shortformats).toList()
     val listTimeDiffStyles = stringArrayResource(id = R.array.timediffstyle).toList()
     val localesShortList = stringArrayResource(id = R.array.locales_short).toList()
@@ -129,6 +129,7 @@ fun ComplicationsSuiteScreen(
 
     /** ONCLICK OPENERS **/
     var longTextFormat by remember { mutableStateOf(false) }
+    var longTitleFormat by remember { mutableStateOf(false) }
     var shortTextFormat by remember { mutableStateOf(false) }
     var shortTitleFormat by remember { mutableStateOf(false) }
     var isTImeZOnClick by remember { mutableStateOf(false) }
@@ -347,6 +348,16 @@ fun ComplicationsSuiteScreen(
         }
         item {
             DialogChip(
+                text = stringResource(id = R.string.date_long_title_format),
+                icon = {},
+                title = preferences.value.longTitle,
+                onClick = {
+                    longTitleFormat = longTitleFormat.not()
+                }
+            )
+        }
+        item {
+            DialogChip(
                 text = stringResource(id = R.string.date_short_text_format),
                 icon = {},
                 title = preferences.value.shortText,
@@ -476,13 +487,19 @@ fun ComplicationsSuiteScreen(
         })
     }
 
-    if (longTextFormat || shortTextFormat || shortTitleFormat) {
+    if (longTextFormat || longTitleFormat|| shortTextFormat || shortTitleFormat) {
+
         val prValue = if (longTextFormat) preferences.value.longText
+        else if (longTitleFormat) preferences.value.longTitle
         else if (shortTextFormat) preferences.value.shortText
         else preferences.value.shortTitle
 
         DateFormatListPicker(
-            dateFormat = if (shortTextFormat) DateFormat.SHORT_TEXT_FORMAT else if (shortTitleFormat) DateFormat.SHORT_TITLE_FORMAT else DateFormat.LONG_TEXT_FORMAT,
+            dateFormat = if (longTextFormat) { DateFormat.LONG_TEXT_FORMAT }
+                         else if (longTitleFormat) { DateFormat.LONG_TITLE_FORMAT }
+                         else if (shortTextFormat) { DateFormat.SHORT_TEXT_FORMAT }
+                         else { DateFormat.SHORT_TITLE_FORMAT },
+
             viewModel = viewModel,
             context = context,
             focusManager = focusManager,
@@ -493,6 +510,7 @@ fun ComplicationsSuiteScreen(
             callback = {
                 if (it == -1) {
                     longTextFormat = false
+                    longTitleFormat = false
                     shortTextFormat = false
                     shortTitleFormat = false
                     return@DateFormatListPicker

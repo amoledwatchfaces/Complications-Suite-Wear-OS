@@ -44,6 +44,7 @@ import com.weartools.weekdayutccomp.complication.WaterComplicationService
 import com.weartools.weekdayutccomp.complication.WeekOfYearComplicationService
 import com.weartools.weekdayutccomp.complication.WorldClock1ComplicationService
 import com.weartools.weekdayutccomp.complication.WorldClock2ComplicationService
+import com.weartools.weekdayutccomp.enums.DateFormat
 import com.weartools.weekdayutccomp.enums.MoonIconType
 import com.weartools.weekdayutccomp.preferences.UserPreferences
 import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
@@ -253,19 +254,18 @@ class MainViewModel @Inject constructor(
         context.updateComplication(SunriseSunsetRVComplicationService::class.java)
         context.updateComplication(MoonPhaseComplicationService::class.java)
     }}
-    fun setDateLongTextFormat(value: String, context: Context) { viewModelScope.launch {
-        dataStore.updateData { it.copy(longText = value) }
-        context.updateComplication(DateComplicationService::class.java)
-    }}
-    fun setDateShortTextFormat(value: String, context: Context) { viewModelScope.launch {
-        dataStore.updateData { it.copy(shortText = value) }
-        context.updateComplication(DateComplicationService::class.java)
-    }}
-    fun setDateShortTitleFormat(value: String, context: Context) { viewModelScope.launch {
-        dataStore.updateData { it.copy(shortTitle = value) }
-        context.updateComplication(DateComplicationService::class.java)
-    }}
 
+    fun setDateFormat(dateFormat: DateFormat, value: String, context: Context)  { viewModelScope.launch {
+        dataStore.updateData {
+            when (dateFormat){
+                DateFormat.SHORT_TEXT_FORMAT -> it.copy(shortText = value)
+                DateFormat.SHORT_TITLE_FORMAT -> it.copy(shortTitle = value)
+                DateFormat.LONG_TEXT_FORMAT -> it.copy(longText = value)
+                DateFormat.LONG_TITLE_FORMAT -> it.copy(longTitle = value)
+            }
+        }
+        context.updateComplication(DateComplicationService::class.java)
+    }}
     fun setTimeDiffStyle(value: String, context: Context) { viewModelScope.launch {
         dataStore.updateData { it.copy(timeDiffStyle = value) }
         context.updateComplication(SunriseSunsetRVComplicationService::class.java)

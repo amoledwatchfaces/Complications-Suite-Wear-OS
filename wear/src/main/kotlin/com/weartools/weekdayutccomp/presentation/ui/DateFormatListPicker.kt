@@ -59,6 +59,7 @@ fun DateFormatListPicker(
 
     val title = when (dateFormat) {
         DateFormat.LONG_TEXT_FORMAT -> stringResource(id = R.string.date_long_text_format)
+        DateFormat.LONG_TITLE_FORMAT -> stringResource(id = R.string.date_long_title_format)
         DateFormat.SHORT_TEXT_FORMAT -> stringResource(id = R.string.date_short_text_format)
         else -> stringResource(id = R.string.date_short_title_format)
     }
@@ -107,15 +108,19 @@ fun DateFormatListPicker(
                             when (dateFormat) {
                                 DateFormat.SHORT_TEXT_FORMAT -> {
                                     customFormatUsed.value = false
-                                    viewModel.setDateShortTextFormat(items[index],context)
+                                    viewModel.setDateFormat(DateFormat.SHORT_TEXT_FORMAT,items[index],context)
                                 }
                                 DateFormat.SHORT_TITLE_FORMAT -> {
                                     customFormatUsed.value = false
-                                    viewModel.setDateShortTitleFormat(items[index],context)
+                                    viewModel.setDateFormat(DateFormat.SHORT_TITLE_FORMAT,items[index],context)
+                                }
+                                DateFormat.LONG_TEXT_FORMAT -> {
+                                    customFormatUsed.value = false
+                                    viewModel.setDateFormat(DateFormat.LONG_TEXT_FORMAT,items[index],context)
                                 }
                                 else -> {
                                     customFormatUsed.value = false
-                                    viewModel.setDateLongTextFormat(items[index],context)
+                                    viewModel.setDateFormat(DateFormat.LONG_TITLE_FORMAT,items[index],context)
                                 }
                             }
                         },
@@ -138,13 +143,16 @@ fun DateFormatListPicker(
                             if (it != ""){
                                 when (dateFormat) {
                                     DateFormat.SHORT_TEXT_FORMAT -> {
-                                        viewModel.setDateShortTextFormat(it,context)
+                                        viewModel.setDateFormat(DateFormat.SHORT_TEXT_FORMAT,it,context)
                                     }
                                     DateFormat.SHORT_TITLE_FORMAT -> {
-                                        viewModel.setDateShortTitleFormat(it,context)
+                                        viewModel.setDateFormat(DateFormat.SHORT_TITLE_FORMAT,it,context)
+                                    }
+                                    DateFormat.LONG_TEXT_FORMAT -> {
+                                        viewModel.setDateFormat(DateFormat.LONG_TEXT_FORMAT,it,context)
                                     }
                                     else -> {
-                                        viewModel.setDateLongTextFormat(it,context)
+                                        viewModel.setDateFormat(DateFormat.LONG_TITLE_FORMAT,it,context)
                                     }
                                 }
                             }

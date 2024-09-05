@@ -564,7 +564,7 @@
         <item>Europe/Zagreb</item>
         <item>Europe/Zurich</item>
     </string-array>
-    <string-array name="dateformats">
+    <string-array name="longformats">
         <item>EEE, d MMM</item>
         <item>EEE d MMM</item>
         <item>EEE, MMM d</item>
@@ -578,6 +578,7 @@
         <item>EEEE, d MMM</item>
         <item>EE, d MMM</item>
         <item>d, EEEE</item>
+        <item>MMMM d, YYYY</item>
     </string-array>
     <string-array name="shortformats">
         <item>d</item>
@@ -601,6 +602,7 @@
         <item>d. MMM</item>
         <item>EEE, d MMM</item>
         <item>EEE, MMM d</item>
+        <item>EEEE</item>
         <item> </item>
     </string-array>
     <string-array name="timediffstyle">

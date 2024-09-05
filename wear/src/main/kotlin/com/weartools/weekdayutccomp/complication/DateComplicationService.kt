@@ -78,16 +78,17 @@ class DateComplicationService : SuspendingComplicationDataSourceService() {
     override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
 
         val prefs = preferences.first()
-        val longText = prefs.longText
-        val text = prefs.shortText
-        val title = prefs.shortTitle
 
         return when (request.complicationType) {
 
             ComplicationType.SHORT_TEXT -> {
+
+                val shortText = prefs.shortText
+                val shortTitle = prefs.shortTitle
+
                 ShortTextComplicationData.Builder(
                     text = try {
-                        TimeFormatComplicationText.Builder(format = text).build()
+                        TimeFormatComplicationText.Builder(format = shortText).build()
                     } catch (e: IllegalArgumentException) {
                         // Inform the user that the format is invalid
                         Toast.makeText(this, "Text: Wrong format! Check SimpleDateFormat", Toast.LENGTH_LONG).show()
@@ -99,7 +100,7 @@ class DateComplicationService : SuspendingComplicationDataSourceService() {
                 )
                     .setTitle(
                         try {
-                            TimeFormatComplicationText.Builder(format = title).build()
+                            TimeFormatComplicationText.Builder(format = shortTitle).build()
                         } catch (e: IllegalArgumentException) {
                             // Inform the user that the format is invalid
                             Toast.makeText(this, "Title: Wrong format! Check SimpleDateFormat", Toast.LENGTH_LONG).show()
@@ -110,6 +111,10 @@ class DateComplicationService : SuspendingComplicationDataSourceService() {
                     .build()
             }
             ComplicationType.LONG_TEXT -> {
+
+                val longText = prefs.longText
+                val longTitle = prefs.longTitle
+
                 LongTextComplicationData.Builder(
                     text = try {
                         TimeFormatComplicationText.Builder(format = longText).build()
@@ -121,7 +126,7 @@ class DateComplicationService : SuspendingComplicationDataSourceService() {
                     contentDescription = PlainComplicationText.Builder(text = getString(R.string.date_comp_name)).build())
                     .setTitle(
                         try {
-                            TimeFormatComplicationText.Builder(format = title).build()
+                            TimeFormatComplicationText.Builder(format = longTitle).build()
                         } catch (e: IllegalArgumentException) {
                             // Inform the user that the format is invalid
                             Toast.makeText(this, "Title: Wrong format! Check SimpleDateFormat", Toast.LENGTH_LONG).show()

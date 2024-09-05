@@ -37,7 +37,8 @@ data class UserPreferences(
     val isISO: Boolean = true,
 
     //DATE
-    val longText: String = "EEE, d MMM",
+    val longText: String = "MMMM d, YYYY",
+    val longTitle: String = "EEEE",
     val shortText: String = "d",
     val shortTitle: String = "MMM",
 

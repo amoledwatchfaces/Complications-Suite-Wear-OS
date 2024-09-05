@@ -20,8 +20,8 @@ android {
         applicationId = "com.weartools.weekdayutccomp"
         minSdk = 27
         targetSdk = 34
-        versionCode = 10000347
-        versionName = "3.4.7"
+        versionCode = 10000348
+        versionName = "3.4.8"
         resourceConfigurations += listOf("en", "cs", "de", "el", "es", "it", "pt","pl", "ro", "sk", "zh", "ru")
     }
     bundle {
@@ -68,9 +68,9 @@ android {
 }
 
 dependencies {
-    val composeMaterial = "1.6.8"
+    val composeMaterial = "1.7.0"
     //val wearCompose = "1.3.1"
-    val wearComposeBeta = "1.4.0-rc01"
+    val wearComposeBeta = "1.4.0"
 
     // NEW MOON / SUNRISE / SUNSET COMP
     //request permission
@@ -95,7 +95,7 @@ dependencies {
     implementation ("androidx.wear.compose:compose-material:$wearComposeBeta")
     implementation ("androidx.wear.compose:compose-foundation:$wearComposeBeta")
     implementation ("androidx.compose.ui:ui-tooling-preview:$composeMaterial")
-    implementation ("androidx.activity:activity-compose:1.9.1")
+    implementation ("androidx.activity:activity-compose:1.9.2")
     implementation ("androidx.compose.material:material-icons-extended:$composeMaterial")
 
     androidTestImplementation ("androidx.compose.ui:ui-test-junit4:$composeMaterial")
@@ -133,7 +133,7 @@ dependencies {
     implementation ("com.google.android.libraries.places:places:3.5.0")
 
     // INPUT
-    implementation("androidx.compose.material3:material3:1.2.1")
+    implementation("androidx.compose.material3:material3:1.3.0")
 
     // Ktor + OkHttp + Kotlinx.Serialization
     val ktorVersion = "2.3.11"
