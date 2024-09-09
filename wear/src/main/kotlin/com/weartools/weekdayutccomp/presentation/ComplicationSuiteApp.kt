@@ -13,12 +13,14 @@ import androidx.wear.compose.material.Scaffold
 import androidx.wear.compose.material.TimeText
 import androidx.wear.compose.material.scrollAway
 import com.weartools.weekdayutccomp.MainViewModel
+import com.weartools.weekdayutccomp.enums.Request
 import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme
 
 
 @Composable
 fun ComplicationsSuiteApp(
-    viewModel: MainViewModel = hiltViewModel()
+    viewModel: MainViewModel = hiltViewModel(),
+    open: Request
 ) {
     ComplicationsSuiteTheme {
         val listState = rememberScalingLazyListState()
@@ -34,6 +36,7 @@ fun ComplicationsSuiteApp(
                 viewModel = viewModel,
                 listState = listState,
                 focusRequester = focusRequester,
+                open = open
             )
         }
     }

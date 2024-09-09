@@ -37,6 +37,7 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
 import android.graphics.Typeface
 import android.graphics.drawable.Icon.createWithBitmap
+import androidx.wear.watchface.complications.data.ComplicationText
 import androidx.wear.watchface.complications.data.MonochromaticImageComplicationData
 import java.time.DayOfWeek
 import java.time.Year
@@ -48,6 +49,52 @@ class WeekOfYearComplicationService : SuspendingComplicationDataSourceService() 
     @Inject
     lateinit var dataStore: DataStore<UserPreferences>
     private val preferences by lazy { UserPreferencesRepository(dataStore).getPreferences() }
+
+    private fun createBitmapWithCircleAndNumber(number: Int): Bitmap {
+        // Define the bitmap size
+        val bitmapSize = 72
+
+        // Create a solid circle bitmap
+        val circleBitmap = Bitmap.createBitmap(bitmapSize, bitmapSize, Bitmap.Config.ARGB_8888)
+        val circleCanvas = Canvas(circleBitmap)
+        val centerX = bitmapSize / 2f
+        val centerY = bitmapSize / 2f
+        val radius = bitmapSize / 2f
+        val paintCircle = Paint().apply {
+            color = Color.WHITE
+            style = Paint.Style.FILL
+        }
+        circleCanvas.drawCircle(centerX, centerY, radius, paintCircle)
+
+        // Create a text bitmap
+        val textBitmap = Bitmap.createBitmap(bitmapSize, bitmapSize, Bitmap.Config.ARGB_8888)
+        val textCanvas = Canvas(textBitmap)
+        // ... (draw the number as in your original code, but with a white background)
+        // Draw the number in the center
+        val paintText = Paint().apply {
+            color = Color.BLACK
+            textAlign = Paint.Align.CENTER
+            textSize = if (number >= 10) 40f else 48f
+            typeface = Typeface.DEFAULT_BOLD
+        }
+
+        val textY = centerY + 1 - (paintText.descent() + paintText.ascent()) / 2
+        textCanvas.drawText(number.toString(), centerX, textY, paintText)
+
+        // Create a mask bitmap
+        val maskBitmap = Bitmap.createBitmap(bitmapSize, bitmapSize, Bitmap.Config.ALPHA_8)
+        val maskCanvas = Canvas(maskBitmap)
+        maskCanvas.drawBitmap(textBitmap, 0f, 0f, null)
+
+        // Create a paint to combine bitmaps
+        val paint = Paint()
+        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_OUT)
+
+        // Combine the circle and mask bitmaps
+        circleCanvas.drawBitmap(maskBitmap, 0f, 0f, paint)
+
+        return circleBitmap
+    }
 
     private fun openScreen(): PendingIntent? {
 
@@ -67,8 +114,7 @@ class WeekOfYearComplicationService : SuspendingComplicationDataSourceService() 
             ComplicationType.MONOCHROMATIC_IMAGE -> {
                 MonochromaticImageComplicationData.Builder(
                     monochromaticImage = MonochromaticImage.Builder(createWithBitmap(createBitmapWithCircleAndNumber(7))).build(),
-                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.woy_complication_text)).build())
-                    .setTapAction(null)
+                    contentDescription = ComplicationText.EMPTY)
                     .build()
             }
             ComplicationType.SMALL_IMAGE -> {
@@ -76,27 +122,23 @@ class WeekOfYearComplicationService : SuspendingComplicationDataSourceService() 
                     smallImage = SmallImage.Builder(
                         image = createWithBitmap(createBitmapWithCircleAndNumber(7)),
                         type = SmallImageType.ICON).build(),
-                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.woy_complication_text)).build())
-                    .setTapAction(null)
+                    contentDescription = ComplicationText.EMPTY)
                     .build()
             }
             ComplicationType.SHORT_TEXT -> {
                 ShortTextComplicationData.Builder(
                     text = PlainComplicationText.Builder(text = "32").build(),
-                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.woy_complication_text))
-                        .build())
+                    contentDescription = ComplicationText.EMPTY)
                     .setTitle(PlainComplicationText.Builder(text = getString(R.string.woy_complication_text)).build())
                     .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_week)).build())
-                    .setTapAction(null)
                     .build()
             }
             ComplicationType.LONG_TEXT -> {
                 LongTextComplicationData.Builder(
                     text = PlainComplicationText.Builder(text = getString(R.string.woy_complication_text)).build(),
-                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.woy_complication_description)).build())
+                    contentDescription = ComplicationText.EMPTY)
                     .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_week)).build())
                     .setTitle(PlainComplicationText.Builder(text = "32").build())
-                    .setTapAction(null)
                     .build()
             }
             ComplicationType.RANGED_VALUE -> {
@@ -104,10 +146,9 @@ class WeekOfYearComplicationService : SuspendingComplicationDataSourceService() 
                     value = 32f,
                     min = 1f,
                     max =  52f,
-                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.woy_complication_description)).build())
+                    contentDescription = ComplicationText.EMPTY)
                     .setText(PlainComplicationText.Builder(text = "32").build())
                     .setTitle(PlainComplicationText.Builder(text = getString(R.string.woy_complication_text)).build())
-                    .setTapAction(null)
                     .build()
             }
 
@@ -188,52 +229,6 @@ class WeekOfYearComplicationService : SuspendingComplicationDataSourceService() 
             }
         }
     }
-}
-
-fun createBitmapWithCircleAndNumber(number: Int): Bitmap {
-    // Define the bitmap size
-    val bitmapSize = 72
-
-    // Create a solid circle bitmap
-    val circleBitmap = Bitmap.createBitmap(bitmapSize, bitmapSize, Bitmap.Config.ARGB_8888)
-    val circleCanvas = Canvas(circleBitmap)
-    val centerX = bitmapSize / 2f
-    val centerY = bitmapSize / 2f
-    val radius = bitmapSize / 2f
-    val paintCircle = Paint().apply {
-        color = Color.WHITE
-        style = Paint.Style.FILL
-    }
-    circleCanvas.drawCircle(centerX, centerY, radius, paintCircle)
-
-    // Create a text bitmap
-    val textBitmap = Bitmap.createBitmap(bitmapSize, bitmapSize, Bitmap.Config.ARGB_8888)
-    val textCanvas = Canvas(textBitmap)
-    // ... (draw the number as in your original code, but with a white background)
-    // Draw the number in the center
-    val paintText = Paint().apply {
-        color = Color.BLACK
-        textAlign = Paint.Align.CENTER
-        textSize = if (number >= 10) 40f else 48f
-        typeface = Typeface.DEFAULT_BOLD
-    }
-
-    val textY = centerY + 1 - (paintText.descent() + paintText.ascent()) / 2
-    textCanvas.drawText(number.toString(), centerX, textY, paintText)
-
-    // Create a mask bitmap
-    val maskBitmap = Bitmap.createBitmap(bitmapSize, bitmapSize, Bitmap.Config.ALPHA_8)
-    val maskCanvas = Canvas(maskBitmap)
-    maskCanvas.drawBitmap(textBitmap, 0f, 0f, null)
-
-    // Create a paint to combine bitmaps
-    val paint = Paint()
-    paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_OUT)
-
-    // Combine the circle and mask bitmaps
-    circleCanvas.drawBitmap(maskBitmap, 0f, 0f, paint)
-
-    return circleBitmap
 }
 
 

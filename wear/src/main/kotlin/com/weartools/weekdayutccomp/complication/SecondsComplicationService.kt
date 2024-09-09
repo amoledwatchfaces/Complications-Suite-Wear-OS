@@ -45,17 +45,15 @@ class SecondsComplicationService : SuspendingComplicationDataSourceService() {
             ComplicationType.SHORT_TEXT -> {
                 ShortTextComplicationData.Builder(
                     text = PlainComplicationText.Builder(text = "30").build(),
-                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.sec_comp_name)).build())
+                    contentDescription = ComplicationText.EMPTY)
                     .setTitle(PlainComplicationText.Builder(text = getString(R.string.sec_short_title)).build())
-                    .setTapAction(null)
                     .build()
             }
             ComplicationType.LONG_TEXT -> {
                 LongTextComplicationData.Builder(
                     text = PlainComplicationText.Builder(text = getString(R.string.sec_comp_name)).build(),
-                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.sec_short_title)).build())
+                    contentDescription = ComplicationText.EMPTY)
                     .setTitle(PlainComplicationText.Builder(text = "30").build())
-                    .setTapAction(null)
                     .build()
             }
 

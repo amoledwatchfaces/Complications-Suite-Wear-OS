@@ -58,18 +58,16 @@ class TimeComplicationService : SuspendingComplicationDataSourceService() {
             ComplicationType.SHORT_TEXT -> {
                 ShortTextComplicationData.Builder(
                     text = PlainComplicationText.Builder(text = "10:08").build(),
-                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.time_comp_desc)).build())
+                    contentDescription = ComplicationText.EMPTY)
                     .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_clock)).build())
-                    .setTapAction(null)
                     .build()
             }
             ComplicationType.LONG_TEXT -> {
                 LongTextComplicationData.Builder(
                     text = PlainComplicationText.Builder(text = "10:08:35").build(),
-                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.time_comp_desc)).build())
+                    contentDescription = ComplicationText.EMPTY)
                     .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_clock)).build())
                     .setTitle(PlainComplicationText.Builder(text = "AM").build())
-                    .setTapAction(null)
                     .build()
             }
             ComplicationType.RANGED_VALUE -> {
@@ -77,11 +75,10 @@ class TimeComplicationService : SuspendingComplicationDataSourceService() {
                     value = 608f,
                     min = 0f,
                     max =  1440f,
-                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.time_comp_desc)).build())
+                    contentDescription = ComplicationText.EMPTY)
                     .setText(PlainComplicationText.Builder(text = "10:08").build())
                     .setTitle(PlainComplicationText.Builder(text = "AM").build())
                     .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_clock)).build())
-                    .setTapAction(null)
                     .build()
             }
 

@@ -30,10 +30,12 @@ import androidx.compose.material.icons.filled.EditLocation
 import androidx.compose.material.icons.filled.LocationCity
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -64,6 +66,7 @@ import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.enums.DateFormat
 import com.weartools.weekdayutccomp.enums.MoonIconType
+import com.weartools.weekdayutccomp.enums.Request
 import com.weartools.weekdayutccomp.presentation.ui.ChipWithEditText
 import com.weartools.weekdayutccomp.presentation.ui.DateFormatListPicker
 import com.weartools.weekdayutccomp.presentation.ui.DialogChip
@@ -77,19 +80,22 @@ import com.weartools.weekdayutccomp.presentation.ui.SectionText
 import com.weartools.weekdayutccomp.presentation.ui.ToggleChip
 import com.weartools.weekdayutccomp.theme.wearColorPalette
 import com.weartools.weekdayutccomp.utils.openPlayStore
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun ComplicationsSuiteScreen(
     listState: ScalingLazyListState = rememberScalingLazyListState(),
     focusRequester: FocusRequester,
-    viewModel: MainViewModel
+    viewModel: MainViewModel,
+    open: Request
 ) {
     val context = LocalContext.current
     val preferences = viewModel.preferences.collectAsState()
     val loaderState by viewModel.loaderStateStateFlow.collectAsState()
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
+    val coroutineScope = rememberCoroutineScope()
 
     //AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(preferences.value.locale))
 
@@ -139,6 +145,17 @@ fun ComplicationsSuiteScreen(
     var moonIconChange by remember{ mutableStateOf(false) }
     var openLocationChoose by remember{ mutableStateOf(false) }
 
+    LaunchedEffect(open) {
+        coroutineScope.launch {
+            when (open) {
+                Request.SUNRISE_SUNSET, Request.MOON_PHASE -> { listState.animateScrollToItem(index = 7, 120) }
+                Request.SUNRISE_SUNSET_OPEN_LOCATION, Request.MOON_PHASE_OPEN_LOCATION -> { openLocationChoose = openLocationChoose.not() }
+                Request.CUSTOM_TEXT -> { listState.animateScrollToItem(index = 22,120) }
+                else -> {}
+            }
+        }
+    }
+
     ScalingLazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -156,6 +173,7 @@ fun ComplicationsSuiteScreen(
         // WORLD CLOCK COMPLICATION PREFERENCE CATEGORY
         item { PreferenceCategory(title = stringResource(id = R.string.wc_setting_preference_category_title)) }
         item {
+
             DialogChip(
                 text = stringResource(id = R.string.wc_comp_name_1),
                 title = listcity[listcityID.indexOf(preferences.value.city1)],
@@ -376,7 +394,7 @@ fun ComplicationsSuiteScreen(
                 }
             )
         }
-        /** Jalali / Hijri Complications Toggle **/
+        /** Jalali / Hijri IntentOpen Toggle **/
         item {
             ToggleChip(
                 label = stringResource(id = R.string.date_comp_jalali_hijri_settings),

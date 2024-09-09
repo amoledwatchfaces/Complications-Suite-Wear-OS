@@ -22,6 +22,7 @@ import android.graphics.drawable.Icon.createWithResource
 import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.wear.watchface.complications.data.ComplicationData
+import androidx.wear.watchface.complications.data.ComplicationText
 import androidx.wear.watchface.complications.data.ComplicationType
 import androidx.wear.watchface.complications.data.LongTextComplicationData
 import androidx.wear.watchface.complications.data.MonochromaticImage
@@ -34,6 +35,8 @@ import com.weartools.weekdayutccomp.R.drawable
 import com.weartools.weekdayutccomp.network.ApiService
 import com.weartools.weekdayutccomp.preferences.UserPreferences
 import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
+import com.weartools.weekdayutccomp.ComplicationTapBroadcastReceiver
+import com.weartools.weekdayutccomp.ComplicationToggleArgs
 import com.weartools.weekdayutccomp.utils.isOnline
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
@@ -62,18 +65,16 @@ class BitcoinPriceComplicationService : SuspendingComplicationDataSourceService(
             ComplicationType.SHORT_TEXT -> {
                 ShortTextComplicationData.Builder(
                     text = PlainComplicationText.Builder(text = "45K").build(),
-                    contentDescription = PlainComplicationText.Builder(text = "BTC").build())
+                    contentDescription = ComplicationText.EMPTY)
                     .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_btc)).build())
-                    .setTapAction(null)
                     .build()
             }
             ComplicationType.LONG_TEXT -> {
                 LongTextComplicationData.Builder(
                     text = PlainComplicationText.Builder(text = "$45,000").build(),
-                    contentDescription = PlainComplicationText.Builder(text = "BTC").build())
+                    contentDescription = ComplicationText.EMPTY)
                     .setTitle(PlainComplicationText.Builder(text = "BTC").build())
                     .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_btc)).build())
-                    .setTapAction(null)
                     .build()
             }
             ComplicationType.RANGED_VALUE -> {
@@ -81,17 +82,16 @@ class BitcoinPriceComplicationService : SuspendingComplicationDataSourceService(
                     value = 75F,
                     min = 0F,
                     max = 100F,
-                    contentDescription = PlainComplicationText.Builder(text = "BTC").build())
+                    contentDescription = ComplicationText.EMPTY)
                     .setText(PlainComplicationText.Builder(text = "45K").build())
                     .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_btc)).build())
-                    .setTapAction(null)
                     .build()
             }
             else -> {null}
         }
     }
 
-override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
+    override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
     val args = ComplicationToggleArgs(providerComponent = ComponentName(this, javaClass), complicationInstanceId = request.complicationInstanceId)
     val complicationPendingIntent = ComplicationTapBroadcastReceiver.getToggleIntent(context = this, args = args)
 

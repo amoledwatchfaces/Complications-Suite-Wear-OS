@@ -53,23 +53,27 @@ class WorldClock1ComplicationService : SuspendingComplicationDataSourceService()
 
     override fun getPreviewData(type: ComplicationType): ComplicationData? {
         return when (type) {
-            ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
-                text = PlainComplicationText.Builder(text = "10:00").build(),
-                contentDescription = PlainComplicationText.Builder(text = getString(R.string.wc_comp_name_1)).build())
-                .setTitle(PlainComplicationText.Builder(text = "UTC").build())
-                .setTapAction(null)
-                .build()
-            ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
-                text = PlainComplicationText.Builder(text = "10:00").build(),
-                contentDescription = PlainComplicationText.Builder(text = getString(R.string.wc_comp_name_1)).build())
-                .setTitle(PlainComplicationText.Builder(text = "UTC").build())
-                .setTapAction(null)
-                .build()
+
+            ComplicationType.SHORT_TEXT -> {
+                ShortTextComplicationData.Builder(
+                    text = PlainComplicationText.Builder(text = "10:00").build(),
+                    contentDescription = ComplicationText.EMPTY)
+                    .setTitle(PlainComplicationText.Builder(text = "UTC").build())
+                    .build()
+            }
+            ComplicationType.LONG_TEXT -> {
+                LongTextComplicationData.Builder(
+                    text = PlainComplicationText.Builder(text = "10:00").build(),
+                    contentDescription = ComplicationText.EMPTY)
+                    .setTitle(PlainComplicationText.Builder(text = "UTC").build())
+                    .build()
+            }
+
             else -> {null}
         }
     }
 
-override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
+    override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
 
     val prefs = preferences.first()
 
@@ -91,20 +95,23 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
 
     return when (request.complicationType) {
 
-        ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
-            text = text,
-            contentDescription = PlainComplicationText.Builder(text = getString(R.string.wc_comp_name_1)).build())
-            .setTitle(PlainComplicationText.Builder(text = city).build())
-            .setTapAction(openScreen())
-            .build()
-
-        ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
-            text = text,
-            contentDescription = PlainComplicationText.Builder(text = getString(R.string.wc_comp_name_1)).build())
-            .setTitle(PlainComplicationText.Builder(text = city).build())
-            .setMonochromaticImage(MonochromaticImage.Builder(Icon.createWithResource(this, R.drawable.ic_timezone)).build())
-            .setTapAction(openScreen())
-            .build()
+        ComplicationType.SHORT_TEXT -> {
+            ShortTextComplicationData.Builder(
+                text = text,
+                contentDescription = PlainComplicationText.Builder(text = getString(R.string.wc_comp_name_1)).build())
+                .setTitle(PlainComplicationText.Builder(text = city).build())
+                .setTapAction(openScreen())
+                .build()
+        }
+        ComplicationType.LONG_TEXT -> {
+            LongTextComplicationData.Builder(
+                text = text,
+                contentDescription = PlainComplicationText.Builder(text = getString(R.string.wc_comp_name_1)).build())
+                .setTitle(PlainComplicationText.Builder(text = city).build())
+                .setMonochromaticImage(MonochromaticImage.Builder(Icon.createWithResource(this, R.drawable.ic_timezone)).build())
+                .setTapAction(openScreen())
+                .build()
+        }
 
         else -> {
             if (Log.isLoggable(TAG, Log.WARN)) {

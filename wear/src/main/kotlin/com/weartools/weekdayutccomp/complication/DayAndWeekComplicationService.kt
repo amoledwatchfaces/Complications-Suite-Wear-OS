@@ -47,7 +47,6 @@ class DayAndWeekComplicationService : SuspendingComplicationDataSourceService() 
                     text = PlainComplicationText.Builder(text = "${getString(R.string.weekW)}34").build(),
                     contentDescription = PlainComplicationText.Builder(text = getString(R.string.doy_comp_name)).build())
                     .setTitle(PlainComplicationText.Builder(text = "${getString(R.string.dayD)}254").build())
-                    .setTapAction(null)
                     .build()
             }
             ComplicationType.LONG_TEXT -> {
@@ -55,7 +54,6 @@ class DayAndWeekComplicationService : SuspendingComplicationDataSourceService() 
                     text = PlainComplicationText.Builder(text = "${getString(R.string.weekWlong)} 34").build(),
                     contentDescription = PlainComplicationText.Builder(text = getString(R.string.doy_comp_name)).build())
                     .setTitle(PlainComplicationText.Builder(text = "${getString(R.string.dayDlong)} 254").build())
-                    .setTapAction(null)
                     .build()
             }
 

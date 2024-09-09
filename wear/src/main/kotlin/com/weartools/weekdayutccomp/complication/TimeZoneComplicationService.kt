@@ -42,20 +42,23 @@ class TimeZoneComplicationService : SuspendingComplicationDataSourceService() {
 
     override fun getPreviewData(type: ComplicationType): ComplicationData? {
         return when (type) {
-            ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
-                text = PlainComplicationText.Builder(text = "PST").build(),
-                contentDescription = PlainComplicationText.Builder(text = getString(R.string.time_zone_comp_name)).build())
-                .setMonochromaticImage(MonochromaticImage.Builder(image = Icon.createWithResource(this, R.drawable.ic_world)).build())
-                .setTapAction(null)
-                .build()
 
-            ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
-                text = PlainComplicationText.Builder(text = "-08:00").build(),
-                contentDescription = PlainComplicationText.Builder(text = getString(R.string.time_zone_comp_name)).build())
-                .setMonochromaticImage(MonochromaticImage.Builder(image = Icon.createWithResource(this, R.drawable.ic_world)).build())
-                .setTitle(PlainComplicationText.Builder(text = "PST").build())
-                .setTapAction(null)
-                .build()
+            ComplicationType.SHORT_TEXT -> {
+                ShortTextComplicationData.Builder(
+                    text = PlainComplicationText.Builder(text = "PST").build(),
+                    contentDescription = ComplicationText.EMPTY)
+                    .setMonochromaticImage(MonochromaticImage.Builder(image = Icon.createWithResource(this, R.drawable.ic_world)).build())
+                    .build()
+            }
+            ComplicationType.LONG_TEXT -> {
+                LongTextComplicationData.Builder(
+                    text = PlainComplicationText.Builder(text = "-08:00").build(),
+                    contentDescription = ComplicationText.EMPTY)
+                    .setMonochromaticImage(MonochromaticImage.Builder(image = Icon.createWithResource(this, R.drawable.ic_world)).build())
+                    .setTitle(PlainComplicationText.Builder(text = "PST").build())
+                    .build()
+            }
+
             else -> {null}
         }
     }
@@ -64,20 +67,23 @@ class TimeZoneComplicationService : SuspendingComplicationDataSourceService() {
 
         return when (request.complicationType) {
 
-            ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
-                text = TimeFormatComplicationText.Builder(format = "z").build(),
-                contentDescription = TimeFormatComplicationText.Builder(format = "'${getString(R.string.time_zone_comp_name)}: 'z").build())
-                .setMonochromaticImage(MonochromaticImage.Builder(image = Icon.createWithResource(this, R.drawable.ic_world)).build())
-                .setTapAction(openScreen())
-                .build()
-
-            ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
-                text = TimeFormatComplicationText.Builder(format = "ZZZ").build(),
-                contentDescription = TimeFormatComplicationText.Builder(format = "'${getString(R.string.time_zone_comp_name)}: 'z").build())
-                .setMonochromaticImage(MonochromaticImage.Builder(image = Icon.createWithResource(this, R.drawable.ic_world)).build())
-                .setTitle(TimeFormatComplicationText.Builder(format = "z").build())
-                .setTapAction(openScreen())
-                .build()
+            ComplicationType.SHORT_TEXT -> {
+                ShortTextComplicationData.Builder(
+                    text = TimeFormatComplicationText.Builder(format = "z").build(),
+                    contentDescription = TimeFormatComplicationText.Builder(format = "'${getString(R.string.time_zone_comp_name)}: 'z").build())
+                    .setMonochromaticImage(MonochromaticImage.Builder(image = Icon.createWithResource(this, R.drawable.ic_world)).build())
+                    .setTapAction(openScreen())
+                    .build()
+            }
+            ComplicationType.LONG_TEXT -> {
+                LongTextComplicationData.Builder(
+                    text = TimeFormatComplicationText.Builder(format = "ZZZ").build(),
+                    contentDescription = TimeFormatComplicationText.Builder(format = "'${getString(R.string.time_zone_comp_name)}: 'z").build())
+                    .setMonochromaticImage(MonochromaticImage.Builder(image = Icon.createWithResource(this, R.drawable.ic_world)).build())
+                    .setTitle(TimeFormatComplicationText.Builder(format = "z").build())
+                    .setTapAction(openScreen())
+                    .build()
+            }
 
             else -> {
                 if (Log.isLoggable(TAG, Log.WARN)) {
@@ -88,10 +94,5 @@ class TimeZoneComplicationService : SuspendingComplicationDataSourceService() {
 
         }
     }
-
-    override fun onComplicationDeactivated(complicationInstanceId: Int) {
-        Log.d(TAG, "onComplicationDeactivated(): $complicationInstanceId")
-    }
-
 }
 

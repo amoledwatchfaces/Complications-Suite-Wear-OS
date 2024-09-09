@@ -56,19 +56,15 @@ class DateComplicationService : SuspendingComplicationDataSourceService() {
             ComplicationType.SHORT_TEXT -> {
                 ShortTextComplicationData.Builder(
                     text = PlainComplicationText.Builder(text = "1").build(),
-                    contentDescription = PlainComplicationText
-                        .Builder(text = getString(R.string.date_comp_name))
-                        .build())
+                    contentDescription = ComplicationText.EMPTY)
                     .setTitle(PlainComplicationText.Builder(text = "Jan").build())
-                    .setTapAction(null)
                     .build()
             }
             ComplicationType.LONG_TEXT -> {
                 LongTextComplicationData.Builder(
                     text = PlainComplicationText.Builder(text = "January 1, 2027").build(),
-                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.date_comp_name)).build())
+                    contentDescription = ComplicationText.EMPTY)
                     .setTitle(PlainComplicationText.Builder(text = "Friday").build())
-                    .setTapAction(null)
                     .build()
             }
             else -> { null }

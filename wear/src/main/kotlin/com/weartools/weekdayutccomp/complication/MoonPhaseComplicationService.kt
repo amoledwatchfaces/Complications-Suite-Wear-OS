@@ -39,7 +39,9 @@ import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.R.drawable
+import com.weartools.weekdayutccomp.activity.MainActivity
 import com.weartools.weekdayutccomp.enums.MoonIconType
+import com.weartools.weekdayutccomp.enums.Request
 import com.weartools.weekdayutccomp.preferences.UserPreferences
 import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
 import com.weartools.weekdayutccomp.utils.DrawMoonBitmap
@@ -80,24 +82,23 @@ class MoonPhaseComplicationService : SuspendingComplicationDataSourceService() {
 
     private fun openScreen(): PendingIntent? {
 
-    val calendarIntent = Intent()
-    calendarIntent.action = Intent.ACTION_MAIN
-    calendarIntent.addCategory(Intent.CATEGORY_APP_CALENDAR)
+        val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("$packageName.${Request.MOON_PHASE.name}", true)
 
-    return PendingIntent.getActivity(
-        this, 0, calendarIntent,
-        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-    )
-}
+        return PendingIntent.getActivity(
+            this, 1000+Request.MOON_PHASE.ordinal , intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+    }
 
     override fun getPreviewData(type: ComplicationType): ComplicationData? {
     return when (type) {
+
         ComplicationType.SHORT_TEXT -> {
             ShortTextComplicationData.Builder(
                 text = PlainComplicationText.Builder(text = "40%").build(),
                 contentDescription = PlainComplicationText.Builder(text = getString(R.string.moon_comp_name)).build())
                 .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_settings_moon_detailed)).build())
-                .setTapAction(null)
                 .build()
         }
         ComplicationType.LONG_TEXT -> {
@@ -106,7 +107,6 @@ class MoonPhaseComplicationService : SuspendingComplicationDataSourceService() {
                 contentDescription = PlainComplicationText.Builder(text = getString(R.string.moon_comp_name)).build())
                 .setTitle(PlainComplicationText.Builder(text = "40%").build())
                 .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_settings_moon_detailed)).build())
-                .setTapAction(openScreen())
                 .build()
         }
         ComplicationType.RANGED_VALUE -> {
@@ -117,23 +117,21 @@ class MoonPhaseComplicationService : SuspendingComplicationDataSourceService() {
                 contentDescription = PlainComplicationText.Builder(text = getString(R.string.moon_comp_name)).build())
                 .setText(PlainComplicationText.Builder(text = "-105°").build())
                 .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_settings_moon_detailed)).build())
-                .setTapAction(null)
                 .build()
         }
         ComplicationType.MONOCHROMATIC_IMAGE -> {
             MonochromaticImageComplicationData.Builder(
                 monochromaticImage = MonochromaticImage.Builder(createWithResource(this, drawable.ic_settings_moon_detailed)).build(),
                 contentDescription = PlainComplicationText.Builder(text = getString(R.string.moon_comp_name)).build())
-                .setTapAction(null)
                 .build()
         }
         ComplicationType.SMALL_IMAGE -> {
             SmallImageComplicationData.Builder(
                 smallImage = SmallImage.Builder(image = createWithResource(this, drawable.ic_settings_moon_detailed), type = SmallImageType.ICON).build(),
                 contentDescription = PlainComplicationText.Builder(text = getString(R.string.moon_comp_name)).build())
-                .setTapAction(null)
                 .build()
         }
+
         else -> { null }
     }
 }

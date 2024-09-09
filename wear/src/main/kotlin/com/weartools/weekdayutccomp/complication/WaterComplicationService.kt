@@ -23,6 +23,7 @@ import android.graphics.drawable.Icon.createWithResource
 import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.wear.watchface.complications.data.ComplicationData
+import androidx.wear.watchface.complications.data.ComplicationText
 import androidx.wear.watchface.complications.data.ComplicationType
 import androidx.wear.watchface.complications.data.LongTextComplicationData
 import androidx.wear.watchface.complications.data.MonochromaticImage
@@ -45,10 +46,10 @@ import kotlinx.coroutines.flow.first
 import java.time.LocalDate
 import javax.inject.Inject
 
-var lastUpdateDate: LocalDate = LocalDate.now()
-
 @AndroidEntryPoint
 class WaterComplicationService : SuspendingComplicationDataSourceService() {
+
+    private var lastUpdateDate: LocalDate = LocalDate.now()
 
     @Inject
     lateinit var dataStore: DataStore<UserPreferences>
@@ -67,46 +68,41 @@ class WaterComplicationService : SuspendingComplicationDataSourceService() {
     override fun getPreviewData(type: ComplicationType): ComplicationData? {
         return when (type) {
 
-            ComplicationType.SHORT_TEXT -> ShortTextComplicationData.Builder(
-                text = PlainComplicationText.Builder(text = "10").build(),
-                contentDescription = PlainComplicationText.Builder(text = getString(R.string.water_comp_name)).build())
-                .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_water)).build())
-                .setTapAction(null)
-                .build()
-
-            ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
-                text = PlainComplicationText.Builder(text = "${getString(R.string.water_comp_name)}: 10").build(),
-                contentDescription = PlainComplicationText.Builder(text = getString(R.string.water_comp_name)).build())
-                .setTapAction(null)
-                .build()
-
-            ComplicationType.MONOCHROMATIC_IMAGE -> MonochromaticImageComplicationData.Builder(
-                monochromaticImage = MonochromaticImage.Builder(createWithResource(this, drawable.ic_water))
-                    .setAmbientImage(createWithResource(this, drawable.ic_water))
-                    .build(),
-                contentDescription = PlainComplicationText.Builder(text = getString(R.string.water_comp_name)).build())
-                .setTapAction(null)
-                .build()
-
-            ComplicationType.SMALL_IMAGE -> SmallImageComplicationData.Builder(
-                smallImage = SmallImage.Builder(
-                    image = createWithResource(this, drawable.ic_water),
-                    type = SmallImageType.ICON).build(),
-                contentDescription = PlainComplicationText.Builder(text = getString(R.string.water_comp_name)).build())
-                .setTapAction(null)
-                .build()
-
+            ComplicationType.SHORT_TEXT -> {
+                ShortTextComplicationData.Builder(
+                    text = PlainComplicationText.Builder(text = "10").build(),
+                    contentDescription = ComplicationText.EMPTY)
+                    .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_water)).build())
+                    .build()
+            }
+            ComplicationType.LONG_TEXT -> {
+                LongTextComplicationData.Builder(
+                    text = PlainComplicationText.Builder(text = "${getString(R.string.water_comp_name)}: 10").build(),
+                    contentDescription = ComplicationText.EMPTY)
+                    .build()
+            }
+            ComplicationType.MONOCHROMATIC_IMAGE -> {
+                MonochromaticImageComplicationData.Builder(
+                    monochromaticImage = MonochromaticImage.Builder(createWithResource(this, drawable.ic_water)).build(),
+                    contentDescription = ComplicationText.EMPTY)
+                    .build()
+            }
+            ComplicationType.SMALL_IMAGE -> {
+                SmallImageComplicationData.Builder(
+                    smallImage = SmallImage.Builder(
+                        image = createWithResource(this, drawable.ic_water),
+                        type = SmallImageType.ICON).build(),
+                    contentDescription = ComplicationText.EMPTY)
+                    .build()
+            }
             ComplicationType.RANGED_VALUE -> {
                 return RangedValueComplicationData.Builder(
                     value = 10f,
                     min = 0f,
                     max = 20f,
-                    contentDescription = PlainComplicationText
-                        .Builder(text = getString(R.string.water_comp_name)).build()
-                )
+                    contentDescription = ComplicationText.EMPTY)
                     .setText(PlainComplicationText.Builder(text = "10").build())
                     .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_water)).build())
-                    .setTapAction(openScreen())
                     .build()
             }
 
@@ -114,8 +110,7 @@ class WaterComplicationService : SuspendingComplicationDataSourceService() {
         }
     }
 
-
-override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
+    override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
 
     /** Logic to reset water intake when on date change **/
     val refreshDate = LocalDate.now()
@@ -130,22 +125,18 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
     //Log.d(TAG, "WTI: Update, Intake: $waterIntake")
     //Log.d(TAG, "WTI: Update, Goal: $waterIntakeGoal")
 
-
-
-    when (request.complicationType) {
+    return when (request.complicationType) {
 
         ComplicationType.SHORT_TEXT -> {
-
-            return ShortTextComplicationData.Builder(
-                text =PlainComplicationText.Builder(text = "$waterIntake").build(),
+            ShortTextComplicationData.Builder(
+                text = PlainComplicationText.Builder(text = "$waterIntake").build(),
                 contentDescription = PlainComplicationText.Builder(text = "${getString(R.string.water_comp_name)}: $waterIntake").build())
                 .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_water)).build())
                 .setTapAction(openScreen())
                 .build()
         }
-
         ComplicationType.RANGED_VALUE -> {
-            return RangedValueComplicationData.Builder(
+            RangedValueComplicationData.Builder(
                 value = if (waterIntake <= waterIntakeGoal) waterIntake.toFloat() else waterIntakeGoal,
                 min = 0f,
                 max = waterIntakeGoal,
@@ -156,35 +147,29 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
                 .setTapAction(openScreen())
                 .build()
         }
-
         ComplicationType.LONG_TEXT -> {
-            return LongTextComplicationData.Builder(
+            LongTextComplicationData.Builder(
                 text = PlainComplicationText.Builder(text = "${getString(R.string.water_comp_name)}: $waterIntake").build(),
                 contentDescription = PlainComplicationText.Builder(text = "${getString(R.string.water_comp_name)}: $waterIntake").build())
                 .setTapAction(openScreen())
                 .build()
         }
-
         ComplicationType.MONOCHROMATIC_IMAGE -> {
-            return MonochromaticImageComplicationData.Builder(
+            MonochromaticImageComplicationData.Builder(
             monochromaticImage = MonochromaticImage.Builder(createWithResource(this, drawable.ic_water))
                 .setAmbientImage(createWithResource(this, drawable.ic_water))
                 .build(),
             contentDescription = PlainComplicationText.Builder(text = "${getString(R.string.water_comp_name)}: $waterIntake").build())
             .setTapAction(openScreen())
             .build()}
-
-
         ComplicationType.SMALL_IMAGE -> {
-            return SmallImageComplicationData.Builder(
-            smallImage = SmallImage.Builder(
-                image = createWithResource(this, drawable.ic_water),
-                type = SmallImageType.ICON).build(),
-            contentDescription = PlainComplicationText.Builder(text = "${getString(R.string.water_comp_name)}: $waterIntake.").build())
-            .setTapAction(openScreen())
-            .build()}
-
-
+            SmallImageComplicationData.Builder(
+                smallImage = SmallImage.Builder(
+                    image = createWithResource(this, drawable.ic_water),
+                    type = SmallImageType.ICON).build(),
+                contentDescription = PlainComplicationText.Builder(text = "${getString(R.string.water_comp_name)}: $waterIntake.").build())
+                .setTapAction(openScreen())
+                .build()}
 
         else -> {
             if (Log.isLoggable(TAG, Log.WARN)) {

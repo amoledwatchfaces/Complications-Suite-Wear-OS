@@ -18,128 +18,96 @@ package com.weartools.weekdayutccomp.complication
 
 import android.app.PendingIntent
 import android.content.ComponentName
-import android.content.Context
-import android.content.Intent
+import android.content.ContentValues.TAG
 import android.graphics.drawable.Icon.createWithResource
-import android.net.Uri
 import android.util.Log
+import android.widget.Toast
 import androidx.wear.watchface.complications.data.*
-import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUpdateRequester
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
 import com.weartools.weekdayutccomp.R.drawable
+import com.weartools.weekdayutccomp.ComplicationTapBroadcastReceiver
+import com.weartools.weekdayutccomp.ComplicationToggleArgs
 
 class PayComplicationService : SuspendingComplicationDataSourceService() {
 
-    override fun onComplicationActivated(
-        complicationInstanceId: Int,
-        type: ComplicationType
-    ) {
-        Log.d(TAG, "onComplicationActivated(): $complicationInstanceId")
-    }
+    private fun openScreen(): PendingIntent? {
 
-private fun openScreen(): PendingIntent? {
+        val intent1 = packageManager.getLaunchIntentForPackage("com.google.android.apps.walletnfcrel")
+        val intent2 = packageManager.getLaunchIntentForPackage("com.samsung.android.samsungpay.gear")
 
-    val intent1 = packageManager.getLaunchIntentForPackage("com.google.android.apps.walletnfcrel")
-    val intent2 = packageManager.getLaunchIntentForPackage("com.samsung.android.samsungpay.gear")
-    val i = Intent(
-        Intent.ACTION_VIEW,
-        Uri.parse("market://details?id=com.google.android.apps.walletnfcrel")
-    )
-    i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-
-    if (intent1!=null)
-    {
-    return PendingIntent.getActivity(
-        this, 0, intent1,
-        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-    )}
-    else if (intent2!=null)
-    {
-        return PendingIntent.getActivity(
-            this, 0, intent2,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )}
-     else {
-         updateComplication(context = this)
-         return PendingIntent.getActivity(
-            this, 0, i,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )}
-}
-
-override fun getPreviewData(type: ComplicationType): ComplicationData? {
-    return when (type) {
-        ComplicationType.MONOCHROMATIC_IMAGE -> MonochromaticImageComplicationData.Builder(
-        monochromaticImage = MonochromaticImage.Builder(
-            createWithResource(this, drawable.ic_pay)
-        )
-            .setAmbientImage(createWithResource(this, drawable.ic_pay))
-            .build(),
-        contentDescription = PlainComplicationText.Builder(text = "MONO_IMG.").build()
-    )
-        .setTapAction(null)
-        .build()
-        ComplicationType.SMALL_IMAGE -> SmallImageComplicationData.Builder(
-            smallImage = SmallImage.Builder(
-                image = createWithResource(this, drawable.ic_pay),
-                type = SmallImageType.ICON
-            ).build(),
-            contentDescription = PlainComplicationText.Builder(text = "SMALL_IMAGE.").build()
-        )
-            .setTapAction(null)
-            .build()
-        else -> {null}
-    }
-}
-
-override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
-    Log.d(TAG, "onComplicationRequest() id: ${request.complicationInstanceId}")
-
-    return when (request.complicationType) {
-
-        ComplicationType.MONOCHROMATIC_IMAGE -> MonochromaticImageComplicationData.Builder(
-            monochromaticImage = MonochromaticImage.Builder(
-                createWithResource(this, drawable.ic_pay)
-            )
-                .setAmbientImage(createWithResource(this, drawable.ic_pay))
-                .build(),
-            contentDescription = PlainComplicationText.Builder(text = "MONO_IMG.").build()
-        )
-            .setTapAction(openScreen())
-            .build()
-
-        ComplicationType.SMALL_IMAGE -> SmallImageComplicationData.Builder(
-            smallImage = SmallImage.Builder(
-                image = createWithResource(this, drawable.ic_pay),
-                type = SmallImageType.ICON
-            ).build(),
-            contentDescription = PlainComplicationText.Builder(text = "SMALL_IMAGE.").build()
-        )
-            .setTapAction(openScreen())
-            .build()
-
-        else -> {
-            if (Log.isLoggable(TAG, Log.WARN)) {
-                Log.w(TAG, "Unexpected complication type ${request.complicationType}")
-            }
+        return if (intent1 != null) {
+            PendingIntent.getActivity(this, 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+        } else if (intent2 != null) {
+            PendingIntent.getActivity(this, 0, intent2, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+        } else {
             null
         }
+
     }
-}
 
-override fun onComplicationDeactivated(complicationInstanceId: Int) {
-    Log.d(TAG, "onComplicationDeactivated(): $complicationInstanceId")
-}
+    override fun getPreviewData(type: ComplicationType): ComplicationData? {
+        return when (type) {
 
-companion object {
-    private const val TAG = "CompDataSourceService"
-}
-    private fun updateComplication(context: Context?) {
-        //Log.d(TAG, "Updating Pay Complications")
-        val componentName = ComponentName(context!!, PayComplicationService::class.java)
-        val req = ComplicationDataSourceUpdateRequester.create(context,componentName)
-        req.requestUpdateAll()
+            ComplicationType.MONOCHROMATIC_IMAGE -> {
+                MonochromaticImageComplicationData.Builder(
+                    monochromaticImage = MonochromaticImage.Builder(createWithResource(this, drawable.ic_pay)).build(),
+                    contentDescription = ComplicationText.EMPTY)
+                    .build()
+            }
+            ComplicationType.SMALL_IMAGE -> {
+                SmallImageComplicationData.Builder(
+                    smallImage = SmallImage.Builder(
+                        image = createWithResource(this, drawable.ic_pay),
+                        type = SmallImageType.ICON).build(),
+                    contentDescription = ComplicationText.EMPTY)
+                    .build()
+            }
+
+            else -> {null}
+        }
+    }
+
+    override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
+        val args = ComplicationToggleArgs(providerComponent = ComponentName(this, javaClass), complicationInstanceId = request.complicationInstanceId)
+        val complicationPendingIntent = ComplicationTapBroadcastReceiver.getToggleIntent(context = this, args = args)
+
+        var tapAction = openScreen()
+
+        val intent1 = packageManager.getLaunchIntentForPackage("com.google.android.apps.walletnfcrel")
+        val intent2 = packageManager.getLaunchIntentForPackage("com.samsung.android.samsungpay.gear")
+
+        if (intent1 == null && intent2 == null) {
+            Toast.makeText(applicationContext, "Google Wallet not installed", Toast.LENGTH_LONG).show()
+            tapAction = complicationPendingIntent
+        }
+
+        return when (request.complicationType) {
+
+            ComplicationType.MONOCHROMATIC_IMAGE -> {
+                MonochromaticImageComplicationData.Builder(
+                    monochromaticImage = MonochromaticImage.Builder(createWithResource(this, drawable.ic_pay)).build(),
+                    contentDescription = PlainComplicationText.Builder(text = "Google Wallet").build())
+                    .setTapAction(tapAction)
+                    .build()
+            }
+            ComplicationType.SMALL_IMAGE -> {
+                SmallImageComplicationData.Builder(
+                    smallImage = SmallImage.Builder(
+                        image = createWithResource(this, drawable.ic_pay),
+                        type = SmallImageType.ICON).build(),
+                    contentDescription = PlainComplicationText.Builder(text = "Google Wallet").build())
+                    .setTapAction(tapAction)
+                    .build()
+            }
+
+            else -> {
+                if (Log.isLoggable(TAG, Log.WARN)) {
+                    Log.w(TAG, "Unexpected complication type ${request.complicationType}")
+                }
+                null
+            }
+        }
     }
 }
 

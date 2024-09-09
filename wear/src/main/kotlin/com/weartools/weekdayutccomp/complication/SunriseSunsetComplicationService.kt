@@ -35,15 +35,12 @@ import androidx.wear.watchface.complications.datasource.SuspendingComplicationDa
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.R.drawable
 import com.weartools.weekdayutccomp.activity.MainActivity
+import com.weartools.weekdayutccomp.enums.Request
 import com.weartools.weekdayutccomp.preferences.UserPreferences
 import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
 import com.weartools.weekdayutccomp.utils.MoonPhaseHelper
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
@@ -55,24 +52,15 @@ class SunriseSunsetComplicationService : SuspendingComplicationDataSourceService
     lateinit var dataStore: DataStore<UserPreferences>
     private val preferences by lazy { UserPreferencesRepository(dataStore).getPreferences() }
 
-    override fun onComplicationActivated(complicationInstanceId: Int, type: ComplicationType) {
-        /** CHECK IF LOCATION IS SET + CONSIDER LOCATION TOAST */
-        CoroutineScope(Dispatchers.IO).launch {
-            val hasPermission = preferences.first().coarsePermission
-            withContext(Dispatchers.Main) {
-                if (hasPermission.not()) {
-                    Toast.makeText(applicationContext, getString(R.string.enable_permission_toast), Toast.LENGTH_LONG).show()
-                }
-            }
-        }
-    }
+    private fun openScreen(hasPermission: Boolean): PendingIntent? {
 
-    private fun openScreen(): PendingIntent? {
+        val request = if (hasPermission) Request.SUNRISE_SUNSET else Request.SUNRISE_SUNSET_OPEN_LOCATION
 
         val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("$packageName.${request.name}", true)
 
         return PendingIntent.getActivity(
-            this, 0, intent,
+            this, 1000+request.ordinal , intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
     }
@@ -103,7 +91,11 @@ class SunriseSunsetComplicationService : SuspendingComplicationDataSourceService
     override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
 
         val prefs = preferences.first()
-        if (prefs.coarsePermission.not()) return NoDataComplication.getPlaceholder(request, this)
+        if (prefs.coarsePermission.not()) {
+            Toast.makeText(applicationContext, getString(R.string.enable_permission_toast), Toast.LENGTH_LONG).show()
+            return NoDataComplication.getPlaceholder(request, this, tapAction = openScreen(false))
+        }
+
         val ismilitary = prefs.isMilitaryTime
         val leadingzero = prefs.isLeadingZeroTime
 
@@ -127,7 +119,7 @@ class SunriseSunsetComplicationService : SuspendingComplicationDataSourceService
                     text = PlainComplicationText.Builder(text = time).build(),
                     contentDescription = PlainComplicationText.Builder(text = "$text: $time").build())
                     .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, icon)).build())
-                    .setTapAction(openScreen())
+                    .setTapAction(openScreen(true))
                     .build()
             }
             ComplicationType.LONG_TEXT -> {
@@ -141,7 +133,7 @@ class SunriseSunsetComplicationService : SuspendingComplicationDataSourceService
                     text = PlainComplicationText.Builder(text = "$time /.. $time2").build(),
                     contentDescription = PlainComplicationText.Builder(text = "$text: $time").build())
                     .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, icon)).setAmbientImage(createWithResource(this, if (mph.isSunrise) drawable.ic_sunset_3 else drawable.ic_sunrise_3)).build())
-                    .setTapAction(openScreen())
+                    .setTapAction(openScreen(true))
                     .build()
             }
 

@@ -419,7 +419,7 @@
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
                 android:value="SHORT_TEXT,LONG_TEXT,RANGED_VALUE" />
         </service>
-        <receiver android:name=".complication.ComplicationTapBroadcastReceiver" />
+        <receiver android:name=".ComplicationTapBroadcastReceiver" />
 
         <activity
             android:name=".activity.FlashlightActivity"

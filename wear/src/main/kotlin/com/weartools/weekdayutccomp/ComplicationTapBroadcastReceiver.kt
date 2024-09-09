@@ -14,17 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.weartools.weekdayutccomp.complication
+package com.weartools.weekdayutccomp
 
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.os.Parcelable
 import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUpdateRequester
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import kotlinx.parcelize.Parcelize
 
 class ComplicationTapBroadcastReceiver : BroadcastReceiver() {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
@@ -67,3 +70,9 @@ class ComplicationTapBroadcastReceiver : BroadcastReceiver() {
         )
     }
 }
+
+@Parcelize
+data class ComplicationToggleArgs(
+    val providerComponent: ComponentName,
+    val complicationInstanceId: Int
+) : Parcelable

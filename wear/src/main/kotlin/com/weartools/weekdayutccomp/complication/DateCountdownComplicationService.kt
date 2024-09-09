@@ -61,7 +61,7 @@ class DateCountdownComplicationService : SuspendingComplicationDataSourceService
         )
     }
 
-override fun getPreviewData(type: ComplicationType): ComplicationData? {
+    override fun getPreviewData(type: ComplicationType): ComplicationData? {
     return when (type) {
 
         ComplicationType.SHORT_TEXT -> {
@@ -69,7 +69,6 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
                 text = PlainComplicationText.Builder(text = "17d").build(),
                 contentDescription = PlainComplicationText.Builder(text = getString(R.string.date_countdown_comp_name)).build())
                 .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_date_countdown)).build())
-                .setTapAction(null)
                 .build()
         }
         ComplicationType.LONG_TEXT -> {
@@ -78,7 +77,6 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
                 contentDescription = PlainComplicationText.Builder(text = getString(R.string.date_countdown_comp_name)).build())
                 .setTitle(PlainComplicationText.Builder(text = "17 days").build())
                 .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_date_countdown)).build())
-                .setTapAction(null)
                 .build()
         }
 
@@ -86,8 +84,7 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
     }
 }
 
-
-override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
+    override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
 
     val datePicked = preferences.first().datePicker
     val timeInstance = LocalDate.parse(datePicked).atStartOfDay(ZoneId.systemDefault()).toInstant()

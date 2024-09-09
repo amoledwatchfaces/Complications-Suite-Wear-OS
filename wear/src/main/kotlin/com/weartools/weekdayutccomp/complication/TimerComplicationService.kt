@@ -17,9 +17,7 @@
 package com.weartools.weekdayutccomp.complication
 
 import android.app.PendingIntent
-import android.content.ComponentName
 import android.content.ContentValues.TAG
-import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Icon.createWithResource
 import android.util.Log
@@ -33,18 +31,16 @@ import androidx.wear.watchface.complications.data.PlainComplicationText
 import androidx.wear.watchface.complications.data.RangedValueComplicationData
 import androidx.wear.watchface.complications.data.TimeDifferenceComplicationText
 import androidx.wear.watchface.complications.data.TimeDifferenceStyle
-import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUpdateRequester
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
-import androidx.work.CoroutineWorker
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
-import androidx.work.WorkerParameters
 import com.weartools.weekdayutccomp.R.drawable
 import com.weartools.weekdayutccomp.activity.PickTimeActivity
 import com.weartools.weekdayutccomp.preferences.UserPreferences
 import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
+import com.weartools.weekdayutccomp.utils.TimerWorker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import java.time.Duration
@@ -69,7 +65,7 @@ class TimerComplicationService : SuspendingComplicationDataSourceService() {
         )
     }
 
-override fun getPreviewData(type: ComplicationType): ComplicationData? {
+    override fun getPreviewData(type: ComplicationType): ComplicationData? {
     return when (type) {
 
         ComplicationType.RANGED_VALUE -> {
@@ -87,8 +83,7 @@ override fun getPreviewData(type: ComplicationType): ComplicationData? {
     }
 }
 
-
-override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
+    override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
 
     val startMillis = preferences.first().startTime
     val timePicked = preferences.first().timePicker
@@ -154,13 +149,5 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
         }
     }
 }
-}
-class TimerWorker(private val appContext: Context, workerParams: WorkerParameters) : CoroutineWorker(appContext, workerParams) {
-    override suspend fun doWork(): Result {
-        ComplicationDataSourceUpdateRequester.create(appContext,
-            ComponentName(appContext, TimerComplicationService::class.java)
-        ).requestUpdateAll()
-        return Result.success()
-    }
 }
 

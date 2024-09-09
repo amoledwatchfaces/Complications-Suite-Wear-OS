@@ -17,6 +17,7 @@
 package com.weartools.weekdayutccomp.complication
 
 import android.app.PendingIntent
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.drawable.Icon.createWithResource
 import android.util.Log
@@ -28,18 +29,9 @@ import com.weartools.weekdayutccomp.R.drawable
 
 class FlashlightComplicationService : SuspendingComplicationDataSourceService() {
 
-    override fun onComplicationActivated(
-        complicationInstanceId: Int,
-        type: ComplicationType
-    ) {
-        Log.d(TAG, "onComplicationActivated(): $complicationInstanceId")
-    }
-
     private fun openScreen(): PendingIntent? {
 
         val intent = Intent(this, FlashlightActivity::class.java)
-        //
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
 
         return PendingIntent.getActivity(
             this, 0, intent,
@@ -48,74 +40,57 @@ class FlashlightComplicationService : SuspendingComplicationDataSourceService() 
         )
     }
 
-override fun getPreviewData(type: ComplicationType): ComplicationData? {
-    return when (type) {
-        ComplicationType.MONOCHROMATIC_IMAGE -> MonochromaticImageComplicationData.Builder(
-            monochromaticImage = MonochromaticImage.Builder(
-                createWithResource(this, drawable.ic_flashlight)
-            )
-                .setAmbientImage(createWithResource(this, drawable.ic_flashlight))
-                .build(),
-            contentDescription = PlainComplicationText.Builder(text = "Flashlight").build()
-        )
-            .setTapAction(null)
-            .build()
-        ComplicationType.SMALL_IMAGE -> SmallImageComplicationData.Builder(
-            smallImage = SmallImage.Builder(
-                image = createWithResource(this, drawable.ic_flashlight),
-                type = SmallImageType.ICON
-            ).build(),
-            contentDescription = PlainComplicationText.Builder(text = "Flashlight").build()
-        )
-            .setTapAction(null)
-            .build()
-        else -> {null}
-    }
-}
+    override fun getPreviewData(type: ComplicationType): ComplicationData? {
+        return when (type) {
 
-override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
-    Log.d(TAG, "onComplicationRequest() id: ${request.complicationInstanceId}")
-
-    return when (request.complicationType) {
-
-        ComplicationType.MONOCHROMATIC_IMAGE -> MonochromaticImageComplicationData.Builder(
-            monochromaticImage = MonochromaticImage.Builder(
-                createWithResource(this, drawable.ic_flashlight)
-            )
-                .setAmbientImage(createWithResource(this, drawable.ic_flashlight))
-                .build(),
-            contentDescription = PlainComplicationText.Builder(text = "Flashlight").build()
-        )
-            .setTapAction(openScreen())
-            .build()
-
-
-        ComplicationType.SMALL_IMAGE -> SmallImageComplicationData.Builder(
-            smallImage = SmallImage.Builder(
-                image = createWithResource(this, drawable.ic_flashlight),
-                type = SmallImageType.ICON
-            ).build(),
-            contentDescription = PlainComplicationText.Builder(text = "Flashlight").build()
-        )
-            .setTapAction(openScreen())
-            .build()
-
-        else -> {
-            if (Log.isLoggable(TAG, Log.WARN)) {
-                Log.w(TAG, "Unexpected complication type ${request.complicationType}")
+            ComplicationType.MONOCHROMATIC_IMAGE -> {
+                MonochromaticImageComplicationData.Builder(
+                    monochromaticImage = MonochromaticImage.Builder(createWithResource(this, drawable.ic_flashlight)).build(),
+                    contentDescription = ComplicationText.EMPTY)
+                    .build()
             }
-            null
+            ComplicationType.SMALL_IMAGE -> {
+                SmallImageComplicationData.Builder(
+                    smallImage = SmallImage.Builder(
+                        image = createWithResource(this, drawable.ic_flashlight),
+                        type = SmallImageType.ICON).build(),
+                    contentDescription = ComplicationText.EMPTY)
+                    .build()
+            }
+
+            else -> {null}
         }
-
     }
-}
 
-override fun onComplicationDeactivated(complicationInstanceId: Int) {
-    Log.d(TAG, "onComplicationDeactivated(): $complicationInstanceId")
-}
+    override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
 
-companion object {
-    private const val TAG = "FlashlightComplication"
-}
+        return when (request.complicationType) {
+
+            ComplicationType.MONOCHROMATIC_IMAGE -> {
+                MonochromaticImageComplicationData.Builder(
+                    monochromaticImage = MonochromaticImage.Builder(createWithResource(this, drawable.ic_flashlight)).build(),
+                    contentDescription = PlainComplicationText.Builder(text = "Flashlight").build())
+                    .setTapAction(openScreen())
+                    .build()
+            }
+            ComplicationType.SMALL_IMAGE -> {
+                SmallImageComplicationData.Builder(
+                    smallImage = SmallImage.Builder(
+                        image = createWithResource(this, drawable.ic_flashlight),
+                        type = SmallImageType.ICON).build(),
+                    contentDescription = PlainComplicationText.Builder(text = "Flashlight").build())
+                    .setTapAction(openScreen())
+                    .build()
+            }
+
+            else -> {
+                if (Log.isLoggable(TAG, Log.WARN)) {
+                    Log.w(TAG, "Unexpected complication type ${request.complicationType}")
+                }
+                null
+            }
+
+        }
+    }
 }
 

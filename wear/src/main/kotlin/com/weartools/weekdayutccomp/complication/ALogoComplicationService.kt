@@ -17,11 +17,13 @@
 package com.weartools.weekdayutccomp.complication
 
 import android.app.PendingIntent
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.drawable.Icon.createWithResource
 import android.net.Uri
 import android.util.Log
 import androidx.wear.watchface.complications.data.ComplicationData
+import androidx.wear.watchface.complications.data.ComplicationText
 import androidx.wear.watchface.complications.data.ComplicationType
 import androidx.wear.watchface.complications.data.MonochromaticImage
 import androidx.wear.watchface.complications.data.MonochromaticImageComplicationData
@@ -34,13 +36,6 @@ import androidx.wear.watchface.complications.datasource.SuspendingComplicationDa
 import com.weartools.weekdayutccomp.R.drawable
 
 class ALogoComplicationService : SuspendingComplicationDataSourceService() {
-
-    override fun onComplicationActivated(
-        complicationInstanceId: Int,
-        type: ComplicationType
-    ) {
-        Log.d(TAG, "onComplicationActivated(): $complicationInstanceId")
-    }
 
     private fun openScreen(): PendingIntent? {
 
@@ -59,53 +54,44 @@ class ALogoComplicationService : SuspendingComplicationDataSourceService() {
 
     }
 
-override fun getPreviewData(type: ComplicationType): ComplicationData? {
+    override fun getPreviewData(type: ComplicationType): ComplicationData? {
     return when (type) {
-        ComplicationType.MONOCHROMATIC_IMAGE -> MonochromaticImageComplicationData.Builder(
-            monochromaticImage = MonochromaticImage.Builder(
-                createWithResource(this, drawable.a_logo_2_min)
-            )
-                .build(),
-            contentDescription = PlainComplicationText.Builder(text = "LOGO.").build()
-        )
-            .setTapAction(null)
-            .build()
-        ComplicationType.SMALL_IMAGE -> SmallImageComplicationData.Builder(
-            smallImage = SmallImage.Builder(
-                image = createWithResource(this, drawable.a_logo_2_min),
-                type = SmallImageType.ICON
-            ).build(),
-            contentDescription = PlainComplicationText.Builder(text = "LOGO.").build()
-        )
-            .setTapAction(null)
-            .build()
+
+        ComplicationType.MONOCHROMATIC_IMAGE -> {
+            MonochromaticImageComplicationData.Builder(
+                monochromaticImage = MonochromaticImage.Builder(createWithResource(this, drawable.a_logo_2_min)).build(),
+                contentDescription = ComplicationText.EMPTY)
+                .build()
+        }
+        ComplicationType.SMALL_IMAGE -> {
+            SmallImageComplicationData.Builder(
+                smallImage = SmallImage.Builder(
+                    image = createWithResource(this, drawable.a_logo_2_min),
+                    type = SmallImageType.ICON).build(),
+                contentDescription = ComplicationText.EMPTY)
+                .build()
+        }
+
         else -> {null}
     }
 }
 
-override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
-    Log.d(TAG, "onComplicationRequest() id: ${request.complicationInstanceId}")
+    override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
 
     return when (request.complicationType) {
 
-        ComplicationType.MONOCHROMATIC_IMAGE -> MonochromaticImageComplicationData.Builder(
-            monochromaticImage = MonochromaticImage.Builder(
-                createWithResource(this, drawable.a_logo_2_min)
-            )
-                .build(),
-            contentDescription = PlainComplicationText.Builder(text = "LOGO.").build()
-        )
-            .setTapAction(openScreen())
-            .build()
-
-
+        ComplicationType.MONOCHROMATIC_IMAGE -> {
+            MonochromaticImageComplicationData.Builder(
+                monochromaticImage = MonochromaticImage.Builder(createWithResource(this, drawable.a_logo_2_min)).build(),
+                contentDescription = PlainComplicationText.Builder(text = "amoledwatchfaces.com").build())
+                .setTapAction(openScreen())
+                .build()
+        }
         ComplicationType.SMALL_IMAGE -> SmallImageComplicationData.Builder(
             smallImage = SmallImage.Builder(
                 image = createWithResource(this, drawable.a_logo_2_min),
-                type = SmallImageType.ICON
-            ).build(),
-            contentDescription = PlainComplicationText.Builder(text = "LOGO.").build()
-        )
+                type = SmallImageType.ICON).build(),
+            contentDescription = PlainComplicationText.Builder(text = "amoledwatchfaces.com").build())
             .setTapAction(openScreen())
             .build()
 
@@ -117,14 +103,6 @@ override suspend fun onComplicationRequest(request: ComplicationRequest): Compli
         }
 
     }
-}
-
-override fun onComplicationDeactivated(complicationInstanceId: Int) {
-    Log.d(TAG, "onComplicationDeactivated(): $complicationInstanceId")
-}
-
-companion object {
-    private const val TAG = "CompDataSourceService"
 }
 }
 
