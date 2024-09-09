@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.weartools.weekdayutccomp
+package com.weartools.weekdayutccomp.receiver
 
 import android.app.PendingIntent
 import android.content.BroadcastReceiver

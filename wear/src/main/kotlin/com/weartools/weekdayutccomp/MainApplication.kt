@@ -5,7 +5,7 @@ import androidx.work.Configuration
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class MainApp : Application(), Configuration.Provider{
+class MainApplication : Application(), Configuration.Provider{
 
     override val workManagerConfiguration: Configuration
         get() = Configuration.Builder()

@@ -1,4 +1,4 @@
-package com.weartools.weekdayutccomp
+package com.weartools.weekdayutccomp.receiver
 
 import android.content.BroadcastReceiver
 import android.content.ComponentName

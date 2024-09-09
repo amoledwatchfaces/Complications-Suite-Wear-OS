@@ -35,8 +35,8 @@ import com.weartools.weekdayutccomp.R.drawable
 import com.weartools.weekdayutccomp.network.ApiService
 import com.weartools.weekdayutccomp.preferences.UserPreferences
 import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
-import com.weartools.weekdayutccomp.ComplicationTapBroadcastReceiver
-import com.weartools.weekdayutccomp.ComplicationToggleArgs
+import com.weartools.weekdayutccomp.receiver.ComplicationTapBroadcastReceiver
+import com.weartools.weekdayutccomp.receiver.ComplicationToggleArgs
 import com.weartools.weekdayutccomp.utils.isOnline
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first

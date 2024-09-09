@@ -26,8 +26,8 @@ import androidx.wear.watchface.complications.data.*
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
 import com.weartools.weekdayutccomp.R.drawable
-import com.weartools.weekdayutccomp.ComplicationTapBroadcastReceiver
-import com.weartools.weekdayutccomp.ComplicationToggleArgs
+import com.weartools.weekdayutccomp.receiver.ComplicationTapBroadcastReceiver
+import com.weartools.weekdayutccomp.receiver.ComplicationToggleArgs
 
 class PayComplicationService : SuspendingComplicationDataSourceService() {
 
