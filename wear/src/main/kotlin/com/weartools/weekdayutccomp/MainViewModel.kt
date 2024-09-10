@@ -31,6 +31,7 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.model.PlaceTypes
 import com.google.android.libraries.places.api.net.FetchPlaceRequest
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
+import com.weartools.weekdayutccomp.activity.handleIntentExtras
 import com.weartools.weekdayutccomp.complication.BarometerComplicationService
 import com.weartools.weekdayutccomp.complication.CustomTextComplicationService
 import com.weartools.weekdayutccomp.complication.DateComplicationService
@@ -46,6 +47,7 @@ import com.weartools.weekdayutccomp.complication.WorldClock1ComplicationService
 import com.weartools.weekdayutccomp.complication.WorldClock2ComplicationService
 import com.weartools.weekdayutccomp.enums.DateFormat
 import com.weartools.weekdayutccomp.enums.MoonIconType
+import com.weartools.weekdayutccomp.enums.Request
 import com.weartools.weekdayutccomp.preferences.UserPreferences
 import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
 import com.weartools.weekdayutccomp.utils.AddressProvider
@@ -68,6 +70,14 @@ class MainViewModel @Inject constructor(
     repository: UserPreferencesRepository,
     private val dataStore: DataStore<UserPreferences>
 ) : ViewModel() {
+
+    // MutableStateFlow to hold the Request state
+    private val _openRequestState = MutableStateFlow(Request.MAIN)
+    val openRequestState: StateFlow<Request> = _openRequestState
+
+    fun updateRequestState(intent: Intent) {
+        _openRequestState.value = handleIntentExtras(intent)
+    }
 
     private val loaderStateMutableStateFlow = MutableStateFlow(value = false)
     val loaderStateStateFlow: StateFlow<Boolean> = loaderStateMutableStateFlow.asStateFlow()
@@ -117,7 +127,7 @@ class MainViewModel @Inject constructor(
                     else {
                         viewModelScope.launch {
                             setLocation(it.latitude, it.longitude,context)
-                            setCoarsePermission(true)
+                            setCoarsePermission()
                             val addressName = addressProvider.getAddressFromLocation(it.latitude,it.longitude)
                             if (addressName != null){
                                 Log.i(ContentValues.TAG, "$addressName")
@@ -194,7 +204,7 @@ class MainViewModel @Inject constructor(
                             prefs.copy(locationName = prediction.getPrimaryText(StyleSpan(Typeface.BOLD)).toString())
                         }
                         setLocation(latLng.latitude,latLng.longitude,context)
-                        setCoarsePermission(true)
+                        setCoarsePermission()
                     }}
                 loaderStateMutableStateFlow.value = false
 
@@ -245,8 +255,8 @@ class MainViewModel @Inject constructor(
         dataStore.updateData { it.copy(notificationAsked = value) } }
     }
 
-    fun setCoarsePermission(value: Boolean) { viewModelScope.launch {
-        dataStore.updateData { it.copy(coarsePermission = value) } }
+    private fun setCoarsePermission() { viewModelScope.launch {
+        dataStore.updateData { it.copy(coarsePermission = true) } }
     }
     private fun setLocation(lat: Double, lon: Double, context: Context) { viewModelScope.launch {
         dataStore.updateData { it.copy(latitude = lat, longitude = lon) }

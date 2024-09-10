@@ -28,6 +28,7 @@ import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
 import com.weartools.weekdayutccomp.activity.MainActivity
 import com.weartools.weekdayutccomp.R
+import com.weartools.weekdayutccomp.enums.Request
 import com.weartools.weekdayutccomp.preferences.UserPreferences
 import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,9 +45,10 @@ class WorldClock1ComplicationService : SuspendingComplicationDataSourceService()
     private fun openScreen(): PendingIntent? {
 
         val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("$packageName.${Request.WORLD_CLOCK.name}", true)
 
         return PendingIntent.getActivity(
-            this, 0, intent,
+            this, 1000+ Request.WORLD_CLOCK.ordinal, intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
     }

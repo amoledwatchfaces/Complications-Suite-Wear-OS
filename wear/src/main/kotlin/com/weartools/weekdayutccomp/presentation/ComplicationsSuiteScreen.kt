@@ -151,6 +151,7 @@ fun ComplicationsSuiteScreen(
                 Request.SUNRISE_SUNSET, Request.MOON_PHASE -> { listState.animateScrollToItem(index = 7, 120) }
                 Request.SUNRISE_SUNSET_OPEN_LOCATION, Request.MOON_PHASE_OPEN_LOCATION -> { openLocationChoose = openLocationChoose.not() }
                 Request.CUSTOM_TEXT -> { listState.animateScrollToItem(index = 22,120) }
+                Request.WORLD_CLOCK -> { listState.animateScrollToItem(index = 1,120) }
                 else -> {}
             }
         }
