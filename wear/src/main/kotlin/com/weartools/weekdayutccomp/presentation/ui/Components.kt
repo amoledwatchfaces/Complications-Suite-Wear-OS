@@ -79,9 +79,8 @@ fun ListItemsWidget(
     callback: (Int) -> Unit
 ) {
     val state = remember { mutableStateOf(true) }
-    var position by remember {
-        mutableIntStateOf(0)
-    }
+    var position by remember { mutableIntStateOf(0) }
+
         val listState = rememberScalingLazyListState(initialCenterItemIndex = 0)
         val coroutineScope = rememberCoroutineScope()
 
@@ -136,8 +135,8 @@ fun ListItemsWidget(
             )
 
         }
-        position= items.indexOf(preValue)
-        if (position != 0)
+        position = items.indexOf(preValue)
+        if (position != 0 && position != -1)
             LaunchedEffect(position) {
                 coroutineScope.launch {
                     listState.scrollToItem(index = position,120)

@@ -94,6 +94,18 @@
     <string name="time_ampm_setting_off">12h</string>
 
     <!-- World Clock Complication Preferences -->
+    <string name="wc_name">World Clock</string>
+    <array name="wc_regions">
+        <item>Africa</item>
+        <item>Asia</item>
+        <item>Atlantic</item>
+        <item>Australia</item>
+        <item>Europe</item>
+        <item>North America</item>
+        <item>Pacific</item>
+        <item>South America</item>
+        <item>Universal</item>
+    </array>
     <string name="wc_comp_name_1">World Clock 1</string>
     <string name="wc_comp_name_2">World Clock 2</string>
     <string name="wc_setting_preference_category_title">World Clock Complication</string>

@@ -78,6 +78,7 @@ import com.weartools.weekdayutccomp.presentation.ui.PermissionAskDialog
 import com.weartools.weekdayutccomp.presentation.ui.PreferenceCategory
 import com.weartools.weekdayutccomp.presentation.ui.SectionText
 import com.weartools.weekdayutccomp.presentation.ui.ToggleChip
+import com.weartools.weekdayutccomp.presentation.ui.WorldClockWidget
 import com.weartools.weekdayutccomp.theme.wearColorPalette
 import com.weartools.weekdayutccomp.utils.openPlayStore
 import kotlinx.coroutines.launch
@@ -102,6 +103,7 @@ fun ComplicationsSuiteScreen(
     /** LISTS **/
     val listcity = stringArrayResource(id = R.array.cities_zone).toList()
     val listcityID = stringArrayResource(id = R.array.cities).toList()
+
     val listLongFormat = stringArrayResource(id = R.array.longformats).toList()
     val listShortFormat = stringArrayResource(id = R.array.shortformats).toList()
     val listTimeDiffStyles = stringArrayResource(id = R.array.timediffstyle).toList()
@@ -485,25 +487,19 @@ fun ComplicationsSuiteScreen(
 
 
     if (isTImeZOnClick || isTImeZOnClick2) {
-        val title = if (isTImeZOnClick) stringResource(id = R.string.wc_setting_title) else stringResource(id = R.string.wc2_setting_title)
-        val prValue = if (isTImeZOnClick) listcity[listcityID.indexOf(preferences.value.city1)]
-        else listcity[listcityID.indexOf(preferences.value.city2)]
-        ListItemsWidget(focusRequester = focusRequester, titles = title, preValue = prValue, items = listcity, callback = {
-            if (it == -1) {
+
+        WorldClockWidget(
+            viewModel = viewModel,
+            preferences = preferences,
+            worldClock1 = isTImeZOnClick,
+            focusRequester = focusRequester,
+            context = context,
+            callback = {
                 isTImeZOnClick = false
                 isTImeZOnClick2 = false
-                return@ListItemsWidget
+                return@WorldClockWidget
             }
-            if (isTImeZOnClick) {
-                viewModel.setWorldClock1(listcityID[it], context)
-                isTImeZOnClick = isTImeZOnClick.not()
-            } else {
-                viewModel.setWorldClock2(listcityID[it], context)
-                isTImeZOnClick2 = isTImeZOnClick2.not()
-            }
-
-
-        })
+        )
     }
 
     if (longTextFormat || longTitleFormat|| shortTextFormat || shortTitleFormat) {

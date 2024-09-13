@@ -88,6 +88,18 @@
     <string name="time_ampm_setting_off">12h</string>
 
     <!-- World Clock Complication Preferences -->
+    <string name="wc_name">Svetový čas</string>
+    <array name="wc_regions">
+        <item>Afrika</item>
+        <item>Ázia</item>
+        <item>Atlantik</item>
+        <item>Austrália</item>
+        <item>Európa</item>
+        <item>Severná Amerika</item>
+        <item>Tichomorie</item>
+        <item>Južná Amerika</item>
+        <item>Univerzálne</item>
+    </array>
     <string name="wc_comp_name_1">Svetový čas 1</string>
     <string name="wc_comp_name_2">Svetový čas 2</string>
     <string name="wc_setting_preference_category_title">Svetový čas - Komplikácia</string>

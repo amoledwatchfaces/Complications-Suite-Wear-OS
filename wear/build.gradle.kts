@@ -20,8 +20,8 @@ android {
         applicationId = "com.weartools.weekdayutccomp"
         minSdk = 27
         targetSdk = 34
-        versionCode = 10000351
-        versionName = "3.5.1"
+        versionCode = 10000352
+        versionName = "3.5.2"
         resourceConfigurations += listOf("en", "cs", "de", "el", "es", "it", "pt","pl", "ro", "sk", "zh", "ru")
     }
     bundle {
@@ -68,7 +68,7 @@ android {
 }
 
 dependencies {
-    val composeMaterial = "1.7.0"
+    val composeMaterial = "1.7.1"
     //val wearCompose = "1.3.1"
     val wearComposeBeta = "1.4.0"
 
