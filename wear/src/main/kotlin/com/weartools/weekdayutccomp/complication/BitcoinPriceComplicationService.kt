@@ -32,12 +32,11 @@ import androidx.wear.watchface.complications.data.ShortTextComplicationData
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
 import com.weartools.weekdayutccomp.R.drawable
-import com.weartools.weekdayutccomp.network.ApiService
 import com.weartools.weekdayutccomp.preferences.UserPreferences
 import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
 import com.weartools.weekdayutccomp.receiver.ComplicationTapBroadcastReceiver
 import com.weartools.weekdayutccomp.receiver.ComplicationToggleArgs
-import com.weartools.weekdayutccomp.utils.isOnline
+import com.weartools.weekdayutccomp.utils.CryptoHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import java.math.RoundingMode
@@ -50,9 +49,6 @@ class BitcoinPriceComplicationService : SuspendingComplicationDataSourceService(
     @Inject
     lateinit var dataStore: DataStore<UserPreferences>
     private val preferences by lazy { UserPreferencesRepository(dataStore).getPreferences() }
-
-    @Inject
-    lateinit var apiService: ApiService
 
     private var price = 0f
     private var highPrice = 0f
@@ -96,12 +92,12 @@ class BitcoinPriceComplicationService : SuspendingComplicationDataSourceService(
     val complicationPendingIntent = ComplicationTapBroadcastReceiver.getToggleIntent(context = this, args = args)
 
     //GET CURRENT PRICE
-    val currentPriceObject = if (this.isOnline())  apiService.requestBitcoinPrices() else null
-    if (currentPriceObject != null){
-        price = currentPriceObject.lastPrice
-        highPrice = currentPriceObject.highPrice
-        lowPrice = currentPriceObject.lowPrice
-        dataStore.updateData { it.copy(priceBTC = price) }
+    val bitcoinPrice = CryptoHelper.fetchBitcoinPrice()
+    if (bitcoinPrice != null){
+        price = bitcoinPrice.last
+        highPrice = bitcoinPrice.high
+        lowPrice = bitcoinPrice.low
+        dataStore.updateData { it.copy(priceBTC = bitcoinPrice.last) }
         shortPattern = "#.#K"
         longPattern = "$#,###"
     }
@@ -135,7 +131,7 @@ class BitcoinPriceComplicationService : SuspendingComplicationDataSourceService(
         }
         ComplicationType.RANGED_VALUE -> {
             RangedValueComplicationData.Builder(
-                value = if (currentPriceObject == null) lowPrice else price,
+                value = if (bitcoinPrice == null) lowPrice else price,
                 min = lowPrice,
                 max =  highPrice,
                 contentDescription = PlainComplicationText.Builder(text = "BTC").build())

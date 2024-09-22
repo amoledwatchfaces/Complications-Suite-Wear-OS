@@ -20,8 +20,8 @@ android {
         applicationId = "com.weartools.weekdayutccomp"
         minSdk = 27
         targetSdk = 34
-        versionCode = 10000352
-        versionName = "3.5.2"
+        versionCode = 10000353
+        versionName = "3.5.3"
         resourceConfigurations += listOf("en", "cs", "de", "el", "es", "it", "pt","pl", "ro", "sk", "zh", "ru")
     }
     bundle {
@@ -118,7 +118,7 @@ dependencies {
     implementation ("com.google.android.horologist:horologist-composables:0.2.8")
     implementation ("com.google.android.horologist:horologist-audio-ui:0.2.8")
 
-    implementation ("com.google.code.gson:gson:2.10.1")
+    // Serialization
     implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
 
     // PERSIAN DATE
@@ -134,13 +134,6 @@ dependencies {
 
     // INPUT
     implementation("androidx.compose.material3:material3:1.3.0")
-
-    // Ktor + OkHttp + Kotlinx.Serialization
-    val ktorVersion = "2.3.11"
-    implementation ("io.ktor:ktor-client-logging:$ktorVersion")
-    implementation ("io.ktor:ktor-client-okhttp:$ktorVersion")
-    implementation ("io.ktor:ktor-client-content-negotiation:$ktorVersion")
-    implementation ("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
 }
 
 
