@@ -19,3 +19,4 @@ local.properties
 /wear/release/
 /wear/build/
 /mobile
+/wear/google-services.json
