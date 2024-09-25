@@ -11,6 +11,8 @@ plugins {
     id ("com.google.devtools.ksp")
     id ("com.google.dagger.hilt.android")
     id ("org.jetbrains.kotlin.plugin.compose")
+    id ("com.google.gms.google-services")
+    id ("com.google.firebase.crashlytics")
 }
 
 android {
@@ -20,9 +22,13 @@ android {
         applicationId = "com.weartools.weekdayutccomp"
         minSdk = 27
         targetSdk = 34
-        versionCode = 10000353
-        versionName = "3.5.3"
+        versionCode = rootProject.extra["versionCode"] as Int
+        versionName = rootProject.extra["versionName"] as String
+
         resourceConfigurations += listOf("en", "cs", "de", "el", "es", "it", "pt","pl", "ro", "sk", "zh", "ru")
+
+        versionNameSuffix = "-wear"
+        versionCode = 20000 + (versionCode ?: 0)
     }
     bundle {
         language {
@@ -68,9 +74,8 @@ android {
 }
 
 dependencies {
-    val composeMaterial = "1.7.1"
-    //val wearCompose = "1.3.1"
-    val wearComposeBeta = "1.4.0"
+    val composeUiVersion = "1.7.2"
+    val composeWearVersion = "1.4.0"
 
     // NEW MOON / SUNRISE / SUNSET COMP
     //request permission
@@ -91,16 +96,16 @@ dependencies {
 
     //COMPOSE
     implementation ("androidx.core:core-ktx:1.13.1")
-    implementation ("androidx.compose.ui:ui:$composeMaterial")
-    implementation ("androidx.wear.compose:compose-material:$wearComposeBeta")
-    implementation ("androidx.wear.compose:compose-foundation:$wearComposeBeta")
-    implementation ("androidx.compose.ui:ui-tooling-preview:$composeMaterial")
+    implementation ("androidx.compose.ui:ui:$composeUiVersion")
+    implementation ("androidx.wear.compose:compose-material:$composeWearVersion")
+    implementation ("androidx.wear.compose:compose-foundation:$composeWearVersion")
+    implementation ("androidx.compose.ui:ui-tooling-preview:$composeUiVersion")
     implementation ("androidx.activity:activity-compose:1.9.2")
-    implementation ("androidx.compose.material:material-icons-extended:$composeMaterial")
+    implementation ("androidx.compose.material:material-icons-extended:$composeUiVersion")
 
-    androidTestImplementation ("androidx.compose.ui:ui-test-junit4:$composeMaterial")
-    debugImplementation ("androidx.compose.ui:ui-tooling:$composeMaterial")
-    debugImplementation ("androidx.compose.ui:ui-test-manifest:$composeMaterial")
+    androidTestImplementation ("androidx.compose.ui:ui-test-junit4:$composeUiVersion")
+    debugImplementation ("androidx.compose.ui:ui-tooling:$composeUiVersion")
+    debugImplementation ("androidx.compose.ui:ui-test-manifest:$composeUiVersion")
 
     //DataStore
     implementation ("androidx.datastore:datastore-preferences:1.1.1")
@@ -121,19 +126,23 @@ dependencies {
     // Serialization
     implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
 
-    // PERSIAN DATE
+    // Persian Date
     implementation("com.github.samanzamani:persiandate:1.7.1")
 
-    // HILT
+    // Hilt
     implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
     implementation ("com.google.dagger:hilt-android:2.51")
     ksp ("com.google.dagger:hilt-compiler:2.51")
 
     // Google Places
-    implementation ("com.google.android.libraries.places:places:3.5.0")
+    implementation ("com.google.android.libraries.places:places:4.0.0")
 
     // INPUT
     implementation("androidx.compose.material3:material3:1.3.0")
+
+    // Firebase
+    implementation (platform("com.google.firebase:firebase-bom:33.3.0"))
+    implementation ("com.google.firebase:firebase-crashlytics")
 }
 
 

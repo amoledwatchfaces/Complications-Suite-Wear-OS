@@ -28,7 +28,6 @@ import androidx.wear.compose.foundation.rotary.rotaryScrollable
 import androidx.wear.compose.material.Chip
 import androidx.wear.compose.material.ChipDefaults
 import androidx.wear.compose.material.Icon
-import androidx.wear.compose.material.ListHeader
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.ToggleChip
@@ -178,16 +177,6 @@ fun ToggleChip(
             )
         }
     )
-}
-
-@Composable
-fun Header() {
-    ListHeader { Text(
-        textAlign = TextAlign.Center,
-        color = MaterialTheme.colors.primary,
-        text = stringResource(id = R.string.settings),
-        style = MaterialTheme.typography.title3
-    )}
 }
 
 @Composable

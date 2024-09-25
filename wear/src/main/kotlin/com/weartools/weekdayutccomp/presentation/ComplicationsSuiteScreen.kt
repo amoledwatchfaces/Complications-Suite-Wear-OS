@@ -47,6 +47,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.wear.compose.foundation.lazy.AutoCenteringParams
@@ -58,6 +59,8 @@ import androidx.wear.compose.foundation.rotary.rotaryScrollable
 import androidx.wear.compose.material.AppCard
 import androidx.wear.compose.material.Card
 import androidx.wear.compose.material.Icon
+import androidx.wear.compose.material.ListHeader
+import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberPermissionState
@@ -70,7 +73,6 @@ import com.weartools.weekdayutccomp.enums.Request
 import com.weartools.weekdayutccomp.presentation.ui.ChipWithEditText
 import com.weartools.weekdayutccomp.presentation.ui.DateFormatListPicker
 import com.weartools.weekdayutccomp.presentation.ui.DialogChip
-import com.weartools.weekdayutccomp.presentation.ui.Header
 import com.weartools.weekdayutccomp.presentation.ui.ListItemsWidget
 import com.weartools.weekdayutccomp.presentation.ui.LoaderBox
 import com.weartools.weekdayutccomp.presentation.ui.LocationChooseDialog
@@ -170,8 +172,15 @@ fun ComplicationsSuiteScreen(
         state = listState,
     ) {
 
-        //SETTINGS TEST
-        item { Header() }
+        //SETTINGS
+        item { ListHeader {
+            Text(
+                textAlign = TextAlign.Center,
+                color = MaterialTheme.colors.primary,
+                text = stringResource(id = R.string.settings),
+                style = MaterialTheme.typography.title3
+            )
+        } }
 
         // WORLD CLOCK COMPLICATION PREFERENCE CATEGORY
         item { PreferenceCategory(title = stringResource(id = R.string.wc_setting_preference_category_title)) }
