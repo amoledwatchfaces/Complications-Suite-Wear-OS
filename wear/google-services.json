@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "928537825190",
+    "project_id": "weartools-fa8c6",
+    "storage_bucket": "weartools-fa8c6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:928537825190:android:b64744d9657986b9448967",
+        "android_client_info": {
+          "package_name": "com.weartools.phonebattcomp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAy92SjOvl7CW8NQKnMN5dmlrKDjsJi6_8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:928537825190:android:869535ff575046c7448967",
+        "android_client_info": {
+          "package_name": "com.weartools.weekdayutccomp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAy92SjOvl7CW8NQKnMN5dmlrKDjsJi6_8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
