@@ -42,10 +42,14 @@ class AssistComplicationService : SuspendingComplicationDataSourceService() {
 
     private fun openScreen(): PendingIntent? {
         val intent = packageManager.getLaunchIntentForPackage("com.google.android.wearable.assistant")
-        return PendingIntent.getActivity(
+        return if (intent != null) {
+            PendingIntent.getActivity(
                 this, 0, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
+        } else {
+            null
+        }
     }
 
     override fun getPreviewData(type: ComplicationType): ComplicationData? {
@@ -75,9 +79,8 @@ class AssistComplicationService : SuspendingComplicationDataSourceService() {
         val complicationPendingIntent = ComplicationTapBroadcastReceiver.getToggleIntent(context = this, args = args)
 
         var tapAction = openScreen()
-        val intent = packageManager.getLaunchIntentForPackage("com.google.android.wearable.assistant")
 
-        if (intent==null) {
+        if (tapAction == null) {
             Toast.makeText(applicationContext, getString(R.string.assist_missing), Toast.LENGTH_LONG).show()
             tapAction = complicationPendingIntent
         }
