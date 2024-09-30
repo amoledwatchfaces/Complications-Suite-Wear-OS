@@ -42,14 +42,6 @@ Download the package (.apk) to side-load from <a href="https://github.com/amoled
 * Week of Year
 * World Clock (2x)
 
-## Help us with translations:
-
-<a href="https://github.com/amoledwatchfaces/Complications-Suite-Wear-OS/tree/master/Store-listings">STORE LISTINGS</a>
-
-<a href="https://github.com/amoledwatchfaces/Complications-Suite-Wear-OS/tree/master/mobile/src/main/res">MOBILE APP</a>
-
-<a href="https://github.com/amoledwatchfaces/Complications-Suite-Wear-OS/tree/master/wear/src/main/res">WEAR APP</a>
-
 ## License
 
     Complications Suite - Wear OS
