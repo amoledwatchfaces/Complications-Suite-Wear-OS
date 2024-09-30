@@ -88,6 +88,7 @@ data class UserPreferences(
     // TIMER / TIME PICKER
     val startTime: Long = System.currentTimeMillis(),
     val timePicker: String = LocalDate.now().toString(),
+    val timePicked: Long = System.currentTimeMillis(),
 )
 
 

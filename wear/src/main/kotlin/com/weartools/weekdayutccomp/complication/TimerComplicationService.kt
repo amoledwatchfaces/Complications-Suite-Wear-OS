@@ -44,8 +44,7 @@ import com.weartools.weekdayutccomp.utils.TimerWorker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import java.time.Duration
-import java.time.LocalDateTime
-import java.time.ZoneId
+import java.time.Instant
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -86,28 +85,29 @@ class TimerComplicationService : SuspendingComplicationDataSourceService() {
     override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
 
     val startMillis = preferences.first().startTime
-    val timePicked = preferences.first().timePicker
-    val timeInstance = LocalDateTime.parse(timePicked).atZone(ZoneId.systemDefault()).toInstant()
+    val targetMillis = preferences.first().timePicked
 
     val currentMillis = System.currentTimeMillis()
-    val targetMillis = timeInstance.toEpochMilli()
 
-    val timeRange = (targetMillis-startMillis)/1000
-    val currentValue = (timeRange-((currentMillis-startMillis)/1000)).coerceIn(0,targetMillis)
+    val timeRange = (targetMillis - startMillis) / 1000
+    val timePassed = (currentMillis - startMillis) / 1000
+    val currentValue = (timeRange - timePassed)
 
-    if (currentMillis < targetMillis){
+    if (currentMillis < targetMillis) {
         /** Use WorkManager to update Complication each every 5 seconds **/
         val oneTimeWorkRequest = OneTimeWorkRequestBuilder<TimerWorker>()
-            .setInitialDelay(Duration.ofSeconds(
-                when (timeRange){
-                    in 0..59 -> 5
-                    in 60..299 -> 10
-                    in 300..599 -> 30
-                    in 600..1799 -> 60
-                    in 1800..3599 -> 300
-                    else -> 600
-                }
-            ))
+            .setInitialDelay(
+                Duration.ofSeconds(
+                    when (timeRange) {
+                        in 0..59 -> 5
+                        in 60..299 -> 10
+                        in 300..599 -> 30
+                        in 600..1799 -> 60
+                        in 1800..3599 -> 300
+                        else -> 600
+                    }
+                )
+            )
             .build()
         WorkManager.getInstance(this).enqueueUniqueWork(
             "timer_update_work",
@@ -118,13 +118,13 @@ class TimerComplicationService : SuspendingComplicationDataSourceService() {
     else {
         /** Cancel WorkManager Work and return NoDataComplication **/
         WorkManager.getInstance(this).cancelUniqueWork("timer_update_work")
-        return NoDataComplication.getPlaceholder(
-            context = this,
-            request = request,
-            placeHolderText = "- -",
-            placeHolderIcon = createWithResource(this, drawable.ic_timer_3),
-            tapAction = openScreen()
-        )
+            return NoDataComplication.getPlaceholder(
+                context = this,
+                request = request,
+                placeHolderText = "- -",
+                placeHolderIcon = createWithResource(this, drawable.ic_timer_3),
+                tapAction = openScreen()
+            )
     }
 
     when (request.complicationType) {
@@ -132,10 +132,10 @@ class TimerComplicationService : SuspendingComplicationDataSourceService() {
         ComplicationType.RANGED_VALUE -> {
             return RangedValueComplicationData.Builder(
                 min = 0f,
-                value = currentValue.toFloat(),
+                value = currentValue.coerceIn(0, timeRange).toFloat(),
                 max =  timeRange.toFloat(),
                 contentDescription = ComplicationText.EMPTY)
-                .setText(TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.STOPWATCH, CountDownTimeReference(timeInstance)).build())
+                .setText(TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.STOPWATCH, CountDownTimeReference(Instant.ofEpochMilli(targetMillis))).build())
                 .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_timer_4)).build())
                 .setTapAction(openScreen())
                 .build()

@@ -11,8 +11,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.horologist.composables.TimePicker
 import com.weartools.weekdayutccomp.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.time.LocalDateTime
 import java.time.LocalTime
+import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
 class PickTimeActivity : ComponentActivity(){
@@ -28,9 +28,15 @@ class PickTimeActivity : ComponentActivity(){
                 modifier = Modifier.background(color = Color.Black),
                 showSeconds = true,
                 onTimeConfirm = {
-                    val localDatePlusTime = LocalDateTime.now().plusHours(it.hour.toLong()).plusMinutes(it.minute.toLong()).plusSeconds(it.second.toLong())
-
-                    viewModel.setTimePicked(localDatePlusTime.toString(),context)
+                    val currentTime = System.currentTimeMillis()
+                    viewModel.setTimePicked(
+                        currentTime = currentTime,
+                        targetTime = currentTime
+                            .plus(TimeUnit.HOURS.toMillis(it.hour.toLong()))
+                            .plus(TimeUnit.MINUTES.toMillis(it.minute.toLong()))
+                            .plus(TimeUnit.SECONDS.toMillis(it.second.toLong()))
+                        ,context
+                    )
                     setResult(RESULT_OK) // OK! (use whatever code you want)
                     finish()
                 }

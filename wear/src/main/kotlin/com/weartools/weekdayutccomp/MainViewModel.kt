@@ -188,14 +188,14 @@ class MainViewModel @Inject constructor(
         val placesClient = Places.createClient(context)
 
         val placeId = prediction.placeId
-        val placeFields = listOf(Place.Field.LAT_LNG)
+        val placeFields = listOf(Place.Field.LOCATION)
 
         val request = FetchPlaceRequest.builder(placeId, placeFields)
             .build()
 
         placesClient.fetchPlace(request)
             .addOnSuccessListener { response ->
-                val latLng = response.place.latLng
+                val latLng = response.place.location
                 Log.i(ContentValues.TAG, "LAT: ${latLng?.latitude} LON: ${latLng?.longitude}")
 
                 if (latLng != null){
@@ -234,11 +234,11 @@ class MainViewModel @Inject constructor(
         context.updateComplication(DateCountdownComplicationService::class.java)
     }}
 
-    fun setTimePicked(value: String, context: Context) { viewModelScope.launch {
+    fun setTimePicked(currentTime: Long, targetTime: Long, context: Context) { viewModelScope.launch {
         dataStore.updateData { it.copy(
-            startTime = System.currentTimeMillis(),
-            timePicker = value)
-        }
+            startTime = currentTime,
+            timePicked = targetTime
+        ) }
         context.updateComplication(TimerComplicationService::class.java)
     }}
 
