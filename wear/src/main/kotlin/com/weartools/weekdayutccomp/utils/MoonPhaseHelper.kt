@@ -49,7 +49,7 @@ class MoonPhaseHelper{
   companion object {
 
     private fun scheduleSunriseSunsetWorker(context: Context, delay: Long) {
-      Log.i(TAG, "Complication will update in $delay MILLISECONDS")
+      //Log.i(TAG, "Complication will update in ${delay/1000/60} minutes")
 
       val sunriseSunsetWorkRequest = OneTimeWorkRequestBuilder<SunriseSunsetWorker>()
         .setInitialDelay(delay, TimeUnit.MILLISECONDS)
