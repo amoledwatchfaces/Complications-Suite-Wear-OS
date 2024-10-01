@@ -144,18 +144,12 @@ class TimerComplicationService : SuspendingComplicationDataSourceService() {
 }
 
     override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
-        //Log.i("TimerComplicationService", "onComplicationRequest id: ${request.complicationInstanceId}")
 
         val startMillis = preferences.first().startTime
         val targetMillis = preferences.first().timePicked
-
-        val currentTime = System.currentTimeMillis()
         val timeRange = (targetMillis - startMillis) / 1000
-        val timePassed = (currentTime - startMillis) / 1000
-        val timeLeft = (timeRange - timePassed)
 
         /** Use DynamicValue in API 33+ **/
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
             /*
             if (currentTime < targetMillis) {
@@ -202,6 +196,10 @@ class TimerComplicationService : SuspendingComplicationDataSourceService() {
         }
         /** Use WorkManger in API 27+ **/
         else {
+            val currentTime = System.currentTimeMillis()
+            val timePassed = (currentTime - startMillis) / 1000
+            val timeLeft = (timeRange - timePassed)
+
             /*
             Log.i("TimerComplicationService", "Time Range: $timeRange")
             Log.i("TimerComplicationService", "Time Passed: $timePassed")
@@ -260,6 +258,6 @@ class TimerComplicationService : SuspendingComplicationDataSourceService() {
                 }
             }
         }
-}
+    }
 }
 
