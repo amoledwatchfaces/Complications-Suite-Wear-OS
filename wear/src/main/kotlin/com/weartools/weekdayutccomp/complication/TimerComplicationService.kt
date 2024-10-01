@@ -31,12 +31,19 @@ import android.app.PendingIntent
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.drawable.Icon.createWithResource
+import android.os.Build
 import android.util.Log
 import androidx.datastore.core.DataStore
+import androidx.wear.protolayout.expression.DynamicBuilders
+import androidx.wear.protolayout.expression.DynamicBuilders.DynamicDuration
+import androidx.wear.protolayout.expression.DynamicBuilders.DynamicFloat
+import androidx.wear.protolayout.expression.DynamicBuilders.DynamicInstant
+import androidx.wear.protolayout.expression.DynamicBuilders.DynamicString
 import androidx.wear.watchface.complications.data.ComplicationData
 import androidx.wear.watchface.complications.data.ComplicationText
 import androidx.wear.watchface.complications.data.ComplicationType
 import androidx.wear.watchface.complications.data.CountDownTimeReference
+import androidx.wear.watchface.complications.data.DynamicComplicationText
 import androidx.wear.watchface.complications.data.MonochromaticImage
 import androidx.wear.watchface.complications.data.PlainComplicationText
 import androidx.wear.watchface.complications.data.RangedValueComplicationData
@@ -46,7 +53,6 @@ import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkManager
 import com.weartools.weekdayutccomp.R.drawable
 import com.weartools.weekdayutccomp.activity.PickTimeActivity
@@ -65,6 +71,49 @@ class TimerComplicationService : SuspendingComplicationDataSourceService() {
     @Inject
     lateinit var dataStore: DataStore<UserPreferences>
     private val preferences by lazy { UserPreferencesRepository(dataStore).getPreferences() }
+
+    private fun getDynamicDuration(targetTime: Long): DynamicDuration{
+
+        val currentTime = DynamicInstant.platformTimeWithSecondsPrecision()
+        val endTime = DynamicInstant.withSecondsPrecision(Instant.ofEpochMilli(targetTime))
+        val duration = currentTime.durationUntil(endTime)
+
+        val outputDuration = DynamicDuration.onCondition(duration.toIntSeconds().gt(0))
+            .use(duration)
+            .elseUse(Duration.ZERO)
+
+        return outputDuration
+    }
+    private fun getDynamicValue(dynamicDuration: DynamicDuration):  DynamicFloat{
+        val durationInSeconds = dynamicDuration.toIntSeconds()
+        val dynamicValueFloat = DynamicFloat.onCondition(durationInSeconds.gt(60))
+            .use(durationInSeconds.div(10).times(10).asFloat())
+            .elseUse(
+                DynamicFloat.onCondition(durationInSeconds.gt(30))
+                    .use(durationInSeconds.div(5).times(5).asFloat())
+                    .elseUse(durationInSeconds.asFloat()))
+
+        return dynamicValueFloat
+    }
+    private fun getDynamicStringFromDynamicDuration(dynamicDuration: DynamicDuration): DynamicString {
+
+        val durationInSeconds = dynamicDuration.toIntSeconds()
+
+        val hours = dynamicDuration.hoursPart
+        val minutes = dynamicDuration.minutesPart
+        val seconds = dynamicDuration.secondsPart
+
+        val intFormatter = DynamicBuilders.DynamicInt32.IntFormatter.Builder()
+            .setMinIntegerDigits(2)
+            .build()
+
+        return DynamicString.onCondition(durationInSeconds.gte(3600))
+            .use(hours.format().concat(DynamicString.constant(":")).concat(minutes.format(intFormatter)))
+            .elseUse(DynamicString.onCondition(durationInSeconds.gt(0))
+                .use(minutes.format(intFormatter).concat(DynamicString.constant(":")).concat(seconds.format(intFormatter)))
+                .elseUse(DynamicString.constant("--"))
+            )
+    }
 
     private fun openScreen(): PendingIntent? {
 
@@ -105,33 +154,80 @@ class TimerComplicationService : SuspendingComplicationDataSourceService() {
         val timePassed = (currentTime - startMillis) / 1000
         val timeLeft = (timeRange - timePassed)
 
-        /*
-        Log.i("TimerComplicationService", "Time Range: $timeRange")
-        Log.i("TimerComplicationService", "Time Passed: $timePassed")
-        Log.i("TimerComplicationService", "Time Left: $timeLeft")
-        */
+        /** Use DynamicValue in API 33+ **/
 
-        if (currentTime < targetMillis) {
-            /** Use WorkManager to update Complication each every 5 seconds **/
-            WorkManager.getInstance(applicationContext).enqueueUniqueWork(
-                "timer_update_work",
-                ExistingWorkPolicy.REPLACE,
-                OneTimeWorkRequestBuilder<TimerWorker>()
-                    .setInitialDelay(Duration.ofSeconds(when (timeLeft) {
-                        in 0..29 -> 5L
-                        in 30..59 -> 10L
-                        in 60..299 -> 15L
-                        in 300..599 -> 30L
-                        in 600..1799 -> 60L
-                        in 1800..3599 -> 300L
-                        else -> 600L
-                    }))
-                    .build()
-            )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+            /*
+            if (currentTime < targetMillis) {
+                /** Use WorkManager to vibrate watch when timer completes **/
+                WorkManager.getInstance(this).enqueueUniqueWork(
+                    "timer_vibrate_work",
+                    ExistingWorkPolicy.REPLACE,
+                    OneTimeWorkRequestBuilder<TimerVibrationWorker>()
+                        .setInitialDelay(Duration.ofSeconds(timeLeft))
+                        .build()
+                )
+            }
+            else {
+                /** Vibrate watch when timer completes **/
+                val vibratorManager = this.getSystemService(VIBRATOR_MANAGER_SERVICE) as VibratorManager
+                val vibrator = vibratorManager.defaultVibrator
+                val vibrationEffect = VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE)
+                vibrator.vibrate(vibrationEffect)
+            }
+
+             */
+            when (request.complicationType) {
+                ComplicationType.RANGED_VALUE -> {
+                    val dynamicDuration = getDynamicDuration(targetMillis)
+                    return RangedValueComplicationData.Builder(
+                        min = 0f,
+                        max =  timeRange.toFloat(),
+                        dynamicValue = getDynamicValue(dynamicDuration),
+                        fallbackValue = 0f,
+                        contentDescription = ComplicationText.EMPTY)
+                        .setText(DynamicComplicationText(getDynamicStringFromDynamicDuration(dynamicDuration),"- -"))
+                        .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_timer_4)).build())
+                        .setTapAction(openScreen())
+                        .build()
+                }
+
+                else -> {
+                    if (Log.isLoggable(TAG, Log.WARN)) {
+                        Log.w(TAG, "Unexpected complication type ${request.complicationType}")
+                    }
+                    return null
+                }
+            }
         }
+        /** Use WorkManger in API 27+ **/
         else {
-            /** Cancel WorkManager Work and return NoDataComplication **/
-            WorkManager.getInstance(applicationContext).cancelUniqueWork("timer_update_work")
+            /*
+            Log.i("TimerComplicationService", "Time Range: $timeRange")
+            Log.i("TimerComplicationService", "Time Passed: $timePassed")
+            Log.i("TimerComplicationService", "Time Left: $timeLeft")
+            */
+            if (currentTime < targetMillis) {
+                /** Use WorkManager to update Complication each every 5 seconds **/
+                WorkManager.getInstance(this).enqueueUniqueWork(
+                    "timer_update_work",
+                    ExistingWorkPolicy.REPLACE,
+                    OneTimeWorkRequestBuilder<TimerWorker>()
+                        .setInitialDelay(Duration.ofSeconds(when (timeLeft) {
+                            in 0..29 -> 5L
+                            in 30..59 -> 10L
+                            in 60..299 -> 15L
+                            in 300..599 -> 30L
+                            in 600..1799 -> 60L
+                            in 1800..3599 -> 300L
+                            else -> 600L
+                        }))
+                        .build()
+                )
+            }
+            else {
+                /** Cancel WorkManager Work and return NoDataComplication **/
+                WorkManager.getInstance(this).cancelUniqueWork("timer_update_work")
                 return NoDataComplication.getPlaceholder(
                     context = this,
                     request = request,
@@ -139,27 +235,29 @@ class TimerComplicationService : SuspendingComplicationDataSourceService() {
                     placeHolderIcon = createWithResource(this, drawable.ic_timer_3),
                     tapAction = openScreen()
                 )
-        }
-
-        when (request.complicationType) {
-
-            ComplicationType.RANGED_VALUE -> {
-                return RangedValueComplicationData.Builder(
-                    min = 0f,
-                    value = timeLeft.coerceIn(0, timeRange).toFloat(),
-                    max =  timeRange.toFloat(),
-                    contentDescription = ComplicationText.EMPTY)
-                    .setText(TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.STOPWATCH, CountDownTimeReference(Instant.ofEpochMilli(targetMillis))).build())
-                    .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_timer_4)).build())
-                    .setTapAction(openScreen())
-                    .build()
             }
 
-            else -> {
-                if (Log.isLoggable(TAG, Log.WARN)) {
-                    Log.w(TAG, "Unexpected complication type ${request.complicationType}")
+            when (request.complicationType) {
+
+                ComplicationType.RANGED_VALUE -> {
+
+                    return RangedValueComplicationData.Builder(
+                        min = 0f,
+                        value = timeLeft.coerceIn(0, timeRange).toFloat(),
+                        max =  timeRange.toFloat(),
+                        contentDescription = ComplicationText.EMPTY)
+                        .setText(TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.STOPWATCH, CountDownTimeReference(Instant.ofEpochMilli(targetMillis))).build())
+                        .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_timer_4)).build())
+                        .setTapAction(openScreen())
+                        .build()
                 }
-                return null
+
+                else -> {
+                    if (Log.isLoggable(TAG, Log.WARN)) {
+                        Log.w(TAG, "Unexpected complication type ${request.complicationType}")
+                    }
+                    return null
+                }
             }
         }
 }
