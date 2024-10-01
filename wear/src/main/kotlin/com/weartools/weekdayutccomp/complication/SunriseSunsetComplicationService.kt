@@ -52,7 +52,8 @@ import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
 import com.weartools.weekdayutccomp.utils.MoonPhaseHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
-import java.time.ZonedDateTime
+import java.time.Instant
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
@@ -110,7 +111,7 @@ class SunriseSunsetComplicationService : SuspendingComplicationDataSourceService
         val ismilitary = prefs.isMilitaryTime
         val leadingzero = prefs.isLeadingZeroTime
 
-        val mph = MoonPhaseHelper.updateSun(context = this, prefs, dataStore)
+        val mph = MoonPhaseHelper.updateSun(context = this, prefs)
         val icon = if (mph.isSunrise) drawable.ic_sunrise_3 else drawable.ic_sunset_3
         val text = if (mph.isSunrise) getString(R.string.sunrise) else getString(R.string.sunset)
 
@@ -120,7 +121,7 @@ class SunriseSunsetComplicationService : SuspendingComplicationDataSourceService
         else "hh:mm"
         val dateTimeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern(fmt)
 
-        val time = ZonedDateTime.parse(mph.changeTime).format(dateTimeFormatter)
+        val time = Instant.ofEpochMilli(mph.changeTime).atZone(ZoneId.systemDefault()).format(dateTimeFormatter)
 
         return when (request.complicationType) {
 
@@ -138,7 +139,7 @@ class SunriseSunsetComplicationService : SuspendingComplicationDataSourceService
                  * @param ambientImage: Inverted Icon, Sunset when Sunrise, Sunrise when Sunset
                  * @param time2: Next Sunrise/Sunset after time1.
                  * **/
-                val time2 = ZonedDateTime.parse(mph.changeTime2).format(dateTimeFormatter)
+                val time2 = Instant.ofEpochMilli(mph.changeTime2).atZone(ZoneId.systemDefault()).format(dateTimeFormatter)
 
                 LongTextComplicationData.Builder(
                     text = PlainComplicationText.Builder(text = "$time /.. $time2").build(),

@@ -55,8 +55,7 @@ import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
 import com.weartools.weekdayutccomp.utils.MoonPhaseHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
-import org.shredzone.commons.suncalc.SunTimes
-import java.time.ZonedDateTime
+import java.time.Instant
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -121,39 +120,33 @@ class SunriseSunsetRVComplicationService : SuspendingComplicationDataSourceServi
             return NoDataComplication.getPlaceholder(request, this, tapAction = openScreen(false))
         }
 
-        val lat = prefs.latitude
-        val long = prefs.longitude
         val timeDiffStyle = prefs.timeDiffStyle
 
-        val mph = MoonPhaseHelper.updateSun(context = this, prefs, dataStore)
+        val mph = MoonPhaseHelper.updateSun(context = this, prefs)
 
-        val time = mph.changeTime
+        val changeTime = mph.changeTime
+        val changeTime2 = mph.changeTime2
         val isSunrise = mph.isSunrise
         val icon = if (isSunrise) drawable.ic_sunrise_3 else drawable.ic_sunset_3
 
-        val timeInstance = ZonedDateTime.parse(time).toInstant()
+        val timeInstance = Instant.ofEpochMilli(changeTime)
 
         when (request.complicationType) {
 
             ComplicationType.RANGED_VALUE -> {
-
-                val times = SunTimes.compute().at(lat,long).today().execute()
-                val rise = times.rise?.toInstant()?.toEpochMilli()?.toFloat() ?: 0F
-                val set = times.set?.toInstant()?.toEpochMilli()?.toFloat() ?: 0F
-
-                val max = timeInstance.toEpochMilli()
-                val current = System.currentTimeMillis()
-                val min = if (current <= rise) set-86400000
-                          else if (current > rise && current <= set) rise
-                          else set
-
-                val length = (max-min)/60000F
-                val progress = (max-current)/60000F
+                // Current Time
+                val currentMillis = System.currentTimeMillis()
+                // StartTime is always 2nd change time minus 24hours
+                val startMillis = (changeTime2 - 86400000)
+                // Range is difference between start time and 1st upcoming change time in minutes
+                val rangeMinutes = (changeTime - startMillis) / 60000f
+                // Time left is difference between current time and start time in minutes
+                val timeLeftMinutes = (currentMillis - startMillis) / 60000f
 
                 return RangedValueComplicationData.Builder(
-                    value = progress,
+                    value = (rangeMinutes-timeLeftMinutes).coerceIn(0f, rangeMinutes),
                     min = 0f,
-                    max = length,
+                    max = rangeMinutes,
                     contentDescription = PlainComplicationText.Builder(text = getString(R.string.sunrise_sunset_countdown_comp_name)).build())
                     .setText(TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.valueOf(timeDiffStyle), CountDownTimeReference(timeInstance)).build())
                     .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this,icon)).build())

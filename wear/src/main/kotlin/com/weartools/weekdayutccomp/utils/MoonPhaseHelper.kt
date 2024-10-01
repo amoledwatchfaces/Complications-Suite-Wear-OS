@@ -30,7 +30,6 @@ package com.weartools.weekdayutccomp.utils
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.util.Log
-import androidx.datastore.core.DataStore
 import androidx.work.CoroutineWorker
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
@@ -42,7 +41,6 @@ import com.weartools.weekdayutccomp.complication.SunriseSunsetComplicationServic
 import com.weartools.weekdayutccomp.complication.SunriseSunsetRVComplicationService
 import com.weartools.weekdayutccomp.preferences.UserPreferences
 import org.shredzone.commons.suncalc.SunTimes
-import java.time.ZonedDateTime
 import java.util.concurrent.TimeUnit
 
 
@@ -50,10 +48,7 @@ class MoonPhaseHelper{
 
   companion object {
 
-    private fun scheduleSunriseSunsetWorker(context: Context, scheduleTime: Long) {
-      Log.i(TAG, "Enqueuing SunriseSunsetWorker!")
-
-      val delay = (scheduleTime - System.currentTimeMillis()) // + 30? SECONDS AS WE WANT TO SEE CURRENT MINUTE OF SUNSET / SUNRISE
+    private fun scheduleSunriseSunsetWorker(context: Context, delay: Long) {
       Log.i(TAG, "Complication will update in $delay MILLISECONDS")
 
       val sunriseSunsetWorkRequest = OneTimeWorkRequestBuilder<SunriseSunsetWorker>()
@@ -65,40 +60,30 @@ class MoonPhaseHelper{
         .enqueueUniqueWork("scheduleSunriseSunsetWorker", ExistingWorkPolicy.REPLACE, sunriseSunsetWorkRequest)
     }
 
-    suspend fun updateSun(context: Context, prefs: UserPreferences, dataStore: DataStore<UserPreferences>): SunriseSunset{
+    fun updateSun(context: Context, prefs: UserPreferences): SunriseSunset{
 
       val lat = prefs.latitude
       val long = prefs.longitude
       val coarseEnabled = prefs.coarsePermission
 
-      Log.d(TAG, "MPH Coarse Location: $coarseEnabled")
-      Log.d(TAG, "MPH lat: $lat lon: $long")
-      val parameters =
-              if (coarseEnabled) { SunTimes.compute()
-                .at(lat,long).now().execute()
-              }
-              else { SunTimes.compute().now().execute()}
+      //Log.d(TAG, "MPH Coarse Location: $coarseEnabled")
+      //Log.d(TAG, "MPH lat: $lat lon: $long")
 
-      val sunrise = parameters.rise?: ZonedDateTime.now()
-      val sunset = parameters.set?: ZonedDateTime.now()
+      val parameters = if (coarseEnabled) { SunTimes.compute().at(lat,long).now().execute() }
+      else { SunTimes.compute().now().execute()}
+
+      val now = System.currentTimeMillis()
+
+      val sunrise = parameters.rise?.toInstant()?.toEpochMilli()?: now
+      val sunset = parameters.set?.toInstant()?.toEpochMilli()?: now
 
       if (sunrise < sunset){
-        dataStore.updateData { it.copy(
-          changeTime = parameters.rise.toString(),
-          isSunrise = true
-        ) }
-        scheduleSunriseSunsetWorker(context, sunrise.toInstant().toEpochMilli())
-        return SunriseSunset(true, parameters.rise.toString(), parameters.set.toString() )
-
-
+        scheduleSunriseSunsetWorker(context, sunrise - now)
+        return SunriseSunset(true, sunrise, sunset)
 
       } else {
-        dataStore.updateData { it.copy(
-          changeTime = parameters.set.toString(),
-          isSunrise = false
-        ) }
-        scheduleSunriseSunsetWorker(context, sunset.toInstant().toEpochMilli())
-        return SunriseSunset(false, parameters.set.toString(), parameters.rise.toString() )
+        scheduleSunriseSunsetWorker(context, sunset - now)
+        return SunriseSunset(false, sunset, sunrise )
       }
     }
 

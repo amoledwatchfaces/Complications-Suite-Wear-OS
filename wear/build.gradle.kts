@@ -86,15 +86,15 @@ dependencies {
     // Used for WorkManager
     implementation ("androidx.work:work-runtime-ktx:2.9.1")
 
-    // MOON PHASE HELPER
+    // Moon Phase Helper
     implementation ("org.shredzone.commons:commons-suncalc:3.7")
 
-    // WEAR OS
+    // Wear OS
     implementation ("com.google.android.gms:play-services-wearable:18.2.0")
     implementation ("androidx.wear.watchface:watchface-complications-data-source-ktx:1.2.1")
     implementation ("androidx.wear:wear:1.3.0")
 
-    //COMPOSE
+    // Compose
     implementation ("androidx.core:core-ktx:1.13.1")
     implementation ("androidx.compose.ui:ui:$composeUiVersion")
     implementation ("androidx.wear.compose:compose-material:$composeWearVersion")
@@ -107,19 +107,19 @@ dependencies {
     debugImplementation ("androidx.compose.ui:ui-tooling:$composeUiVersion")
     debugImplementation ("androidx.compose.ui:ui-test-manifest:$composeUiVersion")
 
-    //DataStore
-    implementation ("androidx.datastore:datastore-preferences:1.1.1")
+    // DataStore
+    implementation ("androidx.datastore:datastore:1.1.1")
 
-    //Locale
+    // Locale
     implementation ("androidx.appcompat:appcompat:1.7.0")
 
-    // INPUT
+    // Input
     implementation ("androidx.wear:wear-input:1.2.0-alpha02")
 
-    // SPLASH SCREEN
+    // Splash Screen
     implementation ("androidx.core:core-splashscreen:1.0.1")
 
-    // HOROLOGIST
+    // Horologist
     implementation ("com.google.android.horologist:horologist-composables:0.2.8")
     implementation ("com.google.android.horologist:horologist-audio-ui:0.2.8")
 
@@ -137,7 +137,7 @@ dependencies {
     // Google Places
     implementation ("com.google.android.libraries.places:places:4.0.0")
 
-    // INPUT
+    // Material 3
     implementation("androidx.compose.material3:material3:1.3.0")
 
     // Firebase

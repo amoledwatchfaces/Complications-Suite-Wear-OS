@@ -67,10 +67,6 @@ data class UserPreferences(
     val water: Int = 0,
     val waterGoal: Float = 20.0f,
 
-    // SUNRISE / SUNSET
-    val changeTime: String = "0",
-    val isSunrise: Boolean = true,
-
     // BITCOIN / ETH
     val priceBTC: Float = 0f,
     val priceETH: Float = 0f,
@@ -87,7 +83,6 @@ data class UserPreferences(
 
     // TIMER / TIME PICKER
     val startTime: Long = System.currentTimeMillis(),
-    val timePicker: String = LocalDate.now().toString(),
     val timePicked: Long = System.currentTimeMillis(),
 )
 
@@ -106,7 +101,8 @@ object UserPreferencesSerializer : Serializer<UserPreferences> {
     override val defaultValue = UserPreferences()
     override suspend fun readFrom(input: InputStream): UserPreferences {
         try {
-            return Json.decodeFromString(
+            val json = Json { ignoreUnknownKeys = true } // Ignore unknown keys to prevent errors when removing some parameters
+            return json.decodeFromString(
                 UserPreferences.serializer(), input.readBytes().decodeToString()
             )
         } catch (serialization: SerializationException) {
