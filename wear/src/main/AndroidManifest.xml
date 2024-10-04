@@ -93,6 +93,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.PickDateActivity"
+            android:noHistory="true"
+            android:autoRemoveFromRecents="true"
             android:exported="true"
             android:theme="@android:style/Theme.DeviceDefault"
             android:taskAffinity="">
@@ -104,19 +106,25 @@
         </activity>
         <activity android:name=".activity.VolumeActivity"
             android:noHistory="true"
+            android:autoRemoveFromRecents="true"
             android:exported="true"
             android:taskAffinity="">
         </activity>
         <activity android:name=".activity.FlashlightActivity"
+            android:noHistory="true"
+            android:autoRemoveFromRecents="true"
             android:exported="true"
             android:taskAffinity="">
         </activity>
         <activity android:name=".activity.WaterActivity"
+            android:autoRemoveFromRecents="true"
             android:noHistory="true"
             android:exported="true"
             android:taskAffinity="">
         </activity>
         <activity android:name=".activity.PickTimeActivity"
+            android:noHistory="true"
+            android:autoRemoveFromRecents="true"
             android:exported="true"
             android:theme="@android:style/Theme.DeviceDefault"
             android:taskAffinity="">

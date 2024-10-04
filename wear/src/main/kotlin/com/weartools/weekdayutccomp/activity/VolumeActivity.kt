@@ -34,11 +34,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import com.google.android.horologist.audio.ui.ExperimentalHorologistAudioUiApi
-import com.google.android.horologist.audio.ui.VolumeScreen
+import com.google.android.horologist.annotations.ExperimentalHorologistApi
+import com.weartools.weekdayutccomp.presentation.ui.VolumeScreen
+
 
 class VolumeActivity : ComponentActivity() {
-    @OptIn(ExperimentalHorologistAudioUiApi::class)
+    @OptIn(ExperimentalHorologistApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {

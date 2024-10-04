@@ -120,8 +120,8 @@ dependencies {
     implementation ("androidx.core:core-splashscreen:1.0.1")
 
     // Horologist
-    implementation ("com.google.android.horologist:horologist-composables:0.2.8")
-    implementation ("com.google.android.horologist:horologist-audio-ui:0.2.8")
+    implementation ("com.google.android.horologist:horologist-composables:0.6.20")
+    implementation ("com.google.android.horologist:horologist-audio-ui:0.6.20")
 
     // Serialization
     implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
@@ -141,7 +141,7 @@ dependencies {
     implementation("androidx.compose.material3:material3:1.3.0")
 
     // Firebase
-    implementation (platform("com.google.firebase:firebase-bom:33.3.0"))
+    implementation (platform("com.google.firebase:firebase-bom:33.4.0"))
     implementation ("com.google.firebase:firebase-crashlytics")
 }
 

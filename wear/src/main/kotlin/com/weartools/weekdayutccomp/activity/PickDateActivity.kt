@@ -36,8 +36,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.horologist.composables.DatePicker
 import com.weartools.weekdayutccomp.MainViewModel
+import com.weartools.weekdayutccomp.presentation.ui.DatePicker
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 
@@ -55,7 +55,7 @@ class PickDateActivity : ComponentActivity(){
             DatePicker(
                 modifier = Modifier.background(color = Color.Black),
                 onDateConfirm = {
-                    viewModel.setDatePicked(it.toString(),context)
+                    viewModel.setDatePicked(it.toString(), context)
                     setResult(RESULT_OK) // OK! (use whatever code you want)
                     finish()
                 },
