@@ -39,12 +39,12 @@ import androidx.lifecycle.ViewModelProvider
 import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.presentation.ui.DatePicker
 import dagger.hilt.android.AndroidEntryPoint
-import java.time.LocalDate
+import java.time.Instant
+import java.time.ZoneId
 
 @AndroidEntryPoint
 class PickDateActivity : ComponentActivity(){
 
-    // LocalDate.now().toString()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val viewModel = ViewModelProvider(this)[MainViewModel::class.java]
@@ -55,11 +55,13 @@ class PickDateActivity : ComponentActivity(){
             DatePicker(
                 modifier = Modifier.background(color = Color.Black),
                 onDateConfirm = {
-                    viewModel.setDatePicked(it.toString(), context)
+                    viewModel.setDatePicked(it.atStartOfDay(ZoneId.of("UTC")).toInstant().toEpochMilli(), context)
                     setResult(RESULT_OK) // OK! (use whatever code you want)
                     finish()
                 },
-                date = LocalDate.parse(preferences.value.datePicker)
+                date = Instant.ofEpochMilli(preferences.value.datePicked)
+                    .atZone(ZoneId.of("UTC"))
+                    .toLocalDate()
             )
             }
         }

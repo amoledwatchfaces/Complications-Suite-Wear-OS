@@ -11,7 +11,6 @@ import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 import java.io.InputStream
 import java.io.OutputStream
-import java.time.LocalDate
 import javax.inject.Inject
 
 
@@ -60,7 +59,8 @@ data class UserPreferences(
     val locale: String = "en",
 
     // DATE PICKER
-    val datePicker: String = LocalDate.now().toString(),
+    val startDate: Long = System.currentTimeMillis(),
+    val datePicked: Long = System.currentTimeMillis(),
     val notificationAsked: Boolean = false,
 
     // WATER

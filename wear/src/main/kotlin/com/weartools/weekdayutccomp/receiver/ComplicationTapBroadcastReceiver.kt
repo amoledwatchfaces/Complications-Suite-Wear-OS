@@ -32,7 +32,9 @@ import android.content.BroadcastReceiver
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Parcelable
+import android.util.Log
 import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUpdateRequester
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -44,17 +46,21 @@ class ComplicationTapBroadcastReceiver : BroadcastReceiver() {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
     override fun onReceive(context: Context, intent: Intent) {
-        val args = intent.getArgs()
         val result = goAsync()
 
-        scope.launch {
-            try {
-                ComplicationDataSourceUpdateRequester
-                    .create(context = context, complicationDataSourceComponent = args.providerComponent)
-                    .requestUpdate(args.complicationInstanceId)
-            } finally {
-                result.finish()
+        intent.getArgs()?.let { args -> // This block executes only if args is not null
+            scope.launch {
+                try {
+                    ComplicationDataSourceUpdateRequester
+                        .create(context = context, complicationDataSourceComponent = args.providerComponent)
+                        .requestUpdate(args.complicationInstanceId)
+                } finally {
+                    result.finish()
+                }
             }
+        } ?: run {
+            Log.e("Complication", "Received Intent without valid args")
+            result.finish() // Finish the result if args is null
         }
     }
 
@@ -75,10 +81,24 @@ class ComplicationTapBroadcastReceiver : BroadcastReceiver() {
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
         }
-        private fun Intent.getArgs(): ComplicationToggleArgs = requireNotNull(
-            @Suppress("DEPRECATION")
-            extras?.getParcelable(EXTRA_ARGS)
-        )
+        private fun Intent.getArgs(): ComplicationToggleArgs?{
+            return extras?.let {
+                try {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        it.getParcelable(EXTRA_ARGS, ComplicationToggleArgs::class.java)
+                    } else {
+                        @Suppress("DEPRECATION")
+                        it.getParcelable(EXTRA_ARGS)
+                    }
+                } catch (e: Exception) {
+                    Log.e("Complication", "Error fetching Parcelable: $e")
+                    null
+                }
+            } ?: run {
+                Log.e("Complication", "Intent without extras")
+                null
+            }
+        }
     }
 }
 

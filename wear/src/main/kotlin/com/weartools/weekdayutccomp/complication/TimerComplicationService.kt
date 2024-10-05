@@ -27,6 +27,7 @@
  */
 package com.weartools.weekdayutccomp.complication
 
+import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.content.ContentValues.TAG
 import android.content.Intent
@@ -143,6 +144,7 @@ class TimerComplicationService : SuspendingComplicationDataSourceService() {
     }
 }
 
+
     override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
 
         val startMillis = preferences.first().startTime
@@ -171,6 +173,7 @@ class TimerComplicationService : SuspendingComplicationDataSourceService() {
             }
 
              */
+            @SuppressLint("RestrictedApi")
             when (request.complicationType) {
                 ComplicationType.RANGED_VALUE -> {
                     val dynamicDuration = getDynamicDuration(targetMillis)

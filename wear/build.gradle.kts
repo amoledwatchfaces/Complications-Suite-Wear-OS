@@ -1,7 +1,5 @@
-@file:Suppress("UnstableApiUsage")
 import java.io.FileInputStream
 import java.util.Properties
-
 
 plugins {
     id ("com.android.application")
@@ -76,8 +74,7 @@ android {
 dependencies {
     val composeUiVersion = "1.7.2"
     val composeWearVersion = "1.4.0"
-
-    // NEW MOON / SUNRISE / SUNSET COMP
+    
     //request permission
     implementation ("com.google.accompanist:accompanist-permissions:0.34.0")
     //location
@@ -105,7 +102,7 @@ dependencies {
 
     androidTestImplementation ("androidx.compose.ui:ui-test-junit4:$composeUiVersion")
     debugImplementation ("androidx.compose.ui:ui-tooling:$composeUiVersion")
-    debugImplementation ("androidx.compose.ui:ui-test-manifest:$composeUiVersion")
+    debugImplementation ("androidx.compose.ui:ui-test-manifest:1.7.3")
 
     // DataStore
     implementation ("androidx.datastore:datastore:1.1.1")

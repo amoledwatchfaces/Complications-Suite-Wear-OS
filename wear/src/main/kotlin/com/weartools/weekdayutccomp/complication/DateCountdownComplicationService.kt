@@ -39,20 +39,20 @@ import androidx.wear.watchface.complications.data.CountDownTimeReference
 import androidx.wear.watchface.complications.data.LongTextComplicationData
 import androidx.wear.watchface.complications.data.MonochromaticImage
 import androidx.wear.watchface.complications.data.PlainComplicationText
+import androidx.wear.watchface.complications.data.RangedValueComplicationData
 import androidx.wear.watchface.complications.data.ShortTextComplicationData
 import androidx.wear.watchface.complications.data.TimeDifferenceComplicationText
 import androidx.wear.watchface.complications.data.TimeDifferenceStyle
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
-import com.weartools.weekdayutccomp.activity.PickDateActivity
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.R.drawable
+import com.weartools.weekdayutccomp.activity.PickDateActivity
 import com.weartools.weekdayutccomp.preferences.UserPreferences
 import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
-import java.time.LocalDate
-import java.time.ZoneId
+import java.time.Instant
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -90,6 +90,16 @@ class DateCountdownComplicationService : SuspendingComplicationDataSourceService
                 .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_date_countdown)).build())
                 .build()
         }
+        ComplicationType.RANGED_VALUE -> {
+            RangedValueComplicationData.Builder(
+                value = 17f,
+                min = 0f,
+                max = 31f,
+                contentDescription = PlainComplicationText.Builder(text = getString(R.string.date_countdown_comp_name)).build())
+                .setText(PlainComplicationText.Builder(text = "17d").build())
+                .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_date_countdown)).build())
+                .build()
+        }
 
         else -> {null}
     }
@@ -97,14 +107,13 @@ class DateCountdownComplicationService : SuspendingComplicationDataSourceService
 
     override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
 
-    val datePicked = preferences.first().datePicker
-    val timeInstance = LocalDate.parse(datePicked).atStartOfDay(ZoneId.systemDefault()).toInstant()
+    val datePicked = preferences.first().datePicked
+    val timeInstance = Instant.ofEpochMilli(datePicked)
 
-    when (request.complicationType) {
+    return when (request.complicationType) {
 
         ComplicationType.SHORT_TEXT -> {
-
-            return ShortTextComplicationData.Builder(
+            ShortTextComplicationData.Builder(
                 text = TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.SHORT_SINGLE_UNIT, CountDownTimeReference(timeInstance)).build(),
                 contentDescription = PlainComplicationText.Builder(text = "Date Countdown").build())
                 .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_date_countdown)).build())
@@ -112,7 +121,7 @@ class DateCountdownComplicationService : SuspendingComplicationDataSourceService
                 .build()
         }
         ComplicationType.LONG_TEXT -> {
-            return LongTextComplicationData.Builder(
+            LongTextComplicationData.Builder(
                 text = PlainComplicationText.Builder(text = getString(R.string.countdown_text)).build(),
                 contentDescription = PlainComplicationText.Builder(text = "Date Countdown").build())
                 .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_date_countdown)).build())
@@ -120,6 +129,24 @@ class DateCountdownComplicationService : SuspendingComplicationDataSourceService
                     TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.WORDS_SINGLE_UNIT, CountDownTimeReference(timeInstance))
                     .setText("^1")
                     .build())
+                .setTapAction(openScreen())
+                .build()
+        }
+        ComplicationType.RANGED_VALUE -> {
+
+            val now = System.currentTimeMillis()
+            val startDate = preferences.first().startDate
+            val timeRange = (datePicked - startDate) / 60000
+            val timePassed = (now - startDate) / 60000
+            val timeLeft = (timeRange - timePassed)
+
+            RangedValueComplicationData.Builder(
+                min = 0f,
+                value = timeLeft.coerceIn(0, timeRange).toFloat(),
+                max = timeRange.toFloat(),
+                contentDescription = PlainComplicationText.Builder(text = "Date Countdown").build())
+                .setText(TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.SHORT_SINGLE_UNIT, CountDownTimeReference(timeInstance)).build())
+                .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_date_countdown)).build())
                 .setTapAction(openScreen())
                 .build()
         }

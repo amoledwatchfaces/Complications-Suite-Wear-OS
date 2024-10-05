@@ -157,7 +157,7 @@ class MainViewModel @Inject constructor(
                             setCoarsePermission()
                             val addressName = addressProvider.getAddressFromLocation(it.latitude,it.longitude)
                             if (addressName != null){
-                                Log.i(ContentValues.TAG, "$addressName")
+                                Log.i(ContentValues.TAG, addressName)
                                 dataStore.updateData { prefs ->
                                     prefs.copy(locationName = addressName)
                                 }
@@ -256,8 +256,11 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun setDatePicked(value: String, context: Context) { viewModelScope.launch {
-        dataStore.updateData { it.copy(datePicker = value) }
+    fun setDatePicked(value: Long, context: Context) { viewModelScope.launch {
+        dataStore.updateData { it.copy(
+            startDate = System.currentTimeMillis(),
+            datePicked = value
+        ) }
         context.updateComplication(DateCountdownComplicationService::class.java)
     }}
 
