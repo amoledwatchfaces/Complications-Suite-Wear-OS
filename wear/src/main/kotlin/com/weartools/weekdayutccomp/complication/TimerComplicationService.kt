@@ -48,6 +48,7 @@ import androidx.wear.watchface.complications.data.DynamicComplicationText
 import androidx.wear.watchface.complications.data.MonochromaticImage
 import androidx.wear.watchface.complications.data.PlainComplicationText
 import androidx.wear.watchface.complications.data.RangedValueComplicationData
+import androidx.wear.watchface.complications.data.ShortTextComplicationData
 import androidx.wear.watchface.complications.data.TimeDifferenceComplicationText
 import androidx.wear.watchface.complications.data.TimeDifferenceStyle
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
@@ -116,6 +117,28 @@ class TimerComplicationService : SuspendingComplicationDataSourceService() {
             )
     }
 
+    private fun scheduleUpdateAtEnd(timeLeft: Long){
+        Log.i("TimerComplicationService", "schedule update in: $timeLeft seconds")
+        WorkManager.getInstance(this).enqueueUniqueWork(
+            "timer_update_work",
+            ExistingWorkPolicy.REPLACE,
+            OneTimeWorkRequestBuilder<TimerWorker>()
+                .setInitialDelay(Duration.ofSeconds(timeLeft))
+                .build()
+        )
+    }
+    private fun returnEmptyComplication(request: ComplicationRequest): ComplicationData? {
+        Log.i("TimerComplicationService", "Returning empty complication data")
+        WorkManager.getInstance(this).cancelUniqueWork("timer_update_work")
+        return NoDataComplication.getPlaceholder(
+            context = this,
+            request = request,
+            placeHolderText = "- -",
+            placeHolderIcon = createWithResource(this, drawable.ic_timer_3),
+            tapAction = openScreen()
+        )
+    }
+
     private fun openScreen(): PendingIntent? {
 
         val intent = Intent(applicationContext, PickTimeActivity::class.java)
@@ -125,9 +148,8 @@ class TimerComplicationService : SuspendingComplicationDataSourceService() {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
     }
-
     override fun getPreviewData(type: ComplicationType): ComplicationData? {
-    return when (type) {
+        return when (type) {
 
         ComplicationType.RANGED_VALUE -> {
             RangedValueComplicationData.Builder(
@@ -135,112 +157,87 @@ class TimerComplicationService : SuspendingComplicationDataSourceService() {
                 min = 0f,
                 max =  10f,
                 contentDescription = ComplicationText.EMPTY)
-                .setText(PlainComplicationText.Builder(text = "5:59").build())
+                .setText(PlainComplicationText.Builder(text = "6:30").build())
+                .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_timer_4)).build())
+                .build()
+        }
+        ComplicationType.SHORT_TEXT -> {
+            ShortTextComplicationData.Builder(
+                text = PlainComplicationText.Builder(text = "6:30").build(),
+                contentDescription = ComplicationText.EMPTY)
                 .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_timer_4)).build())
                 .build()
         }
 
         else -> {null}
+        }
     }
-}
-
 
     override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
 
         val startMillis = preferences.first().startTime
         val targetMillis = preferences.first().timePicked
+        val currentTime = System.currentTimeMillis()
         val timeRange = (targetMillis - startMillis) / 1000
+        val timePassed = (currentTime - startMillis) / 1000
+        val timeLeft = (timeRange - timePassed)
 
-        /** Use DynamicValue in API 33+ **/
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
-            /*
-            if (currentTime < targetMillis) {
-                /** Use WorkManager to vibrate watch when timer completes **/
-                WorkManager.getInstance(this).enqueueUniqueWork(
-                    "timer_vibrate_work",
-                    ExistingWorkPolicy.REPLACE,
-                    OneTimeWorkRequestBuilder<TimerVibrationWorker>()
-                        .setInitialDelay(Duration.ofSeconds(timeLeft))
-                        .build()
-                )
-            }
-            else {
-                /** Vibrate watch when timer completes **/
-                val vibratorManager = this.getSystemService(VIBRATOR_MANAGER_SERVICE) as VibratorManager
-                val vibrator = vibratorManager.defaultVibrator
-                val vibrationEffect = VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE)
-                vibrator.vibrate(vibrationEffect)
-            }
+        when (request.complicationType){
 
-             */
-            @SuppressLint("RestrictedApi")
-            when (request.complicationType) {
-                ComplicationType.RANGED_VALUE -> {
+            ComplicationType.RANGED_VALUE -> {
+
+                /** Use DynamicValue in API 33+ **/
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+
+                    /** Use WorkManager to update Complication after Timer ends , return empty Complication after next update  **/
+                    if (currentTime < targetMillis) { scheduleUpdateAtEnd(timeLeft) }
+                    else { return returnEmptyComplication(request) }
+
                     val dynamicDuration = getDynamicDuration(targetMillis)
+                    @SuppressLint("RestrictedApi")
                     return RangedValueComplicationData.Builder(
-                        min = 0f,
-                        max =  timeRange.toFloat(),
-                        dynamicValue = getDynamicValue(dynamicDuration),
-                        fallbackValue = 0f,
-                        contentDescription = ComplicationText.EMPTY)
-                        .setText(DynamicComplicationText(getDynamicStringFromDynamicDuration(dynamicDuration),"- -"))
-                        .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_timer_4)).build())
-                        .setTapAction(openScreen())
-                        .build()
-                }
-
-                else -> {
-                    if (Log.isLoggable(TAG, Log.WARN)) {
-                        Log.w(TAG, "Unexpected complication type ${request.complicationType}")
+                            min = 0f,
+                            max =  timeRange.toFloat(),
+                            dynamicValue = getDynamicValue(dynamicDuration),
+                            fallbackValue = 0f,
+                            contentDescription = ComplicationText.EMPTY)
+                            .setText(DynamicComplicationText(getDynamicStringFromDynamicDuration(dynamicDuration),"- -"))
+                            .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_timer_4)).build())
+                            .setTapAction(openScreen())
+                            .build()
                     }
-                    return null
-                }
-            }
-        }
-        /** Use WorkManger in API 27+ **/
-        else {
-            val currentTime = System.currentTimeMillis()
-            val timePassed = (currentTime - startMillis) / 1000
-            val timeLeft = (timeRange - timePassed)
 
-            /*
-            Log.i("TimerComplicationService", "Time Range: $timeRange")
-            Log.i("TimerComplicationService", "Time Passed: $timePassed")
-            Log.i("TimerComplicationService", "Time Left: $timeLeft")
-            */
-            if (currentTime < targetMillis) {
-                /** Use WorkManager to update Complication each every 5 seconds **/
-                WorkManager.getInstance(this).enqueueUniqueWork(
-                    "timer_update_work",
-                    ExistingWorkPolicy.REPLACE,
-                    OneTimeWorkRequestBuilder<TimerWorker>()
-                        .setInitialDelay(Duration.ofSeconds(when (timeLeft) {
-                            in 0..29 -> 5L
-                            in 30..59 -> 10L
-                            in 60..299 -> 15L
-                            in 300..599 -> 30L
-                            in 600..1799 -> 60L
-                            in 1800..3599 -> 300L
-                            else -> 600L
-                        }))
-                        .build()
-                )
-            }
-            else {
-                /** Cancel WorkManager Work and return NoDataComplication **/
-                WorkManager.getInstance(this).cancelUniqueWork("timer_update_work")
-                return NoDataComplication.getPlaceholder(
-                    context = this,
-                    request = request,
-                    placeHolderText = "- -",
-                    placeHolderIcon = createWithResource(this, drawable.ic_timer_3),
-                    tapAction = openScreen()
-                )
-            }
-
-            when (request.complicationType) {
-
-                ComplicationType.RANGED_VALUE -> {
+                /** Use WorkManger in API 27+ **/
+                else {
+                    if (currentTime < targetMillis) {
+                        /** Use WorkManager to update Complication each every 5 seconds **/
+                        WorkManager.getInstance(this).enqueueUniqueWork(
+                            "timer_update_work",
+                            ExistingWorkPolicy.REPLACE,
+                            OneTimeWorkRequestBuilder<TimerWorker>()
+                                .setInitialDelay(Duration.ofSeconds(when (timeLeft) {
+                                    in 0..29 -> 5L
+                                    in 30..59 -> 10L
+                                    in 60..299 -> 15L
+                                    in 300..599 -> 30L
+                                    in 600..1799 -> 60L
+                                    in 1800..3599 -> 300L
+                                    else -> 600L
+                                }))
+                                .build()
+                        )
+                    }
+                    else {
+                        /** Cancel WorkManager Work and return NoDataComplication **/
+                        WorkManager.getInstance(this).cancelUniqueWork("timer_update_work")
+                        return NoDataComplication.getPlaceholder(
+                            context = this,
+                            request = request,
+                            placeHolderText = "- -",
+                            placeHolderIcon = createWithResource(this, drawable.ic_timer_3),
+                            tapAction = openScreen()
+                        )
+                    }
 
                     return RangedValueComplicationData.Builder(
                         min = 0f,
@@ -252,13 +249,26 @@ class TimerComplicationService : SuspendingComplicationDataSourceService() {
                         .setTapAction(openScreen())
                         .build()
                 }
+            }
+            ComplicationType.SHORT_TEXT -> {
 
-                else -> {
-                    if (Log.isLoggable(TAG, Log.WARN)) {
-                        Log.w(TAG, "Unexpected complication type ${request.complicationType}")
-                    }
-                    return null
+                /** Use WorkManager to update Complication after Timer ends , return empty Complication after next update  **/
+                if (currentTime < targetMillis) { scheduleUpdateAtEnd(timeLeft) }
+                else { return returnEmptyComplication(request) }
+
+                return ShortTextComplicationData.Builder(
+                    text = TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.STOPWATCH, CountDownTimeReference(Instant.ofEpochMilli(targetMillis))).build(),
+                    contentDescription = ComplicationText.EMPTY)
+                    .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_timer_4)).build())
+                    .setTapAction(openScreen())
+                    .build()
+            }
+
+            else -> {
+                if (Log.isLoggable(TAG, Log.WARN)) {
+                    Log.w(TAG, "Unexpected complication type ${request.complicationType}")
                 }
+                return null
             }
         }
     }

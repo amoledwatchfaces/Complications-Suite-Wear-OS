@@ -465,7 +465,7 @@
                 <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
             </intent-filter>
             <meta-data android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS" android:value="0"/>
-            <meta-data android:name="android.support.wearable.complications.SUPPORTED_TYPES" android:value="RANGED_VALUE" />
+            <meta-data android:name="android.support.wearable.complications.SUPPORTED_TYPES" android:value="RANGED_VALUE,SHORT_TEXT" />
             <meta-data android:name="android.support.wearable.complications.PROVIDER_CONFIG_ACTION" android:value="com.weartools.weekdayutccomp.CONFIG_COMPLICATION_PICK_TIME" />
         </service>
         <service android:name=".complication.TimeZoneComplicationService"
