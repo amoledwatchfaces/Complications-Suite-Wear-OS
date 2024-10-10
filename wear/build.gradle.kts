@@ -72,7 +72,7 @@ android {
 }
 
 dependencies {
-    val composeUiVersion = "1.7.2"
+    val composeUiVersion = "1.7.3"
     val composeWearVersion = "1.4.0"
     
     //request permission

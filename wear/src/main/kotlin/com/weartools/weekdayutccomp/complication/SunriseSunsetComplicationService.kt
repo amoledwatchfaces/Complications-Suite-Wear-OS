@@ -135,16 +135,14 @@ class SunriseSunsetComplicationService : SuspendingComplicationDataSourceService
                     .build()
             }
             ComplicationType.LONG_TEXT -> {
-                /** Dual Solution
-                 * @param ambientImage: Inverted Icon, Sunset when Sunrise, Sunrise when Sunset
-                 * @param time2: Next Sunrise/Sunset after time1.
-                 * **/
-                val time2 = Instant.ofEpochMilli(mph.changeTime2).atZone(ZoneId.systemDefault()).format(dateTimeFormatter)
+
+                //val time2 = Instant.ofEpochMilli(mph.changeTime2).atZone(ZoneId.systemDefault()).format(dateTimeFormatter)
 
                 LongTextComplicationData.Builder(
-                    text = PlainComplicationText.Builder(text = "$time /.. $time2").build(),
+                    text = PlainComplicationText.Builder(text = text).build(),
                     contentDescription = PlainComplicationText.Builder(text = "$text: $time").build())
-                    .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, icon)).setAmbientImage(createWithResource(this, if (mph.isSunrise) drawable.ic_sunset_3 else drawable.ic_sunrise_3)).build())
+                    .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, icon)).build())
+                    .setTitle(PlainComplicationText.Builder(text = time).build())
                     .setTapAction(openScreen(true))
                     .build()
             }
