@@ -40,6 +40,7 @@ import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.presentation.ui.DatePicker
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.Instant
+import java.time.LocalDate
 import java.time.ZoneId
 
 @AndroidEntryPoint
@@ -54,6 +55,7 @@ class PickDateActivity : ComponentActivity(){
 
             DatePicker(
                 modifier = Modifier.background(color = Color.Black),
+                fromDate = LocalDate.now().plusDays(1),
                 onDateConfirm = {
                     viewModel.setDatePicked(it.atStartOfDay(ZoneId.of("UTC")).toInstant().toEpochMilli(), context)
                     setResult(RESULT_OK) // OK! (use whatever code you want)
