@@ -124,51 +124,57 @@ class MoonriseMoonsetComplicationService : SuspendingComplicationDataSourceServi
             return NoDataComplication.getPlaceholder(request, this, tapAction = openScreen(false))
         }
 
-        val timeDiffStyle = prefs.timeDiffStyle
-
         val mph = MoonPhaseHelper.updateMoon(context = this, prefs)
-
-        val changeTime = mph.changeTime
-        val changeTime2 = mph.changeTime2
         val isMoonrise = mph.isMoonRise
         val icon = if (isMoonrise) drawable.ic_moon_rise else drawable.ic_moon_set
 
-        val timeInstance = Instant.ofEpochMilli(changeTime)
-
         when (request.complicationType) {
 
-            ComplicationType.RANGED_VALUE -> {
-                // Current Time
-                val currentMillis = System.currentTimeMillis()
-                // StartTime is always 2nd change time minus 24hours
-                val startMillis = (changeTime2 - 86400000)
-                // Range is difference between start time and 1st upcoming change time in minutes
-                val rangeMinutes = (changeTime - startMillis) / 60000f
-                // Time left is difference between current time and start time in minutes
-                val timeLeftMinutes = (currentMillis - startMillis) / 60000f
+            ComplicationType.RANGED_VALUE, ComplicationType.LONG_TEXT -> {
 
-                return RangedValueComplicationData.Builder(
-                    value = (rangeMinutes-timeLeftMinutes).coerceIn(0f, rangeMinutes),
-                    min = 0f,
-                    max = rangeMinutes,
-                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.moonrise_moonset)).build())
-                    .setText(TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.valueOf(timeDiffStyle), CountDownTimeReference(timeInstance)).build())
-                    .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this,icon)).build())
-                    .setTapAction(openScreen(true))
-                    .build()
+                val timeDiffStyle = prefs.timeDiffStyle
+                val changeTime = mph.changeTime
+                val changeTime2 = mph.changeTime2
+                val timeInstance = Instant.ofEpochMilli(changeTime)
 
+                when (request.complicationType){
+                    ComplicationType.RANGED_VALUE -> {
+                        // Current Time
+                        val currentMillis = System.currentTimeMillis()
+                        // StartTime is always 2nd change time minus 24hours
+                        val startMillis = (changeTime2 - 86400000)
+                        // Range is difference between start time and 1st upcoming change time in minutes
+                        val rangeMinutes = (changeTime - startMillis) / 60000f
+                        // Time left is difference between current time and start time in minutes
+                        val timeLeftMinutes = (currentMillis - startMillis) / 60000f
+
+                        return RangedValueComplicationData.Builder(
+                            value = (rangeMinutes-timeLeftMinutes).coerceIn(0f, rangeMinutes),
+                            min = 0f,
+                            max = rangeMinutes,
+                            contentDescription = PlainComplicationText.Builder(text = getString(R.string.moonrise_moonset)).build())
+                            .setText(TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.valueOf(timeDiffStyle), CountDownTimeReference(timeInstance)).build())
+                            .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this,icon)).build())
+                            .setTapAction(openScreen(true))
+                            .build()
+                    }
+                    ComplicationType.LONG_TEXT -> {
+                        return LongTextComplicationData.Builder(
+                            text = PlainComplicationText.Builder(text= if (isMoonrise) getString(R.string.moonrise) else getString(R.string.moonset)).build(),
+                            contentDescription = TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.valueOf(timeDiffStyle), CountDownTimeReference(timeInstance))
+                                .setText(if (isMoonrise) "${getString(R.string.moonrise_in)}: ^1" else "${getString(R.string.moonset_in)}: ^1")
+                                .build())
+                            .setTitle(TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.valueOf(timeDiffStyle), CountDownTimeReference(timeInstance))
+                                .setText("^1")
+                                .build())
+                            .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this,icon)).build())
+                            .setTapAction(openScreen(true))
+                            .build()
+                    }
+                    else -> { return null }
+                }
             }
-            ComplicationType.LONG_TEXT -> {
-                return LongTextComplicationData.Builder(
-                    text = TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.valueOf(timeDiffStyle), CountDownTimeReference(timeInstance))
-                            .setText(if (isMoonrise) "${getString(R.string.moonrise_in)}: ^1" else "${getString(R.string.moonset_in)}: ^1")
-                            .build(),
-                    contentDescription = TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.valueOf(timeDiffStyle), CountDownTimeReference(timeInstance))
-                            .setText(if (isMoonrise) "${getString(R.string.moonrise_in)}: ^1" else "${getString(R.string.moonset_in)}: ^1")
-                            .build())
-                    .setTapAction(openScreen(true))
-                    .build()
-            }
+
             ComplicationType.SHORT_TEXT -> {
 
                 val ismilitary = prefs.isMilitaryTime
