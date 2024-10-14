@@ -49,7 +49,7 @@ import com.weartools.weekdayutccomp.activity.MainActivity
 import com.weartools.weekdayutccomp.enums.Request
 import com.weartools.weekdayutccomp.preferences.UserPreferences
 import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
-import com.weartools.weekdayutccomp.utils.MoonPhaseHelper
+import com.weartools.weekdayutccomp.utils.SunriseSunsetHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import java.time.Instant
@@ -111,7 +111,7 @@ class SunriseSunsetComplicationService : SuspendingComplicationDataSourceService
         val ismilitary = prefs.isMilitaryTime
         val leadingzero = prefs.isLeadingZeroTime
 
-        val mph = MoonPhaseHelper.updateSun(context = this, prefs)
+        val mph = SunriseSunsetHelper.updateSun(context = this, prefs)
         val icon = if (mph.isSunrise) drawable.ic_sunrise_3 else drawable.ic_sunset_3
         val text = if (mph.isSunrise) getString(R.string.sunrise) else getString(R.string.sunset)
 

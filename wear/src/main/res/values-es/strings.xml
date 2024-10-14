@@ -65,6 +65,12 @@
     <string name="moon_setting_simple_icon_on">Simple</string>
     <string name="moon_setting_simple_icon_off">Detallado</string>
 
+    <string name="moonrise_moonset">Salida y Puesta de la luna</string>
+    <string name="moonrise">Salida de la luna</string>
+    <string name="moonset">Puesta de la luna</string>
+    <string name="moonrise_in">Salida de la luna en</string>
+    <string name="moonset_in">Puesta de la luna en</string>
+
     <string name="icon_type">Icono Luna</string>
     <string name="icon_type_0">Sencilla</string>
     <string name="icon_type_1">Detallado RGB</string>

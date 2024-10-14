@@ -67,6 +67,12 @@
     <string name="moon_setting_simple_icon_on">Einfaches</string>
     <string name="moon_setting_simple_icon_off">Detailliert</string>
 
+    <string name="moonrise_moonset">Mondaufgang und Monduntergang</string>
+    <string name="moonrise">Mondaufgang</string>
+    <string name="moonset">Monduntergang</string>
+    <string name="moonrise_in">Mondaufgang in</string>
+    <string name="moonset_in">Monduntergang in</string>
+
     <string name="icon_type">Symbol</string>
     <string name="icon_type_0">Einfaches</string>
     <string name="icon_type_1">Detailliert RGB</string>

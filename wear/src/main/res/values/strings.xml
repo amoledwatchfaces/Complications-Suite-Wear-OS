@@ -74,6 +74,12 @@
     <string name="moon_setting_simple_icon_on">Simple</string>
     <string name="moon_setting_simple_icon_off">Detailed</string>
 
+    <string name="moonrise_moonset">Moonrise &amp; Moonset</string>
+    <string name="moonrise">Moonrise</string>
+    <string name="moonset">Moonset</string>
+    <string name="moonrise_in">Moonrise in</string>
+    <string name="moonset_in">Moonset in</string>
+
     <!-- Pay Complication -->
     <string name="pay_comp_name">Pay</string>
 

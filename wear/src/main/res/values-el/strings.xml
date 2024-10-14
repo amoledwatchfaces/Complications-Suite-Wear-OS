@@ -66,6 +66,12 @@
     <string name="moon_setting_simple_icon_on">Απλό</string>
     <string name="moon_setting_simple_icon_off">Λεπτομερές</string>
 
+    <string name="moonrise_moonset">Ανατολή και Δύση Σελήνης</string>
+    <string name="moonrise">Ανατολή Σελήνης</string>
+    <string name="moonset">Δύση Σελήνης</string>
+    <string name="moonrise_in">Ανατολή Σελήνης σε</string>
+    <string name="moonset_in">Δύση Σελήνης σε</string>
+
     <string name="icon_type">Εικονίδιο</string>
     <string name="icon_type_0">Απλό</string>
     <string name="icon_type_1">Λεπτομερές RGB</string>

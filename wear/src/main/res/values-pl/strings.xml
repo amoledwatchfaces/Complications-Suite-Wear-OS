@@ -74,6 +74,12 @@
     <string name="moon_setting_simple_icon_on">Prosta</string>
     <string name="moon_setting_simple_icon_off">Szczegółowa</string>
 
+    <string name="moonrise_moonset">Wschód i Zachód księżyca</string>
+    <string name="moonrise">Wschód księżyca</string>
+    <string name="moonset">Zachód księżyca</string>
+    <string name="moonrise_in">Wschód księżyca za</string>
+    <string name="moonset_in">Zachód księżyca za</string>
+
     <!-- Pay Complication -->
     <string name="pay_comp_name">Płatności</string>
 

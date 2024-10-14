@@ -65,6 +65,12 @@
     <string name="moon_setting_simple_icon_on">简单</string>
     <string name="moon_setting_simple_icon_off">详细</string>
 
+    <string name="moonrise_moonset">月出和月落</string>
+    <string name="moonrise">月出</string>
+    <string name="moonset">月落</string>
+    <string name="moonrise_in">月出于</string>
+    <string name="moonset_in">月落于</string>
+
     <string name="icon_type">月相图标</string>
     <string name="icon_type_0">简单</string>
     <string name="icon_type_1">详细 RGB</string>

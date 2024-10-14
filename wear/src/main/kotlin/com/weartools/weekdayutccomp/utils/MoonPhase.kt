@@ -37,56 +37,68 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.R.drawable
-import com.weartools.weekdayutccomp.complication.SunriseSunsetComplicationService
-import com.weartools.weekdayutccomp.complication.SunriseSunsetRVComplicationService
+import com.weartools.weekdayutccomp.complication.MoonriseMoonsetComplicationService
 import com.weartools.weekdayutccomp.preferences.UserPreferences
-import org.shredzone.commons.suncalc.SunTimes
+import org.shredzone.commons.suncalc.MoonTimes
 import java.util.concurrent.TimeUnit
 
+data class MoonriseMoonset(
+  val isMoonRise: Boolean,
+  val changeTime: Long,
+  val changeTime2: Long,
+)
+
+class MoonriseMoonsetWorker(private val appContext: Context, workerParams: WorkerParameters) :
+  CoroutineWorker(appContext, workerParams) {
+  override suspend fun doWork(): Result {
+    Log.i(TAG, "Worker running")
+    appContext.updateComplication(MoonriseMoonsetComplicationService::class.java)
+    return Result.success()
+  }
+}
 
 class MoonPhaseHelper{
 
   companion object {
 
-    private fun scheduleSunriseSunsetWorker(context: Context, delay: Long) {
-      //Log.i(TAG, "Complication will update in ${delay/1000/60} minutes")
+    private fun scheduleMoonriseMoonsetWorker(context: Context, delay: Long) {
+      if (delay > 0){
+        val moonriseMoonsetWorkRequest = OneTimeWorkRequestBuilder<MoonriseMoonsetWorker>()
+          .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+          .build()
 
-      val sunriseSunsetWorkRequest = OneTimeWorkRequestBuilder<SunriseSunsetWorker>()
-        .setInitialDelay(delay, TimeUnit.MILLISECONDS)
-        .build()
-
-      WorkManager
-        .getInstance(context)
-        .enqueueUniqueWork("scheduleSunriseSunsetWorker", ExistingWorkPolicy.REPLACE, sunriseSunsetWorkRequest)
+        WorkManager
+          .getInstance(context)
+          .enqueueUniqueWork("scheduleMoonriseMoonsetWorker", ExistingWorkPolicy.REPLACE, moonriseMoonsetWorkRequest)
+      }
     }
 
-    fun updateSun(context: Context, prefs: UserPreferences): SunriseSunset{
+    fun updateMoon(context: Context, prefs: UserPreferences): MoonriseMoonset{
 
       val lat = prefs.latitude
       val long = prefs.longitude
       val coarseEnabled = prefs.coarsePermission
 
-      //Log.d(TAG, "MPH Coarse Location: $coarseEnabled")
-      //Log.d(TAG, "MPH lat: $lat lon: $long")
-
-      val parameters = if (coarseEnabled) { SunTimes.compute().at(lat,long).now().execute() }
-      else { SunTimes.compute().now().execute()}
+      val parameters = if (coarseEnabled) { MoonTimes.compute().at(lat,long).now().execute() }
+      else { MoonTimes.compute().now().execute()}
 
       val now = System.currentTimeMillis()
 
-      val sunrise = parameters.rise?.toInstant()?.toEpochMilli()?: now
-      val sunset = parameters.set?.toInstant()?.toEpochMilli()?: now
+      //Log.i("MoonPhaseHelper", "moonrise: ${parameters.rise}")
+      //Log.i("MoonPhaseHelper", "moonset: ${parameters.set}")
 
-      if (sunrise < sunset){
-        scheduleSunriseSunsetWorker(context, sunrise - now)
-        return SunriseSunset(true, sunrise, sunset)
+      val moonrise = parameters.rise?.toInstant()?.toEpochMilli()?: now
+      val moonset = parameters.set?.toInstant()?.toEpochMilli()?: now
+
+      if (moonrise < moonset){
+        scheduleMoonriseMoonsetWorker(context, moonrise - now)
+        return MoonriseMoonset(true, moonrise, moonset)
 
       } else {
-        scheduleSunriseSunsetWorker(context, sunset - now)
-        return SunriseSunset(false, sunset, sunrise )
+        scheduleMoonriseMoonsetWorker(context, moonset - now)
+        return MoonriseMoonset(false, moonset, moonrise )
       }
     }
-
 
     fun getSimpleIcon(phaseName: String, isnorthernHemi: Boolean): Int {
 
@@ -131,12 +143,3 @@ class MoonPhaseHelper{
   }
 }
 
-class SunriseSunsetWorker(private val appContext: Context, workerParams: WorkerParameters) :
-  CoroutineWorker(appContext, workerParams) {
-  override suspend fun doWork(): Result {
-    Log.i(TAG, "Worker running")
-    appContext.updateComplication(SunriseSunsetComplicationService::class.java)
-    appContext.updateComplication(SunriseSunsetRVComplicationService::class.java)
-    return Result.success()
-  }
-}

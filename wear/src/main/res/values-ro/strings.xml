@@ -65,6 +65,12 @@
     <string name="moon_setting_simple_icon_on">Simplă</string>
     <string name="moon_setting_simple_icon_off">Detaliat</string>
 
+    <string name="moonrise_moonset">Răsăritul și Apusul lunii</string>
+    <string name="moonrise">Răsăritul lunii</string>
+    <string name="moonset">Apusul lunii</string>
+    <string name="moonrise_in">Răsăritul lunii în</string>
+    <string name="moonset_in">Apusul lunii în</string>
+
     <string name="icon_type">Pictogramă</string>
     <string name="icon_type_0">Simplă</string>
     <string name="icon_type_1">Detaliat RGB</string>

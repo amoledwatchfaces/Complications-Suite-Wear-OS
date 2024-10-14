@@ -71,6 +71,12 @@
     <string name="moon_setting_simple_icon_on">Jednoduchá</string>
     <string name="moon_setting_simple_icon_off">Detailná</string>
 
+    <string name="moonrise_moonset">Východ a Západ mesiaca</string>
+    <string name="moonrise">Východ mesiaca</string>
+    <string name="moonset">Západ mesiaca</string>
+    <string name="moonrise_in">Východ mesiaca za</string>
+    <string name="moonset_in">Západ mesiaca za</string>
+
     <!-- Pay Complication -->
     <string name="pay_comp_name">Pay</string>
 

@@ -66,6 +66,12 @@
     <string name="moon_setting_simple_icon_on">Simples</string>
     <string name="moon_setting_simple_icon_off">Detalhada</string>
 
+    <string name="moonrise_moonset">Nascer e Pôr da lua</string>
+    <string name="moonrise">Nascer da lua</string>
+    <string name="moonset">Pôr da lua</string>
+    <string name="moonrise_in">Nascer da lua em</string>
+    <string name="moonset_in">Pôr da lua em</string>
+
     <string name="icon_type">Ícone</string>
     <string name="icon_type_0">Simples</string>
     <string name="icon_type_1">Detalhada RGB</string>

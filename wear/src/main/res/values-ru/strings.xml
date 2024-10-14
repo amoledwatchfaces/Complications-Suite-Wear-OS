@@ -69,6 +69,12 @@
     <string name="moon_setting_simple_icon_on">Простой</string>
     <string name="moon_setting_simple_icon_off">Детальный</string>
 
+    <string name="moonrise_moonset">Восход и Закат луны</string>
+    <string name="moonrise">Восход луны</string>
+    <string name="moonset">Закат луны</string>
+    <string name="moonrise_in">Восход луны через</string>
+    <string name="moonset_in">Закат луны через</string>
+
     <string name="icon_type">Лунная Иконка</string>
     <string name="icon_type_0">Простой</string>
     <string name="icon_type_1">Детальный RGB</string>

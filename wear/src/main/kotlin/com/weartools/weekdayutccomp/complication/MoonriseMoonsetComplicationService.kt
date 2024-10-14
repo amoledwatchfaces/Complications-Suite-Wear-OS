@@ -35,6 +35,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.datastore.core.DataStore
 import androidx.wear.watchface.complications.data.ComplicationData
+import androidx.wear.watchface.complications.data.ComplicationText
 import androidx.wear.watchface.complications.data.ComplicationType
 import androidx.wear.watchface.complications.data.CountDownTimeReference
 import androidx.wear.watchface.complications.data.LongTextComplicationData
@@ -52,14 +53,16 @@ import com.weartools.weekdayutccomp.activity.MainActivity
 import com.weartools.weekdayutccomp.enums.Request
 import com.weartools.weekdayutccomp.preferences.UserPreferences
 import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
-import com.weartools.weekdayutccomp.utils.SunriseSunsetHelper
+import com.weartools.weekdayutccomp.utils.MoonPhaseHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SunriseSunsetRVComplicationService : SuspendingComplicationDataSourceService() {
+class MoonriseMoonsetComplicationService : SuspendingComplicationDataSourceService() {
 
     @Inject
     lateinit var dataStore: DataStore<UserPreferences>
@@ -86,24 +89,25 @@ class SunriseSunsetRVComplicationService : SuspendingComplicationDataSourceServi
                 value = 40f,
                 min = 0f,
                 max =  100f,
-                contentDescription = PlainComplicationText.Builder(text = getString(R.string.sunrise_sunset_countdown_comp_name)).build())
-                .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_sunset_3)).build())
+                contentDescription = ComplicationText.EMPTY)
+                .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_moon_rise)).build())
                 .setText(PlainComplicationText.Builder(text = "6h 45m").build())
                 .setTapAction(null)
                 .build()
         }
         ComplicationType.LONG_TEXT -> {
             LongTextComplicationData.Builder(
-                text = PlainComplicationText.Builder(text = "${getString(R.string.sunset_in)}: 6h 45m").build(),
-                contentDescription = PlainComplicationText.Builder(text = getString(R.string.sunrise_sunset_countdown_comp_name)).build())
+                text = PlainComplicationText.Builder(text = "${getString(R.string.moonrise_in)}: 6h 45m").build(),
+                contentDescription = ComplicationText.EMPTY)
+                .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_moon_rise)).build())
                 .setTapAction(null)
                 .build()
         }
         ComplicationType.SHORT_TEXT -> {
             ShortTextComplicationData.Builder(
-                text = PlainComplicationText.Builder(text = "6h 45m").build(),
-                contentDescription = PlainComplicationText.Builder(text = getString(R.string.sunrise_sunset_countdown_comp_name)).build())
-                .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_sunset_3)).build())
+                text = PlainComplicationText.Builder(text = "19:45").build(),
+                contentDescription = ComplicationText.EMPTY)
+                .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_moon_rise)).build())
                 .setTapAction(null)
                 .build()
         }
@@ -122,12 +126,12 @@ class SunriseSunsetRVComplicationService : SuspendingComplicationDataSourceServi
 
         val timeDiffStyle = prefs.timeDiffStyle
 
-        val mph = SunriseSunsetHelper.updateSun(context = this, prefs)
+        val mph = MoonPhaseHelper.updateMoon(context = this, prefs)
 
         val changeTime = mph.changeTime
         val changeTime2 = mph.changeTime2
-        val isSunrise = mph.isSunrise
-        val icon = if (isSunrise) drawable.ic_sunrise_3 else drawable.ic_sunset_3
+        val isMoonrise = mph.isMoonRise
+        val icon = if (isMoonrise) drawable.ic_moon_rise else drawable.ic_moon_set
 
         val timeInstance = Instant.ofEpochMilli(changeTime)
 
@@ -147,7 +151,7 @@ class SunriseSunsetRVComplicationService : SuspendingComplicationDataSourceServi
                     value = (rangeMinutes-timeLeftMinutes).coerceIn(0f, rangeMinutes),
                     min = 0f,
                     max = rangeMinutes,
-                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.sunrise_sunset_countdown_comp_name)).build())
+                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.moonrise_moonset)).build())
                     .setText(TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.valueOf(timeDiffStyle), CountDownTimeReference(timeInstance)).build())
                     .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this,icon)).build())
                     .setTapAction(openScreen(true))
@@ -157,20 +161,31 @@ class SunriseSunsetRVComplicationService : SuspendingComplicationDataSourceServi
             ComplicationType.LONG_TEXT -> {
                 return LongTextComplicationData.Builder(
                     text = TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.valueOf(timeDiffStyle), CountDownTimeReference(timeInstance))
-                            .setText(if (isSunrise) "${getString(R.string.sunrise_in)}: ^1" else "${getString(R.string.sunset_in)}: ^1")
+                            .setText(if (isMoonrise) "${getString(R.string.moonrise_in)}: ^1" else "${getString(R.string.moonset_in)}: ^1")
                             .build(),
                     contentDescription = TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.valueOf(timeDiffStyle), CountDownTimeReference(timeInstance))
-                            .setText(if (isSunrise) "${getString(R.string.sunrise_in)}: ^1" else "${getString(R.string.sunset_in)}: ^1")
+                            .setText(if (isMoonrise) "${getString(R.string.moonrise_in)}: ^1" else "${getString(R.string.moonset_in)}: ^1")
                             .build())
                     .setTapAction(openScreen(true))
                     .build()
             }
             ComplicationType.SHORT_TEXT -> {
+
+                val ismilitary = prefs.isMilitaryTime
+                val leadingzero = prefs.isLeadingZeroTime
+
+                val fmt = if (ismilitary && leadingzero) "HH:mm"
+                else if (!ismilitary && !leadingzero) "h:mm"
+                else if (ismilitary) "H:mm"
+                else "hh:mm"
+                val dateTimeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern(fmt)
+
+                val time = Instant.ofEpochMilli(mph.changeTime).atZone(ZoneId.systemDefault()).format(dateTimeFormatter)
+                val text = if (mph.isMoonRise) getString(R.string.moonrise) else getString(R.string.moonset)
+
                 return ShortTextComplicationData.Builder(
-                    text = TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.valueOf(timeDiffStyle), CountDownTimeReference(timeInstance)).build(),
-                    contentDescription = TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.valueOf(timeDiffStyle), CountDownTimeReference(timeInstance))
-                            .setText(if (isSunrise) "${getString(R.string.sunrise_in)}: ^1" else "${getString(R.string.sunset_in)}: ^1")
-                            .build())
+                    text = PlainComplicationText.Builder(text = time).build(),
+                    contentDescription = PlainComplicationText.Builder(text = "$text: $time").build())
                     .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this,icon)).build())
                     .setTapAction(openScreen(true))
                     .build()

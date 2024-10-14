@@ -65,6 +65,12 @@
     <string name="moon_setting_simple_icon_on">Semplice</string>
     <string name="moon_setting_simple_icon_off">Dettagliata</string>
 
+    <string name="moonrise_moonset">Sorgere e Tramonto della luna</string>
+    <string name="moonrise">Sorgere della luna</string>
+    <string name="moonset">Tramonto della luna</string>
+    <string name="moonrise_in">Sorgere della luna in</string>
+    <string name="moonset_in">Tramonto della luna in</string>
+
     <string name="icon_type">Icona</string>
     <string name="icon_type_0">Semplice</string>
     <string name="icon_type_1">Dettagliata RGB</string>

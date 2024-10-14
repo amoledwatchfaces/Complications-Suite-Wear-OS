@@ -66,6 +66,12 @@
     <string name="moon_setting_simple_icon_on">Jednoduchá</string>
     <string name="moon_setting_simple_icon_off">Detailní</string>
 
+    <string name="moonrise_moonset">Východ a Západ měsíce</string>
+    <string name="moonrise">Východ měsíce</string>
+    <string name="moonset">Západ měsíce</string>
+    <string name="moonrise_in">Východ měsíce za</string>
+    <string name="moonset_in">Západ měsíce za</string>
+
     <string name="icon_type">Ikona</string>
     <string name="icon_type_0">Jednoduchá</string>
     <string name="icon_type_1">Detailní RGB</string>

@@ -64,6 +64,7 @@ import com.weartools.weekdayutccomp.complication.CustomTextComplicationService
 import com.weartools.weekdayutccomp.complication.DateComplicationService
 import com.weartools.weekdayutccomp.complication.DateCountdownComplicationService
 import com.weartools.weekdayutccomp.complication.MoonPhaseComplicationService
+import com.weartools.weekdayutccomp.complication.MoonriseMoonsetComplicationService
 import com.weartools.weekdayutccomp.complication.SunriseSunsetComplicationService
 import com.weartools.weekdayutccomp.complication.SunriseSunsetRVComplicationService
 import com.weartools.weekdayutccomp.complication.TimeComplicationService
@@ -293,6 +294,7 @@ class MainViewModel @Inject constructor(
         context.updateComplication(SunriseSunsetComplicationService::class.java)
         context.updateComplication(SunriseSunsetRVComplicationService::class.java)
         context.updateComplication(MoonPhaseComplicationService::class.java)
+        context.updateComplication(MoonriseMoonsetComplicationService::class.java)
     }}
 
     fun setDateFormat(dateFormat: DateFormat, value: String, context: Context)  { viewModelScope.launch {
@@ -309,6 +311,7 @@ class MainViewModel @Inject constructor(
     fun setTimeDiffStyle(value: String, context: Context) { viewModelScope.launch {
         dataStore.updateData { it.copy(timeDiffStyle = value) }
         context.updateComplication(SunriseSunsetRVComplicationService::class.java)
+        context.updateComplication(MoonriseMoonsetComplicationService::class.java)
     }}
     fun setMilitary(value: Boolean, context: Context) { viewModelScope.launch {
         dataStore.updateData { it.copy(isMilitary = value) }
@@ -319,6 +322,7 @@ class MainViewModel @Inject constructor(
         dataStore.updateData { it.copy(isMilitaryTime = value) }
         context.updateComplication(TimeComplicationService::class.java)
         context.updateComplication(SunriseSunsetComplicationService::class.java)
+        context.updateComplication(MoonriseMoonsetComplicationService::class.java)
     }}
     fun setISO(value: Boolean, context: Context) { viewModelScope.launch {
         dataStore.updateData { it.copy(isISO = value) }
@@ -355,6 +359,7 @@ class MainViewModel @Inject constructor(
         dataStore.updateData { it.copy(isLeadingZeroTime = value) }
         context.updateComplication(TimeComplicationService::class.java)
         context.updateComplication(SunriseSunsetComplicationService::class.java)
+        context.updateComplication(MoonriseMoonsetComplicationService::class.java)
     }}
     fun setCustomText(value: String, context: Context) { viewModelScope.launch {
         dataStore.updateData { it.copy(customText = value) }
