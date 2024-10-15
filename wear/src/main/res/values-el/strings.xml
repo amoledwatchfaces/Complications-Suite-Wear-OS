@@ -97,6 +97,18 @@
     <string name="time_ampm_setting_off">12h</string>
 
     <!-- Προτημήσεις Complication Παγκόσμιου ρολογιού -->
+    <string name="wc_name">Παγκόσμιο ρολόι</string>
+    <array name="wc_regions" translatable="true" lang="el">
+        <item>Αφρική</item>
+        <item>Ασία</item>
+        <item>Ατλαντικός</item>
+        <item>Αυστραλία</item>
+        <item>Ευρώπη</item>
+        <item>Βόρεια Αμερική</item>
+        <item>Ειρηνικός</item>
+        <item>Νότια Αμερική</item>
+        <item>Παγκόσμια</item>
+    </array>
     <string name="wc_comp_name_1">Παγκόσμιο ρολόι 1</string>
     <string name="wc_comp_name_2">Παγκόσμιο ρολόι 2</string>
     <string name="wc_setting_preference_category_title">Complication Παγκόσμιο ρολόι</string>

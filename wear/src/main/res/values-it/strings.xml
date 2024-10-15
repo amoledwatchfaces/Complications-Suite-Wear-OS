@@ -96,6 +96,18 @@
     <string name="time_ampm_setting_off">OFF / 12h</string>
 
     <!-- World Clock Complication Preferences -->
+    <string name="wc_name">Orologio Mondiale</string>
+    <array name="wc_regions" translatable="true" lang="it">
+        <item>Africa</item>
+        <item>Asia</item>
+        <item>Atlantico</item>
+        <item>Australia</item>
+        <item>Europa</item>
+        <item>Nord America</item>
+        <item>Pacifico</item>
+        <item>Sud America</item>
+        <item>Universale</item>
+    </array>
     <string name="wc_comp_name_1">Orologio Mondiale 1</string>
     <string name="wc_comp_name_2">Orologio Mondiale 2</string>
     <string name="wc_setting_preference_category_title">Orologio Mondiale</string>

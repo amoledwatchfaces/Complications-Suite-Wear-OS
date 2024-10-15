@@ -100,6 +100,18 @@
     <string name="time_ampm_setting_off">12h</string>
 
     <!-- World Clock Complication Preferences -->
+    <string name="wc_name">Zegar światowy</string>
+    <array name="wc_regions" translatable="true" lang="pl">
+        <item>Afryka</item>
+        <item>Azja</item>
+        <item>Atlantyk</item>
+        <item>Australia</item>
+        <item>Europa</item>
+        <item>Ameryka Północna</item>
+        <item>Pacyfik</item>
+        <item>Ameryka Południowa</item>
+        <item>Uniwersalny</item>
+    </array>
     <string name="wc_comp_name_1">Zegar światowy 1</string>
     <string name="wc_comp_name_2">Zegar światowy 2</string>
     <string name="wc_setting_preference_category_title">Zegar światowy - ustawienia</string>

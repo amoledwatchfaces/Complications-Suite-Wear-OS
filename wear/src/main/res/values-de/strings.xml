@@ -98,6 +98,18 @@
     <string name="time_ampm_setting_off">AUS / 12h</string>
 
     <!-- World Clock Complication Preferences -->
+    <string name="wc_name">Weltuhr</string>
+    <array name="wc_regions" translatable="true" lang="de">
+        <item>Afrika</item>
+        <item>Asien</item>
+        <item>Atlantik</item>
+        <item>Australien</item>
+        <item>Europa</item>
+        <item>Nordamerika</item>
+        <item>Pazifik</item>
+        <item>Südamerika</item>
+        <item>Universell</item>
+    </array>
     <string name="wc_comp_name_1">Weltuhr 1</string>
     <string name="wc_comp_name_2">Weltuhr 2</string>
     <string name="wc_setting_preference_category_title">Weltuhr Komplikation</string>

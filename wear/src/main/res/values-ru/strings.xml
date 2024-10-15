@@ -100,6 +100,18 @@
     <string name="time_ampm_setting_off">12ч</string>
 
     <!-- World Clock Complication Preferences -->
+    <string name="wc_name">Мировые Часы</string>
+    <array name="wc_regions" translatable="true" lang="ru">
+        <item>Африка</item>
+        <item>Азия</item>
+        <item>Атлантика</item>
+        <item>Австралия</item>
+        <item>Европа</item>
+        <item>Северная Америка</item>
+        <item>Тихий океан</item>
+        <item>Южная Америка</item>
+        <item>Универсальный</item>
+    </array>
     <string name="wc_comp_name_1">Мировые Часы 1</string>
     <string name="wc_comp_name_2">Мировые Часы 2</string>
     <string name="wc_setting_preference_category_title">Мировые Часы Осложнение</string>

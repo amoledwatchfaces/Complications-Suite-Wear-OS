@@ -96,6 +96,18 @@
     <string name="time_ampm_setting_off">OFF / 12h</string>
 
     <!-- World Clock Complication Preferences -->
+    <string name="wc_name">Ora Mondială</string>
+    <array name="wc_regions" translatable="true" lang="ro">
+        <item>Africa</item>
+        <item>Asia</item>
+        <item>Atlantic</item>
+        <item>Australia</item>
+        <item>Europa</item>
+        <item>America de Nord</item>
+        <item>Pacific</item>
+        <item>America de Sud</item>
+        <item>Universal</item>
+    </array>
     <string name="wc_comp_name_1">Ora Mondială 1</string>
     <string name="wc_comp_name_2">Ora Mondială 2</string>
     <string name="wc_setting_preference_category_title">Ceas Mondial - Complicaţie</string>
