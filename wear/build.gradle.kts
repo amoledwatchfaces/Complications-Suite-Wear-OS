@@ -128,8 +128,8 @@ dependencies {
 
     // Hilt
     implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
-    implementation ("com.google.dagger:hilt-android:2.51")
-    ksp ("com.google.dagger:hilt-compiler:2.51")
+    implementation ("com.google.dagger:hilt-android:2.52")
+    ksp ("com.google.dagger:hilt-compiler:2.52")
 
     // Google Places
     implementation ("com.google.android.libraries.places:places:4.0.0")
