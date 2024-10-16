@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Translated by: Nova1601 -->
+<resources>
+    <!-- Do not translate translatable="false" lines -->
+    <string name="app_name">Complications Suite</string> <!-- Does not need to be translated, but it's recommended --> <!-- Note from Nova (the traductor) : I don't think i'm gonna change the app name because in the French version of WearOS Complication  translation is Complication But If Needed or Wanted Complication can also be translated to "Module" -->
+    <string name="app_info">Information de l\'application</string>
+    <string name="version">Version</string>
+    <string name="settings">Paramètre</string>
+    <string name="language">Langue</string>
+
+    <string name="icon_type">Type D\'icon</string>
+    <string name="icon_type_0">Simple</string>
+    <string name="icon_type_1">Par Défaut RGB</string>
+    <string name="icon_type_2">Par Défaut ARGB</string>
+
+    <string name="compose_toggle" translatable="false">Interrupteur</string> <!-- Note from Nova (the traductor) : Toggle have many traduction in French and the one i put fit the word and have a synonym who is "commutateur" this is the same things execpt this is the technical word for "Interrupteur" -->
+
+    <string name="awf_comp_name" translatable="false">Logo de Amoled</string>
+    <!-- Crypto Complication -->
+    <string name="crypto_name_1" translatable="true">Prix Du BTC En $</string>
+    <string name="crypto_name_2" translatable="true">Prix du ETH En $</string>
+
+    <!-- Flashlight Complication -->
+    <string name="flashlight_comp_name">Lampe Torche</string>
+
+    <!-- Alarm Complication Preferences -->
+    <string name="alarm_comp_name">Alarme</string>
+
+    <!-- Assist Complication Preferences -->
+    <string name="assist_comp_name">Assistant (Monochrome)</string>
+    <string name="assist_missing">L\'aplication De L\'assistant Vocal N'est Pas Installé</string>
+
+    <!-- Date Complication Preferences -->
+    <string name="date_comp_name">Date</string>
+    <string name="date_custom_format">Format Personalisé</string>
+    <string name="date_setting_preference_category_title">Complication Pour La Date </string>
+    <string name="date_long_text_format">Format Du Text Long</string>
+    <string name="date_long_title_format">Format Du Titre Long</string>
+    <string name="date_short_text_format">Short Text Format Du Text Court </string>
+    <string name="date_short_title_format">Short Title Format Du Text Court</string>
+
+    <!-- Persian Date -->
+    <string name="persian_date_complications">Complications Pour La Date En Persan</string>
+    <string name="date_comp_jalali_hijri_settings" translatable="false">Jalali / Hijri</string>
+    <string name="date_comp_jalali_name">Date en Jalali</string>
+    <string name="date_comp_hijri_name">Date en Hijri</string>
+
+    <!-- Day of Year Complication Preferences -->
+    <string name="doy_comp_name">Jours De L\'année</string>
+    <string name="doy_short_title">Jours</string>
+
+    <!-- Logo Complication Preferences -->
+    <string name="logo_comp_name">Logo De Wear OS</string>
+
+    <!-- Moon Phase Complication Preferences -->
+    <string name="moon_comp_name">Phase De La Lune</string>
+    <string name="moon_setting_preference_category_title">Complication De La Lune Et Du Soleil</string>
+
+    <array name="moon_phases">
+        <item>Premier Quartier</item>
+        <item>Pleine Lune</item>
+        <item>Dernier Quartier</item>
+        <item>Nouvelle Lune</item>
+        <item>Dernier Croissant</item>
+        <item>Gibbeuse Décroissante</item>
+        <item>Premier Croissant</item>
+        <item>Gibbeuse Croissante</item>
+    </array>
+
+    <string name="moon_setting_hemi_title">Hémisphère</string>
+    <string name="moon_setting_hemi_on">Nord</string>
+    <string name="moon_setting_hemi_off">Sud</string>
+    <string name="moon_setting_simple_icon_title">Icon De La Lune</string>
+    <string name="moon_setting_simple_icon_on">Simple</string>
+    <string name="moon_setting_simple_icon_off">Détailler</string>
+
+    <string name="moonrise_moonset">Lever De La Lune &amp; Coucher De La Lune</string>
+    <string name="moonrise">Lever De La Lune</string>
+    <string name="moonset">Coucher De La Lune</string>
+    <string name="moonrise_in">Lever De La Lune Dans</string>
+    <string name="moonset_in">Coucher De La Lune Dans</string>
+
+    <!-- Pay Complication -->
+    <string name="pay_comp_name">Payer</string>
+    <!-- Sec Complication -->
+    <string name="sec_comp_name">Seconde</string>
+    <string name="sec_short_title">Sec</string>
+
+    <!-- Time Complication Preferences -->
+    <string name="time_comp_name">Temps</string>
+    <string name="time_comp_desc">Temps Actuelle</string>
+    <string name="time_setting_leading_zero_title">Zéro Non Significatif</string>
+    <string name="time_setting_leading_zero_summary_on" translatable="false">09:00</string>
+    <string name="time_setting_leading_zero_summary_off" translatable="false">9:00</string>
+
+    <string name="time_ampm_setting_preference_category_title">Temps / Soleil Complication</string>
+    <string name="time_ampm_setting_title">Hour Format</string>
+    <string name="time_ampm_setting_on">24h</string>
+    <string name="time_ampm_setting_off">12h</string>
+
+    <!-- World Clock Complication Preferences -->
+    <string name="wc_name">Horloge Mondial</string>
+    <array name="wc_regions">
+        <item>Afrique</item>
+        <item>Asie</item>
+        <item>Atlantique</item>
+        <item>Australie</item>
+        <item>Europe</item>
+        <item>Amérique Du Nord</item>
+        <item>Pacifique</item>
+        <item>Amérique Du Sud</item>
+        <item>Universel</item>
+    </array>
+    <string name="wc_comp_name_1">Horloge Mondial n°1</string>
+    <string name="wc_comp_name_2">Horloge Mondial n°2</string>
+    <string name="wc_setting_preference_category_title">Complication De L\'horloge Mondial</string>
+    <string name="wc_setting_leading_zero_title">Zéro Non Significatif</string>
+    <string name="wc_setting_leading_zero_summary_on" translatable="false">09:00</string>
+    <string name="wc_setting_leading_zero_summary_off" translatable="false">9:00</string>
+
+    <string name="wc_ampm_setting_title">Format de L\'heure</string>
+    <string name="wc_ampm_setting_on">24h</string>
+    <string name="wc_ampm_setting_off">12h</string>
+
+
+    <string name="wc_setting_title">ID de la Timezone n°1</string>
+    <string name="wc2_setting_title">ID de la Timezone n°2</string>
+
+    <!-- WOY Complication Preferences -->
+    <string name="week_complication_name">Semaine de L\'année</string>
+    <string name="woy_complication_text">Semaine</string>
+    <string name="woy_complication_description">Semaine de l\'année</string>
+    <string name="woy_setting_preference_category_title">Complication de la Semaine de l\'année </string>
+    <string name="woy_setting_title">Format</string>
+    <string name="woy_setting_on" translatable="false">ISO</string>
+    <string name="woy_setting_off" translatable="false">US</string>
+
+    <!-- Custom Text + Title -->
+    <string name="custom_text_comp_name">Texte Personalisé</string>
+    <string name="custom_text_comp_name_category">Complication de Texte Personalisé</string>
+
+    <!--Custom Text + Title 2-->
+    <string name="custom_text_p1">Texte</string>
+    <string name="custom_title_p1">Titre</string>
+
+    <!--translate-->
+    <string name="coarse_location_toggle_title">Localisation Aproximative</string>
+    <string name="coarse_secondary_enabled">Activer</string>
+    <string name="coarse_secondary_disabled">Désactiver</string>
+    <string name="coarse_toggle_description">Intérupteur de Permission Pour La Localisation Aproximative</string>
+
+    <!--translate-->
+    <string name="sunrise_sunset_comp_name">Lever de Soleil &amp; Coucher de Soleil</string>
+    <string name="sunrise_sunset_countdown_comp_name">Lever de Soleil &amp; Compte À Rebours Du Coucher de Soleil</string>
+    <string name="sunrise">Lever de Soleil</string>
+    <string name="sunset">Coucher de Soleil</string>
+    <string name="sunrise_in">Lever de Soleil Dans</string>
+    <string name="sunset_in">Coucher de Soleil Dans</string>
+    <string name="enable_permission_toast">Besoin de la Localisation Aproximative (App UI)</string>
+    <string name="enable_permission_toast_consider">Définir La Localisation Pour Une Rotation Précise de la Lune</string>
+    <string name="location">Localisation</string>
+    <string name="checking">Vérification de la Localisation</string>
+    <string name="no_location">Impossible D\'obtenir La Localisation. Vérifier Le GPS</string>
+
+    <string name="countdown_style">Format Du Compte À Rebours</string>
+    <string name="countdown_style_style">Format</string>
+    <string name="e_g_">Par Exemple</string>
+
+    <!-- translate -->
+    <string name="day_and_week_comp_name">Jours &amp; Semaine</string>
+    <string name="dayD">J:</string>
+    <string name="weekW">S:</string>
+    <string name="dayDlong">Jours</string>
+    <string name="weekWlong">Semaine</string>
+
+    <!-- Developer Options -->
+    <string name="developer_options_comp_name">Options de Développement</string>
+
+    <!--Date Countdown-->
+    <string name="date_countdown_comp_name">Compte À Rebours</string>
+    <string name="countdown_text">Temps Restant</string>
+
+    <!--NOTIFICATIONS-->
+    <string name="notification_permission_info">Certaines complications nécessitent d\'afficher des messages contextuels sur Android 13+. L\'application demandera votre autorisation pour les afficher.</string>
+
+    <!--VOLUME-->
+    <string name="volume_comp_name">Contrôle Du Volume</string>
+
+    <!--DICE-->
+    <string name="dice_comp_name">Dé</string>
+
+    <!--WATER-->
+    <string name="water_comp_name">Consommation D\'eau</string>
+    <string name="water_intake_text">Consomation</string>
+    <string name="water_intake_goal_text">Goal</string> <!-- Note from Nova (the traductor) : Goal don't need a traduction, it's the same word in French-->
+
+    <!--Time zone-->
+    <string name="time_zone_comp_name">Fuseau Horaire</string>
+
+    <!-- Dynamic Calendar Icon -->
+    <string name="dynamic_calendar_icon_comp_name">Icon Dynamique De Calendrier</string>
+
+    <!-- Barometer -->
+    <string name="barometer_comp_name">Baromètre</string>
+    <string name="barometer_category">Complication du Baromètre</string>
+    <string name="barometer_use_hpa">Unités De Mesure</string>
+    <string name="barometer_hpa" translatable="false">hPa</string>
+    <string name="barometer_inHg" translatable="false">inHg</string>
+
+    <!-- Timer -->
+    <string name="timer_comp_name">Minuteur</string>
+</resources>

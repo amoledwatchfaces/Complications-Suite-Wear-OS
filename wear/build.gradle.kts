@@ -23,7 +23,7 @@ android {
         versionCode = rootProject.extra["versionCode"] as Int
         versionName = rootProject.extra["versionName"] as String
 
-        resourceConfigurations += listOf("en", "cs", "de", "el", "es", "it", "pt","pl", "ro", "sk", "zh", "ru")
+        resourceConfigurations += listOf("en", "cs", "de", "el", "es", "fr", "it", "pt", "pl", "ro", "sk", "zh", "ru")
 
         versionNameSuffix = "-wear"
         versionCode = 20000 + (versionCode ?: 0)
