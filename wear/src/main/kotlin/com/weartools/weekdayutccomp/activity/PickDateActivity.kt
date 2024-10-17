@@ -42,6 +42,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
+import java.time.ZoneOffset
 
 @AndroidEntryPoint
 class PickDateActivity : ComponentActivity(){
@@ -52,19 +53,26 @@ class PickDateActivity : ComponentActivity(){
         setContent {
             val context = LocalContext.current
             val preferences = viewModel.preferences.collectAsState()
+            val storedDate = preferences.value.datePicked
 
             DatePicker(
                 modifier = Modifier.background(color = Color.Black),
                 fromDate = LocalDate.now().plusDays(1),
                 onDateConfirm = {
-                    viewModel.setDatePicked(it.atStartOfDay(ZoneId.of("UTC")).toInstant().toEpochMilli(), context)
+                    viewModel.setDatePicked(it.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli(), context)
                     setResult(RESULT_OK) // OK! (use whatever code you want)
                     finish()
                 },
-                date = Instant.ofEpochMilli(preferences.value.datePicked)
-                    .atZone(ZoneId.of("UTC"))
-                    .toLocalDate()
+                date =
+                    if (storedDate <= System.currentTimeMillis()){
+                        LocalDate.now().plusDays(1)
+                    }
+                    else {
+                        Instant.ofEpochMilli(storedDate)
+                            .atZone(ZoneId.of("UTC"))
+                            .toLocalDate()
+                    }
             )
-            }
         }
+    }
 }

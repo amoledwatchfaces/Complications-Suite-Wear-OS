@@ -136,9 +136,15 @@ class DateCountdownComplicationService : SuspendingComplicationDataSourceService
 
             val now = System.currentTimeMillis()
             val startDate = preferences.first().startDate
-            val timeRange = (datePicked - startDate) / 60000
+            var timeRange = ((datePicked - startDate) / 60000)
+
             val timePassed = (now - startDate) / 60000
-            val timeLeft = (timeRange - timePassed)
+            var timeLeft = (timeRange - timePassed)
+
+            if (timeRange <= 0) {
+                timeRange = 1
+                timeLeft = 0
+            }
 
             RangedValueComplicationData.Builder(
                 min = 0f,
