@@ -28,7 +28,7 @@
 
     <!-- Assist Complication Preferences -->
     <string name="assist_comp_name">Assistant (Monochrome)</string>
-    <string name="assist_missing">L\'aplication De L\'assistant Vocal N'est Pas Installé</string>
+    <string name="assist_missing">L\'aplication De L\'assistant Vocal N\'est Pas Installé</string>
 
     <!-- Date Complication Preferences -->
     <string name="date_comp_name">Date</string>

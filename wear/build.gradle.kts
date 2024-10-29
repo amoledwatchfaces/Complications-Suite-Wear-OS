@@ -23,7 +23,7 @@ android {
         versionCode = rootProject.extra["versionCode"] as Int
         versionName = rootProject.extra["versionName"] as String
 
-        resourceConfigurations += listOf("en", "cs", "de", "el", "es", "fr", "it", "pt", "pl", "ro", "sk", "zh", "ru")
+        resourceConfigurations += listOf("en", "cs", "de", "el", "es", "fr", "it", "pt", "pl", "ro", "sk","zh","ru")
 
         versionNameSuffix = "-wear"
         versionCode = 20000 + (versionCode ?: 0)
@@ -72,7 +72,7 @@ android {
 }
 
 dependencies {
-    val composeUiVersion = "1.7.3"
+    val composeUiVersion = "1.7.4"
     val composeWearVersion = "1.4.0"
     
     //request permission
@@ -97,12 +97,12 @@ dependencies {
     implementation ("androidx.wear.compose:compose-material:$composeWearVersion")
     implementation ("androidx.wear.compose:compose-foundation:$composeWearVersion")
     implementation ("androidx.compose.ui:ui-tooling-preview:$composeUiVersion")
-    implementation ("androidx.activity:activity-compose:1.9.2")
+    implementation ("androidx.activity:activity-compose:1.9.3")
     implementation ("androidx.compose.material:material-icons-extended:$composeUiVersion")
 
     androidTestImplementation ("androidx.compose.ui:ui-test-junit4:$composeUiVersion")
     debugImplementation ("androidx.compose.ui:ui-tooling:$composeUiVersion")
-    debugImplementation ("androidx.compose.ui:ui-test-manifest:1.7.3")
+    debugImplementation ("androidx.compose.ui:ui-test-manifest:1.7.4")
 
     // DataStore
     implementation ("androidx.datastore:datastore:1.1.1")
