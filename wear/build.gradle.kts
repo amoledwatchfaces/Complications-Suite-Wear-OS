@@ -14,7 +14,7 @@ plugins {
 }
 
 android {
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.weartools.weekdayutccomp"
@@ -30,6 +30,7 @@ android {
     }
     bundle {
         language {
+            @Suppress("UnstableApiUsage")
             enableSplit = false // TO HAVE ALL LANGUAGES AVAILABLE
         }
     }
@@ -72,7 +73,7 @@ android {
 }
 
 dependencies {
-    val composeUiVersion = "1.7.4"
+    val composeUiVersion = "1.7.5"
     val composeWearVersion = "1.4.0"
     
     //request permission
@@ -81,7 +82,7 @@ dependencies {
     implementation ("com.google.android.gms:play-services-location:21.3.0")
 
     // Used for WorkManager
-    implementation ("androidx.work:work-runtime-ktx:2.9.1")
+    implementation ("androidx.work:work-runtime-ktx:2.10.0")
 
     // Moon Phase Helper
     implementation ("org.shredzone.commons:commons-suncalc:3.7")
@@ -92,7 +93,7 @@ dependencies {
     implementation ("androidx.wear:wear:1.3.0")
 
     // Compose
-    implementation ("androidx.core:core-ktx:1.13.1")
+    implementation ("androidx.core:core-ktx:1.15.0")
     implementation ("androidx.compose.ui:ui:$composeUiVersion")
     implementation ("androidx.wear.compose:compose-material:$composeWearVersion")
     implementation ("androidx.wear.compose:compose-foundation:$composeWearVersion")
@@ -102,7 +103,7 @@ dependencies {
 
     androidTestImplementation ("androidx.compose.ui:ui-test-junit4:$composeUiVersion")
     debugImplementation ("androidx.compose.ui:ui-tooling:$composeUiVersion")
-    debugImplementation ("androidx.compose.ui:ui-test-manifest:1.7.4")
+    debugImplementation ("androidx.compose.ui:ui-test-manifest:1.7.5")
 
     // DataStore
     implementation ("androidx.datastore:datastore:1.1.1")
@@ -121,7 +122,7 @@ dependencies {
     implementation ("com.google.android.horologist:horologist-audio-ui:0.6.20")
 
     // Serialization
-    implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+    implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
 
     // Persian Date
     implementation("com.github.samanzamani:persiandate:1.7.1")
@@ -135,10 +136,10 @@ dependencies {
     implementation ("com.google.android.libraries.places:places:4.0.0")
 
     // Material 3
-    implementation("androidx.compose.material3:material3:1.3.0")
+    implementation("androidx.compose.material3:material3:1.3.1")
 
     // Firebase
-    implementation (platform("com.google.firebase:firebase-bom:33.4.0"))
+    implementation (platform("com.google.firebase:firebase-bom:33.5.1"))
     implementation ("com.google.firebase:firebase-crashlytics")
 }
 
