@@ -28,6 +28,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddLocation
 import androidx.compose.material.icons.filled.EditLocation
 import androidx.compose.material.icons.filled.LocationCity
+import androidx.compose.material.icons.outlined.AttachMoney
+import androidx.compose.material.icons.outlined.Euro
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -82,6 +84,7 @@ import com.weartools.weekdayutccomp.presentation.ui.SectionText
 import com.weartools.weekdayutccomp.presentation.ui.ToggleChip
 import com.weartools.weekdayutccomp.presentation.ui.WorldClockWidget
 import com.weartools.weekdayutccomp.theme.wearColorPalette
+import com.weartools.weekdayutccomp.utils.CounterCurrency
 import com.weartools.weekdayutccomp.utils.openPlayStore
 import kotlinx.coroutines.launch
 
@@ -148,6 +151,7 @@ fun ComplicationsSuiteScreen(
     var openLocale by remember{ mutableStateOf(false) }
     var moonIconChange by remember{ mutableStateOf(false) }
     var openLocationChoose by remember{ mutableStateOf(false) }
+    var changeCryptoCounterCurrency by remember{ mutableStateOf(false) }
 
     LaunchedEffect(open) {
         coroutineScope.launch {
@@ -457,6 +461,23 @@ fun ComplicationsSuiteScreen(
             )
         }
 
+        item { PreferenceCategory(title = "Crypto Complications") }
+        item {
+            DialogChip(
+                text = "Counter Currency",
+                icon = { Icon(imageVector =
+                when (preferences.value.counterCurrency){
+                    CounterCurrency.USD -> Icons.Outlined.AttachMoney
+                    CounterCurrency.EUR -> Icons.Outlined.Euro
+                    else -> Icons.Outlined.AttachMoney
+                }, contentDescription = "Counter Currency Icon", tint = wearColorPalette.secondary)},
+                title = preferences.value.counterCurrency.name,
+                onClick = {
+                    changeCryptoCounterCurrency = changeCryptoCounterCurrency.not()
+                }
+            )
+        }
+
         // APP INFO SECTION
         item { PreferenceCategory(title = stringResource(id = R.string.app_info)) }
         item {
@@ -612,6 +633,26 @@ fun ComplicationsSuiteScreen(
             }
         } )
 
+    }
+    if (changeCryptoCounterCurrency){
+        ListItemsWidget(
+            focusRequester = focusRequester,
+            titles = "Counter Currency",
+            items = listOf("USD","EUR"),
+            preValue = preferences.value.counterCurrency.name,
+            callback ={
+                if (it == -1) {
+                    changeCryptoCounterCurrency=false
+                    return@ListItemsWidget
+                }else {
+                    viewModel.setCounterCurrency(
+                        value = CounterCurrency.entries[it],
+                        context
+                    )
+                    changeCryptoCounterCurrency = changeCryptoCounterCurrency.not()
+                }
+            }
+        )
     }
 
     if (Build.VERSION.SDK_INT > 32 && !preferences.value.notificationAsked) {

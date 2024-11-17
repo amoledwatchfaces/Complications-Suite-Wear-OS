@@ -48,6 +48,7 @@ import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
 import com.weartools.weekdayutccomp.receiver.ComplicationTapBroadcastReceiver
 import com.weartools.weekdayutccomp.receiver.ComplicationToggleArgs
 import com.weartools.weekdayutccomp.utils.CryptoHelper
+import com.weartools.weekdayutccomp.utils.counterCurrencySymbols
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import java.math.RoundingMode
@@ -102,20 +103,23 @@ class EthereumPriceComplicationService : SuspendingComplicationDataSourceService
         val args = ComplicationToggleArgs(providerComponent = ComponentName(this, javaClass), complicationInstanceId = request.complicationInstanceId)
         val complicationPendingIntent = ComplicationTapBroadcastReceiver.getToggleIntent(context = this, args = args)
 
+        val counterCurrency = preferences.first().counterCurrency
+        val counterCurrencySymbol = counterCurrencySymbols[counterCurrency.ordinal]
+
         //GET CURRENT PRICE
-        val ethereumPrice = CryptoHelper.fetchEthereumPrice()
+        val ethereumPrice = CryptoHelper.fetchEthereumPrice(counterCurrency)
         if (ethereumPrice != null){
             price = ethereumPrice.last
             highPrice = ethereumPrice.high
             lowPrice = ethereumPrice.low
             dataStore.updateData { it.copy(priceETH = ethereumPrice.last) }
             shortPattern = "#.##K"
-            longPattern = "$#,###"
+            longPattern = "$counterCurrencySymbol#,###"
         }
         else {
             price = preferences.first().priceETH
             shortPattern = "#.##K!"
-            longPattern = "$#,###!"
+            longPattern = "$counterCurrencySymbol#,###!"
         }
 
         val priceString =

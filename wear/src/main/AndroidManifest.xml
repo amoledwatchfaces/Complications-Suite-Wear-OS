@@ -134,6 +134,17 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.CustomGoalActivity"
+            android:autoRemoveFromRecents="true"
+            android:noHistory="true"
+            android:exported="true"
+            android:taskAffinity="">
+            <intent-filter>
+                <action android:name="com.weartools.weekdayutccomp.CUSTOM_GOAL" />
+                <category android:name="android.support.wearable.complications.category.PROVIDER_CONFIG" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <!-- Complications -->
         <service android:name=".complication.AlarmComplicationService"
@@ -364,6 +375,26 @@
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
                 android:value="ICON,SMALL_IMAGE" />
         </service>
+
+        <service android:name=".complication.CustomGoalComplicationService"
+            android:exported="true"
+            android:icon="@drawable/ic_goal"
+            android:label="Custom Goal"
+            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
+            <meta-data
+                android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
+                android:value="2100"/>
+            <meta-data
+                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+                android:value="SHORT_TEXT,GOAL_PROGRESS,RANGED_VALUE,LONG_TEXT" />
+            <meta-data
+                android:name="android.support.wearable.complications.PROVIDER_CONFIG_ACTION"
+                android:value="com.weartools.weekdayutccomp.CUSTOM_GOAL" />
+        </service>
+
         <service android:name=".complication.HijriDateComplicationService"
             android:enabled="false"
             android:exported="true"

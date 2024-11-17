@@ -79,6 +79,7 @@ class WorldClock2ComplicationService : SuspendingComplicationDataSourceService()
                     text = PlainComplicationText.Builder(text = "10:00").build(),
                     contentDescription = ComplicationText.EMPTY)
                     .setTitle(PlainComplicationText.Builder(text = "UTC").build())
+                    .setMonochromaticImage(MonochromaticImage.Builder(Icon.createWithResource(this, R.drawable.ic_timezone)).build())
                     .build()
             }
 

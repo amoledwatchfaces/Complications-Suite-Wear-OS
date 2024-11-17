@@ -133,13 +133,13 @@ dependencies {
     ksp ("com.google.dagger:hilt-compiler:2.52")
 
     // Google Places
-    implementation ("com.google.android.libraries.places:places:4.0.0")
+    implementation ("com.google.android.libraries.places:places:4.1.0")
 
     // Material 3
     implementation("androidx.compose.material3:material3:1.3.1")
 
     // Firebase
-    implementation (platform("com.google.firebase:firebase-bom:33.5.1"))
+    implementation (platform("com.google.firebase:firebase-bom:33.6.0"))
     implementation ("com.google.firebase:firebase-crashlytics")
 }
 

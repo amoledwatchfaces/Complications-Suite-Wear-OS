@@ -48,6 +48,7 @@ import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
 import com.weartools.weekdayutccomp.receiver.ComplicationTapBroadcastReceiver
 import com.weartools.weekdayutccomp.receiver.ComplicationToggleArgs
 import com.weartools.weekdayutccomp.utils.CryptoHelper
+import com.weartools.weekdayutccomp.utils.counterCurrencySymbols
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import java.math.RoundingMode
@@ -99,67 +100,70 @@ class BitcoinPriceComplicationService : SuspendingComplicationDataSourceService(
     }
 
     override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
-    val args = ComplicationToggleArgs(providerComponent = ComponentName(this, javaClass), complicationInstanceId = request.complicationInstanceId)
-    val complicationPendingIntent = ComplicationTapBroadcastReceiver.getToggleIntent(context = this, args = args)
+        val args = ComplicationToggleArgs(providerComponent = ComponentName(this, javaClass), complicationInstanceId = request.complicationInstanceId)
+        val complicationPendingIntent = ComplicationTapBroadcastReceiver.getToggleIntent(context = this, args = args)
 
-    //GET CURRENT PRICE
-    val bitcoinPrice = CryptoHelper.fetchBitcoinPrice()
-    if (bitcoinPrice != null){
-        price = bitcoinPrice.last
-        highPrice = bitcoinPrice.high
-        lowPrice = bitcoinPrice.low
-        dataStore.updateData { it.copy(priceBTC = bitcoinPrice.last) }
-        shortPattern = "#.#K"
-        longPattern = "$#,###"
-    }
-    else {
-        price = preferences.first().priceBTC
-        shortPattern = "#.#K!"
-        longPattern = "$#,###!"
-    }
-    val priceString =
-        if (price >= 1000.00) { DecimalFormat(shortPattern).apply { RoundingMode.HALF_UP }.format(price/1000.0) }
-        else { DecimalFormat(shortPattern).format(price) }
+        val counterCurrency = preferences.first().counterCurrency
+        val counterCurrencySymbol = counterCurrencySymbols[counterCurrency.ordinal]
 
-    return when (request.complicationType) {
-
-        ComplicationType.SHORT_TEXT -> {
-            ShortTextComplicationData.Builder(
-                text = PlainComplicationText.Builder(text = priceString).build(),
-                contentDescription = PlainComplicationText.Builder(text = "BTC").build())
-                .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_btc)).build())
-                .setTapAction(complicationPendingIntent)
-                .build()
+        //GET CURRENT PRICE
+        val bitcoinPrice = CryptoHelper.fetchBitcoinPrice(counterCurrency)
+        if (bitcoinPrice != null){
+            price = bitcoinPrice.last
+            highPrice = bitcoinPrice.high
+            lowPrice = bitcoinPrice.low
+            dataStore.updateData { it.copy(priceBTC = bitcoinPrice.last) }
+            shortPattern = "#.#K"
+            longPattern = "$counterCurrencySymbol#,###"
         }
-        ComplicationType.LONG_TEXT -> {
-            LongTextComplicationData.Builder(
-                text = PlainComplicationText.Builder(text = DecimalFormat(longPattern).format(price.toInt())).build(),
-                contentDescription = PlainComplicationText.Builder(text = "BTC").build())
-                .setTitle(PlainComplicationText.Builder(text = "BTC").build())
-                .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_btc)).build())
-                .setTapAction(complicationPendingIntent)
-                .build()
+        else {
+            price = preferences.first().priceBTC
+            shortPattern = "#.#K!"
+            longPattern = "$counterCurrencySymbol#,###!"
         }
-        ComplicationType.RANGED_VALUE -> {
-            RangedValueComplicationData.Builder(
-                value = if (bitcoinPrice == null) lowPrice else price,
-                min = lowPrice,
-                max =  highPrice,
-                contentDescription = PlainComplicationText.Builder(text = "BTC").build())
-                .setText(PlainComplicationText.Builder(text = priceString).build())
-                .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_btc)).build())
-                .setTapAction(complicationPendingIntent)
-                .build()
-        }
+        val priceString =
+            if (price >= 1000.00) { DecimalFormat(shortPattern).apply { RoundingMode.HALF_UP }.format(price/1000.0) }
+            else { DecimalFormat(shortPattern).format(price) }
 
-        else -> {
-            if (Log.isLoggable(TAG, Log.WARN)) {
-                Log.w(TAG, "Unexpected complication type ${request.complicationType}")
+        return when (request.complicationType) {
+
+            ComplicationType.SHORT_TEXT -> {
+                ShortTextComplicationData.Builder(
+                    text = PlainComplicationText.Builder(text = priceString).build(),
+                    contentDescription = PlainComplicationText.Builder(text = "BTC").build())
+                    .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_btc)).build())
+                    .setTapAction(complicationPendingIntent)
+                    .build()
             }
-            null
-        }
+            ComplicationType.LONG_TEXT -> {
+                LongTextComplicationData.Builder(
+                    text = PlainComplicationText.Builder(text = DecimalFormat(longPattern).format(price.toInt())).build(),
+                    contentDescription = PlainComplicationText.Builder(text = "BTC").build())
+                    .setTitle(PlainComplicationText.Builder(text = "BTC").build())
+                    .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_btc)).build())
+                    .setTapAction(complicationPendingIntent)
+                    .build()
+            }
+            ComplicationType.RANGED_VALUE -> {
+                RangedValueComplicationData.Builder(
+                    value = if (bitcoinPrice == null) lowPrice else price,
+                    min = lowPrice,
+                    max =  highPrice,
+                    contentDescription = PlainComplicationText.Builder(text = "BTC").build())
+                    .setText(PlainComplicationText.Builder(text = priceString).build())
+                    .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_btc)).build())
+                    .setTapAction(complicationPendingIntent)
+                    .build()
+            }
 
-    }
+            else -> {
+                if (Log.isLoggable(TAG, Log.WARN)) {
+                    Log.w(TAG, "Unexpected complication type ${request.complicationType}")
+                }
+                null
+            }
+
+        }
 }
 }
 

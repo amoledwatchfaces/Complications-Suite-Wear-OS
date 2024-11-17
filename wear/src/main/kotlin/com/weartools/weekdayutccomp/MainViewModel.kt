@@ -60,9 +60,12 @@ import com.google.android.libraries.places.api.net.FetchPlaceRequest
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
 import com.weartools.weekdayutccomp.activity.handleIntentExtras
 import com.weartools.weekdayutccomp.complication.BarometerComplicationService
+import com.weartools.weekdayutccomp.complication.BitcoinPriceComplicationService
+import com.weartools.weekdayutccomp.complication.CustomGoalComplicationService
 import com.weartools.weekdayutccomp.complication.CustomTextComplicationService
 import com.weartools.weekdayutccomp.complication.DateComplicationService
 import com.weartools.weekdayutccomp.complication.DateCountdownComplicationService
+import com.weartools.weekdayutccomp.complication.EthereumPriceComplicationService
 import com.weartools.weekdayutccomp.complication.MoonPhaseComplicationService
 import com.weartools.weekdayutccomp.complication.MoonriseMoonsetComplicationService
 import com.weartools.weekdayutccomp.complication.SunriseSunsetComplicationService
@@ -79,6 +82,7 @@ import com.weartools.weekdayutccomp.enums.Request
 import com.weartools.weekdayutccomp.preferences.UserPreferences
 import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
 import com.weartools.weekdayutccomp.utils.AddressProvider
+import com.weartools.weekdayutccomp.utils.CounterCurrency
 import com.weartools.weekdayutccomp.utils.arePermissionsGranted
 import com.weartools.weekdayutccomp.utils.updateComplication
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -345,6 +349,11 @@ class MainViewModel @Inject constructor(
         dataStore.updateData { it.copy(moonIconType = value) }
         context.updateComplication(MoonPhaseComplicationService::class.java)
     }}
+    fun setCounterCurrency(value: CounterCurrency, context: Context) { viewModelScope.launch {
+        dataStore.updateData { it.copy(counterCurrency = value) }
+        context.updateComplication(BitcoinPriceComplicationService::class.java)
+        context.updateComplication(EthereumPriceComplicationService::class.java)
+    }}
     fun setLeadingZero(value: Boolean, context: Context) { viewModelScope.launch {
         dataStore.updateData { it.copy(isLeadingZero = value) }
         context.updateComplication(WorldClock1ComplicationService::class.java)
@@ -369,6 +378,31 @@ class MainViewModel @Inject constructor(
         dataStore.updateData { it.copy(customTitle = value) }
         context.updateComplication(CustomTextComplicationService::class.java)
     }}
+
+
+
+    fun setCustomGoalMin(value: Float, context: Context) { viewModelScope.launch {
+        dataStore.updateData { it.copy(customGoalMin = value) }
+        context.updateComplication(CustomGoalComplicationService::class.java)
+    }}
+    fun setCustomGoalMax(value: Float, context: Context) { viewModelScope.launch {
+        dataStore.updateData { it.copy(customGoalMax = value) }
+        context.updateComplication(CustomGoalComplicationService::class.java)
+    }}
+    fun setCustomGoalValue(value: Float, context: Context) { viewModelScope.launch {
+        dataStore.updateData { it.copy(customGoalValue = value) }
+        context.updateComplication(CustomGoalComplicationService::class.java)
+    }}
+    fun setCustomGoalChangeBy(value: Float, context: Context) { viewModelScope.launch {
+        dataStore.updateData { it.copy(customGoalChangeBy = value) }
+        context.updateComplication(CustomGoalComplicationService::class.java)
+    }}
+    fun setCustomGoalMidnightReset(value: Boolean, context: Context) { viewModelScope.launch {
+        dataStore.updateData { it.copy(customGoalResetAtMidnight = value) }
+        context.updateComplication(CustomGoalComplicationService::class.java)
+    }}
+
+
 
     private fun disableClass(context: Context, className: String){
         viewModelScope.launch {

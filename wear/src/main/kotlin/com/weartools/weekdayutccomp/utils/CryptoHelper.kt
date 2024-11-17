@@ -23,9 +23,9 @@ data class EthereumPrices (
 
 class CryptoHelper {
     companion object{
-        suspend fun fetchBitcoinPrice(): BitcoinPrices? {
+        suspend fun fetchBitcoinPrice(counterCurrency: CounterCurrency): BitcoinPrices? {
             return withContext(Dispatchers.IO) { // Switch to IO thread for network operation
-                val apiUrl = "https://api.exchange.coinbase.com/products/BTC-USD/stats"
+                val apiUrl = "https://api.exchange.coinbase.com/products/BTC-${counterCurrency.name}/stats"
                 var connection: HttpURLConnection? = null
                 try {
                     val url = URL(apiUrl)
@@ -51,9 +51,9 @@ class CryptoHelper {
                 }
             }
         }
-        suspend fun fetchEthereumPrice(): EthereumPrices? {
+        suspend fun fetchEthereumPrice(counterCurrency: CounterCurrency): EthereumPrices? {
             return withContext(Dispatchers.IO) { // Switch to IO thread for network operation
-                val apiUrl = "https://api.exchange.coinbase.com/products/ETH-USD/stats"
+                val apiUrl = "https://api.exchange.coinbase.com/products/ETH-${counterCurrency.name}/stats"
                 var connection: HttpURLConnection? = null
                 try {
                     val url = URL(apiUrl)

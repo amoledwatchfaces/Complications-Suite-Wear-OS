@@ -3,7 +3,9 @@ package com.weartools.weekdayutccomp.preferences
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.Serializer
+import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.enums.MoonIconType
+import com.weartools.weekdayutccomp.utils.CounterCurrency
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
@@ -70,6 +72,7 @@ data class UserPreferences(
     // BITCOIN / ETH
     val priceBTC: Float = 0f,
     val priceETH: Float = 0f,
+    val counterCurrency: CounterCurrency = CounterCurrency.USD,
 
     val moonIconType: MoonIconType = MoonIconType.DEFAULT,
 
@@ -84,6 +87,14 @@ data class UserPreferences(
     // TIMER / TIME PICKER
     val startTime: Long = System.currentTimeMillis(),
     val timePicked: Long = System.currentTimeMillis(),
+
+    // Custom Goal
+    val customGoalIcon: Int = R.drawable.ic_goal,
+    val customGoalValue: Float = 0.0f,
+    val customGoalMin: Float = 0.0f,
+    val customGoalMax: Float = 0.0f,
+    val customGoalChangeBy: Float = 1f,
+    val customGoalResetAtMidnight: Boolean = false,
 )
 
 
