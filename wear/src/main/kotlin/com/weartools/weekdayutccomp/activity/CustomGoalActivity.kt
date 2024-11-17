@@ -30,6 +30,8 @@ package com.weartools.weekdayutccomp.activity
 import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -37,14 +39,17 @@ import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Flag
+import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.outlined.Check
+import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
@@ -59,15 +64,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.rotary.onRotaryScrollEvent
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
+import androidx.wear.compose.foundation.lazy.items
 import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
 import androidx.wear.compose.foundation.rotary.RotaryScrollableDefaults
 import androidx.wear.compose.foundation.rotary.rotaryScrollable
@@ -82,14 +95,20 @@ import androidx.wear.compose.material.Stepper
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.dialog.Alert
 import androidx.wear.compose.material.dialog.Dialog
+import com.google.android.horologist.images.base.paintable.ImageVectorPaintable.Companion.asPaintable
 import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.preferences.UserPreferences
+import com.weartools.weekdayutccomp.presentation.ui.DialogChip
+import com.weartools.weekdayutccomp.presentation.ui.IconItem
+import com.weartools.weekdayutccomp.presentation.ui.IconsViewModel
+import com.weartools.weekdayutccomp.presentation.ui.IconsViewModelImp
 import com.weartools.weekdayutccomp.presentation.ui.NumberEditChip
 import com.weartools.weekdayutccomp.presentation.ui.PreferenceCategory
 import com.weartools.weekdayutccomp.presentation.ui.ToggleChip
 import com.weartools.weekdayutccomp.theme.wearColorPalette
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.ByteArrayOutputStream
 import kotlin.math.roundToInt
 
 @AndroidEntryPoint
@@ -129,7 +148,6 @@ fun CustomGoalTheme(
     val changeBy = preferences.value.customGoalChangeBy
 
     var openGoalSetting by remember{ mutableStateOf(false) }
-
 
     fun onValueChangeByScroll(pixels: Float) {
         val newWaterIntake = when {
@@ -248,6 +266,7 @@ fun GoalSettings(
 ) {
     val state = remember { mutableStateOf(true) }
     val listState = rememberScalingLazyListState(initialCenterItemIndex = 0)
+    var openIconsDialog by remember{ mutableStateOf(false) }
 
     Dialog(
         showDialog = state.value,
@@ -272,6 +291,26 @@ fun GoalSettings(
                 bottom = 52.dp
             ),
             content = {
+                item {
+                    Chip(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        onClick = {
+                            openIconsDialog=openIconsDialog.not()
+                        },
+                        colors = ChipDefaults.gradientBackgroundChipColors(
+                            startBackgroundColor = Color(0xff2c2c2d),
+                            endBackgroundColor = Color(0xff2c2c2d)
+                        ),
+                        label = {
+                            Text(
+                                text = "Icon",
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }
+                    )
+                }
                 item {
                     NumberEditChip(
                         label = "Start value",
@@ -322,7 +361,20 @@ fun GoalSettings(
                 }
             }
         )
-
+        if (openIconsDialog){
+            IconsDialog(
+                focusRequester = focusRequester,
+                preferences = preferences,
+                mainViewModel = viewModel,
+                callback ={
+                    if (it == -1) {
+                        openIconsDialog = false
+                        return@IconsDialog
+                    }else{
+                        openIconsDialog = openIconsDialog.not()
+                    }
+                } )
+        }
     }
 }
 
@@ -337,9 +389,86 @@ fun SimpleComposablePreview(
     WaterIntakeTheme(pref = pref,context = context)
 }
  */
+
+@Composable
+fun IconsDialog(
+    focusRequester: FocusRequester,
+    preferences: State<UserPreferences>,
+    callback: (Int) -> Unit,
+    viewModel: IconsViewModel = IconsViewModelImp(LocalContext.current),
+    mainViewModel: MainViewModel
+) {
+
+    val state by viewModel.state.collectAsState()
+    val dialogState = remember { mutableStateOf(true) }
+
+    val listState = rememberScalingLazyListState(initialCenterItemIndex = 0)
+
+    Dialog(
+        showDialog = dialogState.value,
+        scrollState = listState,
+        onDismissRequest = { callback.invoke(-1) }
+    )
+    {
+        Alert(
+            modifier = Modifier
+                .rotaryScrollable(
+                    RotaryScrollableDefaults.behavior(scrollableState = listState),
+                    focusRequester = focusRequester
+                ),
+            backgroundColor = Color.Black,
+            scrollState = listState,
+            title = { PreferenceCategory(title = "Pick Icon") },
+            verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.Top),
+            contentPadding = PaddingValues(
+                start = 10.dp,
+                end = 10.dp,
+                top = 24.dp,
+                bottom = 52.dp
+            ),
+            content = {
+
+                if (state.loading) {
+                    item {
+                        CircularProgressIndicator()
+                    }
+                }
+                val iconRows = state.icons.chunked(4)
+
+                items(iconRows) { rowIcons ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp),
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        for (icon in rowIcons) {
+                           IconItem(
+                               icon = icon,
+                               onClick = {
+                                   //TODO: Store Icon
+                                   dialogState.value = false
+                                   callback.invoke(1)
+                               }
+                           )
+                        }
+                    }
+                }
+            }
+        )
+
+    }
+}
+
 enum class EditType {
     START,
     TARGET,
     CHANGE_BY,
     CURRENT
 }
+data class Icon(
+    var id: String = "",
+    var name: String = "",
+    var image: ImageVector? = null
+)
