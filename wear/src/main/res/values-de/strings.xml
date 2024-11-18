@@ -204,5 +204,21 @@
     <string name="barometer_category">Barometer-Komplikation</string>
     <string name="barometer_use_hpa">Einheiten</string>
 
+    <!-- Timer -->
     <string name="timer_comp_name">Timer</string>
+
+    <!-- Custom Goal -->
+    <string name="custom_goal_comp_name">Benutzerdefiniertes Ziel</string>
+    <string name="custom_goal_title_preview">Punkte</string>
+    <string name="custom_goal_start">Start: %1$s</string>
+    <string name="custom_goal_target">Ziel: %1$s</string>
+    <string name="goal_settings">Zieleinstellungen</string>
+    <string name="custom_goal_title">Titel</string>
+    <string name="custom_goal_start_value">Startwert</string>
+    <string name="custom_goal_target_value">Zielwert</string>
+    <string name="custom_goal_current_value">Aktueller Wert</string>
+    <string name="custom_goal_change_by_value">Wert ändern um</string>
+    <string name="custom_goal_midnight_reset">Mitternachts-Reset</string>
+    <string name="custom_goal_pick_icon">Icon auswählen</string>
+
 </resources>

@@ -31,13 +31,14 @@ import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.Canvas
+import android.icu.text.DecimalFormat
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -46,45 +47,46 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Flag
-import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.outlined.Check
-import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Canvas
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.ImageBitmapConfig
+import androidx.compose.ui.graphics.asAndroidBitmap
+import androidx.compose.ui.graphics.drawscope.CanvasDrawScope
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.input.rotary.onRotaryScrollEvent
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
 import androidx.wear.compose.foundation.lazy.items
 import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
 import androidx.wear.compose.foundation.rotary.RotaryScrollableDefaults
 import androidx.wear.compose.foundation.rotary.rotaryScrollable
 import androidx.wear.compose.material.ButtonDefaults
+import androidx.wear.compose.material.Card
+import androidx.wear.compose.material.CardDefaults
 import androidx.wear.compose.material.Chip
 import androidx.wear.compose.material.ChipDefaults
 import androidx.wear.compose.material.CircularProgressIndicator
@@ -95,14 +97,14 @@ import androidx.wear.compose.material.Stepper
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.dialog.Alert
 import androidx.wear.compose.material.dialog.Dialog
-import com.google.android.horologist.images.base.paintable.ImageVectorPaintable.Companion.asPaintable
 import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.preferences.UserPreferences
-import com.weartools.weekdayutccomp.presentation.ui.DialogChip
+import com.weartools.weekdayutccomp.presentation.ui.EditTextChip
 import com.weartools.weekdayutccomp.presentation.ui.IconItem
 import com.weartools.weekdayutccomp.presentation.ui.IconsViewModel
 import com.weartools.weekdayutccomp.presentation.ui.IconsViewModelImp
+import com.weartools.weekdayutccomp.presentation.ui.ImageUtil
 import com.weartools.weekdayutccomp.presentation.ui.NumberEditChip
 import com.weartools.weekdayutccomp.presentation.ui.PreferenceCategory
 import com.weartools.weekdayutccomp.presentation.ui.ToggleChip
@@ -182,64 +184,94 @@ fun CustomGoalTheme(
             valueProgression = IntProgression.fromClosedRange(0, 1000000000, 1),
             decreaseIcon = { Icon(imageVector = Icons.Default.Remove, contentDescription = "Remove", tint = wearColorPalette.secondaryVariant) },
             increaseIcon = { Icon(imageVector = Icons.Default.Add, contentDescription = "Add", tint = wearColorPalette.secondaryVariant) })
-        {
-
-            Chip(
-                modifier = Modifier
-                    .fillMaxWidth(0.8f)
-                    .padding(horizontal = 10.dp)
-                    .padding(bottom = 10.dp),
-                onClick = {
-                    openGoalSetting = openGoalSetting.not()
-                },
-                icon = { Icon(imageVector = Icons.Default.Flag, contentDescription = "Remove", tint = wearColorPalette.secondaryVariant) },
-                colors = ChipDefaults.gradientBackgroundChipColors(
-                    startBackgroundColor = Color(0xff2c2c2d),
-                    endBackgroundColor = wearColorPalette.primaryVariant
-                ),
-                label = {
+        {}
+        Card(
+            backgroundPainter = CardDefaults.cardBackgroundPainter(
+                startBackgroundColor = Color(0xff2c2c2d),
+                endBackgroundColor = wearColorPalette.primaryVariant
+            ),
+            modifier = Modifier
+                .fillMaxWidth(0.8f)
+                .padding(horizontal = 10.dp),
+            enabled = true,
+            onClick = {
+                openGoalSetting = openGoalSetting.not()
+            },
+        ){
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Column(modifier = Modifier.weight(0.85f)) {
                     Text(
-                        text = "V: ${preferences.value.customGoalValue}",
+                        text = "${preferences.value.customGoalTitle}: ${preferences.value.customGoalValue.formatValue()}",
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
+                        color = Color(0xFFF1F1F1)
                     )
-                },
-                secondaryLabel = {
+                    Text(
+                        color =  Color.LightGray,
+                        text = stringResource(
+                            R.string.custom_goal_start,
+                            preferences.value.customGoalMin.formatValue()
+                        ),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        fontSize = 12.sp,
+                        lineHeight = 16.sp,
+                        modifier = Modifier.padding(top = 2.dp, bottom = 2.dp)
+                    )
                     Text(
                         color = wearColorPalette.secondaryVariant,
-                        text = "T: ${preferences.value.customGoalMax}",
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                },
-            )
-
-            if (openGoalSetting){
-                GoalSettings(
-                    focusRequester = focusRequester,
-                    viewModel = viewModel,
-                    preferences = preferences,
-                    context = context,
-                    callback ={
-                        if (it == -1) {
-                            openGoalSetting = false
-                            return@GoalSettings
-                        }else{
-                            openGoalSetting = openGoalSetting.not()
-                        }
-                    } )
+                        overflow = TextOverflow.Ellipsis,
+                        text = stringResource(
+                            R.string.custom_goal_target,
+                            preferences.value.customGoalMax.formatValue()
+                        ),
+                        lineHeight = 16.sp,
+                        fontSize = 12.sp)
+                }
+                Column(modifier = Modifier.weight(0.15f)) {
+                    Icon(
+                        imageVector = ImageUtil.createImageVector(preferences.value.customGoalIconId)?:Icons.Default.Flag,
+                        contentDescription = "Remove",
+                        tint = wearColorPalette.secondaryVariant)
+                }
             }
+        }
+        if (openGoalSetting){
+            GoalSettings(
+                focusRequester = focusRequester,
+                viewModel = viewModel,
+                preferences = preferences,
+                context = context,
+                callback ={
+                    if (it == -1) {
+                        openGoalSetting = false
+                        return@GoalSettings
+                    }else{
+                        openGoalSetting = openGoalSetting.not()
+                    }
+                } )
         }
 
         OutlinedCompactButton(
+            colors = ButtonDefaults.buttonColors(
+                backgroundColor = wearColorPalette.primary
+            ),
             border = ButtonDefaults.buttonBorder(null, null),
-            modifier = Modifier.padding(top = 90.dp),
+            modifier = Modifier.padding(top = 80.dp, start = 80.dp),
             onClick = {
                 activity.setResult(RESULT_OK)
                 activity.finish()
             }
         ) {
-            Icon(imageVector = Icons.Outlined.Check, contentDescription = "Confirm", tint = Color.Gray)
+            Icon(
+                imageVector = Icons.Outlined.Check,
+                contentDescription = "Confirm",
+                tint = Color.Black)
         }
 
         CircularProgressIndicator(
@@ -282,7 +314,7 @@ fun GoalSettings(
                 ),
             backgroundColor = Color.Black,
             scrollState = listState,
-            title = { PreferenceCategory(title = "Goal Settings") },
+            title = { PreferenceCategory(title = stringResource(R.string.goal_settings)) },
             verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.Top),
             contentPadding = PaddingValues(
                 start = 10.dp,
@@ -302,9 +334,14 @@ fun GoalSettings(
                             startBackgroundColor = Color(0xff2c2c2d),
                             endBackgroundColor = Color(0xff2c2c2d)
                         ),
+                        icon = {
+                            Icon(
+                                imageVector = ImageUtil.createImageVector(preferences.value.customGoalIconId)?:Icons.Default.Flag,
+                                contentDescription = "Remove",
+                                tint = wearColorPalette.secondaryVariant) },
                         label = {
                             Text(
-                                text = "Icon",
+                                text = "Set icon",
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             )
@@ -312,8 +349,17 @@ fun GoalSettings(
                     )
                 }
                 item {
+                    EditTextChip(
+                        row1 = stringResource(R.string.custom_goal_title),
+                        row2 = preferences.value.customGoalTitle,
+                        viewModel = viewModel,
+                        context = context,
+                    )
+                }
+
+                item {
                     NumberEditChip(
-                        label = "Start value",
+                        label = stringResource(R.string.custom_goal_start_value),
                         editType = EditType.START,
                         goal = preferences.value.customGoalMin.toString(),
                         viewModel = viewModel,
@@ -322,7 +368,7 @@ fun GoalSettings(
                 }
                 item {
                     NumberEditChip(
-                        label = "Target value",
+                        label = stringResource(R.string.custom_goal_target_value),
                         editType = EditType.TARGET,
                         goal = preferences.value.customGoalMax.toString(),
                         viewModel = viewModel,
@@ -331,7 +377,7 @@ fun GoalSettings(
                 }
                 item {
                     NumberEditChip(
-                        label = "Current value",
+                        label = stringResource(R.string.custom_goal_current_value),
                         editType = EditType.CURRENT,
                         goal = preferences.value.customGoalValue.toString(),
                         viewModel = viewModel,
@@ -340,7 +386,7 @@ fun GoalSettings(
                 }
                 item {
                     NumberEditChip(
-                        label = "Change By value",
+                        label = stringResource(R.string.custom_goal_change_by_value),
                         editType = EditType.CHANGE_BY,
                         goal = preferences.value.customGoalChangeBy.toString(),
                         viewModel = viewModel,
@@ -349,7 +395,7 @@ fun GoalSettings(
                 }
                 item {
                     ToggleChip(
-                        label = "Midnight Reset",
+                        label = stringResource(R.string.custom_goal_midnight_reset),
                         secondaryLabelOn = "On",
                         secondaryLabelOff = "Off",
                         checked = preferences.value.customGoalResetAtMidnight,
@@ -364,8 +410,8 @@ fun GoalSettings(
         if (openIconsDialog){
             IconsDialog(
                 focusRequester = focusRequester,
-                preferences = preferences,
                 mainViewModel = viewModel,
+                context = context,
                 callback ={
                     if (it == -1) {
                         openIconsDialog = false
@@ -393,9 +439,9 @@ fun SimpleComposablePreview(
 @Composable
 fun IconsDialog(
     focusRequester: FocusRequester,
-    preferences: State<UserPreferences>,
     callback: (Int) -> Unit,
     viewModel: IconsViewModel = IconsViewModelImp(LocalContext.current),
+    context: Context,
     mainViewModel: MainViewModel
 ) {
 
@@ -418,7 +464,7 @@ fun IconsDialog(
                 ),
             backgroundColor = Color.Black,
             scrollState = listState,
-            title = { PreferenceCategory(title = "Pick Icon") },
+            title = { PreferenceCategory(title = stringResource(R.string.custom_goal_pick_icon)) },
             verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.Top),
             contentPadding = PaddingValues(
                 start = 10.dp,
@@ -444,10 +490,14 @@ fun IconsDialog(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         for (icon in rowIcons) {
-                           IconItem(
+                            val painter = rememberVectorPainter(image = icon.image!!)
+                            IconItem(
                                icon = icon,
                                onClick = {
                                    //TODO: Store Icon
+                                   val bitmap = painter.toImageBitmap(density = Density(density = 1f), layoutDirection = LayoutDirection.Ltr).asAndroidBitmap()
+                                   val byteArray = bitmapToByteArray(bitmap)
+                                   mainViewModel.storeCustomGoalIconBytearray(icon.id, byteArray, context)
                                    dialogState.value = false
                                    callback.invoke(1)
                                }
@@ -472,3 +522,35 @@ data class Icon(
     var name: String = "",
     var image: ImageVector? = null
 )
+fun Painter.toImageBitmap(
+    density: Density,
+    layoutDirection: LayoutDirection,
+    size: Size = intrinsicSize,
+    config: ImageBitmapConfig = ImageBitmapConfig.Argb8888,
+): ImageBitmap {
+    val image = ImageBitmap(width = size.width.roundToInt(), height = size.height.roundToInt(), config = config)
+    val canvas = Canvas(image)
+    CanvasDrawScope().draw(
+        density = density,
+        layoutDirection = layoutDirection,
+        canvas = canvas,
+        size = size) {
+        draw(
+            size = this.size,
+            colorFilter = ColorFilter.tint(Color.White)
+        )
+    }
+    return image
+}
+private fun bitmapToByteArray(bitmap: Bitmap): ByteArray {
+    val stream = ByteArrayOutputStream()
+    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+    return stream.toByteArray()
+}
+
+fun Float.formatValue(): String {
+    return DecimalFormat("#.##").format(this)
+}
+
+
+

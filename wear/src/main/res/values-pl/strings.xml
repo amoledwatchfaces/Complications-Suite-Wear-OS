@@ -208,4 +208,19 @@
 
     <!-- Timer -->
     <string name="timer_comp_name">Timer</string>
+
+    <!-- Custom Goal -->
+    <string name="custom_goal_comp_name">Cel niestandardowy</string>
+    <string name="custom_goal_title_preview">Punkty</string>
+    <string name="custom_goal_start">Początek: %1$s</string>
+    <string name="custom_goal_target">Cel: %1$s</string>
+    <string name="goal_settings">Ustawienia celu</string>
+    <string name="custom_goal_title">Tytuł</string>
+    <string name="custom_goal_start_value">Wartość początkowa</string>
+    <string name="custom_goal_target_value">Wartość celu</string>
+    <string name="custom_goal_current_value">Bieżąca wartość</string>
+    <string name="custom_goal_change_by_value">Zmień o wartość</string>
+    <string name="custom_goal_midnight_reset">Reset o północy</string>
+    <string name="custom_goal_pick_icon">Wybierz ikonę</string>
+
 </resources>

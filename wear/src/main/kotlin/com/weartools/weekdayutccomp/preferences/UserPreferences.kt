@@ -95,6 +95,9 @@ data class UserPreferences(
     val customGoalMax: Float = 0.0f,
     val customGoalChangeBy: Float = 1f,
     val customGoalResetAtMidnight: Boolean = false,
+    val customGoalTitle: String = "Points",
+    val customGoalIconByteArray: ByteArray = ByteArray(0),
+    val customGoalIconId: String = "",
 )
 
 

@@ -196,5 +196,21 @@
     <string name="barometer_category">Barometer</string>
     <string name="barometer_use_hpa">Jednotky</string>
 
+    <!-- Timer -->
     <string name="timer_comp_name">Časovač</string>
+
+    <!-- Custom Goal -->
+    <string name="custom_goal_comp_name">Vlastný cieľ</string>
+    <string name="custom_goal_title_preview">Body</string>
+    <string name="custom_goal_start">Začiatok: %1$s</string>
+    <string name="custom_goal_target">Cieľ: %1$s</string>
+    <string name="goal_settings">Nastavenia cieľa</string>
+    <string name="custom_goal_title">Názov</string>
+    <string name="custom_goal_start_value">Počiatočná hodnota</string>
+    <string name="custom_goal_target_value">Cieľová hodnota</string>
+    <string name="custom_goal_current_value">Aktuálna hodnota</string>
+    <string name="custom_goal_change_by_value">Zmeniť o hodnotu</string>
+    <string name="custom_goal_midnight_reset">Reset o polnoci</string>
+    <string name="custom_goal_pick_icon">Vybrať ikonu</string>
+
 </resources>

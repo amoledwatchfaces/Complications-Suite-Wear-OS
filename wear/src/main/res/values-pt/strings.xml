@@ -205,4 +205,19 @@
 
     <!-- Timer -->
     <string name="timer_comp_name">Temporizador</string>
+
+    <!-- Custom Goal -->
+    <string name="custom_goal_comp_name">Meta personalizada</string>
+    <string name="custom_goal_title_preview">Pontos</string>
+    <string name="custom_goal_start">Início: %1$s</string>
+    <string name="custom_goal_target">Meta: %1$s</string>
+    <string name="goal_settings">Configurações da meta</string>
+    <string name="custom_goal_title">Título</string>
+    <string name="custom_goal_start_value">Valor inicial</string>
+    <string name="custom_goal_target_value">Valor da meta</string>
+    <string name="custom_goal_current_value">Valor atual</string>
+    <string name="custom_goal_change_by_value">Alterar por valor</string>
+    <string name="custom_goal_midnight_reset">Redefinir à meia-noite</string>
+    <string name="custom_goal_pick_icon">Escolher ícone</string>
+
 </resources>

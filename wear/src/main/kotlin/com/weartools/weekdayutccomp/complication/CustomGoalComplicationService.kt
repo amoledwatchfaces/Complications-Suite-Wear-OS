@@ -31,6 +31,7 @@ import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.graphics.drawable.Icon.createWithData
 import android.graphics.drawable.Icon.createWithResource
 import android.util.Log
 import androidx.datastore.core.DataStore
@@ -45,8 +46,10 @@ import androidx.wear.watchface.complications.data.RangedValueComplicationData
 import androidx.wear.watchface.complications.data.ShortTextComplicationData
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
+import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.R.drawable
 import com.weartools.weekdayutccomp.activity.CustomGoalActivity
+import com.weartools.weekdayutccomp.activity.formatValue
 import com.weartools.weekdayutccomp.preferences.UserPreferences
 import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
 import dagger.hilt.android.AndroidEntryPoint
@@ -81,6 +84,7 @@ class CustomGoalComplicationService : SuspendingComplicationDataSourceService() 
                 ShortTextComplicationData.Builder(
                     text = PlainComplicationText.Builder(text = "50").build(),
                     contentDescription = ComplicationText.EMPTY)
+                    .setTitle(PlainComplicationText.Builder(getString(R.string.custom_goal_title_preview)).build())
                     .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_goal)).build())
                     .build()
             }
@@ -89,8 +93,9 @@ class CustomGoalComplicationService : SuspendingComplicationDataSourceService() 
                     value = 50f,
                     targetValue = 100f,
                     contentDescription = ComplicationText.EMPTY)
-                    .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_goal)).build())
                     .setText(PlainComplicationText.Builder(text = "50").build())
+                    .setTitle(PlainComplicationText.Builder(getString(R.string.custom_goal_title_preview)).build())
+                    .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_goal)).build())
                     .build()
             }
             ComplicationType.RANGED_VALUE -> {
@@ -100,13 +105,15 @@ class CustomGoalComplicationService : SuspendingComplicationDataSourceService() 
                     max = 20f,
                     contentDescription = ComplicationText.EMPTY)
                     .setText(PlainComplicationText.Builder(text = "50").build())
+                    .setTitle(PlainComplicationText.Builder(getString(R.string.custom_goal_title_preview)).build())
                     .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_goal)).build())
                     .build()
             }
             ComplicationType.LONG_TEXT -> {
                 LongTextComplicationData.Builder(
-                    text = PlainComplicationText.Builder(text = "50").build(),
+                    text = PlainComplicationText.Builder(text = "50/100").build(),
                     contentDescription = ComplicationText.EMPTY)
+                    .setTitle(PlainComplicationText.Builder(getString(R.string.custom_goal_title_preview)).build())
                     .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_goal)).build())
                     .build()
             }
@@ -128,18 +135,21 @@ class CustomGoalComplicationService : SuspendingComplicationDataSourceService() 
             }
         }
 
-        val customGoalIcon = prefs.customGoalIcon
         val customGoalValue = prefs.customGoalValue
         val customGoalMin = prefs.customGoalMin
         val customGoalMax = prefs.customGoalMax
+
+        val customGoalIcon = MonochromaticImage.Builder(image = createWithData(prefs.customGoalIconByteArray,0,prefs.customGoalIconByteArray.size)).build()
+        val customGoalTitle = if (prefs.customGoalTitle.isNotBlank()) { PlainComplicationText.Builder(text = prefs.customGoalTitle).build() } else { null }
 
         return when (request.complicationType) {
 
             ComplicationType.SHORT_TEXT -> {
                 ShortTextComplicationData.Builder(
-                    text = PlainComplicationText.Builder(text = "$customGoalValue").build(),
+                    text = PlainComplicationText.Builder(text = customGoalValue.formatValue()).build(),
                     contentDescription = ComplicationText.EMPTY)
-                    .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, customGoalIcon)).build())
+                    .setTitle(customGoalTitle)
+                    .setMonochromaticImage(customGoalIcon)
                     .setTapAction(openScreen())
                     .build()
             }
@@ -148,8 +158,9 @@ class CustomGoalComplicationService : SuspendingComplicationDataSourceService() 
                     value = customGoalValue - customGoalMin, // Get value from min
                     targetValue = customGoalMax - customGoalMin, // Get Range
                     contentDescription = ComplicationText.EMPTY)
-                    .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, customGoalIcon)).build())
-                    .setText(PlainComplicationText.Builder(text = "$customGoalValue").build())
+                    .setText(PlainComplicationText.Builder(text = customGoalValue.formatValue()).build())
+                    .setTitle(customGoalTitle)
+                    .setMonochromaticImage(customGoalIcon)
                     .setTapAction(openScreen())
                     .build()
             }
@@ -159,16 +170,18 @@ class CustomGoalComplicationService : SuspendingComplicationDataSourceService() 
                     min = customGoalMin,
                     max = customGoalMax,
                     contentDescription = ComplicationText.EMPTY)
-                    .setText(PlainComplicationText.Builder(text = "$customGoalValue").build())
-                    .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, customGoalIcon)).build())
+                    .setText(PlainComplicationText.Builder(text = customGoalValue.formatValue()).build())
+                    .setTitle(customGoalTitle)
+                    .setMonochromaticImage(customGoalIcon)
                     .setTapAction(openScreen())
                     .build()
             }
             ComplicationType.LONG_TEXT -> {
                 LongTextComplicationData.Builder(
-                    text = PlainComplicationText.Builder(text = "$customGoalValue").build(),
+                    text = PlainComplicationText.Builder(text = "${prefs.customGoalValue.formatValue()}/${prefs.customGoalMax.formatValue()}").build(),
                     contentDescription = ComplicationText.EMPTY)
-                    .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, customGoalIcon)).build())
+                    .setMonochromaticImage(customGoalIcon)
+                    .setTitle(customGoalTitle)
                     .setTapAction(openScreen())
                     .build()
             }

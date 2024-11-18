@@ -84,3 +84,54 @@ fun NumberEditChip(
         }
     )
 }
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+fun EditTextChip(
+    row1: String,
+    row2: String,
+    viewModel: MainViewModel,
+    context: Context,
+) {
+
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val focusManager = LocalFocusManager.current
+    var text by remember { mutableStateOf(row2) }
+
+    Chip(
+        onClick = {},
+        modifier = Modifier
+            .fillMaxWidth(),
+        colors = ChipDefaults.primaryChipColors(backgroundColor = Color(0xff2c2c2d)),
+        label = { Text(row1) },
+        secondaryLabel = {
+            BasicTextField(
+                modifier = Modifier.fillMaxWidth(),
+                keyboardActions = KeyboardActions(
+                    onDone  = { keyboardController?.hide()
+                        focusManager.moveFocus(FocusDirection.Exit)
+                        viewModel.setCustomGoalTitle(text, context)
+                    }
+                ),
+                value = text,
+                onValueChange = { newText ->
+                    text = newText
+                },
+                textStyle = TextStyle(
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 12.sp,
+                    lineHeight = 16.sp,
+                    letterSpacing = 0.1.sp,
+                    color =  wearColorPalette.primary),
+                singleLine = true,
+                cursorBrush = SolidColor(Color.Unspecified),
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Done, keyboardType = KeyboardType.Text
+                ),
+            )
+
+
+        }
+    )
+}
+

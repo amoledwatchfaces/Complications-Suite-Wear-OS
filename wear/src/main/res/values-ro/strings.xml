@@ -204,4 +204,19 @@
 
     <!-- Timer -->
     <string name="timer_comp_name">Cronometru</string>
+
+    <!-- Custom Goal -->
+    <string name="custom_goal_comp_name">Scop personalizat</string>
+    <string name="custom_goal_title_preview">Puncte</string>
+    <string name="custom_goal_start">Început: %1$s</string>
+    <string name="custom_goal_target">Scop: %1$s</string>
+    <string name="goal_settings">Setări scop</string>
+    <string name="custom_goal_title">Titlu</string>
+    <string name="custom_goal_start_value">Valoare de început</string>
+    <string name="custom_goal_target_value">Valoare țintă</string>
+    <string name="custom_goal_current_value">Valoare curentă</string>
+    <string name="custom_goal_change_by_value">Modifică cu valoare</string>
+    <string name="custom_goal_midnight_reset">Resetare la miezul nopții</string>
+    <string name="custom_goal_pick_icon">Alege pictogramă</string>
+
 </resources>

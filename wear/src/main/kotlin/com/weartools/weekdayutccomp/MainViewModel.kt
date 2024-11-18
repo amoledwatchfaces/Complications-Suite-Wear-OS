@@ -401,8 +401,17 @@ class MainViewModel @Inject constructor(
         dataStore.updateData { it.copy(customGoalResetAtMidnight = value) }
         context.updateComplication(CustomGoalComplicationService::class.java)
     }}
-
-
+    fun setCustomGoalTitle(value: String, context: Context) { viewModelScope.launch {
+        dataStore.updateData { it.copy(customGoalTitle = value) }
+        context.updateComplication(CustomGoalComplicationService::class.java)
+    }}
+    fun storeCustomGoalIconBytearray(id: String, value: ByteArray, context: Context) { viewModelScope.launch {
+        dataStore.updateData { it.copy(
+            customGoalIconId = id,
+            customGoalIconByteArray = value
+        ) }
+        context.updateComplication(CustomGoalComplicationService::class.java)
+    }}
 
     private fun disableClass(context: Context, className: String){
         viewModelScope.launch {

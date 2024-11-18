@@ -208,4 +208,19 @@
 
     <!-- Timer -->
     <string name="timer_comp_name">Таймер</string>
+
+    <!-- Custom Goal -->
+    <string name="custom_goal_comp_name">Пользовательская цель</string>
+    <string name="custom_goal_title_preview">Очки</string>
+    <string name="custom_goal_start">Начало: %1$s</string>
+    <string name="custom_goal_target">Цель: %1$s</string>
+    <string name="goal_settings">Настройки цели</string>
+    <string name="custom_goal_title">Заголовок</string>
+    <string name="custom_goal_start_value">Начальное значение</string>
+    <string name="custom_goal_target_value">Целевое значение</string>
+    <string name="custom_goal_current_value">Текущее значение</string>
+    <string name="custom_goal_change_by_value">Изменить на значение</string>
+    <string name="custom_goal_midnight_reset">Сброс в полночь</string>
+    <string name="custom_goal_pick_icon">Выбрать иконку</string>
+
 </resources>

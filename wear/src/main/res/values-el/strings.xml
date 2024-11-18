@@ -205,4 +205,19 @@
 
     <!-- Timer -->
     <string name="timer_comp_name">Χρονόμετρο</string>
+
+    <!-- Custom Goal -->
+    <string name="custom_goal_comp_name">Προσαρμοστικός στόχος</string>
+    <string name="custom_goal_title_preview">Σημεία</string>
+    <string name="custom_goal_start">Έναρξη: %1$s</string>
+    <string name="custom_goal_target">Στόχος: %1$s</string>
+    <string name="goal_settings">Ρυθμίσεις στόχου</string>
+    <string name="custom_goal_title">Τίτλος</string>
+    <string name="custom_goal_start_value">Αρχική τιμή</string>
+    <string name="custom_goal_target_value">Στοχοθετημένη τιμή</string>
+    <string name="custom_goal_current_value">Τρέχουσα τιμή</string>
+    <string name="custom_goal_change_by_value">Αλλαγή κατά τιμή</string>
+    <string name="custom_goal_midnight_reset">Επαναφορά μεσάνυχτα</string>
+    <string name="custom_goal_pick_icon">Επιλέξτε Εικονίδιο</string>
+
 </resources>

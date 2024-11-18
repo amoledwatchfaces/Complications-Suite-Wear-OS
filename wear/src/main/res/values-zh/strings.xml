@@ -197,4 +197,19 @@
 
     <!-- Timer -->
     <string name="timer_comp_name">定时器</string>
+
+    <!-- Custom Goal -->
+    <string name="custom_goal_comp_name">自定义目标</string>
+    <string name="custom_goal_title_preview">积分</string>
+    <string name="custom_goal_start">开始：%1$s</string>
+    <string name="custom_goal_target">目标：%1$s</string>
+    <string name="goal_settings">目标设置</string>
+    <string name="custom_goal_title">标题</string>
+    <string name="custom_goal_start_value">起始值</string>
+    <string name="custom_goal_target_value">目标值</string>
+    <string name="custom_goal_current_value">当前值</string>
+    <string name="custom_goal_change_by_value">更改值</string>
+    <string name="custom_goal_midnight_reset">午夜重置</string>
+    <string name="custom_goal_pick_icon">选择图标</string>
+
 </resources>

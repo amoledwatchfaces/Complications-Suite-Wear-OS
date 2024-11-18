@@ -209,4 +209,19 @@
 
     <!-- Timer -->
     <string name="timer_comp_name">Minuteur</string>
+
+    <!-- Custom Goal -->
+    <string name="custom_goal_comp_name">Objectif personnalisé</string>
+    <string name="custom_goal_title_preview">Points</string>
+    <string name="custom_goal_start">Début : %1$s</string>
+    <string name="custom_goal_target">Cible : %1$s</string>
+    <string name="goal_settings">Paramètres de l\'objectif</string>
+    <string name="custom_goal_title">Titre</string>
+    <string name="custom_goal_start_value">Valeur de départ</string>
+    <string name="custom_goal_target_value">Valeur cible</string>
+    <string name="custom_goal_current_value">Valeur actuelle</string>
+    <string name="custom_goal_change_by_value">Modifier par valeur</string>
+    <string name="custom_goal_midnight_reset">Réinitialisation de minuit</string>
+    <string name="custom_goal_pick_icon">Choisir une icône</string>
+
 </resources>

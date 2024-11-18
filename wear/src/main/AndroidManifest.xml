@@ -379,7 +379,7 @@
         <service android:name=".complication.CustomGoalComplicationService"
             android:exported="true"
             android:icon="@drawable/ic_goal"
-            android:label="Custom Goal"
+            android:label="@string/custom_goal_comp_name"
             android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
             <intent-filter>
                 <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
