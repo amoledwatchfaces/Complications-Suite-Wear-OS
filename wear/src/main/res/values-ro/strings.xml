@@ -219,4 +219,7 @@
     <string name="custom_goal_midnight_reset">Resetare la miezul nopții</string>
     <string name="custom_goal_pick_icon">Alege pictogramă</string>
 
+    <!-- Crypto Complications -->
+    <string name="crypto_complications">Complicațiile criptomonedelor</string>
+    <string name="counter_currency">Monedă de referință</string>
 </resources>

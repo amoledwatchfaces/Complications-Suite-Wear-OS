@@ -461,10 +461,10 @@ fun ComplicationsSuiteScreen(
             )
         }
 
-        item { PreferenceCategory(title = "Crypto Complications") }
+        item { PreferenceCategory(title = stringResource(R.string.crypto_complications)) }
         item {
             DialogChip(
-                text = "Counter Currency",
+                text = stringResource(R.string.counter_currency),
                 icon = { Icon(imageVector =
                 when (preferences.value.counterCurrency){
                     CounterCurrency.USD -> Icons.Outlined.AttachMoney

@@ -212,4 +212,7 @@
     <string name="custom_goal_midnight_reset">Restablecimiento a medianoche</string>
     <string name="custom_goal_pick_icon">Elegir icono</string>
 
+    <!-- Crypto Complications -->
+    <string name="crypto_complications">Complicaciones de Criptomonedas</string>
+    <string name="counter_currency">Moneda de referencia</string>
 </resources>

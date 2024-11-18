@@ -223,4 +223,7 @@
     <string name="custom_goal_midnight_reset">Reset o północy</string>
     <string name="custom_goal_pick_icon">Wybierz ikonę</string>
 
+    <!-- Crypto Complications -->
+    <string name="crypto_complications">Komplikacje kryptowalut</string>
+    <string name="counter_currency">Waluta odniesienia</string>
 </resources>

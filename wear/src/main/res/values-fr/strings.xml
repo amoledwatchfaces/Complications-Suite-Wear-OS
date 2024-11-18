@@ -224,4 +224,8 @@
     <string name="custom_goal_midnight_reset">Réinitialisation de minuit</string>
     <string name="custom_goal_pick_icon">Choisir une icône</string>
 
+    <!-- Crypto Complications -->
+    <string name="crypto_complications">Complications des Cryptomonnaies</string>
+    <string name="counter_currency">Devise de contrepartie</string>
+
 </resources>

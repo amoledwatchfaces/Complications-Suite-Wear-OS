@@ -223,4 +223,7 @@
     <string name="custom_goal_midnight_reset">Сброс в полночь</string>
     <string name="custom_goal_pick_icon">Выбрать иконку</string>
 
+    <!-- Crypto Complications -->
+    <string name="crypto_complications">Сложности с криптовалютой</string>
+    <string name="counter_currency">Контрвалюта</string>
 </resources>

@@ -221,4 +221,7 @@
     <string name="custom_goal_midnight_reset">Mitternachts-Reset</string>
     <string name="custom_goal_pick_icon">Icon auswählen</string>
 
+    <!-- Crypto Complications -->
+    <string name="crypto_complications">Btc-Eth-Komplikationen</string>
+    <string name="counter_currency">Gegenwährung</string>
 </resources>

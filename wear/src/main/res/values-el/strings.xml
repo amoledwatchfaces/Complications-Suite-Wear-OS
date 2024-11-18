@@ -220,4 +220,7 @@
     <string name="custom_goal_midnight_reset">Επαναφορά μεσάνυχτα</string>
     <string name="custom_goal_pick_icon">Επιλέξτε Εικονίδιο</string>
 
+    <!-- Crypto Complications -->
+    <string name="crypto_complications">Περιπλοκές Κρυπτονομισμάτων</string>
+    <string name="counter_currency">Αντιστροφή νομίσματος</string>
 </resources>

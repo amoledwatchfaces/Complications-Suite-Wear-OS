@@ -213,4 +213,7 @@
     <string name="custom_goal_midnight_reset">Reset o polnoci</string>
     <string name="custom_goal_pick_icon">Vybrať ikonu</string>
 
+    <!-- Crypto Complications -->
+    <string name="crypto_complications">Komplikácie kryptomien</string>
+    <string name="counter_currency">Protimena</string>
 </resources>

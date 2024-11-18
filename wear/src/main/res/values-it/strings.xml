@@ -219,4 +219,7 @@
     <string name="custom_goal_midnight_reset">Ripristino a mezzanotte</string>
     <string name="custom_goal_pick_icon">Scegli icona</string>
 
+    <!-- Crypto Complications -->
+    <string name="crypto_complications">Complicazioni delle Criptovalute</string>
+    <string name="counter_currency">Valuta di riferimento</string>
 </resources>

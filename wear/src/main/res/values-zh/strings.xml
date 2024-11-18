@@ -212,4 +212,7 @@
     <string name="custom_goal_midnight_reset">午夜重置</string>
     <string name="custom_goal_pick_icon">选择图标</string>
 
+    <!-- Crypto Complications -->
+    <string name="crypto_complications">加密货币复杂性</string>
+    <string name="counter_currency">对手货币</string>
 </resources>
