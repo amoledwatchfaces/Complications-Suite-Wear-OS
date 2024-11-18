@@ -2,7 +2,6 @@ package com.weartools.weekdayutccomp.presentation.ui
 
 import android.content.Context
 import android.util.Log
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Image
@@ -68,7 +67,7 @@ interface IconsViewModel {
 
 data class IconsState(
     val icons: List<Icon> = emptyList(),
-    val loading: Boolean = false
+    val loading: Boolean = true
 )
 
 class IconsViewModelImp(

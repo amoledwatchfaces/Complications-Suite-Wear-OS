@@ -105,6 +105,7 @@ import com.weartools.weekdayutccomp.presentation.ui.IconItem
 import com.weartools.weekdayutccomp.presentation.ui.IconsViewModel
 import com.weartools.weekdayutccomp.presentation.ui.IconsViewModelImp
 import com.weartools.weekdayutccomp.presentation.ui.ImageUtil
+import com.weartools.weekdayutccomp.presentation.ui.LoaderBox
 import com.weartools.weekdayutccomp.presentation.ui.NumberEditChip
 import com.weartools.weekdayutccomp.presentation.ui.PreferenceCategory
 import com.weartools.weekdayutccomp.presentation.ui.ToggleChip
@@ -476,32 +477,33 @@ fun IconsDialog(
 
                 if (state.loading) {
                     item {
-                        CircularProgressIndicator()
+                        LoaderBox()
                     }
                 }
-                val iconRows = state.icons.chunked(4)
-
-                items(iconRows) { rowIcons ->
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(8.dp),
-                        horizontalArrangement = Arrangement.SpaceEvenly,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        for (icon in rowIcons) {
-                            val painter = rememberVectorPainter(image = icon.image!!)
-                            IconItem(
-                               icon = icon,
-                               onClick = {
-                                   //TODO: Store Icon
-                                   val bitmap = painter.toImageBitmap(density = Density(density = 1f), layoutDirection = LayoutDirection.Ltr).asAndroidBitmap()
-                                   val byteArray = bitmapToByteArray(bitmap)
-                                   mainViewModel.storeCustomGoalIconBytearray(icon.id, byteArray, context)
-                                   dialogState.value = false
-                                   callback.invoke(1)
-                               }
-                           )
+                else{
+                    val iconRows = state.icons.chunked(4)
+                    items(iconRows) { rowIcons ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(8.dp),
+                            horizontalArrangement = Arrangement.SpaceEvenly,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            for (icon in rowIcons) {
+                                val painter = rememberVectorPainter(image = icon.image!!)
+                                IconItem(
+                                    icon = icon,
+                                    onClick = {
+                                        //TODO: Store Icon
+                                        val bitmap = painter.toImageBitmap(density = Density(density = 1f), layoutDirection = LayoutDirection.Ltr).asAndroidBitmap()
+                                        val byteArray = bitmapToByteArray(bitmap)
+                                        mainViewModel.storeCustomGoalIconBytearray(icon.id, byteArray, context)
+                                        dialogState.value = false
+                                        callback.invoke(1)
+                                    }
+                                )
+                            }
                         }
                     }
                 }

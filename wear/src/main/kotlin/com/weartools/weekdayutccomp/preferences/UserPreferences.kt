@@ -92,7 +92,7 @@ data class UserPreferences(
     val customGoalIcon: Int = R.drawable.ic_goal,
     val customGoalValue: Float = 0.0f,
     val customGoalMin: Float = 0.0f,
-    val customGoalMax: Float = 0.0f,
+    val customGoalMax: Float = 100.0f,
     val customGoalChangeBy: Float = 1f,
     val customGoalResetAtMidnight: Boolean = false,
     val customGoalTitle: String = "Points",

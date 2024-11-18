@@ -22,3 +22,5 @@
 
 -dontwarn edu.umd.cs.findbugs.annotations.Nullable**
 -dontwarn org.slf4j.impl.StaticLoggerBinder
+
+-keep class androidx.compose.material.icons.filled.** { *; }
