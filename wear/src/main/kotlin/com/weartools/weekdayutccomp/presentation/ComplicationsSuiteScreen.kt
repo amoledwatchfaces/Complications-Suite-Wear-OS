@@ -105,10 +105,6 @@ fun ComplicationsSuiteScreen(
 
     //AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(preferences.value.locale))
 
-    /** LISTS **/
-    val listcity = stringArrayResource(id = R.array.cities_zone).toList()
-    val listcityID = stringArrayResource(id = R.array.cities).toList()
-
     val listLongFormat = stringArrayResource(id = R.array.longformats).toList()
     val listShortFormat = stringArrayResource(id = R.array.shortformats).toList()
     val listTimeDiffStyles = stringArrayResource(id = R.array.timediffstyle).toList()
@@ -192,7 +188,7 @@ fun ComplicationsSuiteScreen(
 
             DialogChip(
                 text = stringResource(id = R.string.wc_comp_name_1),
-                title = listcity[listcityID.indexOf(preferences.value.city1)],
+                title = "${preferences.value.worldClock1.cityName} (${preferences.value.worldClock1.cityId})",
                 icon = {},
                 onClick = {
                     isTImeZOnClick = isTImeZOnClick.not()
@@ -204,7 +200,7 @@ fun ComplicationsSuiteScreen(
             DialogChip(
                 text = stringResource(id = R.string.wc_comp_name_2),
                 icon = {},
-                title = listcity[listcityID.indexOf(preferences.value.city2)],
+                title = "${preferences.value.worldClock2.cityName} (${preferences.value.worldClock2.cityId})",
                 onClick = {
                     isTImeZOnClick2 = isTImeZOnClick2.not()
                 }

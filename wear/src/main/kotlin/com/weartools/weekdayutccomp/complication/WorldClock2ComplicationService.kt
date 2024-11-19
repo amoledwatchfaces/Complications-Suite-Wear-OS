@@ -34,11 +34,18 @@ import android.graphics.drawable.Icon
 import android.icu.util.TimeZone
 import android.util.Log
 import androidx.datastore.core.DataStore
-import androidx.wear.watchface.complications.data.*
+import androidx.wear.watchface.complications.data.ComplicationData
+import androidx.wear.watchface.complications.data.ComplicationText
+import androidx.wear.watchface.complications.data.ComplicationType
+import androidx.wear.watchface.complications.data.LongTextComplicationData
+import androidx.wear.watchface.complications.data.MonochromaticImage
+import androidx.wear.watchface.complications.data.PlainComplicationText
+import androidx.wear.watchface.complications.data.ShortTextComplicationData
+import androidx.wear.watchface.complications.data.TimeFormatComplicationText
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
-import com.weartools.weekdayutccomp.activity.MainActivity
 import com.weartools.weekdayutccomp.R
+import com.weartools.weekdayutccomp.activity.MainActivity
 import com.weartools.weekdayutccomp.enums.Request
 import com.weartools.weekdayutccomp.preferences.UserPreferences
 import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
@@ -89,51 +96,50 @@ class WorldClock2ComplicationService : SuspendingComplicationDataSourceService()
 
     override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
 
-    val prefs = preferences.first()
+        val prefs = preferences.first()
 
-    val ismilitary = prefs.isMilitary
-    val leadingzero = prefs.isLeadingZero
+        val ismilitary = prefs.isMilitary
+        val leadingzero = prefs.isLeadingZero
 
-    val fmt = if (ismilitary && leadingzero) "HH:mm"
-    else if (!ismilitary && !leadingzero) "h:mm a"
-    else if (ismilitary) "H:mm"
-    else "hh:mm a"
+        val fmt = if (ismilitary && leadingzero) "HH:mm"
+        else if (!ismilitary && !leadingzero) "h:mm a"
+        else if (ismilitary) "H:mm"
+        else "hh:mm a"
 
-    val city2 = prefs.city2
-    val zonearray2 = resources.getStringArray(R.array.cities).indexOf(city2)
-    val timezone2 = resources.getStringArray(R.array.zoneids)[zonearray2]
+        val city = prefs.worldClock2.cityId
+        val zoneId = prefs.worldClock2.zoneId
 
-    val text = TimeFormatComplicationText.Builder(format = fmt)
-        .setTimeZone(TimeZone.getTimeZone(timezone2))
-        .build()
+        val text = TimeFormatComplicationText.Builder(format = fmt)
+            .setTimeZone(TimeZone.getTimeZone(zoneId))
+            .build()
 
-    return when (request.complicationType) {
+        return when (request.complicationType) {
 
-        ComplicationType.SHORT_TEXT -> {
-            ShortTextComplicationData.Builder(
-                text = text,
-                contentDescription = PlainComplicationText.Builder(text = getString(R.string.wc_comp_name_1)).build())
-                .setTitle(PlainComplicationText.Builder(text = city2).build())
-                .setTapAction(openScreen())
-                .build()
-        }
-        ComplicationType.LONG_TEXT -> {
-            LongTextComplicationData.Builder(
-                text = text,
-                contentDescription = PlainComplicationText.Builder(text = getString(R.string.wc_comp_name_1)).build())
-                .setTitle(PlainComplicationText.Builder(text = city2).build())
-                .setMonochromaticImage(MonochromaticImage.Builder(Icon.createWithResource(this, R.drawable.ic_timezone)).build())
-                .setTapAction(openScreen())
-                .build()
-        }
-
-        else -> {
-            if (Log.isLoggable(TAG, Log.WARN)) {
-                Log.w(TAG, "Unexpected complication type ${request.complicationType}")
+            ComplicationType.SHORT_TEXT -> {
+                ShortTextComplicationData.Builder(
+                    text = text,
+                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.wc_comp_name_2)).build())
+                    .setTitle(PlainComplicationText.Builder(text = city).build())
+                    .setTapAction(openScreen())
+                    .build()
             }
-            null
+            ComplicationType.LONG_TEXT -> {
+                LongTextComplicationData.Builder(
+                    text = text,
+                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.wc_comp_name_2)).build())
+                    .setTitle(PlainComplicationText.Builder(text = city).build())
+                    .setMonochromaticImage(MonochromaticImage.Builder(Icon.createWithResource(this, R.drawable.ic_timezone)).build())
+                    .setTapAction(openScreen())
+                    .build()
+            }
+
+            else -> {
+                if (Log.isLoggable(TAG, Log.WARN)) {
+                    Log.w(TAG, "Unexpected complication type ${request.complicationType}")
+                }
+                null
+            }
         }
     }
-}
 }
 

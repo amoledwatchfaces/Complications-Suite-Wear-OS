@@ -6,6 +6,7 @@ import androidx.datastore.core.Serializer
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.enums.MoonIconType
 import com.weartools.weekdayutccomp.utils.CounterCurrency
+import com.weartools.weekdayutccomp.utils.WorldClock
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
@@ -21,8 +22,8 @@ import javax.inject.Inject
 data class UserPreferences(
 
     // WORLD CLOCK
-    val city1: String = "UTC",
-    val city2: String = "UTC",
+    val worldClock1: WorldClock = WorldClock("Etc/UTC", "UTC", "UTC"),
+    val worldClock2: WorldClock = WorldClock("Etc/UTC", "UTC", "UTC"),
     val isMilitary: Boolean = true,
     val isLeadingZero: Boolean = true,
 

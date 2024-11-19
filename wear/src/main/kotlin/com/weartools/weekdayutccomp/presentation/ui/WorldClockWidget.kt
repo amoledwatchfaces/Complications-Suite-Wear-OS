@@ -27,17 +27,18 @@ import androidx.wear.compose.foundation.lazy.itemsIndexed
 import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
 import androidx.wear.compose.foundation.rotary.RotaryScrollableDefaults
 import androidx.wear.compose.foundation.rotary.rotaryScrollable
-import androidx.wear.compose.material.Icon
-import androidx.wear.compose.material.Text
-import androidx.wear.compose.material.dialog.Alert
-import androidx.wear.compose.material.dialog.Dialog
-import com.weartools.weekdayutccomp.R
 import androidx.wear.compose.material.Chip
 import androidx.wear.compose.material.ChipDefaults
+import androidx.wear.compose.material.Icon
+import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.ToggleChipDefaults
+import androidx.wear.compose.material.dialog.Alert
+import androidx.wear.compose.material.dialog.Dialog
 import com.weartools.weekdayutccomp.MainViewModel
+import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.preferences.UserPreferences
 import com.weartools.weekdayutccomp.theme.wearColorPalette
+import com.weartools.weekdayutccomp.utils.WorldClockLists
 import kotlinx.coroutines.launch
 
 @Composable
@@ -110,58 +111,26 @@ fun WorldClockWidget(
     }
 
     if (regionOpen){
-        val listCity: List<String>
-        val listCityId: List<String>
         val title = regions[regionIndex]
-        val currentCityId = if (worldClock1) preferences.value.city1 else preferences.value.city2
-        when (regionIndex){
-            0 -> {
-                listCity = stringArrayResource(id = R.array.cities_africa).toList()
-                listCityId = stringArrayResource(id = R.array.cities_africa_code).toList()
-            }
-            1 -> {
-                listCity = stringArrayResource(id = R.array.cities_asia).toList()
-                listCityId = stringArrayResource(id = R.array.cities_asia_code).toList()
-            }
-            2 -> {
-                listCity = stringArrayResource(id = R.array.cities_atlantic).toList()
-                listCityId = stringArrayResource(id = R.array.cities_atlantic_code).toList()
-            }
-            3 -> {
-                listCity = stringArrayResource(id = R.array.cities_australia).toList()
-                listCityId = stringArrayResource(id = R.array.cities_australia_code).toList()
-            }
-            4 -> {
-                listCity = stringArrayResource(id = R.array.cities_europe).toList()
-                listCityId = stringArrayResource(id = R.array.cities_europe_code).toList()
-            }
-            5 -> {
-                listCity = stringArrayResource(id = R.array.cities_north_america).toList()
-                listCityId = stringArrayResource(id = R.array.cities_north_america_code).toList()
-            }
-            6 -> {
-                listCity = stringArrayResource(id = R.array.cities_pacific).toList()
-                listCityId = stringArrayResource(id = R.array.cities_pacific_code).toList()
-            }
-            7 -> {
-                listCity = stringArrayResource(id = R.array.cities_south_america).toList()
-                listCityId = stringArrayResource(id = R.array.cities_south_america_code).toList()
-            }
-            else -> {
-                listCity = stringArrayResource(id = R.array.cities_universal).toList()
-                listCityId = stringArrayResource(id = R.array.cities_universal_code).toList()
-            }
+        val selectedCityName = if (worldClock1) preferences.value.worldClock1.cityName else preferences.value.worldClock2.cityName
+        val worldClocks = when (regionIndex){
+            0 -> { WorldClockLists.africa }
+            1 -> { WorldClockLists.asia }
+            2 -> { WorldClockLists.atlantic }
+            3 -> { WorldClockLists.australia }
+            4 -> { WorldClockLists.europe }
+            5 -> { WorldClockLists.northAmerica }
+            6 -> { WorldClockLists.pacific }
+            7 -> { WorldClockLists.southAmerica }
+            else -> { WorldClockLists.universal }
         }
-
-        val cityIndex = listCityId.indexOf(currentCityId)
-        val selectedCityName = listCity.getOrNull(cityIndex) ?: "--"
 
         CitiesWidget(
             focusRequester = focusRequester,
             titles = title,
             preValue = selectedCityName,
-            labels = listCity,
-            secondaryLabels = listCityId,
+            labels = worldClocks.map { it.cityName },
+            secondaryLabels = worldClocks.map { it.cityId },
             callback = {
                 if (it == -1) {
                     regionOpen = false
@@ -170,12 +139,12 @@ fun WorldClockWidget(
                 }
                 if (worldClock1) {
                     callback.invoke(-1)
-                    viewModel.setWorldClock1(listCityId[it], context)
+                    viewModel.setWorldClock1(worldClocks[it], context)
                     regionOpen = regionOpen.not()
                     regionIndex = -1
                 } else {
                     callback.invoke(-1)
-                    viewModel.setWorldClock2(listCityId[it], context)
+                    viewModel.setWorldClock2(worldClocks[it], context)
                     regionOpen = regionOpen.not()
                     regionIndex = -1
                 }

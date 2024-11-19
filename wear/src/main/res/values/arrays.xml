@@ -6,6 +6,8 @@
         <item>@string/icon_type_2</item>
     </array>
 
+    <!-- ZoneIds & cities arrays item positions must match! -->
+    <!--
     <string-array name="zoneids">
         <item>Etc/UTC</item>
         <item>Africa/Accra</item>
@@ -191,6 +193,7 @@
         <item>America/Winnipeg</item>
         <item>Europe/Zagreb</item>
         <item>Europe/Zurich</item>
+        <item>Asia/Almaty</item>
     </string-array>
     <string-array name="cities">
         <item>UTC</item>
@@ -377,194 +380,8 @@
         <item>WNP</item>
         <item>ZAG</item>
         <item>ZRH</item>
+        <item>ALMT</item>
     </string-array>
-    <string-array name="cities_zone">
-        <item>UTC</item>
-        <item>Accra (ACC)</item>
-        <item>Adak (ADK)</item>
-        <item>Addis Ababa (ADD)</item>
-        <item>Adelaide (ADL)</item>
-        <item>Algiers (ALG)</item>
-        <item>Amman (AMM)</item>
-        <item>Amsterdam (AMS)</item>
-        <item>Anchorage (ANC)</item>
-        <item>Asmara (ASM)</item>
-        <item>Asuncion (ASU)</item>
-        <item>Athens (ATH)</item>
-        <item>Atlanta (ATL)</item>
-        <item>Auckland (AKL)</item>
-        <item>Austin (AUS)</item>
-        <item>Baghdad (BGW)</item>
-        <item>Bahrain (BAH)</item>
-        <item>Baku (BAK)</item>
-        <item>Bangkok (BKK)</item>
-        <item>Bamako (BKO)</item>
-        <item>Bangui (BGF)</item>
-        <item>Beirut (BEY)</item>
-        <item>Belgrade (BEG)</item>
-        <item>Berlin (BER)</item>
-        <item>Bogota (BOG)</item>
-        <item>Boston (BOS)</item>
-        <item>Brasilia (BSB)</item>
-        <item>Brisbane (BNE)</item>
-        <item>Brunei (BWN)</item>
-        <item>Brussels (BRU)</item>
-        <item>Budapest (BUD)</item>
-        <item>Buenos Aires (BUE)</item>
-        <item>Bucharest (BUH)</item>
-        <item>Cairo (CAI)</item>
-        <item>Calgary (CAL)</item>
-        <item>Canberra (CBR)</item>
-        <item>Cape Town (CPT)</item>
-        <item>Caracas (CCS)</item>
-        <item>Cardiff (CDF)</item>
-        <item>Cayenne (CAY)</item>
-        <item>Colombo (CMB)</item>
-        <item>Columbus (CMH)</item>
-        <item>Conakry (CKY)</item>
-        <item>Copenhagen (CPH)</item>
-        <item>Cork (ORK)</item>
-        <item>Cupertino (CUO)</item>
-        <item>Dakar (DKR)</item>
-        <item>Dallas (DAL)</item>
-        <item>Dar es Salaam (DAR)</item>
-        <item>Darwin (DRW)</item>
-        <item>Denpasar (DPS)</item>
-        <item>Denver (DEN)</item>
-        <item>Detroit (DET)</item>
-        <item>Dhaka (DAC)</item>
-        <item>Djibouti (JIB)</item>
-        <item>Doha (DOH)</item>
-        <item>Douala (DLA)</item>
-        <item>Dubai (DXB)</item>
-        <item>Dublin (DUB)</item>
-        <item>Edinburgh (EDI)</item>
-        <item>Freetown (FNA)</item>
-        <item>Geneva (GVA)</item>
-        <item>Georgetown (GEO)</item>
-        <item>Grytviken (SGS)</item>
-        <item>Guam (GUM)</item>
-        <item>Guatemala (GUA)</item>
-        <item>Halifax (HAL)</item>
-        <item>Harare (HRE)</item>
-        <item>Havana (HAV)</item>
-        <item>Helsinki (HEL)</item>
-        <item>Ho Chi Ming (SGN)</item>
-        <item>Hobart (HBA)</item>
-        <item>Hong Kong (HKG)</item>
-        <item>Honolulu (HNL)</item>
-        <item>Chicago (CHI)</item>
-        <item>Indianapolis (IND)</item>
-        <item>Istanbul (IST)</item>
-        <item>Jakarta (JKT)</item>
-        <item>Jerusalem (JER)</item>
-        <item>Kabul (KBL)</item>
-        <item>Kamchatka (PKC)</item>
-        <item>Kampala (KLA)</item>
-        <item>Karachi (KHI)</item>
-        <item>Kathmandu (KTM)</item>
-        <item>Khartoum (KRT)</item>
-        <item>Kiev (IEV)</item>
-        <item>Kinshasa (FIH)</item>
-        <item>Knoxville (TYS)</item>
-        <item>Kolkata (CCU)</item>
-        <item>Kuala Lumpur (KUL)</item>
-        <item>Kuwait (KWI)</item>
-        <item>La Paz (LPB)</item>
-        <item>Lagos (LOS)</item>
-        <item>Lima (LIM)</item>
-        <item>Lisbon (LIS)</item>
-        <item>Ljubljana (LJU)</item>
-        <item>London (LON)</item>
-        <item>Los Angeles (LAX)</item>
-        <item>Luanda (LAD)</item>
-        <item>Lusaka (LUN)</item>
-        <item>Madrid (MAD)</item>
-        <item>Managua (MGA)</item>
-        <item>Manchester (MHT)</item>
-        <item>Manila (MNL)</item>
-        <item>Maputo (MPM)</item>
-        <item>Melbourne (MEL)</item>
-        <item>Memphis (MEM)</item>
-        <item>Mexico City (DFL)</item>
-        <item>Miami (MIA)</item>
-        <item>Minneapolis (MES)</item>
-        <item>Mogadishu (MGQ)</item>
-        <item>Monrovia (MLW)</item>
-        <item>Montevideo (MVD)</item>
-        <item>Montreal (MTR)</item>
-        <item>Moscow (MOW)</item>
-        <item>Munich (MUC)</item>
-        <item>Nairobi (NBO)</item>
-        <item>Ndjamena (NDJ)</item>
-        <item>New York (NYC)</item>
-        <item>Nouakchott (NKC)</item>
-        <item>Noumea (NOU)</item>
-        <item>Nuuk (GOH)</item>
-        <item>Oslo (OSL)</item>
-        <item>Ottawa (OTT)</item>
-        <item>Ouagadougou (OUA)</item>
-        <item>Pago Pago (PPG)</item>
-        <item>Panama (PTY)</item>
-        <item>Paramaribo (PBM)</item>
-        <item>Paris (PAR)</item>
-        <item>Perth (PER)</item>
-        <item>Philadelphia (PHL)</item>
-        <item>Phoenix (PHX)</item>
-        <item>Podgorica (TGD)</item>
-        <item>Ponta Delgada (PDL)</item>
-        <item>Port-au-Prince (PAP)</item>
-        <item>Portland (PDX)</item>
-        <item>Prague (PRG)</item>
-        <item>Quito (UIO)</item>
-        <item>Rabat (RBA)</item>
-        <item>Rangoon (RGN)</item>
-        <item>Recife (REC)</item>
-        <item>Regina (SAK)</item>
-        <item>Reykjavik (REY)</item>
-        <item>Rio de Janeiro (RIO)</item>
-        <item>Riyadh (RUH)</item>
-        <item>Rome (ROM)</item>
-        <item>Salt Lake City (SLC)</item>
-        <item>San Diego (SAN)</item>
-        <item>San Francisco (SFO)</item>
-        <item>San Jose (SJC)</item>
-        <item>San Juan (SJU)</item>
-        <item>San Salvador (SAL)</item>
-        <item>Santiago (SCL)</item>
-        <item>Santo Domingo (SDQ)</item>
-        <item>Sao Paulo (SAO)</item>
-        <item>Seattle (SEA)</item>
-        <item>Seoul (SEL)</item>
-        <item>Shanghai (SGH)</item>
-        <item>Singapore (SIN)</item>
-        <item>Sofia (SOF)</item>
-        <item>Srednekolymsk (SEK)</item>
-        <item>St. Louis (SYT)</item>
-        <item>St. Petersburg (LED)</item>
-        <item>Stockholm (STO)</item>
-        <item>Sydney (SYD)</item>
-        <item>Taipei (TPE)</item>
-        <item>Tashkent (TAS)</item>
-        <item>Tegucigalpa (TGU)</item>
-        <item>Tehran (THR)</item>
-        <item>Tel Aviv (TAV)</item>
-        <item>Tokyo (TYO)</item>
-        <item>Toronto (TOR)</item>
-        <item>Tripoli (TIP)</item>
-        <item>Tunis (TUN)</item>
-        <item>Vancouver (VAN)</item>
-        <item>Vienna (VIE)</item>
-        <item>Vilnius (VNO)</item>
-        <item>Vladivostok (VVO)</item>
-        <item>Volgograd (VOG)</item>
-        <item>Warsaw (WAW)</item>
-        <item>Washington (WAS)</item>
-        <item>Winnipeg (WNP)</item>
-        <item>Zagreb (ZAG)</item>
-        <item>Zurich (ZRH)</item>
-    </string-array>
-
 
     <string-array name="cities_africa">
         <item>Accra</item>
@@ -627,6 +444,7 @@
         <item>TUN</item>
     </string-array>
     <string-array name="cities_asia">
+        <item>Almaty</item>
         <item>Baghdad</item>
         <item>Bahrain</item>
         <item>Baku</item>
@@ -660,6 +478,7 @@
         <item>Volgograd</item>
     </string-array>
     <string-array name="cities_asia_code">
+        <item>ALMT</item>
         <item>BGW</item>
         <item>BAH</item>
         <item>BAK</item>
@@ -938,7 +757,7 @@
     <string-array name="cities_universal_code">
         <item>UTC</item>
     </string-array>
-
+    -->
 
     <string-array name="longformats">
         <item>EEE, d MMM</item>

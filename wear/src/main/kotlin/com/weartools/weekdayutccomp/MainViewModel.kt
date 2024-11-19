@@ -83,6 +83,7 @@ import com.weartools.weekdayutccomp.preferences.UserPreferences
 import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
 import com.weartools.weekdayutccomp.utils.AddressProvider
 import com.weartools.weekdayutccomp.utils.CounterCurrency
+import com.weartools.weekdayutccomp.utils.WorldClock
 import com.weartools.weekdayutccomp.utils.arePermissionsGranted
 import com.weartools.weekdayutccomp.utils.updateComplication
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -332,12 +333,12 @@ class MainViewModel @Inject constructor(
         dataStore.updateData { it.copy(isISO = value) }
         context.updateComplication(WeekOfYearComplicationService::class.java)
     }}
-    fun setWorldClock1(value: String, context: Context) { viewModelScope.launch {
-        dataStore.updateData { it.copy(city1 = value) }
+    fun setWorldClock1(worldClock: WorldClock, context: Context) { viewModelScope.launch {
+        dataStore.updateData { it.copy(worldClock1 = worldClock) }
         context.updateComplication(WorldClock1ComplicationService::class.java)
     }}
-    fun setWorldClock2(value: String, context: Context) { viewModelScope.launch {
-        dataStore.updateData { it.copy(city2 = value) }
+    fun setWorldClock2(worldClock: WorldClock, context: Context) { viewModelScope.launch {
+        dataStore.updateData { it.copy(worldClock2 = worldClock) }
         context.updateComplication(WorldClock2ComplicationService::class.java)
     }}
 
