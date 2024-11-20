@@ -57,7 +57,7 @@ class PickTimeActivity : ComponentActivity(){
             val alarmManager = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             if (alarmManager.canScheduleExactAlarms().not()) {
 
-                Toast.makeText(this, "Please allow permission to schedule timer", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Timer Complication needs a permission to schedule alarms", Toast.LENGTH_LONG).show()
 
                 val intent = Intent()
                 intent.setAction(ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
