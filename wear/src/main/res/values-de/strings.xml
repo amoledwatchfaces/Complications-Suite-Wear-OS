@@ -220,6 +220,9 @@
     <string name="custom_goal_change_by_value">Wert ändern um</string>
     <string name="custom_goal_midnight_reset">Mitternachts-Reset</string>
     <string name="custom_goal_pick_icon">Icon auswählen</string>
+    <string name="custom_goal_inverse">Umgekehrter Fortschritt</string>
+    <string name="custom_goal_on">Ein</string>
+    <string name="custom_goal_off">Aus</string>
 
     <!-- Crypto Complications -->
     <string name="crypto_complications">Btc-Eth-Komplikationen</string>

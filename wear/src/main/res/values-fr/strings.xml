@@ -223,6 +223,9 @@
     <string name="custom_goal_change_by_value">Modifier par valeur</string>
     <string name="custom_goal_midnight_reset">Réinitialisation de minuit</string>
     <string name="custom_goal_pick_icon">Choisir une icône</string>
+    <string name="custom_goal_inverse">Progrès inversé</string>
+    <string name="custom_goal_on">Activé</string>
+    <string name="custom_goal_off">Désactivé</string>
 
     <!-- Crypto Complications -->
     <string name="crypto_complications">Complications des Cryptomonnaies</string>

@@ -218,6 +218,9 @@
     <string name="custom_goal_change_by_value">Modifică cu valoare</string>
     <string name="custom_goal_midnight_reset">Resetare la miezul nopții</string>
     <string name="custom_goal_pick_icon">Alege pictogramă</string>
+    <string name="custom_goal_inverse">Progres invers</string>
+    <string name="custom_goal_on">Activat</string>
+    <string name="custom_goal_off">Dezactivat</string>
 
     <!-- Crypto Complications -->
     <string name="crypto_complications">Complicațiile criptomonedelor</string>

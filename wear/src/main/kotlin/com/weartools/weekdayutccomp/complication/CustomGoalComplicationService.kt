@@ -27,7 +27,6 @@
  */
 package com.weartools.weekdayutccomp.complication
 
-import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.content.ContentValues.TAG
 import android.content.Intent
@@ -38,7 +37,6 @@ import androidx.datastore.core.DataStore
 import androidx.wear.watchface.complications.data.ComplicationData
 import androidx.wear.watchface.complications.data.ComplicationText
 import androidx.wear.watchface.complications.data.ComplicationType
-import androidx.wear.watchface.complications.data.GoalProgressComplicationData
 import androidx.wear.watchface.complications.data.LongTextComplicationData
 import androidx.wear.watchface.complications.data.MonochromaticImage
 import androidx.wear.watchface.complications.data.PlainComplicationText
@@ -58,7 +56,6 @@ import java.time.LocalDate
 import javax.inject.Inject
 
 @AndroidEntryPoint
-@SuppressLint("NewApi")
 class CustomGoalComplicationService : SuspendingComplicationDataSourceService() {
 
     private var lastUpdateDate: LocalDate = LocalDate.now()
@@ -84,16 +81,6 @@ class CustomGoalComplicationService : SuspendingComplicationDataSourceService() 
                 ShortTextComplicationData.Builder(
                     text = PlainComplicationText.Builder(text = "50").build(),
                     contentDescription = ComplicationText.EMPTY)
-                    .setTitle(PlainComplicationText.Builder(getString(R.string.custom_goal_title_preview)).build())
-                    .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_goal)).build())
-                    .build()
-            }
-            ComplicationType.GOAL_PROGRESS -> {
-                GoalProgressComplicationData.Builder(
-                    value = 50f,
-                    targetValue = 100f,
-                    contentDescription = ComplicationText.EMPTY)
-                    .setText(PlainComplicationText.Builder(text = "50").build())
                     .setTitle(PlainComplicationText.Builder(getString(R.string.custom_goal_title_preview)).build())
                     .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_goal)).build())
                     .build()
@@ -136,8 +123,6 @@ class CustomGoalComplicationService : SuspendingComplicationDataSourceService() 
         }
 
         val customGoalValue = prefs.customGoalValue
-        val customGoalMin = prefs.customGoalMin
-        val customGoalMax = prefs.customGoalMax
 
         val customGoalIcon = MonochromaticImage.Builder(image = createWithData(prefs.customGoalIconByteArray,0,prefs.customGoalIconByteArray.size)).build()
         val customGoalTitle = if (prefs.customGoalTitle.isNotBlank()) { PlainComplicationText.Builder(text = prefs.customGoalTitle).build() } else { null }
@@ -153,22 +138,22 @@ class CustomGoalComplicationService : SuspendingComplicationDataSourceService() 
                     .setTapAction(openScreen())
                     .build()
             }
-            ComplicationType.GOAL_PROGRESS -> {
-                GoalProgressComplicationData.Builder(
-                    value = customGoalValue - customGoalMin, // Get value from min
-                    targetValue = customGoalMax - customGoalMin, // Get Range
-                    contentDescription = ComplicationText.EMPTY)
-                    .setText(PlainComplicationText.Builder(text = customGoalValue.formatValue()).build())
-                    .setTitle(customGoalTitle)
-                    .setMonochromaticImage(customGoalIcon)
-                    .setTapAction(openScreen())
-                    .build()
-            }
             ComplicationType.RANGED_VALUE -> {
+
+                val min = if (prefs.customGoalMin <  prefs.customGoalMax){ prefs.customGoalMin } else prefs.customGoalMax
+                val max = if (prefs.customGoalMax >  prefs.customGoalMin){ prefs.customGoalMax } else prefs.customGoalMin
+
+                // If user chooses to have progress bar working in an opposite way
+                val value = if (prefs.customGoalInverse){
+                    val progressFromStart = customGoalValue - min
+                    max - progressFromStart
+                } else customGoalValue
+
+
                 RangedValueComplicationData.Builder(
-                    value = customGoalValue.coerceIn(customGoalMin,customGoalMax),
-                    min = customGoalMin,
-                    max = customGoalMax,
+                    value = value.coerceIn(min,max),
+                    min = min,
+                    max = max,
                     contentDescription = ComplicationText.EMPTY)
                     .setText(PlainComplicationText.Builder(text = customGoalValue.formatValue()).build())
                     .setTitle(customGoalTitle)

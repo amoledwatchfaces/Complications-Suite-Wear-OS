@@ -146,8 +146,11 @@ fun CustomGoalTheme(
     val preferences = viewModel.preferences.collectAsState()
 
     val value = preferences.value.customGoalValue
-    val min = preferences.value.customGoalMin
-    val max = preferences.value.customGoalMax
+
+    // If user chooses to have target smaller than start value
+    val min = if (preferences.value.customGoalMin < preferences.value.customGoalMax) { preferences.value.customGoalMin } else { preferences.value.customGoalMax }
+    val max = if (preferences.value.customGoalMax > preferences.value.customGoalMin) { preferences.value.customGoalMax } else { preferences.value.customGoalMin }
+
     val changeBy = preferences.value.customGoalChangeBy
 
     var openGoalSetting by remember{ mutableStateOf(false) }
@@ -275,8 +278,15 @@ fun CustomGoalTheme(
                 tint = Color.Black)
         }
 
+        // If user chooses to have progress bar working in an opposite way
+        val progress = if (preferences.value.customGoalInverse){
+            (max - preferences.value.customGoalValue) / (max - min)
+        } else {
+            (preferences.value.customGoalValue - min) / (max - min)
+        }
+
         CircularProgressIndicator(
-            progress = ((value - min) / (max - min)),
+            progress = progress,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(all = 10.dp),
@@ -397,12 +407,24 @@ fun GoalSettings(
                 item {
                     ToggleChip(
                         label = stringResource(R.string.custom_goal_midnight_reset),
-                        secondaryLabelOn = "On",
-                        secondaryLabelOff = "Off",
+                        secondaryLabelOn = stringResource(R.string.custom_goal_on),
+                        secondaryLabelOff = stringResource(R.string.custom_goal_off),
                         checked = preferences.value.customGoalResetAtMidnight,
                         icon = {},
                         onCheckedChange = {
                             viewModel.setCustomGoalMidnightReset(it, context)
+                        }
+                    )
+                }
+                item {
+                    ToggleChip(
+                        label = stringResource(R.string.custom_goal_inverse),
+                        secondaryLabelOn = stringResource(R.string.custom_goal_on),
+                        secondaryLabelOff = stringResource(R.string.custom_goal_off),
+                        checked = preferences.value.customGoalInverse,
+                        icon = {},
+                        onCheckedChange = {
+                            viewModel.setCustomGoalInverse(it, context)
                         }
                     )
                 }

@@ -389,7 +389,7 @@
                 android:value="2100"/>
             <meta-data
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-                android:value="SHORT_TEXT,GOAL_PROGRESS,RANGED_VALUE,LONG_TEXT" />
+                android:value="SHORT_TEXT,RANGED_VALUE,LONG_TEXT" />
             <meta-data
                 android:name="android.support.wearable.complications.PROVIDER_CONFIG_ACTION"
                 android:value="com.weartools.weekdayutccomp.CUSTOM_GOAL" />

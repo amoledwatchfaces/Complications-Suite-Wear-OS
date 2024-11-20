@@ -222,6 +222,9 @@
     <string name="custom_goal_change_by_value">Zmień o wartość</string>
     <string name="custom_goal_midnight_reset">Reset o północy</string>
     <string name="custom_goal_pick_icon">Wybierz ikonę</string>
+    <string name="custom_goal_inverse">Odwrotny postęp</string>
+    <string name="custom_goal_on">Włącz</string>
+    <string name="custom_goal_off">Wyłącz</string>
 
     <!-- Crypto Complications -->
     <string name="crypto_complications">Komplikacje kryptowalut</string>

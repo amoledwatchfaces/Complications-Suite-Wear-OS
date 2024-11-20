@@ -222,6 +222,9 @@
     <string name="custom_goal_change_by_value">Изменить на значение</string>
     <string name="custom_goal_midnight_reset">Сброс в полночь</string>
     <string name="custom_goal_pick_icon">Выбрать иконку</string>
+    <string name="custom_goal_inverse">Обратный прогресс</string>
+    <string name="custom_goal_on">Включено</string>
+    <string name="custom_goal_off">Выключено</string>
 
     <!-- Crypto Complications -->
     <string name="crypto_complications">Сложности с криптовалютой</string>

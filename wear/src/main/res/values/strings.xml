@@ -224,6 +224,9 @@
     <string name="custom_goal_change_by_value">Change By value</string>
     <string name="custom_goal_midnight_reset">Midnight Reset</string>
     <string name="custom_goal_pick_icon">Pick Icon</string>
+    <string name="custom_goal_inverse">Inverse Progress</string>
+    <string name="custom_goal_on">On</string>
+    <string name="custom_goal_off">Off</string>
 
     <!-- Crypto Complications -->
     <string name="crypto_complications">Cryptocurrency Complications</string>

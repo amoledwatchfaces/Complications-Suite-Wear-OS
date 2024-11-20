@@ -219,6 +219,9 @@
     <string name="custom_goal_change_by_value">Αλλαγή κατά τιμή</string>
     <string name="custom_goal_midnight_reset">Επαναφορά μεσάνυχτα</string>
     <string name="custom_goal_pick_icon">Επιλέξτε Εικονίδιο</string>
+    <string name="custom_goal_inverse">Αντίστροφη Πρόοδος</string>
+    <string name="custom_goal_on">Ενεργοποίηση</string>
+    <string name="custom_goal_off">Απενεργοποίηση</string>
 
     <!-- Crypto Complications -->
     <string name="crypto_complications">Περιπλοκές Κρυπτονομισμάτων</string>

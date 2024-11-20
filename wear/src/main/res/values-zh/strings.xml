@@ -211,6 +211,9 @@
     <string name="custom_goal_change_by_value">更改值</string>
     <string name="custom_goal_midnight_reset">午夜重置</string>
     <string name="custom_goal_pick_icon">选择图标</string>
+    <string name="custom_goal_inverse">反向进度</string>
+    <string name="custom_goal_on">开启</string>
+    <string name="custom_goal_off">关闭</string>
 
     <!-- Crypto Complications -->
     <string name="crypto_complications">加密货币复杂性</string>

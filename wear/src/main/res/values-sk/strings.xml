@@ -212,6 +212,9 @@
     <string name="custom_goal_change_by_value">Zmeniť o hodnotu</string>
     <string name="custom_goal_midnight_reset">Reset o polnoci</string>
     <string name="custom_goal_pick_icon">Vybrať ikonu</string>
+    <string name="custom_goal_inverse">Inverzný pokrok</string>
+    <string name="custom_goal_on">Zapnuté</string>
+    <string name="custom_goal_off">Vypnuté</string>
 
     <!-- Crypto Complications -->
     <string name="crypto_complications">Komplikácie kryptomien</string>

@@ -99,6 +99,7 @@ data class UserPreferences(
     val customGoalTitle: String = "Points",
     val customGoalIconByteArray: ByteArray = ByteArray(0),
     val customGoalIconId: String = "",
+    val customGoalInverse: Boolean = false,
 )
 
 
