@@ -27,7 +27,7 @@ class TimerUpdateReceiver : BroadcastReceiver() {
     }
     private fun postNotification(context: Context) {
         val channelId = "timer_done_channel"
-        val notificationId = 1001 // Unique ID for this notification
+        val notificationId = System.currentTimeMillis().toInt() // Unique ID for this notification
 
         // Create notification channel (required for Android 8.0+)
         val channel = NotificationChannel(

@@ -100,19 +100,20 @@ class TimerComplicationService : SuspendingComplicationDataSourceService() {
             }
             // If not allowed to post exact alarm, schedule approximate alarm
             else {
-                alarmManager.set(
+                alarmManager.setAndAllowWhileIdle(
                     AlarmManager.RTC_WAKEUP,
                     triggerAtMillis,
                     pendingIntent
                 )
             }
+        } else {
+            // In older versions
+            alarmManager.setExactAndAllowWhileIdle(
+                AlarmManager.RTC_WAKEUP,
+                triggerAtMillis,
+                pendingIntent
+            )
         }
-        // In older version
-        alarmManager.setExactAndAllowWhileIdle(
-            AlarmManager.RTC_WAKEUP,
-            triggerAtMillis,
-            pendingIntent
-        )
     }
 
     private fun getDynamicDuration(targetTime: Long): DynamicDuration{
