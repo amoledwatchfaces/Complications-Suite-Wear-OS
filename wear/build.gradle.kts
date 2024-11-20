@@ -19,7 +19,7 @@ android {
     defaultConfig {
         applicationId = "com.weartools.weekdayutccomp"
         minSdk = 27
-        targetSdk = 34
+        targetSdk = 35
         versionCode = rootProject.extra["versionCode"] as Int
         versionName = rootProject.extra["versionName"] as String
 

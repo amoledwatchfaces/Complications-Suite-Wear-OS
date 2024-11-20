@@ -27,9 +27,10 @@
  */
 package com.weartools.weekdayutccomp.complication
 
-import android.annotation.SuppressLint
+import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Icon.createWithResource
 import android.os.Build
@@ -60,6 +61,7 @@ import com.weartools.weekdayutccomp.R.drawable
 import com.weartools.weekdayutccomp.activity.PickTimeActivity
 import com.weartools.weekdayutccomp.preferences.UserPreferences
 import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
+import com.weartools.weekdayutccomp.receiver.TimerUpdateReceiver
 import com.weartools.weekdayutccomp.utils.TimerWorker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
@@ -73,6 +75,45 @@ class TimerComplicationService : SuspendingComplicationDataSourceService() {
     @Inject
     lateinit var dataStore: DataStore<UserPreferences>
     private val preferences by lazy { UserPreferencesRepository(dataStore).getPreferences() }
+
+    private fun scheduleExactUpdate(context: Context, timeLeftInSeconds: Long) {
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(context, TimerUpdateReceiver::class.java).apply {
+            action = "$packageName.UPDATE_TIMER"
+        }
+        val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            0,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        val triggerAtMillis = System.currentTimeMillis() + timeLeftInSeconds * 1000
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            // In recent android versions, check if we can post an exact alarm
+            if (alarmManager.canScheduleExactAlarms()){
+                alarmManager.setExactAndAllowWhileIdle(
+                    AlarmManager.RTC_WAKEUP,
+                    triggerAtMillis,
+                    pendingIntent
+                )
+            }
+            // If not allowed to post exact alarm, schedule approximate alarm
+            else {
+                alarmManager.set(
+                    AlarmManager.RTC_WAKEUP,
+                    triggerAtMillis,
+                    pendingIntent
+                )
+            }
+        }
+        // In older version
+        alarmManager.setExactAndAllowWhileIdle(
+            AlarmManager.RTC_WAKEUP,
+            triggerAtMillis,
+            pendingIntent
+        )
+    }
 
     private fun getDynamicDuration(targetTime: Long): DynamicDuration{
 
@@ -117,17 +158,7 @@ class TimerComplicationService : SuspendingComplicationDataSourceService() {
             )
     }
 
-    private fun scheduleUpdateAtEnd(timeLeft: Long){
-        Log.i("TimerComplicationService", "schedule update in: $timeLeft seconds")
-        WorkManager.getInstance(this).enqueueUniqueWork(
-            "timer_update_work",
-            ExistingWorkPolicy.REPLACE,
-            OneTimeWorkRequestBuilder<TimerWorker>()
-                .setInitialDelay(Duration.ofSeconds(timeLeft))
-                .build()
-        )
-    }
-    private fun returnEmptyComplication(request: ComplicationRequest): ComplicationData? {
+    private fun returnEmptyComplication(request: ComplicationRequest): ComplicationData {
         Log.i("TimerComplicationService", "Returning empty complication data")
         WorkManager.getInstance(this).cancelUniqueWork("timer_update_work")
         return NoDataComplication.getPlaceholder(
@@ -190,11 +221,12 @@ class TimerComplicationService : SuspendingComplicationDataSourceService() {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
 
                     /** Use WorkManager to update Complication after Timer ends , return empty Complication after next update  **/
-                    if (currentTime < targetMillis) { scheduleUpdateAtEnd(timeLeft) }
+                    if (currentTime < targetMillis) {
+                        scheduleExactUpdate(this, timeLeft)
+                    }
                     else { return returnEmptyComplication(request) }
 
                     val dynamicDuration = getDynamicDuration(targetMillis)
-                    @SuppressLint("RestrictedApi")
                     return RangedValueComplicationData.Builder(
                             min = 0f,
                             max =  timeRange.toFloat(),
@@ -253,7 +285,9 @@ class TimerComplicationService : SuspendingComplicationDataSourceService() {
             ComplicationType.SHORT_TEXT -> {
 
                 /** Use WorkManager to update Complication after Timer ends , return empty Complication after next update  **/
-                if (currentTime < targetMillis) { scheduleUpdateAtEnd(timeLeft) }
+                if (currentTime < targetMillis) {
+                    scheduleExactUpdate(this, timeLeft)
+                }
                 else { return returnEmptyComplication(request) }
 
                 return ShortTextComplicationData.Builder(

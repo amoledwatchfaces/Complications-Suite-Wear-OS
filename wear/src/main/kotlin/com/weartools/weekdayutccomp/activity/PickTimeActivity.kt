@@ -27,7 +27,14 @@
  */
 package com.weartools.weekdayutccomp.activity
 
+import android.app.AlarmManager
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -41,11 +48,33 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalTime
 import java.util.concurrent.TimeUnit
 
+
 @AndroidEntryPoint
 class PickTimeActivity : ComponentActivity(){
 
+    private fun checkPermission(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val alarmManager = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            if (alarmManager.canScheduleExactAlarms().not()) {
+
+                Toast.makeText(this, "Please allow permission to schedule timer", Toast.LENGTH_LONG).show()
+
+                val intent = Intent()
+                intent.setAction(ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+                intent.setData(Uri.parse("package:$packageName"))
+                startActivity(intent)
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        checkPermission()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         val viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         setContent {
             val context = LocalContext.current

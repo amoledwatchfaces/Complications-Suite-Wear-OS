@@ -36,6 +36,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
+    <!-- Timer Complication -->
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <!-- Mark as Wear OS app -->
     <uses-feature android:name="android.hardware.type.watch" />
 
@@ -667,5 +671,6 @@
             </intent-filter>
         </receiver>
         <receiver android:name=".receiver.ComplicationTapBroadcastReceiver" />
+        <receiver android:name=".receiver.TimerUpdateReceiver" />
     </application>
 </manifest>
