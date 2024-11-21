@@ -76,7 +76,7 @@ class TimerComplicationService : SuspendingComplicationDataSourceService() {
     lateinit var dataStore: DataStore<UserPreferences>
     private val preferences by lazy { UserPreferencesRepository(dataStore).getPreferences() }
 
-    private fun scheduleExactUpdate(context: Context, timeLeftInSeconds: Long) {
+    private fun scheduleExactUpdate(context: Context, triggerAtMillis: Long) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, TimerUpdateReceiver::class.java).apply {
             action = "$packageName.UPDATE_TIMER"
@@ -87,19 +87,14 @@ class TimerComplicationService : SuspendingComplicationDataSourceService() {
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
-        val triggerAtMillis = System.currentTimeMillis() + timeLeftInSeconds * 1000
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            // In recent android versions, check if we can post an exact alarm
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
             if (alarmManager.canScheduleExactAlarms()){
                 alarmManager.setExactAndAllowWhileIdle(
                     AlarmManager.RTC_WAKEUP,
                     triggerAtMillis,
                     pendingIntent
                 )
-            }
-            // If not allowed to post exact alarm, schedule approximate alarm
-            else {
+            } else {
                 alarmManager.setAndAllowWhileIdle(
                     AlarmManager.RTC_WAKEUP,
                     triggerAtMillis,
@@ -107,7 +102,6 @@ class TimerComplicationService : SuspendingComplicationDataSourceService() {
                 )
             }
         } else {
-            // In older versions
             alarmManager.setExactAndAllowWhileIdle(
                 AlarmManager.RTC_WAKEUP,
                 triggerAtMillis,
@@ -221,9 +215,9 @@ class TimerComplicationService : SuspendingComplicationDataSourceService() {
                 /** Use DynamicValue in API 33+ **/
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
 
-                    /** Use WorkManager to update Complication after Timer ends , return empty Complication after next update  **/
+                    /** Use AlarmManager to update Complication after Timer ends , return empty Complication after next update  **/
                     if (currentTime < targetMillis) {
-                        scheduleExactUpdate(this, timeLeft)
+                        scheduleExactUpdate(this, targetMillis)
                     }
                     else { return returnEmptyComplication(request) }
 
@@ -285,9 +279,9 @@ class TimerComplicationService : SuspendingComplicationDataSourceService() {
             }
             ComplicationType.SHORT_TEXT -> {
 
-                /** Use WorkManager to update Complication after Timer ends , return empty Complication after next update  **/
+                /** Use AlarmManager to update Complication after Timer ends , return empty Complication after next update  **/
                 if (currentTime < targetMillis) {
-                    scheduleExactUpdate(this, timeLeft)
+                    scheduleExactUpdate(this, targetMillis)
                 }
                 else { return returnEmptyComplication(request) }
 
