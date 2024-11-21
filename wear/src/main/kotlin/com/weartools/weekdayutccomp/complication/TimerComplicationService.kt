@@ -88,13 +88,16 @@ class TimerComplicationService : SuspendingComplicationDataSourceService() {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
+            // On newer android versions, check if we can schedule exact alarm
             if (alarmManager.canScheduleExactAlarms()){
+                // If permission is not given, schedule exact alarm
                 alarmManager.setExactAndAllowWhileIdle(
                     AlarmManager.RTC_WAKEUP,
                     triggerAtMillis,
                     pendingIntent
                 )
             } else {
+                // If permission is not given, schedule normal alarm
                 alarmManager.setAndAllowWhileIdle(
                     AlarmManager.RTC_WAKEUP,
                     triggerAtMillis,
@@ -102,6 +105,7 @@ class TimerComplicationService : SuspendingComplicationDataSourceService() {
                 )
             }
         } else {
+            // We can schedule exact alarms on older android versions
             alarmManager.setExactAndAllowWhileIdle(
                 AlarmManager.RTC_WAKEUP,
                 triggerAtMillis,
