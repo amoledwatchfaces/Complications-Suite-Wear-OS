@@ -114,7 +114,10 @@ class DateCountdownComplicationService : SuspendingComplicationDataSourceService
 
         ComplicationType.SHORT_TEXT -> {
             ShortTextComplicationData.Builder(
-                text = TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.SHORT_SINGLE_UNIT, CountDownTimeReference(timeInstance)).build(),
+                text = TimeDifferenceComplicationText.Builder(
+                    TimeDifferenceStyle.SHORT_SINGLE_UNIT, CountDownTimeReference(timeInstance))
+                    .setText("^1")
+                    .build(),
                 contentDescription = PlainComplicationText.Builder(text = "Date Countdown").build())
                 .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_date_countdown)).build())
                 .setTapAction(openScreen())
@@ -126,7 +129,9 @@ class DateCountdownComplicationService : SuspendingComplicationDataSourceService
                 contentDescription = PlainComplicationText.Builder(text = "Date Countdown").build())
                 .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_date_countdown)).build())
                 .setTitle(
-                    TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.WORDS_SINGLE_UNIT, CountDownTimeReference(timeInstance))
+                    TimeDifferenceComplicationText.Builder(
+                        TimeDifferenceStyle.WORDS_SINGLE_UNIT,
+                        CountDownTimeReference(timeInstance))
                     .setText("^1")
                     .build())
                 .setTapAction(openScreen())
@@ -151,7 +156,10 @@ class DateCountdownComplicationService : SuspendingComplicationDataSourceService
                 value = timeLeft.coerceIn(0, timeRange).toFloat(),
                 max = timeRange.toFloat(),
                 contentDescription = PlainComplicationText.Builder(text = "Date Countdown").build())
-                .setText(TimeDifferenceComplicationText.Builder(TimeDifferenceStyle.SHORT_SINGLE_UNIT, CountDownTimeReference(timeInstance)).build())
+                .setText(TimeDifferenceComplicationText.Builder(
+                    TimeDifferenceStyle.SHORT_SINGLE_UNIT, CountDownTimeReference(timeInstance))
+                    .setText("^1")
+                    .build())
                 .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_date_countdown)).build())
                 .setTapAction(openScreen())
                 .build()
