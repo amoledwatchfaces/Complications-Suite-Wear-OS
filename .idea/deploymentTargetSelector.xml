@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="wear">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-11-20T12:11:13.594823200Z">
+        <DropdownSelection timestamp="2024-11-27T13:14:09.960118600Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\amoledwatchfaces\.android\avd\Wear_OS_5.avd" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\amoledwatchfaces\.android\avd\Wear_OS_Small_Round_API_33.avd" />
             </handle>
           </Target>
         </DropdownSelection>
