@@ -232,4 +232,9 @@
     <string name="crypto_complications">Cryptocurrency Complications</string>
     <string name="counter_currency">Counter Currency</string>
 
+    <!-- Activity Launcher Complication -->
+    <string name="activity_launcher_comp_name">Activity launcher</string>
+    <string name="activity_setup">Setup</string>
+    <string name="activity_pick_activity">Pick Activity</string>
+    <string name="activity_set_icon">Set icon</string>
 </resources>

@@ -227,4 +227,10 @@
     <!-- Crypto Complications -->
     <string name="crypto_complications">Btc-Eth-Komplikationen</string>
     <string name="counter_currency">Gegenwährung</string>
+
+    <!-- Activity Launcher Complication -->
+    <string name="activity_launcher_comp_name">Aktivitätsstarter</string>
+    <string name="activity_setup">Einrichten</string>
+    <string name="activity_pick_activity">Aktivität auswählen</string>
+    <string name="activity_set_icon">Symbol festlegen</string>
 </resources>

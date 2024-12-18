@@ -218,4 +218,10 @@
     <!-- Crypto Complications -->
     <string name="crypto_complications">加密货币复杂性</string>
     <string name="counter_currency">对手货币</string>
+
+    <!-- Activity Launcher Complication -->
+    <string name="activity_launcher_comp_name">活动启动器</string>
+    <string name="activity_setup">设置</string>
+    <string name="activity_pick_activity">选择活动</string>
+    <string name="activity_set_icon">设置图标</string>
 </resources>

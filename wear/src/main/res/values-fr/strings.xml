@@ -231,4 +231,9 @@
     <string name="crypto_complications">Complications des Cryptomonnaies</string>
     <string name="counter_currency">Devise de contrepartie</string>
 
+    <!-- Activity Launcher Complication -->
+    <string name="activity_launcher_comp_name">Lanceur d\'activités</string>
+    <string name="activity_setup">Configuration</string>
+    <string name="activity_pick_activity">Choisir une activité</string>
+    <string name="activity_set_icon">Définir l\'icône</string>
 </resources>

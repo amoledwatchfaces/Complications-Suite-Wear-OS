@@ -43,13 +43,22 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Flag
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.outlined.Check
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -73,7 +82,10 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.input.rotary.onRotaryScrollEvent
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
@@ -352,7 +364,7 @@ fun GoalSettings(
                                 tint = wearColorPalette.secondaryVariant) },
                         label = {
                             Text(
-                                text = "Set icon",
+                                text = stringResource(R.string.activity_set_icon),
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             )
@@ -463,7 +475,7 @@ fun SimpleComposablePreview(
 fun IconsDialog(
     focusRequester: FocusRequester,
     callback: (Int) -> Unit,
-    viewModel: IconsViewModel = IconsViewModelImp(LocalContext.current),
+    viewModel: IconsViewModel = IconsViewModelImp(LocalContext.current.applicationContext),
     context: Context,
     mainViewModel: MainViewModel
 ) {
@@ -503,6 +515,12 @@ fun IconsDialog(
                     }
                 }
                 else{
+
+                    item { SearchTextField{
+                        viewModel.updateSearch(it)
+                    }
+                    }
+
                     val iconRows = state.icons.chunked(4)
                     items(iconRows) { rowIcons ->
                         Row(
@@ -566,7 +584,7 @@ fun Painter.toImageBitmap(
     }
     return image
 }
-private fun bitmapToByteArray(bitmap: Bitmap): ByteArray {
+fun bitmapToByteArray(bitmap: Bitmap): ByteArray {
     val stream = ByteArrayOutputStream()
     bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
     return stream.toByteArray()
@@ -576,5 +594,50 @@ fun Float.formatValue(): String {
     return DecimalFormat("#.##").format(this)
 }
 
+@Composable
+fun SearchTextField(
+    onSearchChanged: (String) -> Unit
+) {
+    var search by remember { mutableStateOf("") }
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val focusRequester = remember { FocusRequester() } // Add this
+
+    // Request focus when the composable is first composed
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
+
+    OutlinedTextField(
+        value = search,
+        onValueChange = {
+            search = it
+            onSearchChanged(it)
+        },
+        label = { Text(text = "Search", color = wearColorPalette.primary) },
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Done, keyboardType = KeyboardType.Text
+        ),
+        keyboardActions = KeyboardActions(
+            onAny = { keyboardController?.hide() }
+        ),
+        singleLine = true,
+        shape = RoundedCornerShape(TextFieldDefaults.MinHeight/3),
+        modifier = Modifier
+            .fillMaxWidth(0.8f)
+            .heightIn(max = TextFieldDefaults.MinHeight)
+            .focusRequester(focusRequester),
+        colors = //
+        OutlinedTextFieldDefaults.colors(
+            unfocusedBorderColor = wearColorPalette.primaryVariant.copy(alpha = 0.6f),
+            focusedBorderColor = wearColorPalette.primaryVariant.copy(alpha = 1f),
+            focusedTextColor = Color.White,
+            cursorColor = wearColorPalette.secondaryVariant,
+            selectionColors = TextSelectionColors(
+                backgroundColor = wearColorPalette.secondaryVariant.copy(alpha = 0f),
+                handleColor = wearColorPalette.secondaryVariant,
+                ),
+            ),
+    )
+}
 
 

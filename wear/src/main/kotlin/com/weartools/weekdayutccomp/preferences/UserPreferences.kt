@@ -100,6 +100,21 @@ data class UserPreferences(
     val customGoalIconByteArray: ByteArray = ByteArray(0),
     val customGoalIconId: String = "",
     val customGoalInverse: Boolean = false,
+
+    // Activity Launcher
+    val activityIconByteArray: ByteArray = ByteArray(0),
+    val activityIconId: String = "",
+    val activityPackageName: String = "com.weartools.weekdayutccomp",
+    val activityClassName: String = "com.weartools.weekdayutccomp.activity.MainActivity"
+)
+
+@Serializable
+data class ActivityInfo(
+    val activityName: String,
+    val packageName: String,
+    val className: String,
+    val packageIcon: String,
+    val iconSize: Int,
 )
 
 

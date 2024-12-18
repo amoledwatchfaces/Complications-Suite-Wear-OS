@@ -226,4 +226,10 @@
     <!-- Crypto Complications -->
     <string name="crypto_complications">Περιπλοκές Κρυπτονομισμάτων</string>
     <string name="counter_currency">Αντιστροφή νομίσματος</string>
+
+    <!-- Activity Launcher Complication -->
+    <string name="activity_launcher_comp_name">Εκκινητής δραστηριοτήτων</string>
+    <string name="activity_setup">Ρύθμιση</string>
+    <string name="activity_pick_activity">Επιλογή δραστηριότητας</string>
+    <string name="activity_set_icon">Ορισμός εικονιδίου</string>
 </resources>

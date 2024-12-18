@@ -229,4 +229,10 @@
     <!-- Crypto Complications -->
     <string name="crypto_complications">Сложности с криптовалютой</string>
     <string name="counter_currency">Контрвалюта</string>
+
+    <!-- Activity Launcher Complication -->
+    <string name="activity_launcher_comp_name">Запуск действий</string>
+    <string name="activity_setup">Настройка</string>
+    <string name="activity_pick_activity">Выбрать действие</string>
+    <string name="activity_set_icon">Установить значок</string>
 </resources>

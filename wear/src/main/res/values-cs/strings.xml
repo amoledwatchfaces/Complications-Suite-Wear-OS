@@ -219,4 +219,10 @@
     <!-- Crypto Complications -->
     <string name="crypto_complications">Komplikace kryptoměn</string>
     <string name="counter_currency">Kontraktivní měna</string>
+
+    <!-- Activity Launcher Complication -->
+    <string name="activity_launcher_comp_name">Spouštěč aktivit</string>
+    <string name="activity_setup">Nastavení</string>
+    <string name="activity_pick_activity">Vybrat aktivitu</string>
+    <string name="activity_set_icon">Nastavit ikonu</string>
 </resources>

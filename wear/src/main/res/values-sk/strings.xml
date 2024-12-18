@@ -219,4 +219,10 @@
     <!-- Crypto Complications -->
     <string name="crypto_complications">Komplikácie kryptomien</string>
     <string name="counter_currency">Protimena</string>
+
+    <!-- Activity Launcher Complication -->
+    <string name="activity_launcher_comp_name">Spúšťač aktivít</string>
+    <string name="activity_setup">Nastavenie</string>
+    <string name="activity_pick_activity">Vybrať aktivitu</string>
+    <string name="activity_set_icon">Nastaviť ikonu</string>
 </resources>

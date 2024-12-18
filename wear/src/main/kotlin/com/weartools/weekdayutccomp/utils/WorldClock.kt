@@ -46,6 +46,7 @@ object WorldClockLists{
         WorldClock("Asia/Bangkok", "BKK", "Bangkok"),
         WorldClock("Asia/Brunei", "BWN", "Brunei"),
         WorldClock("Asia/Colombo", "CMB", "Colombo"),
+        WorldClock("Asia/Makassar", "DPS", "Denpasar"),
         WorldClock("Asia/Dhaka", "DAC", "Dhaka"),
         WorldClock("Asia/Qatar", "DOH", "Doha"),
         WorldClock("Asia/Dubai", "DXB", "Dubai"),

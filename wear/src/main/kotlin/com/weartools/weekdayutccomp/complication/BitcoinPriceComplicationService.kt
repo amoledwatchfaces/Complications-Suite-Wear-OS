@@ -113,16 +113,17 @@ class BitcoinPriceComplicationService : SuspendingComplicationDataSourceService(
             highPrice = bitcoinPrice.high
             lowPrice = bitcoinPrice.low
             dataStore.updateData { it.copy(priceBTC = bitcoinPrice.last) }
-            shortPattern = "#.#K"
+            shortPattern = if (price >= 100000) "#K" else "#.#K"
             longPattern = "$counterCurrencySymbol#,###"
         }
         else {
             price = preferences.first().priceBTC
-            shortPattern = "#.#K!"
+            shortPattern = if (price >= 100000) "#K!" else "#.#K!"
             longPattern = "$counterCurrencySymbol#,###!"
         }
         val priceString =
-            if (price >= 1000.00) { DecimalFormat(shortPattern).apply { RoundingMode.HALF_UP }.format(price/1000.0) }
+            if (price >= 100000) { DecimalFormat(shortPattern).apply { RoundingMode.HALF_EVEN }.format(price/1000.0) }
+            else if (price >= 1000) { DecimalFormat(shortPattern).apply { RoundingMode.HALF_UP }.format(price/1000.0) }
             else { DecimalFormat(shortPattern).format(price) }
 
         return when (request.complicationType) {

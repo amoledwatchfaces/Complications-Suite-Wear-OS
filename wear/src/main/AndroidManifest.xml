@@ -41,6 +41,9 @@
     <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
+    <!-- Activity Launcher Complication -->
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" tools:ignore="QueryAllPackagesPermission" />
+
     <!-- Mark as Wear OS app -->
     <uses-feature android:name="android.hardware.type.watch" />
 
@@ -150,8 +153,37 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.PickActivityActivity"
+            android:autoRemoveFromRecents="true"
+            android:noHistory="true"
+            android:exported="true"
+            android:taskAffinity="">
+            <intent-filter>
+                <action android:name="com.weartools.weekdayutccomp.CUSTOM_ACTIVITY" />
+                <category android:name="android.support.wearable.complications.category.PROVIDER_CONFIG" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <!-- Complications -->
+        <service android:name=".complication.ActivityLauncherComplicationService"
+            android:exported="true"
+            android:icon="@drawable/ic_open_in_new_view"
+            android:label="@string/activity_launcher_comp_name"
+            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
+            <meta-data
+                android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
+                android:value="0"/>
+            <meta-data
+                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+                android:value="ICON" />
+            <meta-data
+                android:name="android.support.wearable.complications.PROVIDER_CONFIG_ACTION"
+                android:value="com.weartools.weekdayutccomp.CUSTOM_ACTIVITY" />
+        </service>
         <service android:name=".complication.AlarmComplicationService"
             android:exported="true"
             android:icon="@drawable/ic_alarm"

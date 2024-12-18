@@ -225,4 +225,10 @@
     <!-- Crypto Complications -->
     <string name="crypto_complications">Complicazioni delle Criptovalute</string>
     <string name="counter_currency">Valuta di riferimento</string>
+
+    <!-- Activity Launcher Complication -->
+    <string name="activity_launcher_comp_name">Avvio attività</string>
+    <string name="activity_setup">Configurazione</string>
+    <string name="activity_pick_activity">Scegli attività</string>
+    <string name="activity_set_icon">Imposta icona</string>
 </resources>

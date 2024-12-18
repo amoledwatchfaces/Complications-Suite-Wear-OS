@@ -225,4 +225,10 @@
     <!-- Crypto Complications -->
     <string name="crypto_complications">Complicațiile criptomonedelor</string>
     <string name="counter_currency">Monedă de referință</string>
+
+    <!-- Activity Launcher Complication -->
+    <string name="activity_launcher_comp_name">Lansator activități</string>
+    <string name="activity_setup">Configurare</string>
+    <string name="activity_pick_activity">Alege activitate</string>
+    <string name="activity_set_icon">Setează pictogramă</string>
 </resources>

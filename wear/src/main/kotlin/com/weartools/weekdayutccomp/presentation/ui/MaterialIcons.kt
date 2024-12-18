@@ -71,7 +71,7 @@ data class IconsState(
 )
 
 class IconsViewModelImp(
-    val context: Context
+    private val applicationContext: Context
 ) : IconsViewModel, ViewModel() {
 
     private val _state = MutableStateFlow(IconsState())
@@ -117,7 +117,7 @@ class IconsViewModelImp(
     }
 
     private fun getNamesIcons(): List<String> {
-        val inputStream = context.assets.open("icons-names.txt")
+        val inputStream = applicationContext.assets.open("icons-names.txt")
         val reader = BufferedReader(InputStreamReader(inputStream))
         val lines = reader.readLines()
         reader.close()

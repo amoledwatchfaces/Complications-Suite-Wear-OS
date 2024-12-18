@@ -43,6 +43,7 @@ import android.text.style.StyleSpan
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.graphics.drawable.toBitmap
 import androidx.core.os.LocaleListCompat
 import androidx.datastore.core.DataStore
 import androidx.lifecycle.ViewModel
@@ -59,6 +60,7 @@ import com.google.android.libraries.places.api.model.PlaceTypes
 import com.google.android.libraries.places.api.net.FetchPlaceRequest
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
 import com.weartools.weekdayutccomp.activity.handleIntentExtras
+import com.weartools.weekdayutccomp.complication.ActivityLauncherComplicationService
 import com.weartools.weekdayutccomp.complication.BarometerComplicationService
 import com.weartools.weekdayutccomp.complication.BitcoinPriceComplicationService
 import com.weartools.weekdayutccomp.complication.CustomGoalComplicationService
@@ -79,20 +81,24 @@ import com.weartools.weekdayutccomp.complication.WorldClock2ComplicationService
 import com.weartools.weekdayutccomp.enums.DateFormat
 import com.weartools.weekdayutccomp.enums.MoonIconType
 import com.weartools.weekdayutccomp.enums.Request
+import com.weartools.weekdayutccomp.preferences.ActivityInfo
 import com.weartools.weekdayutccomp.preferences.UserPreferences
 import com.weartools.weekdayutccomp.preferences.UserPreferencesRepository
 import com.weartools.weekdayutccomp.utils.AddressProvider
 import com.weartools.weekdayutccomp.utils.CounterCurrency
 import com.weartools.weekdayutccomp.utils.WorldClock
 import com.weartools.weekdayutccomp.utils.arePermissionsGranted
+import com.weartools.weekdayutccomp.utils.bitmapToString
 import com.weartools.weekdayutccomp.utils.updateComplication
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import java.util.Collections
 import java.util.Locale
 import javax.inject.Inject
 
@@ -417,6 +423,20 @@ class MainViewModel @Inject constructor(
         ) }
         context.updateComplication(CustomGoalComplicationService::class.java)
     }}
+    fun storeActivityByteArray(id: String, value: ByteArray, context: Context) { viewModelScope.launch {
+        dataStore.updateData { it.copy(
+            activityIconId = id,
+            activityIconByteArray = value
+        ) }
+        context.updateComplication(ActivityLauncherComplicationService::class.java)
+    }}
+    fun storeActivityInfo(packageName: String, className: String, context: Context) { viewModelScope.launch {
+        dataStore.updateData { it.copy(
+            activityPackageName = packageName,
+            activityClassName = className
+        ) }
+        context.updateComplication(ActivityLauncherComplicationService::class.java)
+    }}
 
     private fun disableClass(context: Context, className: String){
         viewModelScope.launch {
@@ -447,6 +467,63 @@ class MainViewModel @Inject constructor(
                 disableClass(context = context, "com.weartools.weekdayutccomp.complication.HijriDateComplicationService")
                 disableClass(context = context, "com.weartools.weekdayutccomp.complication.JalaliDateComplicationService")
             }
+        }
+    }
+
+
+
+    private val _isLoading = MutableStateFlow(true)
+    val isLoading: StateFlow<Boolean> = _isLoading
+
+    private val _installedPackages = MutableStateFlow<List<ActivityInfo>>(emptyList())
+    val installedPackages: StateFlow<List<ActivityInfo>> = _installedPackages
+
+    fun getInstalledPackages(context: Context) {
+        // Launch a coroutine in the background to load the package icons
+        viewModelScope.launch(Dispatchers.IO) {
+            _isLoading.value = true
+            _installedPackages.value = emptyList()
+
+            val packageManager = context.packageManager
+            val installedApplications = packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
+
+
+            // Use a thread-safe list for activities
+            val activitiesList = Collections.synchronizedList(mutableListOf<ActivityInfo>())
+
+            // Process each application concurrently
+            installedApplications.parallelStream().forEach { applicationInfo ->
+                try {
+                    val packageActivities = packageManager.getPackageInfo(
+                        applicationInfo.packageName,
+                        PackageManager.GET_ACTIVITIES
+                    ).activities ?: return@forEach
+
+                    val appIcon = applicationInfo.loadIcon(packageManager)
+                    val packageIconString = bitmapToString(appIcon.toBitmap())
+                    val iconSize = appIcon.intrinsicHeight
+
+                    packageActivities.forEach { activityInfo ->
+                        if (activityInfo.packageName == applicationInfo.packageName) { // Ensure it's from the app's package
+                            activitiesList.add(
+                                ActivityInfo(
+                                    activityName = activityInfo.name.substringAfterLast('.'),
+                                    packageName = activityInfo.packageName,
+                                    className = activityInfo.name,
+                                    packageIcon = packageIconString,
+                                    iconSize = iconSize
+                                )
+                            )
+                        }
+                    }
+                } catch (e: Exception) {
+                    // Log the exception for debugging purposes
+                }
+            }
+
+            // Update the installed packages state flow
+            _installedPackages.value = activitiesList
+            _isLoading.value = false
         }
     }
 }

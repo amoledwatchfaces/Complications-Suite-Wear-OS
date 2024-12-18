@@ -16,4 +16,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Complications Suite"
-include(":wear",":mobile")
+include(":wear")
