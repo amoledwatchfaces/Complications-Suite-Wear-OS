@@ -35,6 +35,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
 import android.graphics.Typeface
 import android.os.Build
 import android.os.LocaleList
@@ -98,7 +99,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import java.util.Collections
 import java.util.Locale
 import javax.inject.Inject
 
@@ -485,44 +485,23 @@ class MainViewModel @Inject constructor(
             _installedPackages.value = emptyList()
 
             val packageManager = context.packageManager
-            val installedApplications = packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
+            val launcherIntent = Intent(Intent.ACTION_MAIN, null)
+            val resolveInfoList: List<ResolveInfo> = packageManager.queryIntentActivities(launcherIntent, 0)
 
-
-            // Use a thread-safe list for activities
-            val activitiesList = Collections.synchronizedList(mutableListOf<ActivityInfo>())
-
-            // Process each application concurrently
-            installedApplications.parallelStream().forEach { applicationInfo ->
-                try {
-                    val packageActivities = packageManager.getPackageInfo(
-                        applicationInfo.packageName,
-                        PackageManager.GET_ACTIVITIES
-                    ).activities ?: return@forEach
-
-                    val appIcon = applicationInfo.loadIcon(packageManager)
-                    val packageIconString = bitmapToString(appIcon.toBitmap())
-                    val iconSize = appIcon.intrinsicHeight
-
-                    packageActivities.forEach { activityInfo ->
-                        if (activityInfo.exported && activityInfo.name.take(10) == applicationInfo.packageName.take(10)) { // Ensure it's from the app's package
-                            activitiesList.add(
-                                ActivityInfo(
-                                    activityName = activityInfo.name.substringAfterLast('.'),
-                                    packageName = activityInfo.packageName,
-                                    className = activityInfo.name,
-                                    packageIcon = packageIconString,
-                                    iconSize = iconSize
-                                )
-                            )
-                        }
-                    }
-                } catch (e: Exception) {
-                    // Log the exception for debugging purposes
-                }
+            // Load the package icon as a Bitmap
+            val activityList = resolveInfoList.map { resolveInfo ->
+                val icon = resolveInfo.activityInfo.loadIcon(packageManager)
+                ActivityInfo(
+                    activityName = resolveInfo.activityInfo.name.split(".").last(),
+                    packageName = resolveInfo.activityInfo.packageName,
+                    className = resolveInfo.activityInfo.name,
+                    packageIcon = bitmapToString(icon.toBitmap()),
+                    iconSize = icon.intrinsicHeight
+                )
             }
 
             // Update the installed packages state flow
-            _installedPackages.value = activitiesList
+            _installedPackages.value = activityList
             _isLoading.value = false
         }
     }

@@ -14,8 +14,8 @@ tasks.register("clean", Delete::class) {
 buildscript {
 
     /** Set version for wear & mobile modules **/
-    val versionCode by extra(10000388)
-    val versionName by extra("3.8.8")
+    val versionCode by extra(10000389)
+    val versionName by extra("3.8.9")
 
     dependencies {
         classpath ("com.android.tools.build:gradle:8.6.1")
