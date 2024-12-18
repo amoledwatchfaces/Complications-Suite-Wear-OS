@@ -101,6 +101,12 @@ fun AppsListPicker(
                         Chip(
                             modifier = Modifier.fillMaxWidth(),
                             onClick = {
+                                /*
+                                Log.i("AppListPicker", "onClick: ${it.activityName}")
+                                Log.i("AppListPicker", "onClick: ${it.packageName}")
+                                Log.i("AppListPicker", "onClick: ${it.className}")
+
+                                 */
                                 viewModel.storeActivityInfo(
                                     it.packageName,
                                     it.className,

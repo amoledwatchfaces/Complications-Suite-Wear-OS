@@ -504,7 +504,7 @@ class MainViewModel @Inject constructor(
                     val iconSize = appIcon.intrinsicHeight
 
                     packageActivities.forEach { activityInfo ->
-                        if (activityInfo.packageName == applicationInfo.packageName) { // Ensure it's from the app's package
+                        if (activityInfo.exported && activityInfo.name.take(10) == applicationInfo.packageName.take(10)) { // Ensure it's from the app's package
                             activitiesList.add(
                                 ActivityInfo(
                                     activityName = activityInfo.name.substringAfterLast('.'),
