@@ -224,4 +224,12 @@
     <string name="activity_setup">Configuración</string>
     <string name="activity_pick_activity">Seleccionar actividad</string>
     <string name="activity_set_icon">Establecer icono</string>
+
+    <!-- Settings -->
+    <string name="wifi_settings_comp_name">Ajustes de Wi-Fi</string>
+    <string name="settings_comp_name">Ajustes</string>
+    <string name="display_settings_comp_name">Ajustes de pantalla</string>
+    <string name="nfc_settings_comp_name">Ajustes de NFC</string>
+    <string name="bluetooth_settings_comp_name">Ajustes de Bluetooth</string>
+    <string name="battery_saver_settings_comp_name">Ajustes de ahorro de batería</string>
 </resources>

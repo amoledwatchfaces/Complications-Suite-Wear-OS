@@ -225,4 +225,12 @@
     <string name="activity_setup">Nastavení</string>
     <string name="activity_pick_activity">Vybrat aktivitu</string>
     <string name="activity_set_icon">Nastavit ikonu</string>
+
+    <!-- Settings -->
+    <string name="wifi_settings_comp_name">Nastavení Wi-Fi</string>
+    <string name="settings_comp_name">Nastavení</string>
+    <string name="display_settings_comp_name">Nastavení displeje</string>
+    <string name="nfc_settings_comp_name">Nastavení NFC</string>
+    <string name="bluetooth_settings_comp_name">Nastavení Bluetooth</string>
+    <string name="battery_saver_settings_comp_name">Nastavení spořiče baterie</string>
 </resources>

@@ -231,4 +231,12 @@
     <string name="activity_setup">Configurare</string>
     <string name="activity_pick_activity">Alege activitate</string>
     <string name="activity_set_icon">Setează pictogramă</string>
+
+    <!-- Settings -->
+    <string name="wifi_settings_comp_name">Setări Wi-Fi</string>
+    <string name="settings_comp_name">Setări</string>
+    <string name="display_settings_comp_name">Setări afișaj</string>
+    <string name="nfc_settings_comp_name">Setări NFC</string>
+    <string name="bluetooth_settings_comp_name">Setări Bluetooth</string>
+    <string name="battery_saver_settings_comp_name">Setări economisire baterie</string>
 </resources>

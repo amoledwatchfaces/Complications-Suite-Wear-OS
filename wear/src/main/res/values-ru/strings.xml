@@ -235,4 +235,12 @@
     <string name="activity_setup">Настройка</string>
     <string name="activity_pick_activity">Выбрать действие</string>
     <string name="activity_set_icon">Установить значок</string>
+
+    <!-- Settings -->
+    <string name="wifi_settings_comp_name">Настройки Wi-Fi</string>
+    <string name="settings_comp_name">Настройки</string>
+    <string name="display_settings_comp_name">Настройки дисплея</string>
+    <string name="nfc_settings_comp_name">Настройки NFC</string>
+    <string name="bluetooth_settings_comp_name">Настройки Bluetooth</string>
+    <string name="battery_saver_settings_comp_name">Настройки экономии заряда батареи</string>
 </resources>

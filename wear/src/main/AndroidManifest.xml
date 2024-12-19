@@ -244,6 +244,21 @@
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
                 android:value="SHORT_TEXT" />
         </service>
+        <service android:name=".complication.BatterySaverSettingsComplicationService"
+            android:exported="true"
+            android:icon="@drawable/ic_battery_saver"
+            android:label="@string/battery_saver_settings_comp_name"
+            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
+            <meta-data
+                android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
+                android:value="0"/>
+            <meta-data
+                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+                android:value="ICON" />
+        </service>
         <service android:name=".complication.BitcoinPriceComplicationService"
             android:exported="true"
             android:icon="@drawable/ic_btc"
@@ -258,6 +273,21 @@
             <meta-data
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
                 android:value="SHORT_TEXT,LONG_TEXT,RANGED_VALUE" />
+        </service>
+        <service android:name=".complication.BluetoothSettingsComplicationService"
+            android:exported="true"
+            android:icon="@drawable/ic_bluetooth"
+            android:label="@string/bluetooth_settings_comp_name"
+            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
+            <meta-data
+                android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
+                android:value="0"/>
+            <meta-data
+                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+                android:value="ICON" />
         </service>
         <service android:name=".complication.CustomTextComplicationService"
             android:exported="true"
@@ -367,6 +397,21 @@
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
                 android:value="ICON,SMALL_IMAGE" />
         </service>
+        <service android:name=".complication.DisplaySettingsComplicationService"
+            android:exported="true"
+            android:icon="@drawable/ic_brightness"
+            android:label="@string/display_settings_comp_name"
+            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
+            <meta-data
+                android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
+                android:value="0"/>
+            <meta-data
+                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+                android:value="ICON" />
+        </service>
         <service android:name=".complication.DynamicCalendarIconComplicationService"
             android:exported="true"
             android:icon="@drawable/ic_cal_31"
@@ -412,7 +457,6 @@
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
                 android:value="ICON,SMALL_IMAGE" />
         </service>
-
         <service android:name=".complication.CustomGoalComplicationService"
             android:exported="true"
             android:icon="@drawable/ic_goal"
@@ -431,7 +475,6 @@
                 android:name="android.support.wearable.complications.PROVIDER_CONFIG_ACTION"
                 android:value="com.weartools.weekdayutccomp.CUSTOM_GOAL" />
         </service>
-
         <service android:name=".complication.HijriDateComplicationService"
             android:enabled="false"
             android:exported="true"
@@ -509,6 +552,21 @@
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
                 android:value="SHORT_TEXT,LONG_TEXT,RANGED_VALUE" />
         </service>
+        <service android:name=".complication.NfcSettingsComplicationService"
+            android:exported="true"
+            android:icon="@drawable/ic_nfc"
+            android:label="@string/nfc_settings_comp_name"
+            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
+            <meta-data
+                android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
+                android:value="0"/>
+            <meta-data
+                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+                android:value="ICON" />
+        </service>
         <service android:name=".complication.PayComplicationService"
             android:exported="true"
             android:icon="@drawable/ic_pay"
@@ -538,6 +596,21 @@
             <meta-data
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
                 android:value="SHORT_TEXT,LONG_TEXT" />
+        </service>
+        <service android:name=".complication.SettingsComplicationService"
+            android:exported="true"
+            android:icon="@drawable/ic_settings"
+            android:label="@string/settings_comp_name"
+            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
+            <meta-data
+                android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
+                android:value="0"/>
+            <meta-data
+                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+                android:value="ICON" />
         </service>
         <service android:name=".complication.SunriseSunsetComplicationService"
             android:exported="true"
@@ -661,6 +734,21 @@
             <meta-data
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
                 android:value="SHORT_TEXT,RANGED_VALUE,LONG_TEXT,ICON,SMALL_IMAGE" />
+        </service>
+        <service android:name=".complication.WifiSettingsComplicationService"
+            android:exported="true"
+            android:icon="@drawable/ic_wifi"
+            android:label="@string/wifi_settings_comp_name"
+            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
+            <meta-data
+                android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
+                android:value="0"/>
+            <meta-data
+                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+                android:value="ICON" />
         </service>
         <service android:name=".complication.WorldClock1ComplicationService"
             android:exported="true"
