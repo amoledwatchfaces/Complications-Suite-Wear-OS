@@ -208,6 +208,14 @@ fun PickActivityTheme(
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             )
+                        },
+                        secondaryLabel = {
+                            Text(
+                                text = preferences.value.activityClassName.split(".").last(),
+                                maxLines = 1,
+                                color = wearColorPalette.secondaryVariant,
+                                overflow = TextOverflow.Ellipsis
+                            )
                         }
                     )
 
@@ -245,9 +253,11 @@ fun PickActivityTheme(
                     } )
 
             }
+            /*
             if (loaderState) {
                 LoaderBox()
             }
+             */
         }
     }
 }
@@ -296,10 +306,7 @@ fun IconsDialog2(
                 }
                 else{
 
-                    item { SearchTextField{
-                        viewModel.updateSearch(it)
-                    }
-                    }
+                    item { SearchTextField{ viewModel.updateSearch(it) } }
 
                     val iconRows = state.icons.chunked(4)
                     items(iconRows) { rowIcons ->

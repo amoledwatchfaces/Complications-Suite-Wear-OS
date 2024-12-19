@@ -1,7 +1,6 @@
 package com.weartools.weekdayutccomp.presentation.ui
 
 import android.content.Context
-import android.util.Log
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -88,26 +87,15 @@ fun AppsListPicker(
             ),
             content = {
 
-                item { SearchTextField{
-                    searchQuery.value = it
-                } }
-                item {
-                    VerticalDivider()
-                }
-
                 if (chipPlaceholderState.isShowContent ||
                     chipPlaceholderState.isWipeOff
                 ) {
+                    item { SearchTextField{ searchQuery.value = it } }
+                    item { VerticalDivider() }
                     items(filteredActivities.sortedBy { it.packageName }){
                         Chip(
                             modifier = Modifier.fillMaxWidth(),
                             onClick = {
-
-                                Log.i("AppListPicker", "onClick: ${it.activityName}")
-                                Log.i("AppListPicker", "onClick: ${it.packageName}")
-                                Log.i("AppListPicker", "onClick: ${it.className}")
-
-
                                 viewModel.storeActivityInfo(
                                     it.packageName,
                                     it.className,
