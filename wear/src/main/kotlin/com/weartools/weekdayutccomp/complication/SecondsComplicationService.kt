@@ -28,15 +28,26 @@
 package com.weartools.weekdayutccomp.complication
 
 import android.app.PendingIntent
+import android.content.ContentValues.TAG
 import android.content.Intent
+import android.graphics.drawable.Icon.createWithResource
+import android.os.Build
 import android.provider.AlarmClock
 import android.util.Log
-import androidx.wear.watchface.complications.data.*
+import androidx.wear.protolayout.expression.DynamicBuilders.DynamicInstant
+import androidx.wear.watchface.complications.data.ComplicationData
+import androidx.wear.watchface.complications.data.ComplicationText
+import androidx.wear.watchface.complications.data.ComplicationType
+import androidx.wear.watchface.complications.data.LongTextComplicationData
+import androidx.wear.watchface.complications.data.MonochromaticImage
+import androidx.wear.watchface.complications.data.PlainComplicationText
+import androidx.wear.watchface.complications.data.RangedValueComplicationData
+import androidx.wear.watchface.complications.data.ShortTextComplicationData
+import androidx.wear.watchface.complications.data.TimeFormatComplicationText
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
 import com.weartools.weekdayutccomp.R
-import android.content.ContentValues.TAG
-import android.graphics.drawable.Icon.createWithResource
+import java.time.ZoneId
 
 class SecondsComplicationService : SuspendingComplicationDataSourceService() {
 
@@ -67,6 +78,17 @@ class SecondsComplicationService : SuspendingComplicationDataSourceService() {
                     .setTitle(PlainComplicationText.Builder(text = "30").build())
                     .build()
             }
+            ComplicationType.RANGED_VALUE -> {
+                RangedValueComplicationData.Builder(
+                    min = 0f,
+                    max = 60f,
+                    value = 30f,
+                    contentDescription = ComplicationText.EMPTY)
+                    .setText(PlainComplicationText.Builder(text = "30").build())
+                    .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, R.drawable.ic_seconds)).build())
+                    .setTapAction(openScreen())
+                    .build()
+            }
 
             else -> { null }
         }
@@ -79,7 +101,7 @@ class SecondsComplicationService : SuspendingComplicationDataSourceService() {
             ComplicationType.SHORT_TEXT -> {
                 ShortTextComplicationData.Builder(
                     text = TimeFormatComplicationText.Builder(format = "ss").build(),
-                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.sec_short_title)).build())
+                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.sec_comp_name)).build())
                     .setTitle(PlainComplicationText.Builder(text = getString(R.string.sec_short_title)).build())
                     .setTapAction(openScreen())
                     .build()
@@ -87,11 +109,38 @@ class SecondsComplicationService : SuspendingComplicationDataSourceService() {
             ComplicationType.LONG_TEXT -> {
                 LongTextComplicationData.Builder(
                     text = PlainComplicationText.Builder(text = getString(R.string.sec_comp_name)).build(),
-                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.sec_short_title)).build())
+                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.sec_comp_name)).build())
                     .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, R.drawable.ic_seconds)).build())
                     .setTitle(TimeFormatComplicationText.Builder(format = "ss").build())
                     .setTapAction(openScreen())
                     .build()
+            }
+            ComplicationType.RANGED_VALUE ->{
+
+                val dynamicValue = DynamicInstant.platformTimeWithSecondsPrecision().getSecond(ZoneId.systemDefault()).asFloat()
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    RangedValueComplicationData.Builder(
+                        min = 0f,
+                        max = 60f,
+                        dynamicValue = dynamicValue,
+                        fallbackValue = 0f,
+                        contentDescription = ComplicationText.EMPTY)
+                        .setText(TimeFormatComplicationText.Builder(format = "ss").build())
+                        .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, R.drawable.ic_seconds)).build())
+                        .setTapAction(openScreen())
+                        .build()
+                } else {
+                    RangedValueComplicationData.Builder(
+                        min = 0f,
+                        max = 60f,
+                        value = 0f,
+                        contentDescription = ComplicationText.EMPTY)
+                        .setText(TimeFormatComplicationText.Builder(format = "ss").build())
+                        .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, R.drawable.ic_seconds)).build())
+                        .setTapAction(openScreen())
+                        .build()
+                }
             }
 
             else -> {
