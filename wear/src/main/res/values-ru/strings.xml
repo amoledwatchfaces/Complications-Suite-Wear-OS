@@ -34,6 +34,7 @@
     <string name="date_long_title_format">Длинный Названия Формат</string>
     <string name="date_short_text_format">Краткий Текстовый Формат</string>
     <string name="date_short_title_format">Краткого Названия Формат</string>
+    <string name="date_show_icon">Иконка календаря</string>
 
     <!-- Persian Date -->
     <string name="persian_date_complications">Персидский финик - Осложнения</string>

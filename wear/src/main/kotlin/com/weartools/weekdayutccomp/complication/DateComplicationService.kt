@@ -30,10 +30,18 @@ package com.weartools.weekdayutccomp.complication
 import android.app.PendingIntent
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.graphics.drawable.Icon.createWithResource
 import android.util.Log
 import android.widget.Toast
 import androidx.datastore.core.DataStore
-import androidx.wear.watchface.complications.data.*
+import androidx.wear.watchface.complications.data.ComplicationData
+import androidx.wear.watchface.complications.data.ComplicationText
+import androidx.wear.watchface.complications.data.ComplicationType
+import androidx.wear.watchface.complications.data.LongTextComplicationData
+import androidx.wear.watchface.complications.data.MonochromaticImage
+import androidx.wear.watchface.complications.data.PlainComplicationText
+import androidx.wear.watchface.complications.data.ShortTextComplicationData
+import androidx.wear.watchface.complications.data.TimeFormatComplicationText
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
 import com.weartools.weekdayutccomp.R
@@ -106,13 +114,20 @@ class DateComplicationService : SuspendingComplicationDataSourceService() {
                         .build()
                 )
                     .setTitle(
-                        try {
-                            TimeFormatComplicationText.Builder(format = shortTitle).build()
-                        } catch (e: IllegalArgumentException) {
-                            // Inform the user that the format is invalid
-                            Toast.makeText(this, "Title: Wrong format! Check SimpleDateFormat", Toast.LENGTH_LONG).show()
-                            PlainComplicationText.Builder(text="?").build()
+                        if (shortTitle.isBlank()) null
+                        else {
+                            try {
+                                TimeFormatComplicationText.Builder(format = shortTitle).build()
+                            } catch (e: IllegalArgumentException) {
+                                // Inform the user that the format is invalid
+                                Toast.makeText(this, "Title: Wrong format! Check SimpleDateFormat", Toast.LENGTH_LONG).show()
+                                PlainComplicationText.Builder(text="?").build()
+                            }
                         }
+                    )
+                    .setMonochromaticImage(
+                        if (prefs.dateShowIcon){ MonochromaticImage.Builder(image = createWithResource(this, R.drawable.ic_calendar_today)).build() }
+                        else null
                     )
                     .setTapAction(openScreen())
                     .build()
@@ -127,18 +142,25 @@ class DateComplicationService : SuspendingComplicationDataSourceService() {
                         TimeFormatComplicationText.Builder(format = longText).build()
                     } catch (e: IllegalArgumentException) {
                         // Inform the user that the format is invalid
-                        Toast.makeText(this, "Wrong format! Check SimpleDateFormat patters", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, "Text: Wrong format! Check SimpleDateFormat", Toast.LENGTH_LONG).show()
                         PlainComplicationText.Builder(text="?").build()
                     },
                     contentDescription = PlainComplicationText.Builder(text = getString(R.string.date_comp_name)).build())
                     .setTitle(
-                        try {
-                            TimeFormatComplicationText.Builder(format = longTitle).build()
-                        } catch (e: IllegalArgumentException) {
-                            // Inform the user that the format is invalid
-                            Toast.makeText(this, "Title: Wrong format! Check SimpleDateFormat", Toast.LENGTH_LONG).show()
-                            PlainComplicationText.Builder(text="?").build()
+                        if (longTitle.isBlank()) null
+                        else {
+                            try {
+                                TimeFormatComplicationText.Builder(format = longTitle).build()
+                            } catch (e: IllegalArgumentException) {
+                                // Inform the user that the format is invalid
+                                Toast.makeText(this, "Title: Wrong format! Check SimpleDateFormat", Toast.LENGTH_LONG).show()
+                                PlainComplicationText.Builder(text="?").build()
+                            }
                         }
+                    )
+                    .setMonochromaticImage(
+                        if (prefs.dateShowIcon){ MonochromaticImage.Builder(image = createWithResource(this, R.drawable.ic_calendar_today)).build() }
+                        else null
                     )
                     .setTapAction(openScreen())
                     .build()

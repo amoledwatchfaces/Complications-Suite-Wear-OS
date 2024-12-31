@@ -38,6 +38,7 @@
     <string name="date_long_title_format">Długi tytuł</string>
     <string name="date_short_text_format">Format krótkiego tekstu</string>
     <string name="date_short_title_format">Krótki tytuł</string>
+    <string name="date_show_icon">Ikona kalendarza</string>
 
     <!-- Persian Date -->
     <string name="persian_date_complications">Kalendarz Perski</string>

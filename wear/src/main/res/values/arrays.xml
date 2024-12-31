@@ -763,17 +763,17 @@
         <item>EEE, d MMM</item>
         <item>EEE d MMM</item>
         <item>EEE, MMM d</item>
-        <item>MM/dd/YYYY</item>
-        <item>dd/MM/YYYY</item>
+        <item>MM/dd/yyyy</item>
+        <item>dd/MM/yyyy</item>
         <item>EEEE, d</item>
         <item>EEEE, MMM d</item>
-        <item>YYYY-MM-dd</item>
+        <item>yyyy-MM-dd</item>
         <item>EEEE</item>
         <item>MMMM</item>
         <item>EEEE, d MMM</item>
         <item>EE, d MMM</item>
         <item>d, EEEE</item>
-        <item>MMMM d, YYYY</item>
+        <item>MMMM d, yyyy</item>
     </string-array>
     <string-array name="shortformats">
         <item>d</item>

@@ -32,6 +32,7 @@
     <string name="date_long_title_format">Long Title Format</string>
     <string name="date_short_text_format">Short Text Format</string>
     <string name="date_short_title_format">Short Title Format</string>
+    <string name="date_show_icon">Kalendersymbol</string>
 
     <!-- Persian Date -->
     <string name="persian_date_complications">Persisches Datum-Komplikation</string>

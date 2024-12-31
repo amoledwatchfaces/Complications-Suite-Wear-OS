@@ -39,10 +39,11 @@ data class UserPreferences(
     val isISO: Boolean = true,
 
     //DATE
-    val longText: String = "MMMM d, YYYY",
+    val longText: String = "MMMM d, yyyy",
     val longTitle: String = "EEEE",
     val shortText: String = "d",
     val shortTitle: String = "MMM",
+    val dateShowIcon: Boolean = false,
 
     // TIME DIFF
     val timeDiffStyle: String = "SHORT_DUAL_UNIT",

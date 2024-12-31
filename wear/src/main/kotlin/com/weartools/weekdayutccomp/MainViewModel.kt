@@ -454,6 +454,12 @@ class MainViewModel @Inject constructor(
 
         }
     }
+    fun setDateShowIcon(context: Context, state: Boolean) {
+        viewModelScope.launch {
+            dataStore.updateData { it.copy(dateShowIcon = state) }
+            context.updateComplication(DateComplicationService::class.java)
+        }
+    }
     fun setJalaliHijriComplicationsState(context: Context, state: Boolean) {
         viewModelScope.launch {
             dataStore.updateData { it.copy(jalaliHijriDateComplications = state) }

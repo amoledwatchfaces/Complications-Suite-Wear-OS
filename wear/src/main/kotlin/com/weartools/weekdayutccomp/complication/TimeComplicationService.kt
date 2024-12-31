@@ -34,7 +34,15 @@ import android.graphics.drawable.Icon.createWithResource
 import android.provider.AlarmClock
 import android.util.Log
 import androidx.datastore.core.DataStore
-import androidx.wear.watchface.complications.data.*
+import androidx.wear.watchface.complications.data.ComplicationData
+import androidx.wear.watchface.complications.data.ComplicationText
+import androidx.wear.watchface.complications.data.ComplicationType
+import androidx.wear.watchface.complications.data.LongTextComplicationData
+import androidx.wear.watchface.complications.data.MonochromaticImage
+import androidx.wear.watchface.complications.data.PlainComplicationText
+import androidx.wear.watchface.complications.data.RangedValueComplicationData
+import androidx.wear.watchface.complications.data.ShortTextComplicationData
+import androidx.wear.watchface.complications.data.TimeFormatComplicationText
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
 import com.weartools.weekdayutccomp.R
@@ -121,7 +129,8 @@ class TimeComplicationService : SuspendingComplicationDataSourceService() {
                     contentDescription = PlainComplicationText.Builder(text = getString(R.string.time_comp_desc)).build())
                     .setTitle(
                         if (!ismilitary) { TimeFormatComplicationText.Builder(format = "a").build()}
-                        else {PlainComplicationText.Builder(text = "24h").build()})
+                        else { null }
+                    )
                     .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_clock)).build())
                     .setTapAction(openScreen())
                     .build()
@@ -146,7 +155,7 @@ class TimeComplicationService : SuspendingComplicationDataSourceService() {
                     .setText(text)
                     .setTitle(
                         if (!ismilitary) { TimeFormatComplicationText.Builder(format = "a").build()}
-                        else {PlainComplicationText.Builder(text = "24h").build()})
+                        else { null })
                     .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_clock)).build())
                     .setTapAction(openScreen())
                     .build()

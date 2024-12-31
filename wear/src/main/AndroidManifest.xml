@@ -306,7 +306,7 @@
         </service>
         <service android:name=".complication.DateComplicationService"
             android:exported="true"
-            android:icon="@drawable/ic_date"
+            android:icon="@drawable/ic_calendar_today"
             android:label="@string/date_comp_name"
             android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
             <intent-filter>

@@ -64,6 +64,7 @@ import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.ListHeader
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
+import androidx.wear.compose.material.ToggleChipDefaults
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberPermissionState
 import com.weartools.weekdayutccomp.BuildConfig
@@ -403,6 +404,30 @@ fun ComplicationsSuiteScreen(
                 title = preferences.value.shortTitle,
                 onClick = {
                     shortTitleFormat = shortTitleFormat.not()
+                }
+            )
+        }
+        item {
+            androidx.wear.compose.material.ToggleChip(
+                modifier = Modifier.fillMaxWidth(),
+                checked = preferences.value.dateShowIcon,
+                colors = ToggleChipDefaults.toggleChipColors(
+                    checkedEndBackgroundColor = wearColorPalette.primaryVariant,
+                    checkedToggleControlColor = Color(0xFFBFE7FF),
+                ),
+                onCheckedChange = { checked ->
+                    viewModel.setDateShowIcon(context, checked)
+                },
+                appIcon = { Icon(painterResource(R.drawable.ic_calendar_today),
+                contentDescription = "Calendar Today",
+                tint = wearColorPalette.secondary)
+             },
+                label = { Text(stringResource(id = R.string.date_show_icon)) },
+                toggleControl = {
+                    Icon(
+                        imageVector = ToggleChipDefaults.checkboxIcon(preferences.value.dateShowIcon),
+                        contentDescription = stringResource(id = R.string.compose_toggle)
+                    )
                 }
             )
         }
