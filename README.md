@@ -1,6 +1,6 @@
 #  <img src="https://github.com/amoledwatchfaces/Complications-Suite-Wear-OS/assets/92080649/8661c436-be4d-438e-bde0-c6275f229702" width=15% height=15%> ‎‎ ‎ ‎ ‎Complications Suite - Wear OS
 
-###### Day/Week of Year, Seconds, World Clock, Time, Assistant, Moon phase, Bitcoin & Ethereum complications for Wear OS
+###### Add some missing Custom Complications to your Wear OS Watch Face.
 
 ## Preview
 
