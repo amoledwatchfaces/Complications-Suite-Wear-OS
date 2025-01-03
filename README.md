@@ -14,33 +14,47 @@
 
 Download the package (.apk) to side-load from <a href="https://github.com/amoledwatchfaces/Complications-Suite-Wear-OS/releases">HERE</a>
 
-## List of custom complications:
-* Date
-* Alarm
-* Logo
-* Assistant
-* Bitcoin Price
-* Ethereum Price
-* Custom Text / Title
-* Date
-* Date Countdown
-* Day & Week
-* Day of Year
-* Developer options
-* Dice
-* Flashlight
-* Hijri / Jalali Date (optional) by [@hamedsh](https://github.com/hamedsh)
-* Wear OS logo
-* Moon phase
-* Google Pay (Wallet)
-* Seconds
-* Sunset / Sunrise + Countdown
-* Digital Time
-* Time zone
-* Volume control
-* Water intake
-* Week of Year
-* World Clock (2x)
+## List of custom complications and supported types:
+* Activity launcher - `ICON`
+* Alarm - `ICON, SMALL_IMAGE`
+* Amoled Logo - `ICON, SMALL_IMAGE`
+* Assistant (Monochrome) - `ICON, SMALL_IMAGE`
+* Barometer - `SHORT_TEXT`
+* Battery Saver settings - `ICON`
+* BTC (Bitcoin) price - `SHORT_TEXT, LONG_TEXT, RANGED_VALUE`
+* Bluetooth settings - `ICON`
+* Custom text - `SHORT_TEXT, LONG_TEXT`
+* Date - `SHORT_TEXT, LONG_TEXT`
+* Countdown to date - `SHORT_TEXT, LONG_TEXT, RANGED_VALUE`
+* Day and Week - `SHORT_TEXT, LONG_TEXT`
+* Day of Year - `SHORT_TEXT, LONG_TEXT, RANGED_VALUE`
+* Developer Options - `ICON, SMALL_IMAGE`
+* Dice - `ICON, SMALL_IMAGE`
+* Display settings - `ICON`
+* Dynamic calendar icon - `ICON, SMALL_IMAGE`
+* ETH (Ethereum) price - `SHORT_TEXT, LONG_TEXT, RANGED_VALUE`
+* Flashlight - `ICON, SMALL_IMAGE`
+* Custom goal - `SHORT_TEXT, LONG_TEXT, RANGED_VALUE`
+* Date Hijri - `SHORT_TEXT, LONG_TEXT` (optional) by [@hamedsh](https://github.com/hamedsh)
+* Date Jalali - `SHORT_TEXT, LONG_TEXT` (optional) by [@hamedsh](https://github.com/hamedsh)
+* Wear OS logo - `ICON, SMALL_IMAGE`
+* Moon Phase - `SHORT_TEXT, LONG_TEXT, RANGED_VALUE, ICON, SMALL_IMAGE`
+* Moonrise & Moonset - `SHORT_TEXT, LONG_TEXT, RANGED_VALUE`
+* NFC settings - `ICON`
+* Pay - `ICON, SMALL_IMAGE`
+* Seconds - `SHORT_TEXT, LONG_TEXT, RANGED_VALUE`
+* Settings - `ICON`
+* Sunrise & Sunset - `SHORT_TEXT, LONG_TEXT`
+* Sunrise & Sunset countdown - `SHORT_TEXT, LONG_TEXT, RANGED_VALUE`
+* Time - `SHORT_TEXT, LONG_TEXT, RANGED_VALUE`
+* Timer - `SHORT_TEXT, RANGED_VALUE`
+* Time zone - `SHORT_TEXT, LONG_TEXT`
+* Volume control - `ICON, SMALL_IMAGE`
+* Water intake - `SHORT_TEXT, LONG_TEXT, RANGED_VALUE, ICON, SMALL_IMAGE`
+* Week of Year - `SHORT_TEXT, LONG_TEXT, RANGED_VALUE, ICON, SMALL_IMAGE`
+* Wi-Fi settings - `ICON`
+* World Clock 1 - `SHORT_TEXT, LONG_TEXT`
+* World Clock 2 - `SHORT_TEXT, LONG_TEXT`
 
 ## License
 
