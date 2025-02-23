@@ -240,4 +240,7 @@
     <string name="nfc_settings_comp_name">Impostazioni NFC</string>
     <string name="bluetooth_settings_comp_name">Impostazioni Bluetooth</string>
     <string name="battery_saver_settings_comp_name">Impostazioni risparmio batteria</string>
+
+    <!-- Kanji -->
+    <string name="kanji_day_of_week">Giorno della settimana in kanji</string>
 </resources>

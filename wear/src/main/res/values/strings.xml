@@ -246,4 +246,7 @@
     <string name="nfc_settings_comp_name">NFC settings</string>
     <string name="bluetooth_settings_comp_name">Bluetooth settings</string>
     <string name="battery_saver_settings_comp_name">Battery Saver settings</string>
+
+    <!-- Kanji -->
+    <string name="kanji_day_of_week">Kanji day of week</string>
 </resources>

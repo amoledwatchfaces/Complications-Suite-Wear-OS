@@ -244,4 +244,7 @@
     <string name="nfc_settings_comp_name">Настройки NFC</string>
     <string name="bluetooth_settings_comp_name">Настройки Bluetooth</string>
     <string name="battery_saver_settings_comp_name">Настройки экономии заряда батареи</string>
+
+    <!-- Kanji -->
+    <string name="kanji_day_of_week">День недели в кандзи</string>
 </resources>

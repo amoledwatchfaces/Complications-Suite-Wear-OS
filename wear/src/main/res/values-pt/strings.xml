@@ -241,4 +241,7 @@
     <string name="nfc_settings_comp_name">Definições de NFC</string>
     <string name="bluetooth_settings_comp_name">Definições de Bluetooth</string>
     <string name="battery_saver_settings_comp_name">Definições de economia de bateria</string>
+
+    <!-- Kanji -->
+    <string name="kanji_day_of_week">Dia da semana em kanji</string>
 </resources>

@@ -234,4 +234,7 @@
     <string name="nfc_settings_comp_name">Nastavenia NFC</string>
     <string name="bluetooth_settings_comp_name">Nastavenia Bluetooth</string>
     <string name="battery_saver_settings_comp_name">Nastavenia šetriča batérie</string>
+
+    <!-- Kanji -->
+    <string name="kanji_day_of_week">Kanji deň v týždni</string>
 </resources>

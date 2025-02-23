@@ -233,4 +233,7 @@
     <string name="nfc_settings_comp_name">NFC 设置</string>
     <string name="bluetooth_settings_comp_name">蓝牙设置</string>
     <string name="battery_saver_settings_comp_name">节电设置</string>
+
+    <!-- Kanji -->
+    <string name="kanji_day_of_week">汉字的星期几</string>
 </resources>

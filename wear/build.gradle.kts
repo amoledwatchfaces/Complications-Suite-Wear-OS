@@ -73,8 +73,8 @@ android {
 }
 
 dependencies {
-    val composeUiVersion = "1.7.5"
-    val composeWearVersion = "1.4.0"
+    val composeUiVersion = "1.7.8"
+    val composeWearVersion = "1.4.1"
     
     //request permission
     implementation ("com.google.accompanist:accompanist-permissions:0.34.0")
@@ -88,7 +88,7 @@ dependencies {
     implementation ("org.shredzone.commons:commons-suncalc:3.7")
 
     // Wear OS
-    implementation ("com.google.android.gms:play-services-wearable:18.2.0")
+    implementation ("com.google.android.gms:play-services-wearable:19.0.0")
     implementation ("androidx.wear.watchface:watchface-complications-data-source-ktx:1.2.1")
     implementation ("androidx.wear:wear:1.3.0")
 
@@ -98,15 +98,15 @@ dependencies {
     implementation ("androidx.wear.compose:compose-material:$composeWearVersion")
     implementation ("androidx.wear.compose:compose-foundation:$composeWearVersion")
     implementation ("androidx.compose.ui:ui-tooling-preview:$composeUiVersion")
-    implementation ("androidx.activity:activity-compose:1.9.3")
+    implementation ("androidx.activity:activity-compose:1.10.0")
     implementation ("androidx.compose.material:material-icons-extended:$composeUiVersion")
 
     androidTestImplementation ("androidx.compose.ui:ui-test-junit4:$composeUiVersion")
     debugImplementation ("androidx.compose.ui:ui-tooling:$composeUiVersion")
-    debugImplementation ("androidx.compose.ui:ui-test-manifest:1.7.5")
+    debugImplementation ("androidx.compose.ui:ui-test-manifest:1.7.8")
 
     // DataStore
-    implementation ("androidx.datastore:datastore:1.1.1")
+    implementation ("androidx.datastore:datastore:1.1.2")
 
     // Locale
     implementation ("androidx.appcompat:appcompat:1.7.0")
@@ -139,7 +139,7 @@ dependencies {
     implementation("androidx.compose.material3:material3:1.3.1")
 
     // Firebase
-    implementation (platform("com.google.firebase:firebase-bom:33.6.0"))
+    implementation (platform("com.google.firebase:firebase-bom:33.9.0"))
     implementation ("com.google.firebase:firebase-crashlytics")
 
     // Protolayout

@@ -242,4 +242,7 @@
     <string name="nfc_settings_comp_name">NFC-Einstellungen</string>
     <string name="bluetooth_settings_comp_name">Bluetooth-Einstellungen</string>
     <string name="battery_saver_settings_comp_name">Energiespareinstellungen</string>
+
+    <!-- Kanji -->
+    <string name="kanji_day_of_week">Kanji-Wochentag</string>
 </resources>
