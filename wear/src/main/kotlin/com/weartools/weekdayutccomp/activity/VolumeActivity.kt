@@ -31,9 +31,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import com.google.android.horologist.annotations.ExperimentalHorologistApi
 import com.weartools.weekdayutccomp.presentation.ui.VolumeScreen
 
@@ -44,7 +42,7 @@ class VolumeActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val focusRequester = remember { FocusRequester()}
-            VolumeScreen(Modifier.focusRequester(focusRequester))
+            VolumeScreen()
             }
         }
 }

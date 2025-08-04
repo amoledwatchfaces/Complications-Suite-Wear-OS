@@ -33,16 +33,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.LiveRegionMode
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.liveRegion
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.wear.compose.foundation.ExperimentalWearFoundationApi
-import androidx.wear.compose.foundation.rememberActiveFocusRequester
-import androidx.wear.compose.foundation.rotary.rotaryScrollable
 import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.InlineSlider
 import androidx.wear.compose.material.LocalContentAlpha
@@ -52,13 +45,11 @@ import androidx.wear.compose.material.PositionIndicator
 import androidx.wear.compose.material.Stepper
 import com.google.android.horologist.annotations.ExperimentalHorologistApi
 import com.google.android.horologist.audio.AudioOutput
-import com.google.android.horologist.audio.ui.R
 import com.google.android.horologist.audio.ui.VolumeUiState
 import com.google.android.horologist.audio.ui.VolumeViewModel
 import com.google.android.horologist.audio.ui.components.AudioOutputUi
 import com.google.android.horologist.audio.ui.components.DeviceChip
 import com.google.android.horologist.audio.ui.components.toAudioOutputUi
-import com.google.android.horologist.audio.ui.volumeRotaryBehavior
 import com.google.android.horologist.images.base.paintable.ImageVectorPaintable.Companion.asPaintable
 import com.google.android.horologist.images.base.paintable.PaintableIcon
 import com.weartools.weekdayutccomp.theme.wearColorPalette
@@ -82,7 +73,6 @@ import kotlin.math.roundToInt
 @Composable
 @ExperimentalHorologistApi
 fun VolumeScreen(
-    modifier: Modifier = Modifier,
     volumeViewModel: VolumeViewModel = viewModel(factory = VolumeViewModel.Companion.Factory),
     showVolumeIndicator: Boolean = true,
     increaseIcon: @Composable () -> Unit = { VolumeScreenDefaults.IncreaseIcon() },
@@ -92,14 +82,6 @@ fun VolumeScreen(
     val audioOutput by volumeViewModel.audioOutput.collectAsState()
 
     VolumeScreen(
-        modifier = modifier
-            .rotaryScrollable(
-                volumeRotaryBehavior(
-                    volumeUiStateProvider = { volumeViewModel.volumeUiState.value },
-                    onRotaryVolumeInput = { newVolume -> volumeViewModel.setVolume(newVolume) },
-                ),
-                focusRequester = rememberActiveFocusRequester(),
-            ),
         volume = { volumeUiState },
         audioOutputUi = audioOutput.toAudioOutputUi(),
         increaseVolume = { volumeViewModel.increaseVolume() },
@@ -121,7 +103,6 @@ fun VolumeScreen(
     increaseVolume: () -> Unit,
     decreaseVolume: () -> Unit,
     onAudioOutputClick: () -> Unit,
-    modifier: Modifier = Modifier,
     increaseIcon: @Composable () -> Unit = { VolumeScreenDefaults.IncreaseIcon() },
     decreaseIcon: @Composable () -> Unit = { VolumeScreenDefaults.DecreaseIcon() },
     showVolumeIndicator: Boolean = true,
@@ -132,9 +113,9 @@ fun VolumeScreen(
             DeviceChip(
                 modifier = Modifier.padding(horizontal = 18.dp),
                 volumeDescription = if (audioOutputUi.isConnected) {
-                    stringResource(id = R.string.horologist_volume_screen_connected_state)
+                    "Connected"
                 } else {
-                    stringResource(id = R.string.horologist_volume_screen_not_connected_state)
+                    "Disconnected"
                 },
                 deviceName = audioOutputUi.displayName,
                 icon = {
@@ -149,7 +130,6 @@ fun VolumeScreen(
         },
         increaseVolume = increaseVolume,
         decreaseVolume = decreaseVolume,
-        modifier = modifier,
         increaseIcon = increaseIcon,
         decreaseIcon = decreaseIcon,
         showVolumeIndicator = showVolumeIndicator,
@@ -162,25 +142,15 @@ internal fun VolumeScreen(
     contentSlot: @Composable () -> Unit,
     increaseVolume: () -> Unit,
     decreaseVolume: () -> Unit,
-    modifier: Modifier = Modifier,
     increaseIcon: @Composable () -> Unit = { VolumeScreenDefaults.IncreaseIcon() },
     decreaseIcon: @Composable () -> Unit = { VolumeScreenDefaults.DecreaseIcon() },
     showVolumeIndicator: Boolean = true,
     volumeColor: Color = wearColorPalette.primary,
 ) {
     val volumeState = volume()
-    val volumePercent = (100f * volumeState.current / volumeState.max).roundToInt()
-    val volumeDescription = if (volumeState.current == 0) {
-        stringResource(id = R.string.horologist_volume_screen_volume_zero)
-    } else {
-        stringResource(id = R.string.horologist_volume_screen_volume_percent, volumePercent)
-    }
+    (100f * volumeState.current / volumeState.max).roundToInt()
     Stepper(
         contentColor = Color(0xFFC0B4A9),
-        modifier = modifier.semantics {
-            liveRegion = LiveRegionMode.Assertive
-            contentDescription = volumeDescription
-        },
         value = volumeState.current.toFloat(),
         onValueChange = { if (it > volumeState.current) increaseVolume() else decreaseVolume() },
         steps = volumeState.max - 1,
@@ -209,7 +179,7 @@ object VolumeScreenDefaults {
         Icon2(
             modifier = Modifier.size(26.dp),
             paintable = Icons.AutoMirrored.Outlined.VolumeUp.asPaintable(),
-            contentDescription = stringResource(id = R.string.horologist_volume_screen_volume_up_content_description),
+            contentDescription = "Increase Volume",
         )
     }
 
@@ -218,7 +188,7 @@ object VolumeScreenDefaults {
         Icon2(
             modifier = Modifier.size(26.dp),
             paintable = Icons.AutoMirrored.Outlined.VolumeDown.asPaintable(),
-            contentDescription = stringResource(id = R.string.horologist_volume_screen_volume_down_content_description),
+            contentDescription = "Decrease Volume",
         )
     }
 }

@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.io.FileInputStream
 import java.util.Properties
 
@@ -14,24 +15,24 @@ plugins {
 }
 
 android {
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.weartools.weekdayutccomp"
         minSdk = 27
-        targetSdk = 34
+        targetSdk = 36
         versionCode = rootProject.extra["versionCode"] as Int
         versionName = rootProject.extra["versionName"] as String
-
-        resourceConfigurations += listOf("en", "cs", "de", "el", "es", "fr", "it", "pt", "pl", "ro", "sk","zh","ru")
 
         versionNameSuffix = "-wear"
         versionCode = 20000 + (versionCode ?: 0)
     }
     bundle {
         language {
-            @Suppress("UnstableApiUsage")
             enableSplit = false // TO HAVE ALL LANGUAGES AVAILABLE
+        }
+        androidResources { // <-- Add this block
+            localeFilters.addAll(listOf("en", "cs", "de", "el", "es", "fr", "it", "pt", "pl", "ro", "sk","zh","ru"))
         }
     }
     buildTypes {
@@ -65,27 +66,29 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        jvmTarget = "11"
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_11)
+        }
     }
 
     namespace = "com.weartools.weekdayutccomp"
 }
 
 dependencies {
-    val composeUiVersion = "1.7.8"
+    val composeUiVersion = "1.8.3"
     val composeWearVersion = "1.4.1"
     
     //request permission
-    implementation ("com.google.accompanist:accompanist-permissions:0.34.0")
+    implementation ("com.google.accompanist:accompanist-permissions:0.37.3")
     //location
     implementation ("com.google.android.gms:play-services-location:21.3.0")
 
     // Used for WorkManager
-    implementation ("androidx.work:work-runtime-ktx:2.10.0")
+    implementation ("androidx.work:work-runtime-ktx:2.10.3")
 
     // Moon Phase Helper
-    implementation ("org.shredzone.commons:commons-suncalc:3.7")
+    implementation ("org.shredzone.commons:commons-suncalc:3.11")
 
     // Wear OS
     implementation ("com.google.android.gms:play-services-wearable:19.0.0")
@@ -93,58 +96,58 @@ dependencies {
     implementation ("androidx.wear:wear:1.3.0")
 
     // Compose
-    implementation ("androidx.core:core-ktx:1.15.0")
+    implementation ("androidx.core:core-ktx:1.16.0")
     implementation ("androidx.compose.ui:ui:$composeUiVersion")
     implementation ("androidx.wear.compose:compose-material:$composeWearVersion")
     implementation ("androidx.wear.compose:compose-foundation:$composeWearVersion")
     implementation ("androidx.compose.ui:ui-tooling-preview:$composeUiVersion")
-    implementation ("androidx.activity:activity-compose:1.10.0")
-    implementation ("androidx.compose.material:material-icons-extended:$composeUiVersion")
+    implementation ("androidx.activity:activity-compose:1.10.1")
+    implementation ("androidx.compose.material:material-icons-extended:1.7.8")
 
     androidTestImplementation ("androidx.compose.ui:ui-test-junit4:$composeUiVersion")
     debugImplementation ("androidx.compose.ui:ui-tooling:$composeUiVersion")
-    debugImplementation ("androidx.compose.ui:ui-test-manifest:1.7.8")
+    debugImplementation ("androidx.compose.ui:ui-test-manifest:1.8.3")
 
     // DataStore
-    implementation ("androidx.datastore:datastore:1.1.2")
+    implementation ("androidx.datastore:datastore:1.1.7")
 
     // Locale
-    implementation ("androidx.appcompat:appcompat:1.7.0")
+    implementation ("androidx.appcompat:appcompat:1.7.1")
 
     // Input
-    implementation ("androidx.wear:wear-input:1.2.0-alpha02")
+    implementation ("androidx.wear:wear-input:1.2.0-beta01")
 
     // Splash Screen
     implementation ("androidx.core:core-splashscreen:1.0.1")
 
     // Horologist
-    implementation ("com.google.android.horologist:horologist-composables:0.6.20")
-    implementation ("com.google.android.horologist:horologist-audio-ui:0.6.20")
+    implementation ("com.google.android.horologist:horologist-composables:0.7.15")
+    implementation ("com.google.android.horologist:horologist-audio-ui:0.7.15")
 
     // Serialization
-    implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
+    implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
 
     // Persian Date
     implementation("com.github.samanzamani:persiandate:1.7.1")
 
     // Hilt
     implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
-    implementation ("com.google.dagger:hilt-android:2.52")
-    ksp ("com.google.dagger:hilt-compiler:2.52")
+    implementation ("com.google.dagger:hilt-android:2.57")
+    ksp ("com.google.dagger:hilt-compiler:2.57")
 
     // Google Places
-    implementation ("com.google.android.libraries.places:places:4.1.0")
+    implementation ("com.google.android.libraries.places:places:4.4.1")
 
     // Material 3
-    implementation("androidx.compose.material3:material3:1.3.1")
+    implementation("androidx.compose.material3:material3:1.3.2")
 
     // Firebase
-    implementation (platform("com.google.firebase:firebase-bom:33.9.0"))
+    implementation (platform("com.google.firebase:firebase-bom:34.0.0"))
     implementation ("com.google.firebase:firebase-crashlytics")
 
     // Protolayout
-    implementation("androidx.wear.protolayout:protolayout-expression:1.2.1")
-    implementation("androidx.wear.protolayout:protolayout:1.2.1")
+    implementation("androidx.wear.protolayout:protolayout-expression:1.3.0")
+    implementation("androidx.wear.protolayout:protolayout:1.3.0")
 }
 
 
