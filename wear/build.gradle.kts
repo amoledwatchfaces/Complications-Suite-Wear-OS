@@ -15,6 +15,7 @@ plugins {
 }
 
 android {
+    namespace = "com.weartools.weekdayutccomp"
     compileSdk = 36
 
     defaultConfig {
@@ -63,16 +64,15 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlin {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
-        }
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 
-    namespace = "com.weartools.weekdayutccomp"
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_21)
+        }
+    }
 }
 
 dependencies {
@@ -82,7 +82,7 @@ dependencies {
     implementation ("com.google.android.gms:play-services-location:21.3.0")
 
     // Used for WorkManager
-    implementation ("androidx.work:work-runtime-ktx:2.10.4")
+    implementation ("androidx.work:work-runtime-ktx:2.11.0")
 
     // Moon Phase Helper
     implementation ("org.shredzone.commons:commons-suncalc:3.11")
@@ -94,19 +94,19 @@ dependencies {
 
     // Compose
     implementation ("androidx.core:core-ktx:1.17.0")
-    implementation ("androidx.compose.ui:ui:1.9.1")
-    implementation ("androidx.wear.compose:compose-material:1.5.1")
-    implementation ("androidx.wear.compose:compose-foundation:1.5.1")
-    implementation ("androidx.compose.ui:ui-tooling-preview:1.9.1")
-    implementation ("androidx.activity:activity-compose:1.11.0")
+    implementation ("androidx.compose.ui:ui:1.9.5")
+    implementation ("androidx.wear.compose:compose-material:1.5.5")
+    implementation ("androidx.wear.compose:compose-foundation:1.5.5")
+    implementation ("androidx.compose.ui:ui-tooling-preview:1.9.5")
+    implementation ("androidx.activity:activity-compose:1.12.0")
     implementation ("androidx.compose.material:material-icons-extended:1.7.8")
 
-    androidTestImplementation ("androidx.compose.ui:ui-test-junit4:1.9.1")
-    debugImplementation ("androidx.compose.ui:ui-tooling:1.9.1")
-    debugImplementation ("androidx.compose.ui:ui-test-manifest:1.9.1")
+    androidTestImplementation ("androidx.compose.ui:ui-test-junit4:1.9.5")
+    debugImplementation ("androidx.compose.ui:ui-tooling:1.9.5")
+    debugImplementation ("androidx.compose.ui:ui-test-manifest:1.9.5")
 
     // DataStore
-    implementation ("androidx.datastore:datastore:1.1.7")
+    implementation ("androidx.datastore:datastore:1.2.0")
 
     // Locale
     implementation ("androidx.appcompat:appcompat:1.7.1")
@@ -115,7 +115,7 @@ dependencies {
     implementation ("androidx.wear:wear-input:1.2.0")
 
     // Splash Screen
-    implementation ("androidx.core:core-splashscreen:1.0.1")
+    implementation ("androidx.core:core-splashscreen:1.2.0")
 
     // Horologist
     implementation ("com.google.android.horologist:horologist-composables:0.7.15")
@@ -129,17 +129,17 @@ dependencies {
 
     // Hilt
     implementation ("androidx.hilt:hilt-navigation-compose:1.3.0")
-    implementation ("com.google.dagger:hilt-android:2.57.1")
-    ksp ("com.google.dagger:hilt-compiler:2.57.1")
+    implementation ("com.google.dagger:hilt-android:2.57.2")
+    ksp ("com.google.dagger:hilt-compiler:2.57.2")
 
     // Google Places
-    implementation ("com.google.android.libraries.places:places:4.4.1")
+    implementation ("com.google.android.libraries.places:places:5.1.1")
 
     // Material 3
-    implementation("androidx.compose.material3:material3:1.3.2")
+    implementation("androidx.compose.material3:material3:1.4.0")
 
     // Firebase
-    implementation (platform("com.google.firebase:firebase-bom:34.2.0"))
+    implementation (platform("com.google.firebase:firebase-bom:34.6.0"))
     implementation ("com.google.firebase:firebase-crashlytics")
 
     // Protolayout
