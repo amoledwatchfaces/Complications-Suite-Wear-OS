@@ -31,8 +31,8 @@ import android.app.PendingIntent
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.drawable.Icon.createWithResource
-import android.net.Uri
 import android.util.Log
+import androidx.core.net.toUri
 import androidx.wear.watchface.complications.data.ComplicationData
 import androidx.wear.watchface.complications.data.ComplicationText
 import androidx.wear.watchface.complications.data.ComplicationType
@@ -51,8 +51,7 @@ class ALogoComplicationService : SuspendingComplicationDataSourceService() {
     private fun openScreen(): PendingIntent? {
 
         val intent = Intent(Intent.ACTION_VIEW).apply {
-            data = Uri.parse(
-                "https://play.google.com/store/apps/dev?id=5591589606735981545")
+            data = "https://play.google.com/store/apps/dev?id=5591589606735981545".toUri()
               //  "https://play.google.com/store/search?q=dev:amoledwatchfaces™")
             //"https://play.google.com/store/search?q=amoledwatchfaces™&c=apps")
             setPackage("com.android.vending")

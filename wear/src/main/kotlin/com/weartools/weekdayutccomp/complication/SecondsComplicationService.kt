@@ -117,9 +117,10 @@ class SecondsComplicationService : SuspendingComplicationDataSourceService() {
             }
             ComplicationType.RANGED_VALUE ->{
 
-                val dynamicValue = DynamicInstant.platformTimeWithSecondsPrecision().getSecond(ZoneId.systemDefault()).asFloat()
-
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+
+                    val dynamicValue = DynamicInstant.platformTimeWithSecondsPrecision().getSecond(ZoneId.systemDefault()).asFloat()
+
                     RangedValueComplicationData.Builder(
                         min = 0f,
                         max = 60f,
@@ -130,7 +131,8 @@ class SecondsComplicationService : SuspendingComplicationDataSourceService() {
                         .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, R.drawable.ic_seconds)).build())
                         .setTapAction(openScreen())
                         .build()
-                } else {
+                }
+                else {
                     RangedValueComplicationData.Builder(
                         min = 0f,
                         max = 60f,

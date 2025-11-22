@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Translated by: amoledwatchfaces -->
+<resources>
+    <!-- Do not translate translatable="false" lines -->
+    <string name="app_name">Komplikationssvit</string> <!-- Does not need to be translated, but it's recommended -->
+    <string name="app_info">Appinformation</string>
+    <string name="version">Version</string>
+    <string name="settings">Inställningar</string>
+    <string name="language">Språk</string>
+
+    <string name="icon_type">Ikontyp</string>
+    <string name="icon_type_0">Enkel</string>
+    <string name="icon_type_1">Standard RGB</string>
+    <string name="icon_type_2">Standard ARGB</string>
+
+    <string name="compose_toggle" translatable="false">Växla</string>
+
+    <string name="awf_comp_name" translatable="false">Amoled Logo</string>
+    <!-- Crypto Complication -->
+    <string name="crypto_name_1" translatable="true">BTC Pris $</string>
+    <string name="crypto_name_2" translatable="true">ETH Pris $</string>
+
+    <!-- Flashlight Complication -->
+    <string name="flashlight_comp_name">Ficklampa</string>
+
+    <!-- Alarm Complication Preferences -->
+    <string name="alarm_comp_name">Alarm</string>
+
+    <!-- Assist Complication Preferences -->
+    <string name="assist_comp_name">Assistent (Monochrome)</string>
+    <string name="assist_missing">Assistent app inte installerad</string>
+
+    <!-- Date Complication Preferences -->
+    <string name="date_comp_name">Datum</string>
+    <string name="date_custom_format">Anpassat format</string>
+    <string name="date_setting_preference_category_title">Datumkomplikation</string>
+    <string name="date_long_text_format">Långt Textformat</string>
+    <string name="date_long_title_format">Långt Titelformat</string>
+    <string name="date_short_text_format">Kort Textformat</string>
+    <string name="date_short_title_format">Kort Titelformat</string>
+    <string name="date_show_icon">Kalendarikon</string>
+
+    <!-- Persian Date -->
+    <string name="persian_date_complications">Persisk Datumkomplikation</string>
+    <string name="date_comp_jalali_hijri_settings" translatable="false">Jalali / Hijri</string>
+    <string name="date_comp_jalali_name">Datum Jalali</string>
+    <string name="date_comp_hijri_name">Datum Hijri</string>
+
+    <!-- Day of Year Complication Preferences -->
+    <string name="doy_comp_name">årets dag</string>
+    <string name="doy_short_title">Dag</string>
+
+    <!-- Logo Complication Preferences -->
+    <string name="logo_comp_name">Wear OS logo</string>
+
+    <!-- Moon Phase Complication Preferences -->
+    <string name="moon_comp_name">Månfas</string>
+    <string name="moon_setting_preference_category_title">Måne- / Solkomplikation</string>
+
+    <array name="moon_phases">
+        <item>Halvmåne (1:a kv.)</item>
+        <item>Fullmåne</item>
+        <item>Halvmåne (sista kv.)</item>
+        <item>Nymåne</item>
+        <item>Avtagande Skära</item>
+        <item>Avtagande Gibbös</item>
+        <item>Växande Skära</item>
+        <item>Växande Gibbös</item>
+    </array>
+
+    <string name="moon_setting_hemi_title">Halvklot</string>
+    <string name="moon_setting_hemi_on">Norra</string>
+    <string name="moon_setting_hemi_off">Södra</string>
+    <string name="moon_setting_simple_icon_title">Månikon</string>
+    <string name="moon_setting_simple_icon_on">Enkel</string>
+    <string name="moon_setting_simple_icon_off">Detaljerad</string>
+
+    <string name="moonrise_moonset">Uppgång &amp; Nedgång</string>
+    <string name="moonrise">Uppgång</string>
+    <string name="moonset">Nedgång</string>
+    <string name="moonrise_in">Uppgång om</string>
+    <string name="moonset_in">Nedgång om</string>
+
+    <!-- Pay Complication -->
+    <string name="pay_comp_name">Pay</string>
+
+    <!-- Sec Complication -->
+    <string name="sec_comp_name">Sekunder</string>
+    <string name="sec_short_title">Sek</string>
+
+    <!-- Time Complication Preferences -->
+    <string name="time_comp_name">Tid</string>
+    <string name="time_comp_desc">Aktuell Tid</string>
+    <string name="time_setting_leading_zero_title">Inledande Nolla</string>
+    <string name="time_setting_leading_zero_summary_on" translatable="false">09:00</string>
+    <string name="time_setting_leading_zero_summary_off" translatable="false">9:00</string>
+
+    <string name="time_ampm_setting_preference_category_title">Tid- / Solkomplikation</string>
+    <string name="time_ampm_setting_title">Timformat</string>
+    <string name="time_ampm_setting_on">24tim</string>
+    <string name="time_ampm_setting_off">12tim</string>
+
+    <!-- World Clock Complication Preferences -->
+    <string name="wc_name">Världsklocka</string>
+    <array name="wc_regions">
+        <item>Afrika</item>
+        <item>Asien</item>
+        <item>Atlantic</item>
+        <item>Australien</item>
+        <item>Europa</item>
+        <item>Nordamerika</item>
+        <item>Pacific</item>
+        <item>Sydamerika</item>
+        <item>Universal</item>
+    </array>
+    <string name="wc_comp_name_1">Världsklocka 1</string>
+    <string name="wc_comp_name_2">Världsklocka 2</string>
+    <string name="wc_setting_preference_category_title">Världsklocka Komplikation</string>
+    <string name="wc_setting_leading_zero_title">Inledande Nolla</string>
+    <string name="wc_setting_leading_zero_summary_on" translatable="false">09:00</string>
+    <string name="wc_setting_leading_zero_summary_off" translatable="false">9:00</string>
+
+    <string name="wc_ampm_setting_title">Timformat</string>
+    <string name="wc_ampm_setting_on">24tim</string>
+    <string name="wc_ampm_setting_off">12tim</string>
+
+
+    <string name="wc_setting_title">Tidszon 1 ID</string>
+    <string name="wc2_setting_title">Tidszon 2 ID</string>
+
+    <!-- WOY Complication Preferences -->
+    <string name="week_complication_name">årets vecka</string>
+    <string name="woy_complication_text">Vecka</string>
+    <string name="woy_complication_description">årets vecka</string>
+    <string name="woy_setting_preference_category_title">Veckokomplikation</string>
+    <string name="woy_setting_title">Format</string>
+    <string name="woy_setting_on" translatable="false">ISO</string>
+    <string name="woy_setting_off" translatable="false">US</string>
+
+    <!-- Custom Text + Title -->
+    <string name="custom_text_comp_name">Anpassad text</string>
+    <string name="custom_text_comp_name_category">Textkomplication</string>
+
+    <!--Custom Text + Title 2-->
+    <string name="custom_text_p1">Text</string>
+    <string name="custom_title_p1">Titel</string>
+
+    <!--translate-->
+    <string name="coarse_location_toggle_title">Ungefärlig plats</string>
+    <string name="coarse_secondary_enabled">Aktiverad</string>
+    <string name="coarse_secondary_disabled">Inaktiverad</string>
+    <string name="coarse_toggle_description">Växla platsbehörighet</string>
+
+    <!--translate-->
+    <string name="sunrise_sunset_comp_name">Soluppgång &amp; Solnedgång</string>
+    <string name="sunrise_sunset_countdown_comp_name">Soluppgång &amp; Solnedgång Nedräkning</string>
+    <string name="sunrise">Soluppgång</string>
+    <string name="sunset">Solnedgång</string>
+    <string name="sunrise_in">Soluppgång om</string>
+    <string name="sunset_in">Solnedgång om</string>
+    <string name="enable_permission_toast">Ungefärlig plats nödvändig (App UI)</string>
+    <string name="enable_permission_toast_consider">Ställ in plats för exakt månrotation</string>
+    <string name="location">Plats</string>
+    <string name="checking">Kontrollerar plats…</string>
+    <string name="no_location">Ingen platsåtkomst. Kontrollera GPS.</string>
+
+    <string name="countdown_style">Nedräkningsformat</string>
+    <string name="countdown_style_style">Format</string>
+    <string name="e_g_">ex.</string>
+
+    <!-- translate -->
+    <string name="day_and_week_comp_name">Dag &amp; Vecka</string>
+    <string name="dayD">D:</string>
+    <string name="weekW">V:</string>
+    <string name="dayDlong">Dag</string>
+    <string name="weekWlong">Vecka</string>
+
+    <!-- Developer Options -->
+    <string name="developer_options_comp_name">Utvecklaralternativ</string>
+
+    <!--Date Countdown-->
+    <string name="date_countdown_comp_name">Nedräkning till datum</string>
+    <string name="countdown_text">Tid kvar</string>
+
+    <!--NOTIFICATIONS-->
+    <string name="notification_permission_info">Vissa komplikationer kräver att aviseringar visas på Android 13+. Appen kommer att be om tillåtelse att visa dem.</string>
+
+    <!--VOLUME-->
+    <string name="volume_comp_name">Volymkontroll</string>
+
+    <!--DICE-->
+    <string name="dice_comp_name">Tärning</string>
+
+    <!--WATER-->
+    <string name="water_comp_name">Vattenintag</string>
+    <string name="water_intake_text">Intag</string>
+    <string name="water_intake_goal_text">Mål</string>
+
+    <!--Time zone-->
+    <string name="time_zone_comp_name">Tidszon</string>
+
+    <!-- Dynamic Calendar Icon -->
+    <string name="dynamic_calendar_icon_comp_name">Dynamisk kalenderikon</string>
+
+    <!-- Barometer -->
+    <string name="barometer_comp_name">Barometer</string>
+    <string name="barometer_category">Barometerkomplication</string>
+    <string name="barometer_use_hpa">Enheter</string>
+    <string name="barometer_hpa" translatable="false">hPa</string>
+    <string name="barometer_inHg" translatable="false">inHg</string>
+
+    <!-- Timer -->
+    <string name="timer_comp_name">Timer</string>
+
+    <!-- Custom Goal -->
+    <string name="custom_goal_comp_name">Målanpassning</string>
+    <string name="custom_goal_title_preview">Poäng</string>
+    <string name="custom_goal_start">Start: %1$s</string>
+    <string name="custom_goal_target">Mål: %1$s</string>
+    <string name="goal_settings">Målinställningar</string>
+    <string name="custom_goal_title">Titel</string>
+    <string name="custom_goal_start_value">Startvärde</string>
+    <string name="custom_goal_target_value">Målvärde</string>
+    <string name="custom_goal_current_value">Aktuellt värde</string>
+    <string name="custom_goal_change_by_value">ändra efter värde</string>
+    <string name="custom_goal_midnight_reset">Midnattsåterställning</string>
+    <string name="custom_goal_pick_icon">Välj ikon</string>
+    <string name="custom_goal_inverse">Omvänd riktning</string>
+    <string name="custom_goal_on">På</string>
+    <string name="custom_goal_off">Av</string>
+
+    <!-- Crypto Complications -->
+    <string name="crypto_complications">Kryptovaluta Komplikation</string>
+    <string name="counter_currency">Motvaluta</string>
+
+    <!-- Activity Launcher Complication -->
+    <string name="activity_launcher_comp_name">Aktivitetsstartare</string>
+    <string name="activity_setup">Inställningar</string>
+    <string name="activity_pick_activity">Välj aktivitet</string>
+    <string name="activity_set_icon">Välj ikon</string>
+
+    <!-- Settings -->
+    <string name="wifi_settings_comp_name">Wi-Fi Inställningar</string>
+    <string name="settings_comp_name">Inställningar</string>
+    <string name="display_settings_comp_name">Visa inställningar</string>
+    <string name="nfc_settings_comp_name">NFC Inställningar</string>
+    <string name="bluetooth_settings_comp_name">Bluetooth Inställningar</string>
+    <string name="battery_saver_settings_comp_name">Batterisparläge Inställningar</string>
+
+    <!-- Kanji -->
+    <string name="kanji_day_of_week">Kanji veckodag</string>
+</resources>
