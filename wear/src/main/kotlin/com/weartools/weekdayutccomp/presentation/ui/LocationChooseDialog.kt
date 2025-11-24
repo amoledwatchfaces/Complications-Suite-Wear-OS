@@ -46,7 +46,7 @@ import com.google.accompanist.permissions.PermissionState
 import com.google.android.libraries.places.api.model.AutocompletePrediction
 import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme
-import com.weartools.weekdayutccomp.theme.wearColorPalette
+import com.weartools.weekdayutccomp.theme.appColorScheme
 import com.weartools.weekdayutccomp.utils.arePermissionsGranted
 import com.weartools.weekdayutccomp.utils.isLocationEnabled
 import com.weartools.weekdayutccomp.utils.isOnline
@@ -98,7 +98,7 @@ fun LocationChooseDialog(
                             modifier = Modifier.fillMaxWidth(),
                             icon = {
                                 Image(
-                                    colorFilter = ColorFilter.tint(wearColorPalette.secondaryVariant),
+                                    colorFilter = ColorFilter.tint(appColorScheme.primary),
                                     imageVector = Icons.Default.Search,
                                     contentDescription = "Search"
                                 )
@@ -119,7 +119,7 @@ fun LocationChooseDialog(
                             modifier = Modifier.fillMaxWidth(),
                             icon = {
                                 Image(
-                                    colorFilter = ColorFilter.tint(wearColorPalette.secondaryVariant),
+                                    colorFilter = ColorFilter.tint(appColorScheme.primary),
                                     imageVector = Icons.Default.MyLocation,
                                     contentDescription = "Current location"
                                 )
@@ -160,7 +160,7 @@ fun LocationChooseDialog(
                         contentAlignment = Alignment.Center
                     ) {
                         CircularProgressIndicator(
-                            indicatorColor = wearColorPalette.secondaryVariant,
+                            indicatorColor = appColorScheme.primary,
                             trackColor = MaterialTheme.colors.onBackground.copy(alpha = 0.1f),
                             strokeWidth = 4.dp
                         )

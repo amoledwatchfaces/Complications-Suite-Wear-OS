@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.wear.compose.material.Icon
 import com.weartools.weekdayutccomp.activity.Icon
-import com.weartools.weekdayutccomp.theme.wearColorPalette
+import com.weartools.weekdayutccomp.theme.appColorScheme
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -39,7 +39,7 @@ fun IconItem(
         ),
         imageVector = vector,
         contentDescription = "Refresh Icon",
-        tint = wearColorPalette.secondary,
+        tint = appColorScheme.secondary,
     )
 }
 object ImageUtil {

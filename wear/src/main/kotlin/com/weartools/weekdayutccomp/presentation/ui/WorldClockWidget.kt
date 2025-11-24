@@ -37,7 +37,7 @@ import androidx.wear.compose.material.dialog.Dialog
 import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.preferences.UserPreferences
-import com.weartools.weekdayutccomp.theme.wearColorPalette
+import com.weartools.weekdayutccomp.theme.appColorScheme
 import com.weartools.weekdayutccomp.utils.WorldClockLists
 import kotlinx.coroutines.launch
 
@@ -197,7 +197,7 @@ fun CitiesWidget(
                             .fillMaxWidth(),
                         checked = preValue == labels[index],
                         colors = ToggleChipDefaults.toggleChipColors(
-                            checkedEndBackgroundColor = wearColorPalette.primaryVariant,
+                            checkedEndBackgroundColor = appColorScheme.primaryContainer,
                             checkedToggleControlColor = Color(0xFFBFE7FF)
                         ),
                         toggleControl = {

@@ -32,7 +32,7 @@ import androidx.wear.compose.material.OutlinedButton
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.dialog.Alert
 import androidx.wear.compose.material.dialog.Dialog
-import com.weartools.weekdayutccomp.theme.wearColorPalette
+import com.weartools.weekdayutccomp.theme.appColorScheme
 
 @Composable
 fun TextInputDialog(
@@ -67,7 +67,7 @@ fun TextInputDialog(
                         dismissDialog()
                     },
                     colors = ButtonDefaults.primaryButtonColors(
-                        backgroundColor = wearColorPalette.secondaryVariant,
+                        backgroundColor = appColorScheme.secondary,
                         contentColor = Color.Black
                     )
                 ) {
@@ -100,7 +100,7 @@ fun TextInputDialog(
                     onValueChange = {
                         text = it
                     },
-                    label = { Text(text = inputLabel, color = wearColorPalette.primary) },
+                    label = { Text(text = inputLabel, color = appColorScheme.primary) },
                     keyboardOptions = keyboardOptions,
                     keyboardActions = KeyboardActions(
                         onAny = { keyboardController?.hide() }
@@ -111,13 +111,13 @@ fun TextInputDialog(
                         .fillMaxWidth(),
                     colors = //
                     OutlinedTextFieldDefaults.colors(
-                        unfocusedBorderColor = wearColorPalette.primaryVariant.copy(alpha = 0.6f),
-                        focusedBorderColor = wearColorPalette.primaryVariant.copy(alpha = 1f),
+                        unfocusedBorderColor = appColorScheme.primaryContainer.copy(alpha = 0.6f),
+                        focusedBorderColor = appColorScheme.primaryContainer.copy(alpha = 1f),
                         focusedTextColor = Color.White,
-                        cursorColor = wearColorPalette.secondaryVariant,
+                        cursorColor = appColorScheme.secondary,
                         selectionColors = TextSelectionColors(
-                            backgroundColor = wearColorPalette.secondaryVariant.copy(alpha = 0f),
-                            handleColor = wearColorPalette.secondaryVariant,
+                            backgroundColor = appColorScheme.primary.copy(alpha = 0f),
+                            handleColor = appColorScheme.primary,
                         ),
 
                     ),

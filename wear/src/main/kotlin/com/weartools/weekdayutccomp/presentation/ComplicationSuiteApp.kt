@@ -1,17 +1,16 @@
 package com.weartools.weekdayutccomp.presentation
 
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
-import androidx.wear.compose.material.PositionIndicator
-import androidx.wear.compose.material.Scaffold
-import androidx.wear.compose.material.TimeText
-import androidx.wear.compose.material.scrollAway
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.wear.compose.foundation.lazy.rememberTransformingLazyColumnState
+import androidx.wear.compose.material3.AppScaffold
+import androidx.wear.compose.material3.ScreenScaffold
+import androidx.wear.compose.material3.lazy.rememberTransformationSpec
+import androidx.wear.compose.navigation.SwipeDismissableNavHost
+import androidx.wear.compose.navigation.composable
+import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.enums.Request
 import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme
@@ -23,21 +22,32 @@ fun ComplicationsSuiteApp(
     open: Request
 ) {
     ComplicationsSuiteTheme {
-        val listState = rememberScalingLazyListState()
-        val focusRequester = remember { FocusRequester() }
 
-        LaunchedEffect(Unit) {focusRequester.requestFocus()}
-        Scaffold(
-            modifier = Modifier.fillMaxSize(),
-            timeText = { TimeText(modifier = Modifier.scrollAway(listState)) },
-            positionIndicator = { PositionIndicator(scalingLazyListState = listState) }
-        ) {
-            ComplicationsSuiteScreen(
-                viewModel = viewModel,
-                listState = listState,
-                focusRequester = focusRequester,
-                open = open
-            )
+        val scrollState = rememberTransformingLazyColumnState()
+        val transformationSpec = rememberTransformationSpec()
+        val focusRequester = remember { FocusRequester() }
+        val navController = rememberSwipeDismissableNavController()
+
+        AppScaffold {
+            SwipeDismissableNavHost(
+                navController = navController,
+                startDestination = "main_screen"
+            ) {
+                composable("main_screen") {
+                    ScreenScaffold(
+                        scrollState = scrollState
+                    ) {
+                        ComplicationsSuiteScreen(
+                            navController = navController,
+                            listState = scrollState,
+                            transformationSpec = transformationSpec,
+                            focusRequester = focusRequester,
+                            viewModel = viewModel,
+                            open = open
+                        )
+                    }
+                }
+            }
         }
     }
 }

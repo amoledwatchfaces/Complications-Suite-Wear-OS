@@ -6,7 +6,6 @@ import android.text.style.CharacterStyle
 import android.text.style.StyleSpan
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -32,7 +31,7 @@ import androidx.wear.compose.material.dialog.Alert
 import androidx.wear.compose.material.dialog.Dialog
 import com.google.android.libraries.places.api.model.AutocompletePrediction
 import com.weartools.weekdayutccomp.MainViewModel
-import com.weartools.weekdayutccomp.theme.wearColorPalette
+import com.weartools.weekdayutccomp.theme.appColorScheme
 
 @Composable
 fun LocationsList(
@@ -98,12 +97,12 @@ fun LocationChip(
         onClick = onClick,
         colors = ChipDefaults.gradientBackgroundChipColors(
             startBackgroundColor = Color(0xff2c2c2d),
-            endBackgroundColor = wearColorPalette.primaryVariant
+            endBackgroundColor = appColorScheme.primaryContainer
         ),
         icon = { Image(
             imageVector = Icons.Default.LocationCity,
             contentDescription = "Location Icon",
-            colorFilter = ColorFilter.tint(wearColorPalette.secondaryVariant),) },
+            colorFilter = ColorFilter.tint(appColorScheme.primary),) },
         label = { Text(text = primaryText)},
         secondaryLabel = { Text(text = secondaryText)},
     )

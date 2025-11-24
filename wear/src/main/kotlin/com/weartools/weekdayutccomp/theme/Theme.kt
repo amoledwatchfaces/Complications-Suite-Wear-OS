@@ -16,47 +16,55 @@
 package com.weartools.weekdayutccomp.theme
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
-import androidx.wear.compose.material.Colors
-import androidx.wear.compose.material.MaterialTheme
-import androidx.wear.compose.material.Typography
+import androidx.wear.compose.material3.ColorScheme
+import androidx.wear.compose.material3.Typography
 
-val Blue700 = Color(0xFF615145)
-val Teal200 = Color(0xFFccecff)
-val Red400 = Color(0xFFCF6679)
+//primary = Teal200,
+//primaryVariant = Blue700,
+//secondary = Teal200,
+//secondaryVariant = Teal200,
+//error = Red400,
+//onPrimary = Color.White,
+//onSecondary = Color.Gray,
+//onError = Color.Black,
 
-internal val wearColorPalette: Colors = Colors(
-    primary = Teal200,
-    primaryVariant = Blue700,
-    secondary = Teal200,
-    secondaryVariant = Teal200,
-    error = Red400,
-    onPrimary = Color.White,
-    onSecondary = Color.Gray,
-    onError = Color.Black,
+val appColorScheme = ColorScheme(
+    primary = primaryDark,
+    onPrimary = onPrimaryDark,
+    primaryContainer = primaryContainerDark,
+    onPrimaryContainer = onPrimaryContainerDark,
+    secondary = secondaryDark,
+    onSecondary = onSecondaryDark,
+    secondaryContainer = secondaryContainerDark,
+    onSecondaryContainer = onSecondaryContainerDark,
+    tertiary = tertiaryDark,
+    onTertiary = onTertiaryDark,
+    tertiaryContainer = tertiaryContainerDark,
+    onTertiaryContainer = onTertiaryContainerDark,
+    error = errorDark,
+    onError = onErrorDark,
+    errorContainer = errorContainerDark,
+    onErrorContainer = onErrorContainerDark,
+    background = backgroundDark,
+    onBackground = onBackgroundDark,
+    onSurface = onSurfaceDark,
+    onSurfaceVariant = onSurfaceVariantDark,
+    outline = outlineDark,
+    outlineVariant = outlineVariantDark,
+    surfaceContainerLow = surfaceContainerLowDark,
+    surfaceContainer = surfaceContainerDark,
+    surfaceContainerHigh = surfaceContainerHighDark,
 )
 
 @Composable
 fun ComplicationsSuiteTheme(
     content: @Composable () -> Unit
 ) {
-    MaterialTheme(
-        colors = wearColorPalette,
-        typography = Typography,
-        // For shapes, we generally recommend using the default Material Wear shapes which are
-        // optimized for round and non-round devices.
+    androidx.wear.compose.material3.MaterialTheme(
+        colorScheme = appColorScheme,
+        typography = appTypography,
         content = content
     )
 }
 
-val Typography = Typography(
-    body1 = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp
-    )
-)
+val appTypography = Typography()

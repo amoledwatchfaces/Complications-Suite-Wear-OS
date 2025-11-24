@@ -52,7 +52,7 @@ import com.google.android.horologist.audio.ui.components.DeviceChip
 import com.google.android.horologist.audio.ui.components.toAudioOutputUi
 import com.google.android.horologist.images.base.paintable.ImageVectorPaintable.Companion.asPaintable
 import com.google.android.horologist.images.base.paintable.PaintableIcon
-import com.weartools.weekdayutccomp.theme.wearColorPalette
+import com.weartools.weekdayutccomp.theme.appColorScheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
@@ -145,7 +145,7 @@ internal fun VolumeScreen(
     increaseIcon: @Composable () -> Unit = { VolumeScreenDefaults.IncreaseIcon() },
     decreaseIcon: @Composable () -> Unit = { VolumeScreenDefaults.DecreaseIcon() },
     showVolumeIndicator: Boolean = true,
-    volumeColor: Color = wearColorPalette.primary,
+    volumeColor: Color = appColorScheme.primary,
 ) {
     val volumeState = volume()
     (100f * volumeState.current / volumeState.max).roundToInt()
@@ -211,7 +211,7 @@ fun VolumePositionIndicator(
     volumeUiState: () -> VolumeUiState,
     modifier: Modifier = Modifier,
     displayIndicatorEvents: Flow<Unit>? = null,
-    color: Color = wearColorPalette.primary,
+    color: Color = appColorScheme.primary,
 ) {
     // False positive - https://issuetracker.google.com/issues/349411310
     @Suppress("ProduceStateDoesNotAssignValue")

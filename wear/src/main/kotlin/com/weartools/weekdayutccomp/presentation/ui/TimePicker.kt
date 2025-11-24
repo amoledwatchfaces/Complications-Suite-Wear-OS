@@ -87,7 +87,7 @@ import androidx.wear.compose.material.TouchExplorationStateProvider
 import androidx.wear.compose.material.rememberPickerGroupState
 import androidx.wear.compose.material.rememberPickerState
 import com.google.android.horologist.composables.R
-import com.weartools.weekdayutccomp.theme.wearColorPalette
+import com.weartools.weekdayutccomp.theme.appColorScheme
 import java.time.LocalTime
 
 /**
@@ -302,7 +302,7 @@ fun TimePicker(
             Spacer(Modifier.height(paddingAroundPicker))
             Button(
                 colors = ButtonDefaults.primaryButtonColors(
-                    backgroundColor = wearColorPalette.primary,
+                    backgroundColor = appColorScheme.primary,
                     contentColor = Color.Black
                 ),
                 onClick = {
@@ -399,7 +399,7 @@ internal fun pickerTextOption(
             color = if (!isValid(value)) {
                 Color(0xFF757575)
             } else if (pickerSelected) {
-                wearColorPalette.primary
+                appColorScheme.primary
             } else {
                 Color.LightGray
             },

@@ -121,7 +121,7 @@ import com.weartools.weekdayutccomp.presentation.ui.LoaderBox
 import com.weartools.weekdayutccomp.presentation.ui.NumberEditChip
 import com.weartools.weekdayutccomp.presentation.ui.PreferenceCategory
 import com.weartools.weekdayutccomp.presentation.ui.ToggleChip
-import com.weartools.weekdayutccomp.theme.wearColorPalette
+import com.weartools.weekdayutccomp.theme.appColorScheme
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.ByteArrayOutputStream
 import kotlin.math.roundToInt
@@ -198,13 +198,13 @@ fun CustomGoalTheme(
                 )
             },
             valueProgression = IntProgression.fromClosedRange(0, 1000000000, 1),
-            decreaseIcon = { Icon(imageVector = Icons.Default.Remove, contentDescription = "Remove", tint = wearColorPalette.secondaryVariant) },
-            increaseIcon = { Icon(imageVector = Icons.Default.Add, contentDescription = "Add", tint = wearColorPalette.secondaryVariant) })
+            decreaseIcon = { Icon(imageVector = Icons.Default.Remove, contentDescription = "Remove", tint = appColorScheme.primary) },
+            increaseIcon = { Icon(imageVector = Icons.Default.Add, contentDescription = "Add", tint = appColorScheme.primary) })
         {}
         Card(
             backgroundPainter = CardDefaults.cardBackgroundPainter(
                 startBackgroundColor = Color(0xff2c2c2d),
-                endBackgroundColor = wearColorPalette.primaryVariant
+                endBackgroundColor = appColorScheme.primaryContainer
             ),
             modifier = Modifier
                 .fillMaxWidth(0.8f)
@@ -239,7 +239,7 @@ fun CustomGoalTheme(
                         modifier = Modifier.padding(top = 2.dp, bottom = 2.dp)
                     )
                     Text(
-                        color = wearColorPalette.secondaryVariant,
+                        color = appColorScheme.primary,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         text = stringResource(
@@ -253,7 +253,7 @@ fun CustomGoalTheme(
                     Icon(
                         imageVector = ImageUtil.createImageVector(preferences.value.customGoalIconId)?:Icons.Default.Flag,
                         contentDescription = "Remove",
-                        tint = wearColorPalette.secondaryVariant)
+                        tint = appColorScheme.primary)
                 }
             }
         }
@@ -275,7 +275,7 @@ fun CustomGoalTheme(
 
         OutlinedCompactButton(
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = wearColorPalette.primary
+                backgroundColor = appColorScheme.primary
             ),
             border = ButtonDefaults.buttonBorder(null, null),
             modifier = Modifier.padding(top = 80.dp, start = 80.dp),
@@ -304,7 +304,7 @@ fun CustomGoalTheme(
                 .padding(all = 10.dp),
             startAngle = 135f,
             endAngle = 225f,
-            indicatorColor = wearColorPalette.secondary,
+            indicatorColor = appColorScheme.secondary,
             trackColor = MaterialTheme.colors.onBackground.copy(alpha = 0.2f),
             strokeWidth = 5.dp
         )
@@ -361,7 +361,7 @@ fun GoalSettings(
                             Icon(
                                 imageVector = ImageUtil.createImageVector(preferences.value.customGoalIconId)?:Icons.Default.Flag,
                                 contentDescription = "Remove",
-                                tint = wearColorPalette.secondaryVariant) },
+                                tint = appColorScheme.primary) },
                         label = {
                             Text(
                                 text = stringResource(R.string.activity_set_icon),
@@ -613,7 +613,7 @@ fun SearchTextField(
             search = it
             onSearchChanged(it)
         },
-        label = { Text(text = "Search", color = wearColorPalette.primary) },
+        label = { Text(text = "Search", color = appColorScheme.primary) },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Done, keyboardType = KeyboardType.Text
         ),
@@ -628,13 +628,13 @@ fun SearchTextField(
             .focusRequester(focusRequester),
         colors = //
         OutlinedTextFieldDefaults.colors(
-            unfocusedBorderColor = wearColorPalette.primaryVariant.copy(alpha = 0.6f),
-            focusedBorderColor = wearColorPalette.primaryVariant.copy(alpha = 1f),
+            unfocusedBorderColor = appColorScheme.primaryContainer.copy(alpha = 0.6f),
+            focusedBorderColor = appColorScheme.primaryContainer.copy(alpha = 1f),
             focusedTextColor = Color.White,
-            cursorColor = wearColorPalette.secondaryVariant,
+            cursorColor = appColorScheme.primary,
             selectionColors = TextSelectionColors(
-                backgroundColor = wearColorPalette.secondaryVariant.copy(alpha = 0f),
-                handleColor = wearColorPalette.secondaryVariant,
+                backgroundColor = appColorScheme.primary.copy(alpha = 0f),
+                handleColor = appColorScheme.primary,
                 ),
             ),
     )

@@ -32,7 +32,7 @@ import androidx.wear.compose.material.dialog.Dialog
 import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.enums.DateFormat
-import com.weartools.weekdayutccomp.theme.wearColorPalette
+import com.weartools.weekdayutccomp.theme.appColorScheme
 import kotlinx.coroutines.launch
 
 @Composable
@@ -95,7 +95,7 @@ fun DateFormatListPicker(
                             .fillMaxWidth(),
                         checked = preValue == items[index],
                         colors = ToggleChipDefaults.toggleChipColors(
-                            checkedEndBackgroundColor = wearColorPalette.primaryVariant,
+                            checkedEndBackgroundColor = appColorScheme.primaryContainer,
                             checkedToggleControlColor = Color(0xFFBFE7FF)
                         ),
                         toggleControl = {
@@ -130,6 +130,7 @@ fun DateFormatListPicker(
                 item {
                     focusRequester.requestFocus()
                     ChipWithEditText(
+                        modifier = Modifier,
                         row1 = stringResource(id = R.string.date_custom_format),
                         row2 = preValue,
                         viewModel = viewModel,

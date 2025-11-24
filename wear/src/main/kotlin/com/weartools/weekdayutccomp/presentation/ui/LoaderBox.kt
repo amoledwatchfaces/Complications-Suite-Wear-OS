@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.CircularProgressIndicator
 import androidx.wear.compose.material.MaterialTheme
-import com.weartools.weekdayutccomp.theme.wearColorPalette
+import com.weartools.weekdayutccomp.theme.appColorScheme
 
 
 @Composable
@@ -29,7 +29,7 @@ fun LoaderBox(){
             contentAlignment = Alignment.Center
         ) {
             CircularProgressIndicator(
-                indicatorColor = wearColorPalette.secondaryVariant,
+                indicatorColor = appColorScheme.primary,
                 trackColor = MaterialTheme.colors.onBackground.copy(alpha = 0.1f),
                 strokeWidth = 4.dp
             )

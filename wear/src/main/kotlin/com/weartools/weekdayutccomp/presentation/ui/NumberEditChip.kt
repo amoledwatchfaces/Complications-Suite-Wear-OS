@@ -27,7 +27,7 @@ import androidx.wear.compose.material.ChipDefaults
 import androidx.wear.compose.material.Text
 import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.activity.EditType
-import com.weartools.weekdayutccomp.theme.wearColorPalette
+import com.weartools.weekdayutccomp.theme.appColorScheme
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -72,7 +72,7 @@ fun NumberEditChip(
                     fontSize = 12.sp,
                     lineHeight = 16.sp,
                     letterSpacing = 0.1.sp,
-                    color =  wearColorPalette.secondary
+                    color =  appColorScheme.secondary
                 ),
                 singleLine = true,
                 cursorBrush = SolidColor(Color.Unspecified),
@@ -122,7 +122,7 @@ fun EditTextChip(
                     fontSize = 12.sp,
                     lineHeight = 16.sp,
                     letterSpacing = 0.1.sp,
-                    color =  wearColorPalette.primary),
+                    color =  appColorScheme.primary),
                 singleLine = true,
                 cursorBrush = SolidColor(Color.Unspecified),
                 keyboardOptions = KeyboardOptions(

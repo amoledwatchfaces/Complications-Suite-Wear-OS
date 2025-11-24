@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -25,37 +24,38 @@ import androidx.wear.compose.foundation.lazy.itemsIndexed
 import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
 import androidx.wear.compose.foundation.rotary.RotaryScrollableDefaults
 import androidx.wear.compose.foundation.rotary.rotaryScrollable
-import androidx.wear.compose.material.Chip
-import androidx.wear.compose.material.ChipDefaults
 import androidx.wear.compose.material.Icon
-import androidx.wear.compose.material.MaterialTheme
-import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.ToggleChip
 import androidx.wear.compose.material.ToggleChipDefaults
 import androidx.wear.compose.material.dialog.Alert
 import androidx.wear.compose.material.dialog.Dialog
+import androidx.wear.compose.material3.Button
+import androidx.wear.compose.material3.ButtonDefaults
+import androidx.wear.compose.material3.ListHeader
+import androidx.wear.compose.material3.MaterialTheme
+import androidx.wear.compose.material3.SurfaceTransformation
+import androidx.wear.compose.material3.Text
 import com.weartools.weekdayutccomp.R
-import com.weartools.weekdayutccomp.theme.wearColorPalette
+import com.weartools.weekdayutccomp.theme.appColorScheme
 import kotlinx.coroutines.launch
 
 @Composable
 fun DialogChip(
+    modifier: Modifier,
+    transformation: SurfaceTransformation,
     text: String,
     title: String,
     onClick: (() -> Unit)? = null,
     icon: @Composable (BoxScope.() -> Unit)?
 ) {
-    Chip(
-        modifier = Modifier
-            .fillMaxWidth(),
+    Button(
+        colors = ButtonDefaults.filledTonalButtonColors(),
+        modifier = modifier,
+        transformation = transformation,
         onClick = {
             onClick?.invoke()
         },
         icon = icon,
-        colors = ChipDefaults.gradientBackgroundChipColors(
-            startBackgroundColor = Color(0xff2c2c2d),
-            endBackgroundColor = Color(0xff2c2c2d)
-        ),
         label = {
             Text(
                 text = text,
@@ -114,7 +114,7 @@ fun ListItemsWidget(
                                 .fillMaxWidth(),
                             checked = preValue == items[index],
                             colors = ToggleChipDefaults.toggleChipColors(
-                                checkedEndBackgroundColor = wearColorPalette.primaryVariant,
+                                checkedEndBackgroundColor = appColorScheme.primaryContainer,
                                 checkedToggleControlColor = Color(0xFFBFE7FF)
                             ),
                             toggleControl = {
@@ -157,7 +157,7 @@ fun ToggleChip(
             .fillMaxWidth(),
         checked = checked,
         colors = ToggleChipDefaults.toggleChipColors(
-            checkedEndBackgroundColor = wearColorPalette.primaryVariant,
+            checkedEndBackgroundColor = appColorScheme.primaryContainer,
             checkedToggleControlColor = Color(0xFFBFE7FF),
         ),
         appIcon = icon,
@@ -182,20 +182,20 @@ fun ToggleChip(
 @Composable
 fun PreferenceCategory(
     modifier: Modifier = Modifier,
+    transformationSpec: SurfaceTransformation? = null,
     title: String
 ) {
-    Text(
-        textAlign = TextAlign.Center,
-        text = title,
-        modifier = modifier.padding(
-            start = 16.dp,
-            top = 14.dp,
-            end = 16.dp,
-            bottom = 4.dp
-        ),
-        color = wearColorPalette.secondary,
-        style = MaterialTheme.typography.caption2
-    )
+    ListHeader(
+        modifier = modifier,
+        transformation = transformationSpec,
+    ) {
+        Text(
+            textAlign = TextAlign.Center,
+            text = title,
+            color = MaterialTheme.colorScheme.primary,
+            style = MaterialTheme.typography.titleSmall
+        )
+    }
 }
 
 @Composable
@@ -203,9 +203,9 @@ fun SectionText(modifier: Modifier = Modifier, text: String) {
     Text(
         modifier = modifier,
         textAlign = TextAlign.Center,
-        color = MaterialTheme.colors.onSecondary,
+        color = MaterialTheme.colorScheme.outlineVariant,
         text = text,
-        style = MaterialTheme.typography.caption3
+        style = MaterialTheme.typography.bodySmall
     )
 }
 

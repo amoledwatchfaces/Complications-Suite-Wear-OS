@@ -20,6 +20,7 @@ import android.os.Build
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -52,19 +53,23 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.wear.compose.foundation.lazy.AutoCenteringParams
-import androidx.wear.compose.foundation.lazy.ScalingLazyColumn
-import androidx.wear.compose.foundation.lazy.ScalingLazyListState
-import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
+import androidx.navigation.NavHostController
+import androidx.wear.compose.foundation.lazy.TransformingLazyColumn
+import androidx.wear.compose.foundation.lazy.TransformingLazyColumnState
+import androidx.wear.compose.foundation.lazy.rememberTransformingLazyColumnState
 import androidx.wear.compose.foundation.rotary.RotaryScrollableDefaults
 import androidx.wear.compose.foundation.rotary.rotaryScrollable
-import androidx.wear.compose.material.AppCard
-import androidx.wear.compose.material.Card
 import androidx.wear.compose.material.Icon
-import androidx.wear.compose.material.ListHeader
-import androidx.wear.compose.material.MaterialTheme
-import androidx.wear.compose.material.Text
-import androidx.wear.compose.material.ToggleChipDefaults
+import androidx.wear.compose.material3.AppCard
+import androidx.wear.compose.material3.Card
+import androidx.wear.compose.material3.CheckboxButton
+import androidx.wear.compose.material3.ListHeader
+import androidx.wear.compose.material3.MaterialTheme
+import androidx.wear.compose.material3.SurfaceTransformation
+import androidx.wear.compose.material3.SwitchButton
+import androidx.wear.compose.material3.Text
+import androidx.wear.compose.material3.lazy.TransformationSpec
+import androidx.wear.compose.material3.lazy.transformedHeight
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberPermissionState
 import com.weartools.weekdayutccomp.BuildConfig
@@ -82,9 +87,8 @@ import com.weartools.weekdayutccomp.presentation.ui.LocationChooseDialog
 import com.weartools.weekdayutccomp.presentation.ui.PermissionAskDialog
 import com.weartools.weekdayutccomp.presentation.ui.PreferenceCategory
 import com.weartools.weekdayutccomp.presentation.ui.SectionText
-import com.weartools.weekdayutccomp.presentation.ui.ToggleChip
 import com.weartools.weekdayutccomp.presentation.ui.WorldClockWidget
-import com.weartools.weekdayutccomp.theme.wearColorPalette
+import com.weartools.weekdayutccomp.theme.appColorScheme
 import com.weartools.weekdayutccomp.utils.CounterCurrency
 import com.weartools.weekdayutccomp.utils.openPlayStore
 import kotlinx.coroutines.launch
@@ -92,7 +96,9 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun ComplicationsSuiteScreen(
-    listState: ScalingLazyListState = rememberScalingLazyListState(),
+    navController: NavHostController,
+    listState: TransformingLazyColumnState = rememberTransformingLazyColumnState(),
+    transformationSpec: TransformationSpec,
     focusRequester: FocusRequester,
     viewModel: MainViewModel,
     open: Request
@@ -162,32 +168,40 @@ fun ComplicationsSuiteScreen(
         }
     }
 
-    ScalingLazyColumn(
+    TransformingLazyColumn(
+        contentPadding = PaddingValues(top = 25.dp, bottom = 65.dp, start = 12.dp, end = 12.dp),
         modifier = Modifier
             .fillMaxSize()
             .rotaryScrollable(
                 RotaryScrollableDefaults.behavior(scrollableState = listState),
                 focusRequester = focusRequester
             ),
-        autoCentering = AutoCenteringParams(itemIndex = 1),
         state = listState,
     ) {
 
-        //SETTINGS
-        item { ListHeader {
+        // List Header
+        item { ListHeader(
+            modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+            transformation = SurfaceTransformation(transformationSpec),
+        ) {
             Text(
                 textAlign = TextAlign.Center,
-                color = MaterialTheme.colors.primary,
+                color = MaterialTheme.colorScheme.primary,
                 text = stringResource(id = R.string.settings),
-                style = MaterialTheme.typography.title3
+                style = MaterialTheme.typography.titleSmall
             )
         } }
 
-        // WORLD CLOCK COMPLICATION PREFERENCE CATEGORY
-        item { PreferenceCategory(title = stringResource(id = R.string.wc_setting_preference_category_title)) }
+        // World Clock
+        item { PreferenceCategory(
+            modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+            transformationSpec = SurfaceTransformation(transformationSpec),
+            title = stringResource(id = R.string.wc_setting_preference_category_title)
+        ) }
         item {
-
             DialogChip(
+                modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                transformation = SurfaceTransformation(transformationSpec),
                 text = stringResource(id = R.string.wc_comp_name_1),
                 title = "${preferences.value.worldClock1.cityName} (${preferences.value.worldClock1.cityId})",
                 icon = {},
@@ -199,6 +213,8 @@ fun ComplicationsSuiteScreen(
 
         item {
             DialogChip(
+                modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                transformation = SurfaceTransformation(transformationSpec),
                 text = stringResource(id = R.string.wc_comp_name_2),
                 icon = {},
                 title = "${preferences.value.worldClock2.cityName} (${preferences.value.worldClock2.cityId})",
@@ -208,35 +224,49 @@ fun ComplicationsSuiteScreen(
             )
         }
         item {
-            ToggleChip(
-                label = stringResource(id = R.string.wc_setting_leading_zero_title),
-                secondaryLabelOn = stringResource(id = R.string.wc_setting_leading_zero_summary_on),
-                secondaryLabelOff = stringResource(id = R.string.wc_setting_leading_zero_summary_off),
+            SwitchButton(
+                modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                transformation = SurfaceTransformation(transformationSpec),
                 checked = preferences.value.isLeadingZero,
-                icon = {},
-                onCheckedChange = {
-                    viewModel.setLeadingZero(it, context)
+                onCheckedChange = {viewModel.setLeadingZero(it, context)},
+                label = { Text(stringResource(id = R.string.wc_setting_leading_zero_title)) },
+                secondaryLabel = {
+                    if (preferences.value.isLeadingZero) {
+                        Text(text = stringResource(id = R.string.wc_setting_leading_zero_summary_on), color = Color.LightGray)
+                    } else
+                        Text(text = stringResource(id = R.string.wc_setting_leading_zero_summary_off), color = Color.LightGray)
                 }
             )
         }
         item {
-            ToggleChip(
-                label = stringResource(id = R.string.wc_ampm_setting_title),
-                secondaryLabelOn = stringResource(id = R.string.time_ampm_setting_on),
-                secondaryLabelOff = stringResource(id = R.string.time_ampm_setting_off),
+            SwitchButton(
+                modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                transformation = SurfaceTransformation(transformationSpec),
                 checked = preferences.value.isMilitary,
-                icon = {},
                 onCheckedChange = {
                     viewModel.setMilitary(it,context)
+                                  },
+                label = { Text(stringResource(id = R.string.wc_ampm_setting_title)) },
+                secondaryLabel = {
+                    if (preferences.value.isMilitary) {
+                        Text(text = stringResource(id = R.string.time_ampm_setting_on), color = Color.LightGray)
+                    } else
+                        Text(text = stringResource(id = R.string.time_ampm_setting_off), color = Color.LightGray)
                 }
             )
         }
 
         // MOON PHASE COMPLICATION PREFERENCE CATEGORY
-        item { PreferenceCategory(title = stringResource(id = R.string.moon_setting_preference_category_title)) }
+        item { PreferenceCategory(
+            modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+            transformationSpec = SurfaceTransformation(transformationSpec),
+            title = stringResource(id = R.string.moon_setting_preference_category_title)
+        ) }
 
         item {
             DialogChip(
+                modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                transformation = SurfaceTransformation(transformationSpec),
                 text = stringResource(id = R.string.moon_setting_simple_icon_title),
                 icon = {
                     if (preferences.value.moonIconType == MoonIconType.SIMPLE) Icon(
@@ -259,14 +289,19 @@ fun ComplicationsSuiteScreen(
         if (preferences.value.moonIconType == MoonIconType.SIMPLE || preferences.value.coarsePermission.not())
         {
             item {
-                ToggleChip(
-                    label = stringResource(id = R.string.moon_setting_hemi_title),
-                    secondaryLabelOn = stringResource(id = R.string.moon_setting_hemi_on),
-                    secondaryLabelOff = stringResource(id = R.string.moon_setting_hemi_off),
+                SwitchButton(
+                    modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                    transformation = SurfaceTransformation(transformationSpec),
                     checked = preferences.value.isHemisphere,
-                    icon = {},
                     onCheckedChange = {
                         viewModel.setHemisphere(it, context)
+                    },
+                    label = { Text(stringResource(id = R.string.moon_setting_hemi_title)) },
+                    secondaryLabel = {
+                        if (preferences.value.isHemisphere) {
+                            Text(text = stringResource(id = R.string.moon_setting_hemi_on), color = Color.LightGray)
+                        } else
+                            Text(text = stringResource(id = R.string.moon_setting_hemi_off), color = Color.LightGray)
                     }
                 )
             }
@@ -274,22 +309,22 @@ fun ComplicationsSuiteScreen(
 
         item {
             AppCard(
+                modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                transformation = SurfaceTransformation(transformationSpec),
                 enabled = true,
                 time = {
                     Icon(
                         imageVector = if (preferences.value.locationName == "No location set") Icons.Default.AddLocation else Icons.Default.EditLocation,
                         contentDescription = "Refresh Icon",
-                        tint = wearColorPalette.secondary,
+                        tint = appColorScheme.secondary,
                     )},
                 appImage = { Icon(
                     imageVector = Icons.Default.LocationCity,
                     contentDescription = "Refresh Icon",
-                    tint = wearColorPalette.secondary,
+                    tint = appColorScheme.secondary,
                 )},
-                title = {Text(text = preferences.value.locationName, color =  wearColorPalette.primary, fontSize = 12.sp)},
+                title = {Text(text = preferences.value.locationName, color =  appColorScheme.primary, fontSize = 12.sp)},
                 appName = {Text(stringResource(id = R.string.location), color = Color(0xFFF1F1F1))},
-                modifier = Modifier
-                    .fillMaxWidth(),
                 onClick = {
                     openLocationChoose = openLocationChoose.not()
                 },
@@ -297,37 +332,55 @@ fun ComplicationsSuiteScreen(
         }
 
         // TIME COMPLICATION PREFERENCE CATEGORY
-        item { PreferenceCategory(title = stringResource(id = R.string.time_ampm_setting_preference_category_title)) }
+        item { PreferenceCategory(
+            modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+            transformationSpec = SurfaceTransformation(transformationSpec),
+            title = stringResource(id = R.string.time_ampm_setting_preference_category_title)
+        )}
         item {
-            ToggleChip(
-                label = stringResource(id = R.string.time_setting_leading_zero_title),
-                secondaryLabelOn = stringResource(id = R.string.time_setting_leading_zero_summary_on),
-                secondaryLabelOff = stringResource(id = R.string.time_setting_leading_zero_summary_off),
+            SwitchButton(
+                modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                transformation = SurfaceTransformation(transformationSpec),
                 checked = preferences.value.isLeadingZeroTime,
-                icon = {},
                 onCheckedChange = {
                     viewModel.setLeadingZeroTime(it,context)
+                },
+                label = { Text(stringResource(id = R.string.time_setting_leading_zero_title)) },
+                secondaryLabel = {
+                    if (preferences.value.isLeadingZeroTime) {
+                        Text(text = stringResource(id = R.string.time_setting_leading_zero_summary_on), color = Color.LightGray)
+                    } else
+                        Text(text = stringResource(id = R.string.time_setting_leading_zero_summary_off), color = Color.LightGray)
                 }
             )
         }
         item {
-            ToggleChip(
-                label = stringResource(id = R.string.time_ampm_setting_title),
-                secondaryLabelOn = stringResource(id = R.string.time_ampm_setting_on),
-                secondaryLabelOff = stringResource(id = R.string.time_ampm_setting_off),
+            SwitchButton(
+                modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                transformation = SurfaceTransformation(transformationSpec),
                 checked = preferences.value.isMilitaryTime,
-                icon = {},
                 onCheckedChange = {
                     viewModel.setMilitaryTime(it,context)
+                },
+                label = { Text(stringResource(id = R.string.time_ampm_setting_title)) },
+                secondaryLabel = {
+                    if (preferences.value.isMilitaryTime) {
+                        Text(text = stringResource(id = R.string.time_ampm_setting_on), color = Color.LightGray)
+                    } else
+                        Text(text = stringResource(id = R.string.time_ampm_setting_off), color = Color.LightGray)
                 }
             )
         }
 
-        item { PreferenceCategory(title = stringResource(id = R.string.sunrise_sunset_countdown_comp_name)) }
+        item { PreferenceCategory(
+            modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+            transformationSpec = SurfaceTransformation(transformationSpec),
+            title = stringResource(id = R.string.sunrise_sunset_countdown_comp_name)
+        )}
         item {
             Card(
-                modifier = Modifier
-                    .fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                transformation = SurfaceTransformation(transformationSpec),
                 onClick = {
                     timeDiffs = timeDiffs.not()
                 },
@@ -338,7 +391,7 @@ fun ComplicationsSuiteScreen(
                 ) {
                     Column {
                         Text(stringResource(id = R.string.countdown_style), color = Color(0xFFF1F1F1))
-                        Text(preferences.value.timeDiffStyle, color =  wearColorPalette.primary, fontSize = 12.sp)
+                        Text(preferences.value.timeDiffStyle, color =  appColorScheme.primary, fontSize = 12.sp)
                         Text(
                             when (preferences.value.timeDiffStyle) {
                                 "SHORT_DUAL_UNIT" -> "${stringResource(id = R.string.e_g_)} 5h 45m"
@@ -351,24 +404,39 @@ fun ComplicationsSuiteScreen(
         }
 
         // WEEK OF YEAR COMPLICATION PREFERENCE CATEGORY
-        item { PreferenceCategory(title = stringResource(id = R.string.woy_setting_preference_category_title)) }
+        item { PreferenceCategory(
+            modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+            transformationSpec = SurfaceTransformation(transformationSpec),
+            title = stringResource(id = R.string.woy_setting_preference_category_title)
+        )}
         item {
-            ToggleChip(
-                label = stringResource(id = R.string.woy_setting_title),
-                secondaryLabelOn = stringResource(id = R.string.woy_setting_on),
-                secondaryLabelOff = stringResource(id = R.string.woy_setting_off),
+            SwitchButton(
+                modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                transformation = SurfaceTransformation(transformationSpec),
                 checked = preferences.value.isISO,
-                icon = {},
                 onCheckedChange = {
                     viewModel.setISO(it, context)
+                },
+                label = { Text(stringResource(id = R.string.woy_setting_title)) },
+                secondaryLabel = {
+                    if (preferences.value.isISO) {
+                        Text(text = stringResource(id = R.string.woy_setting_on), color = Color.LightGray)
+                    } else
+                        Text(text = stringResource(id = R.string.woy_setting_off), color = Color.LightGray)
                 }
             )
         }
 
         // DATE COMPLICATION PREFERENCE CATEGORY
-        item { PreferenceCategory(title = stringResource(id = R.string.date_setting_preference_category_title)) }
+        item { PreferenceCategory(
+            modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+            transformationSpec = SurfaceTransformation(transformationSpec),
+            title = stringResource(id = R.string.date_setting_preference_category_title)
+        )}
         item {
             DialogChip(
+                modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                transformation = SurfaceTransformation(transformationSpec),
                 text = stringResource(id = R.string.date_long_text_format),
                 icon = {},
                 title = preferences.value.longText,
@@ -379,6 +447,8 @@ fun ComplicationsSuiteScreen(
         }
         item {
             DialogChip(
+                modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                transformation = SurfaceTransformation(transformationSpec),
                 text = stringResource(id = R.string.date_long_title_format),
                 icon = {},
                 title = preferences.value.longTitle,
@@ -389,6 +459,8 @@ fun ComplicationsSuiteScreen(
         }
         item {
             DialogChip(
+                modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                transformation = SurfaceTransformation(transformationSpec),
                 text = stringResource(id = R.string.date_short_text_format),
                 icon = {},
                 title = preferences.value.shortText,
@@ -399,6 +471,8 @@ fun ComplicationsSuiteScreen(
         }
         item {
             DialogChip(
+                modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                transformation = SurfaceTransformation(transformationSpec),
                 text = stringResource(id = R.string.date_short_title_format),
                 icon = {},
                 title = preferences.value.shortTitle,
@@ -408,46 +482,48 @@ fun ComplicationsSuiteScreen(
             )
         }
         item {
-            androidx.wear.compose.material.ToggleChip(
-                modifier = Modifier.fillMaxWidth(),
+            CheckboxButton(
+                modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                transformation = SurfaceTransformation(transformationSpec),
                 checked = preferences.value.dateShowIcon,
-                colors = ToggleChipDefaults.toggleChipColors(
-                    checkedEndBackgroundColor = wearColorPalette.primaryVariant,
-                    checkedToggleControlColor = Color(0xFFBFE7FF),
-                ),
-                onCheckedChange = { checked ->
-                    viewModel.setDateShowIcon(context, checked)
+                onCheckedChange = {
+                    viewModel.setDateShowIcon(context, it)
                 },
-                appIcon = { Icon(painterResource(R.drawable.ic_calendar_today),
-                contentDescription = "Calendar Today",
-                tint = wearColorPalette.secondary)
-             },
                 label = { Text(stringResource(id = R.string.date_show_icon)) },
-                toggleControl = {
-                    Icon(
-                        imageVector = ToggleChipDefaults.checkboxIcon(preferences.value.dateShowIcon),
-                        contentDescription = stringResource(id = R.string.compose_toggle)
-                    )
+                icon = { Icon(painterResource(R.drawable.ic_calendar_today),
+                    contentDescription = "Calendar Today",
+                    tint = appColorScheme.secondary)
                 }
             )
         }
         /** Jalali / Hijri IntentOpen Toggle **/
         item {
-            ToggleChip(
-                label = stringResource(id = R.string.date_comp_jalali_hijri_settings),
-                secondaryLabelOn = stringResource(id = R.string.persian_date_complications),
-                secondaryLabelOff = stringResource(id = R.string.persian_date_complications),
+            SwitchButton(
+                modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                transformation = SurfaceTransformation(transformationSpec),
                 checked = preferences.value.jalaliHijriDateComplications,
-                icon = {},
                 onCheckedChange = {
                     viewModel.setJalaliHijriComplicationsState(context, it)
+                },
+                label = { Text(stringResource(id = R.string.date_comp_jalali_hijri_settings)) },
+                secondaryLabel = {
+                    if (preferences.value.jalaliHijriDateComplications) {
+                        Text(text = stringResource(id = R.string.persian_date_complications), color = Color.LightGray)
+                    } else
+                        Text(text = stringResource(id = R.string.persian_date_complications), color = Color.LightGray)
                 }
             )
         }
 
-        item { PreferenceCategory(title = stringResource(id = R.string.custom_text_comp_name_category)) }
+        item { PreferenceCategory(
+            modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+            transformationSpec = SurfaceTransformation(transformationSpec),
+            title = stringResource(id = R.string.custom_text_comp_name_category)
+        )}
         item {
             ChipWithEditText(
+                modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                transformationSpec = SurfaceTransformation(transformationSpec),
             row1 = stringResource(id = R.string.custom_text_p1),
             row2 = preferences.value.customText,
             viewModel = viewModel,
@@ -458,6 +534,8 @@ fun ComplicationsSuiteScreen(
         ) }
         item {
             ChipWithEditText(
+                modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                transformationSpec = SurfaceTransformation(transformationSpec),
             row1 = stringResource(id = R.string.custom_title_p1),
             row2 = preferences.value.customTitle,
             viewModel = viewModel,
@@ -468,30 +546,45 @@ fun ComplicationsSuiteScreen(
             focusManager = focusManager
         ) }
 
-        item { PreferenceCategory(title = stringResource(id = R.string.barometer_category)) }
+        item { PreferenceCategory(
+            modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+            transformationSpec = SurfaceTransformation(transformationSpec),
+            title = stringResource(id = R.string.barometer_category)
+        )}
         item {
-            ToggleChip(
-                label = stringResource(id = R.string.barometer_use_hpa),
-                secondaryLabelOn = stringResource(id = R.string.barometer_hpa),
-                secondaryLabelOff = stringResource(id = R.string.barometer_inHg),
+            SwitchButton(
+                modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                transformation = SurfaceTransformation(transformationSpec),
                 checked = preferences.value.pressureHPA,
-                icon = {},
                 onCheckedChange = {
                     viewModel.setBarometerHPA(it, context)
+                },
+                label = { Text(stringResource(id = R.string.barometer_use_hpa)) },
+                secondaryLabel = {
+                    if (preferences.value.pressureHPA) {
+                        Text(text = stringResource(id = R.string.barometer_hpa), color = Color.LightGray)
+                    } else
+                        Text(text = stringResource(id = R.string.barometer_inHg), color = Color.LightGray)
                 }
             )
         }
 
-        item { PreferenceCategory(title = stringResource(R.string.crypto_complications)) }
+        item { PreferenceCategory(
+            modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+            transformationSpec = SurfaceTransformation(transformationSpec),
+            title = stringResource(R.string.crypto_complications)
+        )}
         item {
             DialogChip(
+                modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                transformation = SurfaceTransformation(transformationSpec),
                 text = stringResource(R.string.counter_currency),
                 icon = { Icon(imageVector =
                 when (preferences.value.counterCurrency){
                     CounterCurrency.USD -> Icons.Outlined.AttachMoney
                     CounterCurrency.EUR -> Icons.Outlined.Euro
                     else -> Icons.Outlined.AttachMoney
-                }, contentDescription = "Counter Currency Icon", tint = wearColorPalette.secondary)},
+                }, contentDescription = "Counter Currency Icon", tint = appColorScheme.secondary)},
                 title = preferences.value.counterCurrency.name,
                 onClick = {
                     changeCryptoCounterCurrency = changeCryptoCounterCurrency.not()
@@ -500,9 +593,15 @@ fun ComplicationsSuiteScreen(
         }
 
         // APP INFO SECTION
-        item { PreferenceCategory(title = stringResource(id = R.string.app_info)) }
+        item { PreferenceCategory(
+            modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+            transformationSpec = SurfaceTransformation(transformationSpec),
+            title = stringResource(id = R.string.app_info)
+        )}
         item {
             DialogChip(
+                modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                transformation = SurfaceTransformation(transformationSpec),
                 text = stringResource(id = R.string.language),
                 icon = {},
                 title = currentLocale,
@@ -513,8 +612,10 @@ fun ComplicationsSuiteScreen(
         }
         item {
             DialogChip(
+                modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                transformation = SurfaceTransformation(transformationSpec),
                 text = stringResource(id = R.string.version),
-                icon = { Icon(imageVector = Icons.Outlined.Info, contentDescription = "Play Store Icon", tint = wearColorPalette.secondary)},
+                icon = { Icon(imageVector = Icons.Outlined.Info, contentDescription = "Play Store Icon", tint = appColorScheme.secondary)},
                 title = BuildConfig.VERSION_NAME,
                 onClick = {context.openPlayStore()}
             )

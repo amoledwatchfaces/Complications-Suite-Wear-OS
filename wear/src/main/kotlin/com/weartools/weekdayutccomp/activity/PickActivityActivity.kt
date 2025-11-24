@@ -86,7 +86,7 @@ import com.weartools.weekdayutccomp.presentation.ui.IconsViewModelImp
 import com.weartools.weekdayutccomp.presentation.ui.ImageUtil
 import com.weartools.weekdayutccomp.presentation.ui.LoaderBox
 import com.weartools.weekdayutccomp.presentation.ui.PreferenceCategory
-import com.weartools.weekdayutccomp.theme.wearColorPalette
+import com.weartools.weekdayutccomp.theme.appColorScheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -184,7 +184,7 @@ fun PickActivityTheme(
                             Icon(
                                 imageVector = ImageUtil.createImageVector(preferences.value.activityIconId)?: Icons.AutoMirrored.Filled.OpenInNew,
                                 contentDescription = "Remove",
-                                tint = wearColorPalette.secondaryVariant) },
+                                tint = appColorScheme.primary) },
                         label = {
                             Text(
                                 text = stringResource(R.string.activity_set_icon),
@@ -213,7 +213,7 @@ fun PickActivityTheme(
                             Text(
                                 text = preferences.value.activityClassName.split(".").last(),
                                 maxLines = 1,
-                                color = wearColorPalette.secondaryVariant,
+                                color = appColorScheme.primary,
                                 overflow = TextOverflow.Ellipsis
                             )
                         }

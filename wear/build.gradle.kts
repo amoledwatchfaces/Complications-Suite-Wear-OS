@@ -76,8 +76,38 @@ android {
 }
 
 dependencies {
+    val composeBom = platform ("androidx.compose:compose-bom:2025.08.00")
+
+    // Wear OS
+    implementation ("com.google.android.gms:play-services-wearable:19.0.0")
+    implementation ("androidx.wear.watchface:watchface-complications-data-source-ktx:1.2.1")
+    implementation ("androidx.wear:wear:1.3.0")
+
+    // General compose dependencies
+    implementation (composeBom)
+    implementation ("androidx.activity:activity-compose:1.12.0")
+    implementation ("androidx.compose.ui:ui:1.9.5")
+    implementation ("androidx.compose.ui:ui-tooling-preview:1.9.5")
+    implementation ("androidx.compose.material:material-icons-extended:1.7.8")
+
+    // Compose for Wear OS dependencies
+    implementation ("androidx.core:core-ktx:1.17.0")
+    implementation ("androidx.wear.compose:compose-material3:1.6.0-alpha05")
+    //implementation ("androidx.wear.compose:compose-material:1.5.5")
+    implementation ("androidx.wear.compose:compose-navigation:1.5.5")
+
+    // Mobile
+    implementation("androidx.compose.material3:material3:1.4.0")
+
+    // Foundation is additive, so you can use the mobile version in your Wear OS app.
+    implementation ("androidx.wear.compose:compose-foundation:1.5.5")
+
+    // Wear OS preview annotations
+    implementation ("androidx.wear.compose:compose-ui-tooling:1.5.5")
+
     // Permissions
     implementation ("com.google.accompanist:accompanist-permissions:0.37.3")
+
     // Location
     implementation ("com.google.android.gms:play-services-location:21.3.0")
 
@@ -87,20 +117,7 @@ dependencies {
     // Moon Phase Helper
     implementation ("org.shredzone.commons:commons-suncalc:3.11")
 
-    // Wear OS
-    implementation ("com.google.android.gms:play-services-wearable:19.0.0")
-    implementation ("androidx.wear.watchface:watchface-complications-data-source-ktx:1.2.1")
-    implementation ("androidx.wear:wear:1.3.0")
-
-    // Compose
-    implementation ("androidx.core:core-ktx:1.17.0")
-    implementation ("androidx.compose.ui:ui:1.9.5")
-    implementation ("androidx.wear.compose:compose-material:1.5.5")
-    implementation ("androidx.wear.compose:compose-foundation:1.5.5")
-    implementation ("androidx.compose.ui:ui-tooling-preview:1.9.5")
-    implementation ("androidx.activity:activity-compose:1.12.0")
-    implementation ("androidx.compose.material:material-icons-extended:1.7.8")
-
+    // Testing
     androidTestImplementation ("androidx.compose.ui:ui-test-junit4:1.9.5")
     debugImplementation ("androidx.compose.ui:ui-tooling:1.9.5")
     debugImplementation ("androidx.compose.ui:ui-test-manifest:1.9.5")
@@ -134,9 +151,6 @@ dependencies {
 
     // Google Places
     implementation ("com.google.android.libraries.places:places:5.1.1")
-
-    // Material 3
-    implementation("androidx.compose.material3:material3:1.4.0")
 
     // Firebase
     implementation (platform("com.google.firebase:firebase-bom:34.6.0"))
