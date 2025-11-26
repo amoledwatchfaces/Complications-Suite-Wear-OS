@@ -595,8 +595,6 @@ fun ComplicationsSuiteScreen(
             title = stringResource(id = R.string.app_info)
         )}
         item {
-
-
             DialogChip(
                 modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
                 transformation = SurfaceTransformation(transformationSpec),

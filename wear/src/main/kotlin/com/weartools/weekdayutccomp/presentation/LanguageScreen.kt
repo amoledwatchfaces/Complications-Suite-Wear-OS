@@ -15,7 +15,6 @@
  */
 package com.weartools.weekdayutccomp.presentation
 
-
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.wear.compose.foundation.lazy.TransformingLazyColumn
@@ -38,6 +38,7 @@ import androidx.wear.compose.material3.lazy.TransformationSpec
 import androidx.wear.compose.material3.lazy.transformedHeight
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.weartools.weekdayutccomp.MainViewModel
+import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.presentation.ui.PreferenceCategory
 
 @OptIn(ExperimentalPermissionsApi::class)
@@ -69,7 +70,7 @@ fun LanguageScreen(
         state = scrollState,
     ){
         item {
-            PreferenceCategory(title = "Change Locale")
+            PreferenceCategory(title = stringResource(id = R.string.change_locale))
         }
         itemsIndexed(localesLongList) { index, i ->
             RadioButton(
