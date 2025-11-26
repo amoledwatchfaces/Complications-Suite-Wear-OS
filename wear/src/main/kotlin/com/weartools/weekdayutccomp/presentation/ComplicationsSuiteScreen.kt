@@ -32,6 +32,7 @@ import androidx.compose.material.icons.filled.LocationCity
 import androidx.compose.material.icons.outlined.AttachMoney
 import androidx.compose.material.icons.outlined.Euro
 import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.Language
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -78,6 +79,7 @@ import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.enums.DateFormat
 import com.weartools.weekdayutccomp.enums.MoonIconType
 import com.weartools.weekdayutccomp.enums.Request
+import com.weartools.weekdayutccomp.preferences.UserPreferences
 import com.weartools.weekdayutccomp.presentation.ui.ChipWithEditText
 import com.weartools.weekdayutccomp.presentation.ui.DateFormatListPicker
 import com.weartools.weekdayutccomp.presentation.ui.DialogChip
@@ -101,10 +103,11 @@ fun ComplicationsSuiteScreen(
     transformationSpec: TransformationSpec,
     focusRequester: FocusRequester,
     viewModel: MainViewModel,
-    open: Request
+    open: Request,
+    currentLocale: String,
+    preferences: UserPreferences,
 ) {
     val context = LocalContext.current
-    val preferences = viewModel.preferences.collectAsState()
     val loaderState by viewModel.loaderStateStateFlow.collectAsState()
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
@@ -115,8 +118,6 @@ fun ComplicationsSuiteScreen(
     val listLongFormat = stringArrayResource(id = R.array.longformats).toList()
     val listShortFormat = stringArrayResource(id = R.array.shortformats).toList()
     val listTimeDiffStyles = stringArrayResource(id = R.array.timediffstyle).toList()
-    val localesShortList = stringArrayResource(id = R.array.locales_short).toList()
-    val localesLongList = stringArrayResource(id = R.array.locales_long).toList()
 
     val permissionStateNotifications = rememberPermissionState(permission = "android.permission.POST_NOTIFICATIONS")
     val permissionState = rememberPermissionState(
@@ -138,10 +139,6 @@ fun ComplicationsSuiteScreen(
     val moonIconTypeList = listOf(MoonIconType.SIMPLE,MoonIconType.DEFAULT,MoonIconType.TRANSPARENT)
     val moonIconTypeStringList = stringArrayResource(id = R.array.iconTypesArray).toList()
 
-    /** LOCALE **/
-    val index = localesShortList.indexOf(preferences.value.locale)
-    val currentLocale = if (index != -1) localesLongList[index] else "English"
-
 
     /** ONCLICK OPENERS **/
     var longTextFormat by remember { mutableStateOf(false) }
@@ -151,7 +148,6 @@ fun ComplicationsSuiteScreen(
     var isTImeZOnClick by remember { mutableStateOf(false) }
     var isTImeZOnClick2 by remember { mutableStateOf(false) }
     var timeDiffs by remember { mutableStateOf(false) }
-    var openLocale by remember{ mutableStateOf(false) }
     var moonIconChange by remember{ mutableStateOf(false) }
     var openLocationChoose by remember{ mutableStateOf(false) }
     var changeCryptoCounterCurrency by remember{ mutableStateOf(false) }
@@ -169,7 +165,7 @@ fun ComplicationsSuiteScreen(
     }
 
     TransformingLazyColumn(
-        contentPadding = PaddingValues(top = 25.dp, bottom = 65.dp, start = 12.dp, end = 12.dp),
+        contentPadding = PaddingValues(top = 50.dp, bottom = 65.dp, start = 12.dp, end = 12.dp),
         modifier = Modifier
             .fillMaxSize()
             .rotaryScrollable(
@@ -203,7 +199,7 @@ fun ComplicationsSuiteScreen(
                 modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
                 transformation = SurfaceTransformation(transformationSpec),
                 text = stringResource(id = R.string.wc_comp_name_1),
-                title = "${preferences.value.worldClock1.cityName} (${preferences.value.worldClock1.cityId})",
+                title = "${preferences.worldClock1.cityName} (${preferences.worldClock1.cityId})",
                 icon = {},
                 onClick = {
                     isTImeZOnClick = isTImeZOnClick.not()
@@ -217,7 +213,7 @@ fun ComplicationsSuiteScreen(
                 transformation = SurfaceTransformation(transformationSpec),
                 text = stringResource(id = R.string.wc_comp_name_2),
                 icon = {},
-                title = "${preferences.value.worldClock2.cityName} (${preferences.value.worldClock2.cityId})",
+                title = "${preferences.worldClock2.cityName} (${preferences.worldClock2.cityId})",
                 onClick = {
                     isTImeZOnClick2 = isTImeZOnClick2.not()
                 }
@@ -227,11 +223,11 @@ fun ComplicationsSuiteScreen(
             SwitchButton(
                 modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
                 transformation = SurfaceTransformation(transformationSpec),
-                checked = preferences.value.isLeadingZero,
+                checked = preferences.isLeadingZero,
                 onCheckedChange = {viewModel.setLeadingZero(it, context)},
                 label = { Text(stringResource(id = R.string.wc_setting_leading_zero_title)) },
                 secondaryLabel = {
-                    if (preferences.value.isLeadingZero) {
+                    if (preferences.isLeadingZero) {
                         Text(text = stringResource(id = R.string.wc_setting_leading_zero_summary_on), color = Color.LightGray)
                     } else
                         Text(text = stringResource(id = R.string.wc_setting_leading_zero_summary_off), color = Color.LightGray)
@@ -242,13 +238,13 @@ fun ComplicationsSuiteScreen(
             SwitchButton(
                 modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
                 transformation = SurfaceTransformation(transformationSpec),
-                checked = preferences.value.isMilitary,
+                checked = preferences.isMilitary,
                 onCheckedChange = {
                     viewModel.setMilitary(it,context)
                                   },
                 label = { Text(stringResource(id = R.string.wc_ampm_setting_title)) },
                 secondaryLabel = {
-                    if (preferences.value.isMilitary) {
+                    if (preferences.isMilitary) {
                         Text(text = stringResource(id = R.string.time_ampm_setting_on), color = Color.LightGray)
                     } else
                         Text(text = stringResource(id = R.string.time_ampm_setting_off), color = Color.LightGray)
@@ -269,7 +265,7 @@ fun ComplicationsSuiteScreen(
                 transformation = SurfaceTransformation(transformationSpec),
                 text = stringResource(id = R.string.moon_setting_simple_icon_title),
                 icon = {
-                    if (preferences.value.moonIconType == MoonIconType.SIMPLE) Icon(
+                    if (preferences.moonIconType == MoonIconType.SIMPLE) Icon(
                         painter = painterResource(id = R.drawable.ic_settings_moon_simple),
                         contentDescription = "Simple Moon Icon"
                     )
@@ -279,26 +275,26 @@ fun ComplicationsSuiteScreen(
                         tint = Color.Unspecified
                     )
                 },
-                title = moonIconTypeStringList[moonIconTypeList.indexOf(preferences.value.moonIconType)],
+                title = moonIconTypeStringList[moonIconTypeList.indexOf(preferences.moonIconType)],
                 onClick = {
                     moonIconChange = moonIconChange.not()
                 }
             )
         }
 
-        if (preferences.value.moonIconType == MoonIconType.SIMPLE || preferences.value.coarsePermission.not())
+        if (preferences.moonIconType == MoonIconType.SIMPLE || preferences.coarsePermission.not())
         {
             item {
                 SwitchButton(
                     modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
                     transformation = SurfaceTransformation(transformationSpec),
-                    checked = preferences.value.isHemisphere,
+                    checked = preferences.isHemisphere,
                     onCheckedChange = {
                         viewModel.setHemisphere(it, context)
                     },
                     label = { Text(stringResource(id = R.string.moon_setting_hemi_title)) },
                     secondaryLabel = {
-                        if (preferences.value.isHemisphere) {
+                        if (preferences.isHemisphere) {
                             Text(text = stringResource(id = R.string.moon_setting_hemi_on), color = Color.LightGray)
                         } else
                             Text(text = stringResource(id = R.string.moon_setting_hemi_off), color = Color.LightGray)
@@ -314,7 +310,7 @@ fun ComplicationsSuiteScreen(
                 enabled = true,
                 time = {
                     Icon(
-                        imageVector = if (preferences.value.locationName == "No location set") Icons.Default.AddLocation else Icons.Default.EditLocation,
+                        imageVector = if (preferences.locationName == "No location set") Icons.Default.AddLocation else Icons.Default.EditLocation,
                         contentDescription = "Refresh Icon",
                         tint = appColorScheme.secondary,
                     )},
@@ -323,7 +319,7 @@ fun ComplicationsSuiteScreen(
                     contentDescription = "Refresh Icon",
                     tint = appColorScheme.secondary,
                 )},
-                title = {Text(text = preferences.value.locationName, color =  appColorScheme.primary, fontSize = 12.sp)},
+                title = {Text(text = preferences.locationName, color =  appColorScheme.primary, fontSize = 12.sp)},
                 appName = {Text(stringResource(id = R.string.location), color = Color(0xFFF1F1F1))},
                 onClick = {
                     openLocationChoose = openLocationChoose.not()
@@ -341,13 +337,13 @@ fun ComplicationsSuiteScreen(
             SwitchButton(
                 modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
                 transformation = SurfaceTransformation(transformationSpec),
-                checked = preferences.value.isLeadingZeroTime,
+                checked = preferences.isLeadingZeroTime,
                 onCheckedChange = {
                     viewModel.setLeadingZeroTime(it,context)
                 },
                 label = { Text(stringResource(id = R.string.time_setting_leading_zero_title)) },
                 secondaryLabel = {
-                    if (preferences.value.isLeadingZeroTime) {
+                    if (preferences.isLeadingZeroTime) {
                         Text(text = stringResource(id = R.string.time_setting_leading_zero_summary_on), color = Color.LightGray)
                     } else
                         Text(text = stringResource(id = R.string.time_setting_leading_zero_summary_off), color = Color.LightGray)
@@ -358,13 +354,13 @@ fun ComplicationsSuiteScreen(
             SwitchButton(
                 modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
                 transformation = SurfaceTransformation(transformationSpec),
-                checked = preferences.value.isMilitaryTime,
+                checked = preferences.isMilitaryTime,
                 onCheckedChange = {
                     viewModel.setMilitaryTime(it,context)
                 },
                 label = { Text(stringResource(id = R.string.time_ampm_setting_title)) },
                 secondaryLabel = {
-                    if (preferences.value.isMilitaryTime) {
+                    if (preferences.isMilitaryTime) {
                         Text(text = stringResource(id = R.string.time_ampm_setting_on), color = Color.LightGray)
                     } else
                         Text(text = stringResource(id = R.string.time_ampm_setting_off), color = Color.LightGray)
@@ -391,9 +387,9 @@ fun ComplicationsSuiteScreen(
                 ) {
                     Column {
                         Text(stringResource(id = R.string.countdown_style), color = Color(0xFFF1F1F1))
-                        Text(preferences.value.timeDiffStyle, color =  appColorScheme.primary, fontSize = 12.sp)
+                        Text(preferences.timeDiffStyle, color =  appColorScheme.primary, fontSize = 12.sp)
                         Text(
-                            when (preferences.value.timeDiffStyle) {
+                            when (preferences.timeDiffStyle) {
                                 "SHORT_DUAL_UNIT" -> "${stringResource(id = R.string.e_g_)} 5h 45m"
                                 "SHORT_SINGLE_UNIT" -> "${stringResource(id = R.string.e_g_)} 6h"
                                 else -> "${stringResource(id = R.string.e_g_)} 5:45"
@@ -413,13 +409,13 @@ fun ComplicationsSuiteScreen(
             SwitchButton(
                 modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
                 transformation = SurfaceTransformation(transformationSpec),
-                checked = preferences.value.isISO,
+                checked = preferences.isISO,
                 onCheckedChange = {
                     viewModel.setISO(it, context)
                 },
                 label = { Text(stringResource(id = R.string.woy_setting_title)) },
                 secondaryLabel = {
-                    if (preferences.value.isISO) {
+                    if (preferences.isISO) {
                         Text(text = stringResource(id = R.string.woy_setting_on), color = Color.LightGray)
                     } else
                         Text(text = stringResource(id = R.string.woy_setting_off), color = Color.LightGray)
@@ -439,7 +435,7 @@ fun ComplicationsSuiteScreen(
                 transformation = SurfaceTransformation(transformationSpec),
                 text = stringResource(id = R.string.date_long_text_format),
                 icon = {},
-                title = preferences.value.longText,
+                title = preferences.longText,
                 onClick = {
                     longTextFormat = longTextFormat.not()
                 }
@@ -451,7 +447,7 @@ fun ComplicationsSuiteScreen(
                 transformation = SurfaceTransformation(transformationSpec),
                 text = stringResource(id = R.string.date_long_title_format),
                 icon = {},
-                title = preferences.value.longTitle,
+                title = preferences.longTitle,
                 onClick = {
                     longTitleFormat = longTitleFormat.not()
                 }
@@ -463,7 +459,7 @@ fun ComplicationsSuiteScreen(
                 transformation = SurfaceTransformation(transformationSpec),
                 text = stringResource(id = R.string.date_short_text_format),
                 icon = {},
-                title = preferences.value.shortText,
+                title = preferences.shortText,
                 onClick = {
                     shortTextFormat = shortTextFormat.not()
                 }
@@ -475,7 +471,7 @@ fun ComplicationsSuiteScreen(
                 transformation = SurfaceTransformation(transformationSpec),
                 text = stringResource(id = R.string.date_short_title_format),
                 icon = {},
-                title = preferences.value.shortTitle,
+                title = preferences.shortTitle,
                 onClick = {
                     shortTitleFormat = shortTitleFormat.not()
                 }
@@ -485,7 +481,7 @@ fun ComplicationsSuiteScreen(
             CheckboxButton(
                 modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
                 transformation = SurfaceTransformation(transformationSpec),
-                checked = preferences.value.dateShowIcon,
+                checked = preferences.dateShowIcon,
                 onCheckedChange = {
                     viewModel.setDateShowIcon(context, it)
                 },
@@ -501,13 +497,13 @@ fun ComplicationsSuiteScreen(
             SwitchButton(
                 modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
                 transformation = SurfaceTransformation(transformationSpec),
-                checked = preferences.value.jalaliHijriDateComplications,
+                checked = preferences.jalaliHijriDateComplications,
                 onCheckedChange = {
                     viewModel.setJalaliHijriComplicationsState(context, it)
                 },
                 label = { Text(stringResource(id = R.string.date_comp_jalali_hijri_settings)) },
                 secondaryLabel = {
-                    if (preferences.value.jalaliHijriDateComplications) {
+                    if (preferences.jalaliHijriDateComplications) {
                         Text(text = stringResource(id = R.string.persian_date_complications), color = Color.LightGray)
                     } else
                         Text(text = stringResource(id = R.string.persian_date_complications), color = Color.LightGray)
@@ -525,7 +521,7 @@ fun ComplicationsSuiteScreen(
                 modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
                 transformationSpec = SurfaceTransformation(transformationSpec),
             row1 = stringResource(id = R.string.custom_text_p1),
-            row2 = preferences.value.customText,
+            row2 = preferences.customText,
             viewModel = viewModel,
             context = context,
             isText = true,
@@ -537,7 +533,7 @@ fun ComplicationsSuiteScreen(
                 modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
                 transformationSpec = SurfaceTransformation(transformationSpec),
             row1 = stringResource(id = R.string.custom_title_p1),
-            row2 = preferences.value.customTitle,
+            row2 = preferences.customTitle,
             viewModel = viewModel,
             context = context,
             isText = false,
@@ -555,13 +551,13 @@ fun ComplicationsSuiteScreen(
             SwitchButton(
                 modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
                 transformation = SurfaceTransformation(transformationSpec),
-                checked = preferences.value.pressureHPA,
+                checked = preferences.pressureHPA,
                 onCheckedChange = {
                     viewModel.setBarometerHPA(it, context)
                 },
                 label = { Text(stringResource(id = R.string.barometer_use_hpa)) },
                 secondaryLabel = {
-                    if (preferences.value.pressureHPA) {
+                    if (preferences.pressureHPA) {
                         Text(text = stringResource(id = R.string.barometer_hpa), color = Color.LightGray)
                     } else
                         Text(text = stringResource(id = R.string.barometer_inHg), color = Color.LightGray)
@@ -580,34 +576,34 @@ fun ComplicationsSuiteScreen(
                 transformation = SurfaceTransformation(transformationSpec),
                 text = stringResource(R.string.counter_currency),
                 icon = { Icon(imageVector =
-                when (preferences.value.counterCurrency){
+                when (preferences.counterCurrency){
                     CounterCurrency.USD -> Icons.Outlined.AttachMoney
                     CounterCurrency.EUR -> Icons.Outlined.Euro
                     else -> Icons.Outlined.AttachMoney
                 }, contentDescription = "Counter Currency Icon", tint = appColorScheme.secondary)},
-                title = preferences.value.counterCurrency.name,
+                title = preferences.counterCurrency.name,
                 onClick = {
                     changeCryptoCounterCurrency = changeCryptoCounterCurrency.not()
                 }
             )
         }
 
-        // APP INFO SECTION
+        // About
         item { PreferenceCategory(
             modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
             transformationSpec = SurfaceTransformation(transformationSpec),
             title = stringResource(id = R.string.app_info)
         )}
         item {
+
+
             DialogChip(
                 modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
                 transformation = SurfaceTransformation(transformationSpec),
                 text = stringResource(id = R.string.language),
-                icon = {},
+                icon = { Icon(imageVector = Icons.Outlined.Language, contentDescription = "Play Store Icon", tint = appColorScheme.secondary)},
                 title = currentLocale,
-                onClick = {
-                   openLocale=openLocale.not()
-                }
+                onClick = { navController.navigate("language_screen")}
             )
         }
         item {
@@ -620,7 +616,6 @@ fun ComplicationsSuiteScreen(
                 onClick = {context.openPlayStore()}
             )
         }
-
         item {
             SectionText(
                 text = "amoledwatchfaces.com",
@@ -629,8 +624,6 @@ fun ComplicationsSuiteScreen(
                     .padding(top = 12.dp, start = 20.dp, end = 20.dp),
             )
         }
-
-
     }
 
     if (loaderState) {
@@ -656,10 +649,10 @@ fun ComplicationsSuiteScreen(
 
     if (longTextFormat || longTitleFormat|| shortTextFormat || shortTitleFormat) {
 
-        val prValue = if (longTextFormat) preferences.value.longText
-        else if (longTitleFormat) preferences.value.longTitle
-        else if (shortTextFormat) preferences.value.shortText
-        else preferences.value.shortTitle
+        val prValue = if (longTextFormat) preferences.longText
+        else if (longTitleFormat) preferences.longTitle
+        else if (shortTextFormat) preferences.shortText
+        else preferences.shortTitle
 
         DateFormatListPicker(
             dateFormat = if (longTextFormat) { DateFormat.LONG_TEXT_FORMAT }
@@ -685,31 +678,12 @@ fun ComplicationsSuiteScreen(
             })
     }
 
-    if (openLocale){
-        ListItemsWidget(
-            focusRequester = focusRequester,
-            titles = "Change Locale",
-            items = localesLongList,
-            preValue = currentLocale ,
-            callback ={
-            if (it == -1) {
-                openLocale = false
-                return@ListItemsWidget
-            }
-            else {
-                viewModel.changeLocale(localesShortList[it], context)
-                openLocale = openLocale.not()
-            }
-        } )
-
-    }
-
     if (moonIconChange){
         ListItemsWidget(
             focusRequester = focusRequester,
             titles = stringResource(id = R.string.icon_type),
             items = moonIconTypeStringList,
-            preValue = moonIconTypeStringList[moonIconTypeList.indexOf(preferences.value.moonIconType)],
+            preValue = moonIconTypeStringList[moonIconTypeList.indexOf(preferences.moonIconType)],
             callback ={
                 if (it == -1) {
                     moonIconChange=false
@@ -744,7 +718,7 @@ fun ComplicationsSuiteScreen(
             focusRequester = focusRequester,
             titles = stringResource(id = R.string.countdown_style_style),
             items = listTimeDiffStyles,
-            preValue = preferences.value.timeDiffStyle,
+            preValue = preferences.timeDiffStyle,
             callback ={
             if (it == -1) {
                 timeDiffs = false
@@ -761,7 +735,7 @@ fun ComplicationsSuiteScreen(
             focusRequester = focusRequester,
             titles = "Counter Currency",
             items = listOf("USD","EUR"),
-            preValue = preferences.value.counterCurrency.name,
+            preValue = preferences.counterCurrency.name,
             callback ={
                 if (it == -1) {
                     changeCryptoCounterCurrency=false
@@ -777,7 +751,7 @@ fun ComplicationsSuiteScreen(
         )
     }
 
-    if (Build.VERSION.SDK_INT > 32 && !preferences.value.notificationAsked) {
+    if (Build.VERSION.SDK_INT > 32 && !preferences.notificationAsked) {
         PermissionAskDialog(
             focusRequester = focusRequester,
             viewModel = viewModel,

@@ -8,7 +8,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -46,7 +45,7 @@ fun WorldClockWidget(
     viewModel: MainViewModel,
     focusRequester: FocusRequester,
     worldClock1: Boolean,
-    preferences: State<UserPreferences>,
+    preferences: UserPreferences,
     callback: (Int) -> Unit,
     context: Context
 ) {
@@ -112,7 +111,7 @@ fun WorldClockWidget(
 
     if (regionOpen){
         val title = regions[regionIndex]
-        val selectedCityName = if (worldClock1) preferences.value.worldClock1.cityName else preferences.value.worldClock2.cityName
+        val selectedCityName = if (worldClock1) preferences.worldClock1.cityName else preferences.worldClock2.cityName
         val worldClocks = when (regionIndex){
             0 -> { WorldClockLists.africa }
             1 -> { WorldClockLists.asia }
