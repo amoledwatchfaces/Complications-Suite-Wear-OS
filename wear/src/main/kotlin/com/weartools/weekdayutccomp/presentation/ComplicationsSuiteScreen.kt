@@ -206,7 +206,6 @@ fun ComplicationsSuiteScreen(
                 },
             )
         }
-
         item {
             DialogChip(
                 modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
@@ -628,7 +627,6 @@ fun ComplicationsSuiteScreen(
         LoaderBox()
     }
 
-
     if (isTImeZOnClick || isTImeZOnClick2) {
 
         WorldClockWidget(
@@ -728,6 +726,7 @@ fun ComplicationsSuiteScreen(
         } )
 
     }
+
     if (changeCryptoCounterCurrency){
         ListItemsWidget(
             focusRequester = focusRequester,
