@@ -1,7 +1,5 @@
 package com.weartools.weekdayutccomp.presentation.ui
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -25,19 +23,19 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.wear.compose.material.Button
-import androidx.wear.compose.material.ButtonDefaults
-import androidx.wear.compose.material.Icon
-import androidx.wear.compose.material.OutlinedButton
-import androidx.wear.compose.material.Text
-import androidx.wear.compose.material.dialog.Alert
-import androidx.wear.compose.material.dialog.Dialog
+import androidx.wear.compose.foundation.lazy.ScalingLazyListItemScope
+import androidx.wear.compose.material3.AlertDialog
+import androidx.wear.compose.material3.Button
+import androidx.wear.compose.material3.ButtonDefaults
+import androidx.wear.compose.material3.Icon
+import androidx.wear.compose.material3.OutlinedButton
+import androidx.wear.compose.material3.Text
 import com.weartools.weekdayutccomp.theme.appColorScheme
 
 @Composable
 fun TextInputDialog(
     showDialog: Boolean,
-    title: @Composable ColumnScope.() -> Unit,
+    title: String,
     inputLabel: String = "",
     initialValue: () -> String = { "" },
     keyboardOptions: KeyboardOptions = KeyboardOptions(
@@ -46,70 +44,66 @@ fun TextInputDialog(
     onSubmit: (String) -> Unit,
     onCancel: () -> Unit = {},
     dismissDialog: () -> Unit,
-    content: @Composable (ColumnScope.() -> Unit)? = null,
+    content: @Composable (ScalingLazyListItemScope.() -> Unit)? = null,
 ) {
-    Dialog(
-        showDialog = showDialog,
+    var text by rememberSaveable { mutableStateOf(initialValue()) }
+
+    AlertDialog(
+        title = {Text(title)},
+        visible = showDialog,
         onDismissRequest = {
             onCancel()
             dismissDialog()
-        }
-    ) {
-        var text by rememberSaveable { mutableStateOf(initialValue()) }
-
-        Alert(
-            title = title,
-            positiveButton = {
-                Button(
-                    modifier = Modifier.padding(1.dp),
-                    onClick = {
-                        onSubmit(text)
-                        dismissDialog()
-                    },
-                    colors = ButtonDefaults.primaryButtonColors(
-                        backgroundColor = appColorScheme.secondary,
-                        contentColor = Color.Black
-                    )
-                ) {
-                    Icon(Icons.TwoTone.Search, "Submit")
-                }
-            },
-            negativeButton = {
-                OutlinedButton(
-                    modifier = Modifier.padding(1.dp),
-                    border = ButtonDefaults.outlinedButtonBorder(borderWidth = 1.dp, borderColor = Color.DarkGray),
-                    colors = ButtonDefaults.secondaryButtonColors(
-                        backgroundColor = Color.Black),
-                    onClick = {
+        },
+        confirmButton = {
+            Button(
+                modifier = Modifier.padding(1.dp),
+                onClick = {
+                    onSubmit(text)
+                    dismissDialog()
+                },
+                colors = ButtonDefaults.buttonColors(
+                    contentColor = Color.Black,
+                )
+            ) {
+                Icon(Icons.TwoTone.Search, "Submit")
+            }
+        },
+        dismissButton = {
+            OutlinedButton(
+                modifier = Modifier.padding(1.dp),
+                border = ButtonDefaults.outlinedButtonBorder(borderWidth = 1.dp, enabled = true),
+                colors = ButtonDefaults.outlinedButtonColors(),
+                onClick = {
                     onCancel()
                     dismissDialog()
                 }) {
-                    Icon(Icons.TwoTone.Close, "Cancel")
-                }
-            },
-        ) {
-            Column(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                content?.invoke(this)
+                Icon(Icons.TwoTone.Close, "Cancel")
+            }
+        }
+    ){
+        item {
+            content?.invoke(this)
 
-                val keyboardController = LocalSoftwareKeyboardController.current
+            val keyboardController = LocalSoftwareKeyboardController.current
 
-                OutlinedTextField(
-                    value = text,
-                    onValueChange = {
-                        text = it
-                    },
-                    label = { Text(text = inputLabel, color = appColorScheme.primary) },
-                    keyboardOptions = keyboardOptions,
-                    keyboardActions = KeyboardActions(
-                        onAny = { keyboardController?.hide() }
-                    ),
-                    singleLine = true,
-                    shape = RoundedCornerShape(TextFieldDefaults.MinHeight / 2),
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    colors = //
+            OutlinedTextField(
+                value = text,
+                onValueChange = {
+                    text = it
+                },
+                label = { Text(text = inputLabel, color = appColorScheme.primary) },
+                keyboardOptions = keyboardOptions,
+                keyboardActions = KeyboardActions(
+                    onDone = {
+                        keyboardController?.hide()
+                    }
+                ),
+                singleLine = true,
+                shape = RoundedCornerShape(TextFieldDefaults.MinHeight / 2),
+                modifier = Modifier
+                    .fillMaxWidth(),
+                colors = //
                     OutlinedTextFieldDefaults.colors(
                         unfocusedBorderColor = appColorScheme.primaryContainer.copy(alpha = 0.6f),
                         focusedBorderColor = appColorScheme.primaryContainer.copy(alpha = 1f),
@@ -119,10 +113,8 @@ fun TextInputDialog(
                             backgroundColor = appColorScheme.primary.copy(alpha = 0f),
                             handleColor = appColorScheme.primary,
                         ),
-
-                    ),
-                )
-            }
+                        ),
+            )
         }
     }
 }

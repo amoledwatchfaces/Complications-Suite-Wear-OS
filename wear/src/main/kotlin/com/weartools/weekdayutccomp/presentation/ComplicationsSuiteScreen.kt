@@ -60,7 +60,7 @@ import androidx.wear.compose.foundation.lazy.TransformingLazyColumnState
 import androidx.wear.compose.foundation.lazy.rememberTransformingLazyColumnState
 import androidx.wear.compose.foundation.rotary.RotaryScrollableDefaults
 import androidx.wear.compose.foundation.rotary.rotaryScrollable
-import androidx.wear.compose.material.Icon
+import androidx.wear.compose.material3.Icon
 import androidx.wear.compose.material3.AppCard
 import androidx.wear.compose.material3.Card
 import androidx.wear.compose.material3.CheckboxButton
@@ -251,13 +251,12 @@ fun ComplicationsSuiteScreen(
             )
         }
 
-        // MOON PHASE COMPLICATION PREFERENCE CATEGORY
+        // Moon Phase
         item { PreferenceCategory(
             modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
             transformationSpec = SurfaceTransformation(transformationSpec),
             title = stringResource(id = R.string.moon_setting_preference_category_title)
         ) }
-
         item {
             DialogChip(
                 modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
@@ -280,7 +279,6 @@ fun ComplicationsSuiteScreen(
                 }
             )
         }
-
         if (preferences.moonIconType == MoonIconType.SIMPLE || preferences.coarsePermission.not())
         {
             item {
@@ -302,6 +300,7 @@ fun ComplicationsSuiteScreen(
             }
         }
 
+        // Location
         item {
             AppCard(
                 modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
@@ -309,7 +308,7 @@ fun ComplicationsSuiteScreen(
                 enabled = true,
                 time = {
                     Icon(
-                        imageVector = if (preferences.locationName == "No location set") Icons.Default.AddLocation else Icons.Default.EditLocation,
+                        imageVector = if (preferences.locationName == stringResource(R.string.no_location_set)) Icons.Default.AddLocation else Icons.Default.EditLocation,
                         contentDescription = "Refresh Icon",
                         tint = appColorScheme.secondary,
                     )},
@@ -326,7 +325,7 @@ fun ComplicationsSuiteScreen(
             ){}
         }
 
-        // TIME COMPLICATION PREFERENCE CATEGORY
+        // Time
         item { PreferenceCategory(
             modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
             transformationSpec = SurfaceTransformation(transformationSpec),
@@ -367,6 +366,7 @@ fun ComplicationsSuiteScreen(
             )
         }
 
+        // Sunrise Sunset
         item { PreferenceCategory(
             modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
             transformationSpec = SurfaceTransformation(transformationSpec),
@@ -398,7 +398,7 @@ fun ComplicationsSuiteScreen(
             }
         }
 
-        // WEEK OF YEAR COMPLICATION PREFERENCE CATEGORY
+        // Week of Year
         item { PreferenceCategory(
             modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
             transformationSpec = SurfaceTransformation(transformationSpec),
@@ -422,7 +422,7 @@ fun ComplicationsSuiteScreen(
             )
         }
 
-        // DATE COMPLICATION PREFERENCE CATEGORY
+        // Date
         item { PreferenceCategory(
             modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
             transformationSpec = SurfaceTransformation(transformationSpec),
@@ -510,6 +510,7 @@ fun ComplicationsSuiteScreen(
             )
         }
 
+        // Custom Text
         item { PreferenceCategory(
             modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
             transformationSpec = SurfaceTransformation(transformationSpec),
@@ -541,6 +542,7 @@ fun ComplicationsSuiteScreen(
             focusManager = focusManager
         ) }
 
+        // Barometer
         item { PreferenceCategory(
             modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
             transformationSpec = SurfaceTransformation(transformationSpec),
@@ -564,6 +566,7 @@ fun ComplicationsSuiteScreen(
             )
         }
 
+        // Crypto
         item { PreferenceCategory(
             modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
             transformationSpec = SurfaceTransformation(transformationSpec),
