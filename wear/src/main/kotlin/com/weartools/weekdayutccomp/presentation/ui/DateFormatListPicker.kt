@@ -44,9 +44,9 @@ fun DateFormatListPicker(
 ) {
     val state = remember { mutableStateOf(true) }
 
-    val customFormatUsed = remember { mutableStateOf(false) }
+    val customFormatUsed = remember { mutableStateOf(items.indexOf(preValue)==-1) }
 
-    val scrollState = rememberTransformingLazyColumnState(initialAnchorItemIndex = items.indexOf(preValue)+1)
+    val scrollState = rememberTransformingLazyColumnState(initialAnchorItemIndex = 1 + if (customFormatUsed.value) items.size else items.indexOf(preValue) )
 
     val title = when (dateFormat) {
         DateFormat.LONG_TEXT_FORMAT -> stringResource(id = R.string.date_long_text_format)
@@ -83,6 +83,7 @@ fun DateFormatListPicker(
                         transformation = SurfaceTransformation(transformationSpec),
                         selected = preValue == items[index],
                         onSelect = {
+                            customFormatUsed.value = false
                             when (dateFormat) {
                                 DateFormat.SHORT_TEXT_FORMAT -> {
                                     customFormatUsed.value = false
@@ -122,6 +123,7 @@ fun DateFormatListPicker(
                         focusManager = focusManager,
                         callback = {
                             if (it != ""){
+                                customFormatUsed.value = true
                                 when (dateFormat) {
                                     DateFormat.SHORT_TEXT_FORMAT -> {
                                         viewModel.setDateFormat(DateFormat.SHORT_TEXT_FORMAT,it,context)

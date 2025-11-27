@@ -24,6 +24,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.sp
 import androidx.wear.compose.material3.Button
 import androidx.wear.compose.material3.ButtonDefaults
+import androidx.wear.compose.material3.MaterialTheme
 import androidx.wear.compose.material3.SurfaceTransformation
 import androidx.wear.compose.material3.Text
 import com.weartools.weekdayutccomp.MainViewModel
@@ -50,14 +51,20 @@ fun ChipWithEditText(
     Button(
         modifier = modifier,
         transformation = transformationSpec,
-        colors = ButtonDefaults.filledTonalButtonColors(),
+        colors = ButtonDefaults.filledTonalButtonColors(
+            containerColor = if (isCustomFormatUsed) {
+                MaterialTheme.colorScheme.primaryContainer
+            } else {
+                Color.Unspecified
+            },
+        ),
         onClick = {},
         label = { Text(row1) },
         secondaryLabel = {
             BasicTextField(
                 modifier = Modifier.fillMaxWidth(),
                 keyboardActions = KeyboardActions(
-                    onDone  = { keyboardController?.hide()
+                    onAny  = { keyboardController?.hide()
                         focusManager.moveFocus(FocusDirection.Exit)
                         if (isText){viewModel.setCustomText(text, context)}
                         if (isTitle) {viewModel.setCustomTitle(text, context)}
