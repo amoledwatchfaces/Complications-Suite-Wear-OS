@@ -198,7 +198,8 @@ class MainViewModel @Inject constructor(
     ){
 
         loaderStateMutableStateFlow.value = true
-        Places.initialize(context, BuildConfig.PLACES_API_KEY)
+
+        Places.initializeWithNewPlacesApiEnabled(context, BuildConfig.PLACES_API_KEY)
         val placesClient = Places.createClient(context)
 
         val request = FindAutocompletePredictionsRequest.builder()
@@ -223,7 +224,7 @@ class MainViewModel @Inject constructor(
 
         loaderStateMutableStateFlow.value = true
 
-        Places.initialize(context, BuildConfig.PLACES_API_KEY)
+        Places.initializeWithNewPlacesApiEnabled(context, BuildConfig.PLACES_API_KEY)
         val placesClient = Places.createClient(context)
 
         val placeId = prediction.placeId

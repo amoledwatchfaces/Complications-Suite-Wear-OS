@@ -150,7 +150,7 @@ dependencies {
     ksp ("com.google.dagger:hilt-compiler:2.57.2")
 
     // Google Places
-    implementation ("com.google.android.libraries.places:places:5.1.1")
+    implementation ("com.google.android.libraries.places:places:4.1.0") // 4.2.0 and later causing some issues, use 4.1.0!
 
     // Firebase
     implementation (platform("com.google.firebase:firebase-bom:34.6.0"))
