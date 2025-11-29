@@ -28,6 +28,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -50,6 +51,7 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
 import com.google.android.libraries.places.api.model.AutocompletePrediction
 import com.weartools.weekdayutccomp.MainViewModel
+import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.theme.appColorScheme
 import com.weartools.weekdayutccomp.utils.arePermissionsGranted
 import com.weartools.weekdayutccomp.utils.isLocationEnabled
@@ -92,11 +94,13 @@ fun LocationChooseDialog(
                 state = scrollState,
             ){
                 item {
-                    PreferenceCategory(title = "Set location")
+                    PreferenceCategory(title = stringResource(R.string.set_location))
                 }
                 item {
                     OutlinedButton(
-                        modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .transformedHeight(this, transformationSpec),
                         transformation = SurfaceTransformation(transformationSpec),
                         border = ButtonDefaults.outlinedButtonBorder(enabled = true, borderWidth = 2.dp),
                         onClick = {
@@ -104,7 +108,8 @@ fun LocationChooseDialog(
                                 showRenameDialog = true
                             } else {
                                 context.startActivity(Intent("com.google.android.clockwork.settings.connectivity.wifi.ADD_NETWORK_SETTINGS"))
-                                Toast.makeText(context, "No connection", Toast.LENGTH_LONG)
+                                Toast.makeText(context,
+                                    context.getString(R.string.no_connection), Toast.LENGTH_LONG)
                                     .show()
                             }
                         },
@@ -115,12 +120,14 @@ fun LocationChooseDialog(
                                 contentDescription = "Search"
                             )
                         },
-                        label = { Text(text = "Search") },
+                        label = { Text(text = stringResource(R.string.search)) },
                     )
                 }
                 item {
                     OutlinedButton(
-                        modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .transformedHeight(this, transformationSpec),
                         transformation = SurfaceTransformation(transformationSpec),
                         border = ButtonDefaults.outlinedButtonBorder(enabled = true, borderWidth = 2.dp),
                         onClick = {
@@ -149,14 +156,16 @@ fun LocationChooseDialog(
                                 contentDescription = "Current location"
                             )
                         },
-                        label = { Text(text = "Current (GPS)") },
+                        label = { Text(text = stringResource(R.string.current_gps)) },
                     )
                 }
             }
         }
         if (loaderState) {
             Box(
-                modifier = Modifier.fillMaxSize().background(Color.Black),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black),
                 contentAlignment = Alignment.Center
             ) {
                 Box(
@@ -180,8 +189,8 @@ fun LocationChooseDialog(
     if (showRenameDialog){
         TextInputDialog(
             showDialog = true,
-            title = "Search",
-            inputLabel = "Location",
+            title = stringResource(R.string.search),
+            inputLabel = stringResource(R.string.location),
             initialValue = { "" },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Text, imeAction = ImeAction.Done

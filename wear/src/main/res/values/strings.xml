@@ -251,4 +251,10 @@
 
     <!-- Kanji -->
     <string name="kanji_day_of_week">Kanji day of week</string>
+
+    <string name="set_location">Set location</string>
+    <string name="search">Search</string>
+    <string name="current_gps">Current (GPS)</string>
+    <string name="no_connection">No connection</string>
+    <string name="locations">Locations</string>
 </resources>

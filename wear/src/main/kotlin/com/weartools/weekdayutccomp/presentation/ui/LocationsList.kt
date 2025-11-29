@@ -20,6 +20,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
 import androidx.wear.compose.foundation.rotary.RotaryScrollableDefaults
@@ -31,6 +32,7 @@ import androidx.wear.compose.material.dialog.Alert
 import androidx.wear.compose.material.dialog.Dialog
 import com.google.android.libraries.places.api.model.AutocompletePrediction
 import com.weartools.weekdayutccomp.MainViewModel
+import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.theme.appColorScheme
 
 @Composable
@@ -63,7 +65,7 @@ fun LocationsList(
             scrollState = listState,
             contentPadding = PaddingValues(start = 10.dp, end = 10.dp, top = 24.dp, bottom = 32.dp),
             icon = {},
-            title = { Text(text = "Locations") },
+            title = { Text(text = stringResource(R.string.locations)) },
             content = {
                 items(predictions!!.size) {
                     LocationChip(

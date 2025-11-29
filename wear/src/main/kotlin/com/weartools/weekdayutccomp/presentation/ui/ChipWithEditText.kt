@@ -64,7 +64,7 @@ fun ChipWithEditText(
             BasicTextField(
                 modifier = Modifier.fillMaxWidth(),
                 keyboardActions = KeyboardActions(
-                    onAny  = { keyboardController?.hide()
+                    onAny = { keyboardController?.hide()
                         focusManager.moveFocus(FocusDirection.Exit)
                         if (isText){viewModel.setCustomText(text, context)}
                         if (isTitle) {viewModel.setCustomTitle(text, context)}

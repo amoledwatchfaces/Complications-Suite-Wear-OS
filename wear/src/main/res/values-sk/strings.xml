@@ -32,10 +32,10 @@
     <string name="date_comp_name">Dátum</string>
     <string name="date_custom_format">Vlastný formát</string>
     <string name="date_setting_preference_category_title">Dátum - Komplikácia</string>
-    <string name="date_long_text_format">Long Text Formát</string>
-    <string name="date_long_title_format">Long Title Formát</string>
-    <string name="date_short_title_format">Short Title Formát</string>
-    <string name="date_short_text_format">Short Text Formát</string>
+    <string name="date_long_text_format">Dlhý Text - Formát</string>
+    <string name="date_long_title_format">Dlhý Nadpis - Formát</string>
+    <string name="date_short_title_format">Krátky Nadpis - Formát</string>
+    <string name="date_short_text_format">Krátky Text - Formát</string>
     <string name="date_show_icon">Ikona kalendára</string>
 
     <!-- Persian Date -->
@@ -237,4 +237,11 @@
 
     <!-- Kanji -->
     <string name="kanji_day_of_week">Kanji deň v týždni</string>
+
+    <!-- New -->
+    <string name="set_location">Nastav Polohu</string>
+    <string name="search">Hľadať</string>
+    <string name="current_gps">Aktuálna Poloha (GPS)</string>
+    <string name="no_connection">Žiadne pripojenie</string>
+    <string name="locations">Miesta</string>
 </resources>
