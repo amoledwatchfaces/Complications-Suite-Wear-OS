@@ -107,6 +107,8 @@ object WorldClockLists{
         WorldClock("Europe/Ljubljana", "LJU", "Ljubljana"),
         WorldClock("Europe/London", "LON", "London"),
         WorldClock("Europe/Madrid", "MAD", "Madrid"),
+        WorldClock("Europe/Minsk", "MSQ", "Minsk"),
+        WorldClock("Europe/Moscow", "MSK", "Moscow"),
         WorldClock("Europe/Berlin", "MUC", "Munich"),
         WorldClock("Europe/Oslo", "OSL", "Oslo"),
         WorldClock("Europe/Paris", "PAR", "Paris"),

@@ -4,19 +4,24 @@ import java.util.Properties
 
 plugins {
     id ("com.android.application")
-    id ("org.jetbrains.kotlin.android")
-    id ("kotlin-parcelize")
     id ("kotlinx-serialization")
     id ("com.google.devtools.ksp")
     id ("com.google.dagger.hilt.android")
     id ("org.jetbrains.kotlin.plugin.compose")
+    id ("org.jetbrains.kotlin.plugin.parcelize")
     id ("com.google.gms.google-services")
     id ("com.google.firebase.crashlytics")
 }
 
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_21)
+    }
+}
+
 android {
     namespace = "com.weartools.weekdayutccomp"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.weartools.weekdayutccomp"
@@ -48,6 +53,7 @@ android {
         }
         getByName("debug")  {
             isMinifyEnabled = false
+            //noinspection NotShrinkingResources
             isShrinkResources = false
             proguardFiles(getDefaultProguardFile(name = "proguard-android-optimize.txt"), "proguard-rules.pro")
             buildConfigField(type ="String", name = "PLACES_API_KEY", value = apis.getProperty("PLACES_API_KEY"))
@@ -68,42 +74,36 @@ android {
         targetCompatibility = JavaVersion.VERSION_21
     }
 
-    kotlin {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_21)
-        }
-    }
 }
 
 dependencies {
     val composeBom = platform ("androidx.compose:compose-bom:2025.08.00")
 
     // Wear OS
-    implementation ("com.google.android.gms:play-services-wearable:19.0.0")
-    implementation ("androidx.wear.watchface:watchface-complications-data-source-ktx:1.2.1")
-    implementation ("androidx.wear:wear:1.3.0")
+    implementation ("com.google.android.gms:play-services-wearable:20.0.1")
+    implementation ("androidx.wear.watchface:watchface-complications-data-source-ktx:1.3.0")
+    implementation ("androidx.wear:wear:1.4.0")
 
     // General compose dependencies
     implementation (composeBom)
-    implementation ("androidx.activity:activity-compose:1.12.0")
-    implementation ("androidx.compose.ui:ui:1.9.5")
-    implementation ("androidx.compose.ui:ui-tooling-preview:1.9.5")
+    implementation ("androidx.activity:activity-compose:1.13.0")
+    implementation ("androidx.compose.ui:ui:1.11.2")
+    implementation ("androidx.compose.ui:ui-tooling-preview:1.11.2")
     implementation ("androidx.compose.material:material-icons-extended:1.7.8")
 
     // Compose for Wear OS dependencies
-    implementation ("androidx.core:core-ktx:1.17.0")
-    implementation ("androidx.wear.compose:compose-material3:1.6.0-alpha05")
-    //implementation ("androidx.wear.compose:compose-material:1.5.5")
-    implementation ("androidx.wear.compose:compose-navigation:1.5.5")
+    implementation ("androidx.core:core-ktx:1.18.0")
+    implementation ("androidx.wear.compose:compose-material3:1.6.2")
+    implementation ("androidx.wear.compose:compose-navigation:1.6.2")
 
     // Mobile
     implementation("androidx.compose.material3:material3:1.4.0")
 
     // Foundation is additive, so you can use the mobile version in your Wear OS app.
-    implementation ("androidx.wear.compose:compose-foundation:1.5.5")
+    implementation ("androidx.wear.compose:compose-foundation:1.6.2")
 
     // Wear OS preview annotations
-    implementation ("androidx.wear.compose:compose-ui-tooling:1.5.5")
+    implementation ("androidx.wear.compose:compose-ui-tooling:1.6.2")
 
     // Permissions
     implementation ("com.google.accompanist:accompanist-permissions:0.37.3")
@@ -112,18 +112,18 @@ dependencies {
     implementation ("com.google.android.gms:play-services-location:21.3.0")
 
     // Used for WorkManager
-    implementation ("androidx.work:work-runtime-ktx:2.11.0")
+    implementation ("androidx.work:work-runtime-ktx:2.11.2")
 
     // Moon Phase Helper
     implementation ("org.shredzone.commons:commons-suncalc:3.11")
 
     // Testing
-    androidTestImplementation ("androidx.compose.ui:ui-test-junit4:1.9.5")
-    debugImplementation ("androidx.compose.ui:ui-tooling:1.9.5")
-    debugImplementation ("androidx.compose.ui:ui-test-manifest:1.9.5")
+    androidTestImplementation ("androidx.compose.ui:ui-test-junit4:1.11.2")
+    debugImplementation ("androidx.compose.ui:ui-tooling:1.11.2")
+    debugImplementation ("androidx.compose.ui:ui-test-manifest:1.11.2")
 
     // DataStore
-    implementation ("androidx.datastore:datastore:1.2.0")
+    implementation ("androidx.datastore:datastore:1.2.1")
 
     // Locale
     implementation ("androidx.appcompat:appcompat:1.7.1")
@@ -139,26 +139,26 @@ dependencies {
     implementation ("com.google.android.horologist:horologist-audio-ui:0.7.15")
 
     // Serialization
-    implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
+    implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
 
     // Persian Date
     implementation("com.github.samanzamani:persiandate:1.7.1")
 
     // Hilt
     implementation ("androidx.hilt:hilt-navigation-compose:1.3.0")
-    implementation ("com.google.dagger:hilt-android:2.57.2")
-    ksp ("com.google.dagger:hilt-compiler:2.57.2")
+    implementation ("com.google.dagger:hilt-android:2.59.2")
+    ksp ("com.google.dagger:hilt-compiler:2.59.2")
 
     // Google Places
-    implementation ("com.google.android.libraries.places:places:4.1.0") // 4.2.0 and later causing some issues, use 4.1.0!
+    implementation ("com.google.android.libraries.places:places:5.2.0") // 4.2.0 and later causing some issues, use 4.1.0!
 
     // Firebase
-    implementation (platform("com.google.firebase:firebase-bom:34.6.0"))
+    implementation (platform("com.google.firebase:firebase-bom:34.13.0"))
     implementation ("com.google.firebase:firebase-crashlytics")
 
     // Protolayout
-    implementation("androidx.wear.protolayout:protolayout-expression:1.3.0")
-    implementation("androidx.wear.protolayout:protolayout:1.3.0")
+    implementation("androidx.wear.protolayout:protolayout-expression:1.4.0")
+    implementation("androidx.wear.protolayout:protolayout:1.4.0")
 }
 
 
