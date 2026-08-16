@@ -660,7 +660,7 @@
         </service>
         <service android:name=".complication.SwatchInternetTimeComplicationService"
             android:exported="true"
-            android:icon="@drawable/ic_seconds"
+            android:icon="@drawable/local_hospital_24px"
             android:label="Swatch Internet Time"
             android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
             <intent-filter>
