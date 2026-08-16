@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Translated by: amoledwatchfaces / Translated to Turkish -->
+<resources>
+    <!-- Do not translate translatable="false" lines -->
+    <string name="app_name">Complications Suite</string> <!-- Does not need to be translated, but it's recommended -->
+    <string name="app_info">Uygulama Hakkında</string>
+    <string name="version">Sürüm</string>
+    <string name="settings">Ayarlar</string>
+    <string name="language">Dil</string>
+    <string name="change_locale">Dili Değiştir</string>
+
+    <string name="icon_type">Simge Tipi</string>
+    <string name="icon_type_0">Basit</string>
+    <string name="icon_type_1">Varsayılan RGB</string>
+    <string name="icon_type_2">Varsayılan ARGB</string>
+
+    <string name="compose_toggle" translatable="false">Toggle</string>
+
+    <string name="awf_comp_name" translatable="false">Amoled Simgesi</string>
+    <!-- Crypto Complication -->
+    <string name="crypto_name_1" translatable="true">BTC Fiyatı $</string>
+    <string name="crypto_name_2" translatable="true">ETH Fiyatı $</string>
+
+    <!-- Flashlight Complication -->
+    <string name="flashlight_comp_name">El Feneri</string>
+
+    <!-- Alarm Complication Preferences -->
+    <string name="alarm_comp_name">Alarm</string>
+
+    <!-- Assist Complication Preferences -->
+    <string name="assist_comp_name">Asistan (Monet)</string>
+    <string name="assist_missing">Asistan Uygulaması Yüklü Değil</string>
+
+    <!-- Date Complication Preferences -->
+    <string name="date_comp_name">Tarih</string>
+    <string name="date_custom_format">Özel Format</string>
+    <string name="date_setting_preference_category_title">Tarih Bileşeni</string>
+    <string name="date_long_text_format">Uzun Yazı</string>
+    <string name="date_long_title_format">Uzun Başlık</string>
+    <string name="date_short_text_format">Kısa Yazı</string>
+    <string name="date_short_title_format">Kısa Başlık</string>
+    <string name="date_show_icon">Takvim Simgesi</string>
+
+    <!-- Persian Date -->
+    <string name="persian_date_complications">Farsça Tarih Bileşenleri</string>
+    <string name="date_comp_jalali_hijri_settings" translatable="false">Celali / Hicri</string>
+    <string name="date_comp_jalali_name">Celali Tarihi</string>
+    <string name="date_comp_hijri_name">Hicri Tarih</string>
+
+    <!-- Day of Year Complication Preferences -->
+    <string name="doy_comp_name">Yılın Günü</string>
+    <string name="doy_short_title">Gün</string>
+
+    <!-- Logo Complication Preferences -->
+    <string name="logo_comp_name">Wear OS Logosu</string>
+
+    <!-- Moon Phase Complication Preferences -->
+    <string name="moon_comp_name">Ay Evresi</string>
+    <string name="moon_setting_preference_category_title">Ay / Güneş Bileşeni</string>
+
+    <array name="moon_phases">
+        <item>İlk Dördün</item>
+        <item>Dolunay</item>
+        <item>Son Dördün</item>
+        <item>Yeni Ay</item>
+        <item>Küçülen Hilal</item>
+        <item>Küçülen Ay</item>
+        <item>Büyüyen Hilal</item>
+        <item>Şişkin Ay</item>
+    </array>
+
+    <string name="moon_setting_hemi_title">Yarımküre</string>
+    <string name="moon_setting_hemi_on">Kuzey</string>
+    <string name="moon_setting_hemi_off">Güney</string>
+    <string name="moon_setting_simple_icon_title">Ay Simgesi</string>
+    <string name="moon_setting_simple_icon_on">Basit</string>
+    <string name="moon_setting_simple_icon_off">Detaylı</string>
+
+    <string name="moonrise_moonset">Ayın Doğuşu &amp; Batışı</string>
+    <string name="moonrise">Ayın Doğuşu</string>
+    <string name="moonset">Ayın Batışı</string>
+    <string name="moonrise_in">Ayın Doğuşuna</string>
+    <string name="moonset_in">Ayın Batışına</string>
+
+    <!-- Pay Complication -->
+    <string name="pay_comp_name">Ödeme</string>
+
+    <!-- Sec Complication -->
+    <string name="sec_comp_name">Saniyeler</string>
+    <string name="sec_short_title">Sn</string>
+
+    <!-- Time Complication Preferences -->
+    <string name="time_comp_name">Saat</string>
+    <string name="time_comp_desc">Şu Anki Saat</string>
+    <string name="time_setting_leading_zero_title">Baştaki Sıfır</string>
+    <string name="time_setting_leading_zero_summary_on" translatable="false">09:00</string>
+    <string name="time_setting_leading_zero_summary_off" translatable="false">9:00</string>
+
+    <string name="time_ampm_setting_preference_category_title">Saat / Güneş Bileşeni</string>
+    <string name="time_ampm_setting_title">Saat Formatı</string>
+    <string name="time_ampm_setting_on">24s</string>
+    <string name="time_ampm_setting_off">12s</string>
+
+    <!-- World Clock Complication Preferences -->
+    <string name="wc_name">Dünya Saati</string>
+    <array name="wc_regions">
+        <item>Afrika</item>
+        <item>Asya</item>
+        <item>Atlantik</item>
+        <item>Avustralya</item>
+        <item>Avrupa</item>
+        <item>Kuzey Amerika</item>
+        <item>Pasifik</item>
+        <item>Güney Amerika</item>
+        <item>Evrensel</item>
+    </array>
+    <string name="wc_comp_name_1">Dünya Saati 1</string>
+    <string name="wc_comp_name_2">Dünya Saati 2</string>
+    <string name="wc_setting_preference_category_title">Dünya Saati Bileşeni</string>
+    <string name="wc_setting_leading_zero_title">Baştaki Sıfır</string>
+    <string name="wc_setting_leading_zero_summary_on" translatable="false">09:00</string>
+    <string name="wc_setting_leading_zero_summary_off" translatable="false">9:00</string>
+
+    <string name="wc_ampm_setting_title">Saat Formatı</string>
+    <string name="wc_ampm_setting_on">24s</string>
+    <string name="wc_ampm_setting_off">12s</string>
+
+
+    <string name="wc_setting_title">Zaman Dilimi 1 Kimliği</string>
+    <string name="wc2_setting_title">Zaman Dilimi 2 Kimliği</string>
+
+    <!-- WOY Complication Preferences -->
+    <string name="week_complication_name">Yılın Haftası</string>
+    <string name="woy_complication_text">Hafta</string>
+    <string name="woy_complication_description">Yılın Haftası</string>
+    <string name="woy_setting_preference_category_title">Yılın Haftası Bileşeni</string>
+    <string name="woy_setting_title">Format</string>
+    <string name="woy_setting_on" translatable="false">ISO</string>
+    <string name="woy_setting_off" translatable="false">US</string>
+
+    <!-- Custom Text + Title -->
+    <string name="custom_text_comp_name">Özel Metin</string>
+    <string name="custom_text_comp_name_category">Özel Metin Bileşeni</string>
+
+    <!--Custom Text + Title 2-->
+    <string name="custom_text_p1">Metin</string>
+    <string name="custom_title_p1">Başlık</string>
+
+    <!--translate-->
+    <string name="coarse_location_toggle_title">Yaklaşık Konum</string>
+    <string name="coarse_secondary_enabled">Etkin</string>
+    <string name="coarse_secondary_disabled">Devre Dışı</string>
+    <string name="coarse_toggle_description">Yaklaşık Konum İzni Anahtarı</string>
+
+    <!--translate-->
+    <string name="sunrise_sunset_comp_name">Gündoğumu &amp; Günbatımı</string>
+    <string name="sunrise_sunset_countdown_comp_name">Gündoğumu &amp; Günbatımı Geri Sayımı</string>
+    <string name="sunrise">Gündoğumu</string>
+    <string name="sunset">Günbatımı</string>
+    <string name="sunrise_in">Gündoğumuna</string>
+    <string name="sunset_in">Günbatımına</string>
+    <string name="enable_permission_toast">Yaklaşık konum gerekli (Uygulama Arayüzü)</string>
+    <string name="enable_permission_toast_consider">Kesin Ay dönüşü için konumu ayarlayın</string>
+    <string name="location">Konum</string>
+    <string name="checking">Konum kontrol ediliyor…</string>
+    <string name="no_location">Konum alınamıyor. GPS\'i kontrol edin</string>
+    <string name="no_location_set">Konum ayarlanmadı</string>
+
+    <string name="countdown_style">Geri Sayım Formatı</string>
+    <string name="countdown_style_style">Format</string>
+    <string name="e_g_">örn.</string>
+
+    <!-- translate -->
+    <string name="day_and_week_comp_name">Gün &amp; Hafta</string>
+    <string name="dayD">G:</string>
+    <string name="weekW">H:</string>
+    <string name="dayDlong">Gün</string>
+    <string name="weekWlong">Hafta</string>
+
+    <!-- Developer Options -->
+    <string name="developer_options_comp_name">Geliştirici Seçenekleri</string>
+
+    <!--Date Countdown-->
+    <string name="date_countdown_comp_name">Tarihe Geri Sayım</string>
+    <string name="countdown_text">Kalan Zaman</string>
+
+    <!--NOTIFICATIONS-->
+    <string name="notification_permission_info">Bazı bileşenler Android 13+ üzerinde bildirim mesajları göstermelidir. Uygulama bunları göstermek için izin isteyecektir.</string>
+
+    <!--VOLUME-->
+    <string name="volume_comp_name">Ses Kontrolü</string>
+
+    <!--DICE-->
+    <string name="dice_comp_name">Zar</string>
+
+    <!--WATER-->
+    <string name="water_comp_name">Su Tüketimi</string>
+    <string name="water_intake_text">Tüketilen</string>
+    <string name="water_intake_goal_text">Hedef</string>
+
+    <!--Time zone-->
+    <string name="time_zone_comp_name">Zaman Dilimi</string>
+
+    <!-- Dynamic Calendar Icon -->
+    <string name="dynamic_calendar_icon_comp_name">Dinamik Takvim Simgesi</string>
+
+    <!-- Barometer -->
+    <string name="barometer_comp_name">Barometre</string>
+    <string name="barometer_category">Barometre Bileşeni</string>
+    <string name="barometer_use_hpa">Birimler</string>
+    <string name="barometer_hpa" translatable="false">hPa</string>
+    <string name="barometer_inHg" translatable="false">inHg</string>
+
+    <!-- Timer -->
+    <string name="timer_comp_name">Zamanlayıcı</string>
+
+    <!-- Custom Goal -->
+    <string name="custom_goal_comp_name">Özel Hedef</string>
+    <string name="custom_goal_title_preview">Puanlar</string>
+    <string name="custom_goal_start">Başlangıç: %1$s</string>
+    <string name="custom_goal_target">Hedef: %1$s</string>
+    <string name="goal_settings">Hedef Ayarları</string>
+    <string name="custom_goal_title">Başlık</string>
+    <string name="custom_goal_start_value">Başlangıç Değeri</string>
+    <string name="custom_goal_target_value">Hedef Değeri</string>
+    <string name="custom_goal_current_value">Geçerli Değer</string>
+    <string name="custom_goal_change_by_value">Değişim Miktarı</string>
+    <string name="custom_goal_midnight_reset">Gece Yarısı Sıfırla</string>
+    <string name="custom_goal_pick_icon">Simge Seç</string>
+    <string name="custom_goal_inverse">Ters İlerleme</string>
+    <string name="custom_goal_on">Açık</string>
+    <string name="custom_goal_off">Kapalı</string>
+
+    <!-- Crypto Complications -->
+    <string name="crypto_complications">Kripto Para Bileşenleri</string>
+    <string name="counter_currency">Karşıt Para Birimi</string>
+
+    <!-- Activity Launcher Complication -->
+    <string name="activity_launcher_comp_name">Aktivite Başlatıcı</string>
+    <string name="activity_setup">Kurulum</string>
+    <string name="activity_pick_activity">Aktivite Seç</string>
+    <string name="activity_set_icon">Simge Ayarla</string>
+
+    <!-- Settings -->
+    <string name="wifi_settings_comp_name">Wi-Fi Ayarları</string>
+    <string name="settings_comp_name">Ayarlar</string>
+    <string name="display_settings_comp_name">Ekran Ayarları</string>
+    <string name="nfc_settings_comp_name">NFC Ayarları</string>
+    <string name="bluetooth_settings_comp_name">Bluetooth Ayarları</string>
+    <string name="battery_saver_settings_comp_name">Pil Tasarrufu Ayarları</string>
+
+    <!-- Kanji -->
+    <string name="kanji_day_of_week">Haftanın Kanji Günü</string>
+
+    <string name="set_location">Konum Ayarla</string>
+    <string name="search">Ara</string>
+    <string name="current_gps">Geçerli (GPS)</string>
+    <string name="no_connection">Bağlantı Yok</string>
+    <string name="locations">Konumlar</string>
+</resources>

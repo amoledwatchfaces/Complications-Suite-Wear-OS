@@ -7,6 +7,9 @@ import android.graphics.Paint
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
 import android.graphics.RectF
+import androidx.core.graphics.createBitmap
+import androidx.core.graphics.scale
+import androidx.core.graphics.withRotation
 import com.weartools.weekdayutccomp.enums.MoonIconType
 
 object DrawMoonBitmap {
@@ -15,7 +18,7 @@ object DrawMoonBitmap {
      * then flip the image if the phase is less or equal to 0.5 (0 when we use scale -180 to 180)
      * @param fraction Illuminated portion of the moon in % (0% -> 100%)
      * @param lat Observers latitude, just for knowing if location is disabled or enabled (disabled when 0.0)
-     * @param hemi Observers hemisphere. Used only when location is not given so we know how to rotate moon image for southern hemisphere
+     * @param hemi Observers hemisphere. Used only when location is not given so we know how to rotate moon image for Southern Hemisphere
      */
     fun getLunarPhaseBitmap(
         fraction: Double,
@@ -49,7 +52,7 @@ object DrawMoonBitmap {
 
         //val finalRotation = if (lat!=0.0) (90F + angle + parallacticAngle)
 
-        /** SLIGHTLY EDIT ILLUMINATION SO RESULTED BITMAP WONT LOOK BAD */
+        /** SLIGHTLY EDIT ILLUMINATION SO RESULTED BITMAP WON'T LOOK BAD */
         when (percentIlluminated) {
             in 0.01..0.05 -> percentIlluminated = 0.05
             in 0.06..0.15 -> percentIlluminated += 0.05
@@ -76,7 +79,7 @@ object DrawMoonBitmap {
         /** SET CANVAS */
         val radius = targetSize / 2f // calculate the radius of the moon = CENTER POINT
         val targetSizeFloat = targetSize.toFloat()
-        val bitmap = Bitmap.createBitmap(targetSize, targetSize, Bitmap.Config.ARGB_8888)
+        val bitmap = createBitmap(targetSize, targetSize)
         val canvas = Canvas(bitmap)
 
         /** DRAW MOON BACKGROUND IN DEFAULT ICON TYPE */
@@ -86,66 +89,64 @@ object DrawMoonBitmap {
         }
 
         /** ROTATE CANVAS */
-        canvas.save()
-        canvas.rotate(finalRotation, radius, radius)
+        canvas.withRotation(finalRotation, radius, radius) {
+            /** DRAW MOON LOOK FROM 0 --> 50% ILLUMINATION */
+            if (percentIlluminated > 0.01 && percentIlluminated <= 0.5) {
+                // if the moon is in the first half of its cycle
+                // draw a white semicircle to represent the illuminated portion of the moon
 
-        /** DRAW MOON LOOK FROM 0 --> 50% ILLUMINATION */
-        if (percentIlluminated > 0.01 && percentIlluminated <= 0.5) {
-            // if the moon is in the first half of its cycle
-            // draw a white semicircle to represent the illuminated portion of the moon
+                drawArc(
+                    0f,
+                    0f,
+                    targetSizeFloat,
+                    targetSizeFloat,
+                    90f,
+                    180f,
+                    true,
+                    brightPaint
+                )
 
-            canvas.drawArc(
-                0f,
-                0f,
-                targetSizeFloat,
-                targetSizeFloat,
-                90f,
-                180f,
-                true,
-                brightPaint
-            )
+                // Set Xfermode for masking only when transparent icon type
+                if (iconType == MoonIconType.TRANSPARENT) {
+                    brightPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_OUT)
+                }
 
-            // Set Xfermode for masking only when transparent icon type
-            if (iconType == MoonIconType.TRANSPARENT){
-                brightPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_OUT)
+                // draw a dark oval to hide rest of the illuminated part (using DST_OUT mask)
+                val ovalBounds = RectF()
+                val ovalLeft = (0f + 2 * radius * percentIlluminated).toFloat()
+                val ovalRight = (targetSizeFloat - 2 * radius * percentIlluminated).toFloat()
+                ovalBounds[ovalLeft, 0f, ovalRight] = targetSizeFloat
+
+                if (iconType == MoonIconType.DEFAULT) {
+                    drawOval(ovalBounds, shadowPaint)
+                } else drawOval(ovalBounds, brightPaint)
+
+
             }
+            /** DRAW MOON LOOK FROM 50 --> 100% ILLUMINATION */
+            else if (percentIlluminated > 0.5) {
+                // if the moon is in the second half of its cycle
+                // draw a white semicircle to represent the illuminated portion of the moon
+                drawArc(
+                    0f,
+                    0f,
+                    targetSizeFloat,
+                    targetSizeFloat,
+                    90f,
+                    180f,
+                    true,
+                    brightPaint
+                )
+                // draw a white oval to represent the illuminated portion of the moon
+                val ovalBounds = RectF()
+                val ovalLeft = (targetSizeFloat - 2 * radius * percentIlluminated).toFloat()
+                val ovalRight = (0f + 2 * radius * percentIlluminated).toFloat()
+                ovalBounds[ovalLeft, 0f, ovalRight] = targetSizeFloat
+                drawOval(ovalBounds, brightPaint)
 
-            // draw a dark oval to hide rest of the illuminated part (using DST_OUT mask)
-            val ovalBounds = RectF()
-            val ovalLeft = (0f + 2 * radius * percentIlluminated).toFloat()
-            val ovalRight = (targetSizeFloat - 2 * radius * percentIlluminated).toFloat()
-            ovalBounds[ovalLeft, 0f, ovalRight] = targetSizeFloat
-
-            if (iconType == MoonIconType.DEFAULT){
-                canvas.drawOval(ovalBounds, shadowPaint)
-            } else canvas.drawOval(ovalBounds, brightPaint)
-
-
+            }
+            /** RESTORE CANVAS AFTER ROTATION */
         }
-        /** DRAW MOON LOOK FROM 50 --> 100% ILLUMINATION */
-        else if (percentIlluminated > 0.5){
-            // if the moon is in the second half of its cycle
-            // draw a white semicircle to represent the illuminated portion of the moon
-            canvas.drawArc(
-                0f,
-                0f,
-                targetSizeFloat,
-                targetSizeFloat,
-                90f,
-                180f,
-                true,
-                brightPaint
-            )
-            // draw a white oval to represent the illuminated portion of the moon
-            val ovalBounds = RectF()
-            val ovalLeft = (targetSizeFloat - 2 * radius * percentIlluminated).toFloat()
-            val ovalRight = (0f + 2 * radius * percentIlluminated).toFloat()
-            ovalBounds[ovalLeft, 0f, ovalRight] = targetSizeFloat
-            canvas.drawOval(ovalBounds, brightPaint)
-
-        }
-        /** RESTORE CANVAS AFTER ROTATION */
-        canvas.restore()
         canvas.save()
 
 
@@ -176,6 +177,6 @@ object DrawMoonBitmap {
 */
 
         /** RETURN MOON BITMAP */
-        return Bitmap.createScaledBitmap(bitmap, targetSize, targetSize, true)
+        return bitmap.scale(targetSize, targetSize)
     }
 }

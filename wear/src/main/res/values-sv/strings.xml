@@ -249,4 +249,12 @@
 
     <!-- Kanji -->
     <string name="kanji_day_of_week">Kanji veckodag</string>
+
+    <string name="change_locale">Ändra språk</string>
+    <string name="no_location_set">Ingen plats angiven</string>
+    <string name="set_location">Ange plats</string>
+    <string name="search">Sök</string>
+    <string name="current_gps">Aktuell (GPS)</string>
+    <string name="no_connection">Ingen anslutning</string>
+    <string name="locations">Platser</string>
 </resources>

@@ -69,6 +69,7 @@
         <item>zh</item>
         <item>ru</item>
         <item>sv</item>
+        <item>tr</item>
     </string-array>
 
     <string-array name="locales_long">
@@ -86,5 +87,6 @@
         <item>Chinese (Simplified)</item>
         <item>Russian</item>
         <item>Swedish</item>
+        <item>Turkish</item>
     </string-array>
 </resources>

@@ -245,4 +245,12 @@
 
     <!-- Kanji -->
     <string name="kanji_day_of_week">Kanji-Wochentag</string>
+
+    <string name="change_locale">Sprache ändern</string>
+    <string name="no_location_set">Kein Standort festgelegt</string>
+    <string name="set_location">Standort festlegen</string>
+    <string name="search">Suchen</string>
+    <string name="current_gps">Aktueller (GPS)</string>
+    <string name="no_connection">Keine Verbindung</string>
+    <string name="locations">Standorte</string>
 </resources>

@@ -236,4 +236,12 @@
 
     <!-- Kanji -->
     <string name="kanji_day_of_week">汉字的星期几</string>
+
+    <string name="change_locale">更改区域设置</string>
+    <string name="no_location_set">未设置位置</string>
+    <string name="set_location">设置位置</string>
+    <string name="search">搜索</string>
+    <string name="current_gps">当前 (GPS)</string>
+    <string name="no_connection">无连接</string>
+    <string name="locations">位置</string>
 </resources>

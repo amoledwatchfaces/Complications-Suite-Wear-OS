@@ -244,4 +244,12 @@
 
     <!-- Kanji -->
     <string name="kanji_day_of_week">Ημέρα της εβδομάδας Kanji</string>
+
+    <string name="change_locale">Αλλαγή γλώσσας</string>
+    <string name="no_location_set">Δεν έχει οριστεί τοποθεσία</string>
+    <string name="set_location">Ορισμός τοποθεσίας</string>
+    <string name="search">Αναζήτηση</string>
+    <string name="current_gps">Τρέχουσα (GPS)</string>
+    <string name="no_connection">Χωρίς σύνδεση</string>
+    <string name="locations">Τοποθεσίες</string>
 </resources>

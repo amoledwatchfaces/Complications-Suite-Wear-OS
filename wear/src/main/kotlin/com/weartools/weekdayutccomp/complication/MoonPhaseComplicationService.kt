@@ -49,7 +49,6 @@ import androidx.wear.watchface.complications.data.SmallImageType
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
 import com.weartools.weekdayutccomp.R
-import com.weartools.weekdayutccomp.R.drawable
 import com.weartools.weekdayutccomp.activity.MainActivity
 import com.weartools.weekdayutccomp.enums.MoonIconType
 import com.weartools.weekdayutccomp.enums.Request
@@ -109,7 +108,7 @@ class MoonPhaseComplicationService : SuspendingComplicationDataSourceService() {
             ShortTextComplicationData.Builder(
                 text = PlainComplicationText.Builder(text = "40%").build(),
                 contentDescription = PlainComplicationText.Builder(text = getString(R.string.moon_comp_name)).build())
-                .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_settings_moon_detailed)).build())
+                .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, R.drawable.ic_settings_moon_detailed)).build())
                 .build()
         }
         ComplicationType.LONG_TEXT -> {
@@ -117,7 +116,7 @@ class MoonPhaseComplicationService : SuspendingComplicationDataSourceService() {
                 text = PlainComplicationText.Builder(text = MoonPhaseHelper.getMoonPhaseName(phaseName = "WAXING_CRESCENT", context = this)).build(),
                 contentDescription = PlainComplicationText.Builder(text = getString(R.string.moon_comp_name)).build())
                 .setTitle(PlainComplicationText.Builder(text = "40%").build())
-                .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_settings_moon_detailed)).build())
+                .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, R.drawable.ic_settings_moon_detailed)).build())
                 .build()
         }
         ComplicationType.RANGED_VALUE -> {
@@ -127,18 +126,18 @@ class MoonPhaseComplicationService : SuspendingComplicationDataSourceService() {
                 max =  180.0f,
                 contentDescription = PlainComplicationText.Builder(text = getString(R.string.moon_comp_name)).build())
                 .setText(PlainComplicationText.Builder(text = "-105°").build())
-                .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, drawable.ic_settings_moon_detailed)).build())
+                .setMonochromaticImage(MonochromaticImage.Builder(createWithResource(this, R.drawable.ic_settings_moon_detailed)).build())
                 .build()
         }
         ComplicationType.MONOCHROMATIC_IMAGE -> {
             MonochromaticImageComplicationData.Builder(
-                monochromaticImage = MonochromaticImage.Builder(createWithResource(this, drawable.ic_settings_moon_detailed)).build(),
+                monochromaticImage = MonochromaticImage.Builder(createWithResource(this, R.drawable.ic_settings_moon_detailed)).build(),
                 contentDescription = PlainComplicationText.Builder(text = getString(R.string.moon_comp_name)).build())
                 .build()
         }
         ComplicationType.SMALL_IMAGE -> {
             SmallImageComplicationData.Builder(
-                smallImage = SmallImage.Builder(image = createWithResource(this, drawable.ic_settings_moon_detailed), type = SmallImageType.ICON).build(),
+                smallImage = SmallImage.Builder(image = createWithResource(this, R.drawable.ic_settings_moon_detailed), type = SmallImageType.ICON).build(),
                 contentDescription = PlainComplicationText.Builder(text = getString(R.string.moon_comp_name)).build())
                 .build()
         }

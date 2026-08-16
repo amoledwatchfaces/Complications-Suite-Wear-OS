@@ -247,4 +247,12 @@
 
     <!-- Kanji -->
     <string name="kanji_day_of_week">День недели в кандзи</string>
+
+    <string name="change_locale">Сменить язык</string>
+    <string name="no_location_set">Местоположение не установлено</string>
+    <string name="set_location">Установить местоположение</string>
+    <string name="search">Поиск</string>
+    <string name="current_gps">Текущее (GPS)</string>
+    <string name="no_connection">Нет соединения</string>
+    <string name="locations">Местоположения</string>
 </resources>

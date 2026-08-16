@@ -238,10 +238,11 @@
     <!-- Kanji -->
     <string name="kanji_day_of_week">Kanji deň v týždni</string>
 
-    <!-- New -->
-    <string name="set_location">Nastav Polohu</string>
+    <string name="change_locale">Zmeniť miestne nastavenie</string>
+    <string name="no_location_set">Nie je nastavená žiadna poloha</string>
+    <string name="set_location">Nastaviť polohu</string>
     <string name="search">Hľadať</string>
-    <string name="current_gps">Aktuálna Poloha (GPS)</string>
+    <string name="current_gps">Aktuálne (GPS)</string>
     <string name="no_connection">Žiadne pripojenie</string>
     <string name="locations">Miesta</string>
 </resources>

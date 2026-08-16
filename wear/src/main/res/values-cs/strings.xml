@@ -237,4 +237,12 @@
 
     <!-- Kanji -->
     <string name="kanji_day_of_week">Kanji den v týdnu</string>
+
+    <string name="change_locale">Změnit národní prostředí</string>
+    <string name="no_location_set">Žádné nastavení polohy</string>
+    <string name="set_location">Nastavit polohu</string>
+    <string name="search">Vyhledávání</string>
+    <string name="current_gps">Aktuální (GPS)</string>
+    <string name="no_connection">Žádné připojení</string>
+    <string name="locations">Místa</string>
 </resources>

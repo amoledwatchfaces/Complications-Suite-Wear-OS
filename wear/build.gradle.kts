@@ -10,7 +10,7 @@ plugins {
     id ("org.jetbrains.kotlin.plugin.compose")
     id ("org.jetbrains.kotlin.plugin.parcelize")
     id ("com.google.gms.google-services")
-    id ("com.google.firebase.crashlytics")
+    //id ("com.google.firebase.crashlytics")
 }
 
 kotlin {
@@ -38,7 +38,7 @@ android {
             enableSplit = false // TO HAVE ALL LANGUAGES AVAILABLE
         }
         androidResources { // <-- Add this block
-            localeFilters.addAll(listOf("en", "cs", "de", "el", "es", "fr", "it", "pt", "pl", "ro", "sk","zh","ru","sv"))
+            localeFilters.addAll(listOf("en", "cs", "de", "el", "es", "fr", "it", "pt", "pl", "ro", "sk","zh","ru","sv","tr"))
         }
     }
     buildTypes {
@@ -87,12 +87,12 @@ dependencies {
     // General compose dependencies
     implementation (composeBom)
     implementation ("androidx.activity:activity-compose:1.13.0")
-    implementation ("androidx.compose.ui:ui:1.11.2")
-    implementation ("androidx.compose.ui:ui-tooling-preview:1.11.2")
+    implementation ("androidx.compose.ui:ui:1.12.0")
+    implementation ("androidx.compose.ui:ui-tooling-preview:1.12.0")
     implementation ("androidx.compose.material:material-icons-extended:1.7.8")
 
     // Compose for Wear OS dependencies
-    implementation ("androidx.core:core-ktx:1.18.0")
+    implementation ("androidx.core:core-ktx:1.19.0")
     implementation ("androidx.wear.compose:compose-material3:1.6.2")
     implementation ("androidx.wear.compose:compose-navigation:1.6.2")
 
@@ -109,7 +109,7 @@ dependencies {
     implementation ("com.google.accompanist:accompanist-permissions:0.37.3")
 
     // Location
-    implementation ("com.google.android.gms:play-services-location:21.3.0")
+    implementation ("com.google.android.gms:play-services-location:21.4.0")
 
     // Used for WorkManager
     implementation ("androidx.work:work-runtime-ktx:2.11.2")
@@ -118,15 +118,15 @@ dependencies {
     implementation ("org.shredzone.commons:commons-suncalc:3.11")
 
     // Testing
-    androidTestImplementation ("androidx.compose.ui:ui-test-junit4:1.11.2")
-    debugImplementation ("androidx.compose.ui:ui-tooling:1.11.2")
-    debugImplementation ("androidx.compose.ui:ui-test-manifest:1.11.2")
+    androidTestImplementation ("androidx.compose.ui:ui-test-junit4:1.12.0")
+    debugImplementation ("androidx.compose.ui:ui-tooling:1.12.0")
+    debugImplementation ("androidx.compose.ui:ui-test-manifest:1.12.0")
 
     // DataStore
     implementation ("androidx.datastore:datastore:1.2.1")
 
     // Locale
-    implementation ("androidx.appcompat:appcompat:1.7.1")
+    implementation ("androidx.appcompat:appcompat:1.8.0")
 
     // Input
     implementation ("androidx.wear:wear-input:1.2.0")
@@ -145,20 +145,20 @@ dependencies {
     implementation("com.github.samanzamani:persiandate:1.7.1")
 
     // Hilt
-    implementation ("androidx.hilt:hilt-navigation-compose:1.3.0")
-    implementation ("com.google.dagger:hilt-android:2.59.2")
-    ksp ("com.google.dagger:hilt-compiler:2.59.2")
+    implementation ("androidx.hilt:hilt-navigation-compose:1.4.0")
+    implementation ("com.google.dagger:hilt-android:2.60.1")
+    ksp ("com.google.dagger:hilt-compiler:2.60.1")
 
     // Google Places
-    implementation ("com.google.android.libraries.places:places:5.2.0") // 4.2.0 and later causing some issues, use 4.1.0!
+    implementation ("com.google.android.libraries.places:places:5.3.0") // 4.2.0 and later causing some issues, use 4.1.0!
 
     // Firebase
-    implementation (platform("com.google.firebase:firebase-bom:34.13.0"))
-    implementation ("com.google.firebase:firebase-crashlytics")
+    //implementation (platform("com.google.firebase:firebase-bom:34.13.0"))
+    //implementation ("com.google.firebase:firebase-crashlytics")
 
     // Protolayout
-    implementation("androidx.wear.protolayout:protolayout-expression:1.4.0")
-    implementation("androidx.wear.protolayout:protolayout:1.4.0")
+    implementation("androidx.wear.protolayout:protolayout-expression:1.4.2")
+    implementation("androidx.wear.protolayout:protolayout:1.4.2")
 }
 
 

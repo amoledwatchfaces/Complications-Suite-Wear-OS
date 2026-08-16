@@ -243,4 +243,12 @@
 
     <!-- Kanji -->
     <string name="kanji_day_of_week">Ziua săptămânii în kanji</string>
+
+    <string name="change_locale">Schimbați limba</string>
+    <string name="no_location_set">Nicio locație setată</string>
+    <string name="set_location">Setați locația</string>
+    <string name="search">Căutare</string>
+    <string name="current_gps">Actual (GPS)</string>
+    <string name="no_connection">Fără conexiune</string>
+    <string name="locations">Locații</string>
 </resources>
