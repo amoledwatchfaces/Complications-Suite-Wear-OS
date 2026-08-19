@@ -111,8 +111,8 @@ class TimeComplicationService : SuspendingComplicationDataSourceService() {
         val min = LocalDateTime.now().minute
         val progressvariable = hour*60+min.toFloat()
 
-        val ismilitary = preferences.first().isMilitaryTime
-        val leadingzero = preferences.first().isLeadingZeroTime
+        val ismilitary = preferences.first().isMilitary
+        val leadingzero = preferences.first().isLeadingZero
 
         val fmt = if (ismilitary && leadingzero) "HH:mm"
         else if (!ismilitary && !leadingzero) "h:mm"

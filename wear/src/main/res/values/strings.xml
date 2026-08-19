@@ -34,7 +34,7 @@
     <!-- Date Complication Preferences -->
     <string name="date_comp_name">Date</string>
     <string name="date_custom_format">Custom format</string>
-    <string name="date_setting_preference_category_title">Date Complication</string>
+    <string name="date_setting_preference_category_title">Date</string>
     <string name="date_long_text_format">Long Text Format</string>
     <string name="date_long_title_format">Long Title Format</string>
     <string name="date_short_text_format">Short Text Format</string>
@@ -56,7 +56,7 @@
 
     <!-- Moon Phase Complication Preferences -->
     <string name="moon_comp_name">Moon Phase</string>
-    <string name="moon_setting_preference_category_title">Moon / Sun Complication</string>
+    <string name="moon_setting_preference_category_title">Moon / Sun</string>
 
     <array name="moon_phases">
         <item>First Quarter</item>
@@ -96,7 +96,7 @@
     <string name="time_setting_leading_zero_summary_on" translatable="false">09:00</string>
     <string name="time_setting_leading_zero_summary_off" translatable="false">9:00</string>
 
-    <string name="time_ampm_setting_preference_category_title">Time / Sun Complication</string>
+    <string name="time_ampm_setting_preference_category_title">Common</string>
     <string name="time_ampm_setting_title">Hour Format</string>
     <string name="time_ampm_setting_on">24h</string>
     <string name="time_ampm_setting_off">12h</string>
@@ -116,7 +116,7 @@
     </array>
     <string name="wc_comp_name_1">World Clock 1</string>
     <string name="wc_comp_name_2">World Clock 2</string>
-    <string name="wc_setting_preference_category_title">World Clock Complication</string>
+    <string name="wc_setting_preference_category_title">World Clock</string>
     <string name="wc_setting_leading_zero_title">Leading zero</string>
     <string name="wc_setting_leading_zero_summary_on" translatable="false">09:00</string>
     <string name="wc_setting_leading_zero_summary_off" translatable="false">9:00</string>
@@ -142,7 +142,7 @@
 
     <!-- Custom Text + Title -->
     <string name="custom_text_comp_name">Custom Text</string>
-    <string name="custom_text_comp_name_category">Custom Text Complication</string>
+    <string name="custom_text_comp_name_category">Custom Text</string>
 
     <!--Custom Text + Title 2-->
     <string name="custom_text_p1">Text</string>
@@ -156,7 +156,7 @@
 
     <!--translate-->
     <string name="sunrise_sunset_comp_name">Sunrise &amp; Sunset</string>
-    <string name="sunrise_sunset_countdown_comp_name">Sunrise &amp; Sunset Countdown</string>
+    <string name="sunrise_sunset_countdown_comp_name">Sunrise &amp; Sunset</string>
     <string name="sunrise">Sunrise</string>
     <string name="sunset">Sunset</string>
     <string name="sunrise_in">Sunrise in</string>
@@ -208,7 +208,7 @@
 
     <!-- Barometer -->
     <string name="barometer_comp_name">Barometer</string>
-    <string name="barometer_category">Barometer Complication</string>
+    <string name="barometer_category">Barometer</string>
     <string name="barometer_use_hpa">Units</string>
     <string name="barometer_hpa" translatable="false">hPa</string>
     <string name="barometer_inHg" translatable="false">inHg</string>
@@ -234,7 +234,7 @@
     <string name="custom_goal_off">Off</string>
 
     <!-- Crypto Complications -->
-    <string name="crypto_complications">Cryptocurrency Complications</string>
+    <string name="crypto_complications">Cryptocurrency</string>
     <string name="counter_currency">Counter Currency</string>
 
     <!-- Activity Launcher Complication -->

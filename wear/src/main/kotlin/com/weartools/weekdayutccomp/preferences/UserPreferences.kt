@@ -21,19 +21,17 @@ import javax.inject.Inject
 @Serializable
 data class UserPreferences(
 
+    // COMMON SETTINGS
+    val isMilitary: Boolean = true,
+    val isLeadingZero: Boolean = true,
+
     // WORLD CLOCK
     val worldClock1: WorldClock = WorldClock("Etc/UTC", "UTC", "UTC"),
     val worldClock2: WorldClock = WorldClock("Etc/UTC", "UTC", "UTC"),
-    val isMilitary: Boolean = true,
-    val isLeadingZero: Boolean = true,
 
     // MOON
     val isHemisphere: Boolean = true,
     val isSimpleIcon: Boolean = false,
-
-    // TIME
-    val isMilitaryTime: Boolean = true,
-    val isLeadingZeroTime: Boolean = true,
 
     //DATE
     val longText: String = "MMMM d, yyyy",

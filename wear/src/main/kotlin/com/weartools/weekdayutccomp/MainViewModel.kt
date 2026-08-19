@@ -328,9 +328,6 @@ class MainViewModel @Inject constructor(
         dataStore.updateData { it.copy(isMilitary = value) }
         context.updateComplication(WorldClock1ComplicationService::class.java)
         context.updateComplication(WorldClock2ComplicationService::class.java)
-    }}
-    fun setMilitaryTime(value: Boolean, context: Context) { viewModelScope.launch {
-        dataStore.updateData { it.copy(isMilitaryTime = value) }
         context.updateComplication(TimeComplicationService::class.java)
         context.updateComplication(SunriseSunsetComplicationService::class.java)
         context.updateComplication(MoonriseMoonsetComplicationService::class.java)
@@ -362,17 +359,13 @@ class MainViewModel @Inject constructor(
         dataStore.updateData { it.copy(isLeadingZero = value) }
         context.updateComplication(WorldClock1ComplicationService::class.java)
         context.updateComplication(WorldClock2ComplicationService::class.java)
+        context.updateComplication(TimeComplicationService::class.java)
+        context.updateComplication(SunriseSunsetComplicationService::class.java)
+        context.updateComplication(MoonriseMoonsetComplicationService::class.java)
     }}
     fun setBarometerHPA(value: Boolean, context: Context) { viewModelScope.launch {
         dataStore.updateData { it.copy(pressureHPA = value) }
         context.updateComplication(BarometerComplicationService::class.java)
-    }}
-
-    fun setLeadingZeroTime(value: Boolean, context: Context) { viewModelScope.launch {
-        dataStore.updateData { it.copy(isLeadingZeroTime = value) }
-        context.updateComplication(TimeComplicationService::class.java)
-        context.updateComplication(SunriseSunsetComplicationService::class.java)
-        context.updateComplication(MoonriseMoonsetComplicationService::class.java)
     }}
     fun setCustomText(value: String, context: Context) { viewModelScope.launch {
         dataStore.updateData { it.copy(customText = value) }

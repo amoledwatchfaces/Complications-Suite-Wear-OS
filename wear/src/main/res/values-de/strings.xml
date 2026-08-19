@@ -27,7 +27,7 @@
     <string name="date_comp_name">Datum (Suite)</string>
 
     <string name="date_custom_format">Individuelles Format</string>
-    <string name="date_setting_preference_category_title">Datums-Komplikation</string>
+    <string name="date_setting_preference_category_title">Datum</string>
     <string name="date_long_text_format">Long Text Format</string>
     <string name="date_long_title_format">Long Title Format</string>
     <string name="date_short_text_format">Short Text Format</string>
@@ -48,7 +48,7 @@
 
     <!-- Moon Phase Complication Preferences -->
     <string name="moon_comp_name">Mondphase</string>
-    <string name="moon_setting_preference_category_title">Mondphasen / Sonnenaufgang und Sonnenuntergang</string>
+    <string name="moon_setting_preference_category_title">Mond / Sonne</string>
 
     <array name="moon_phases">
         <item>First Quarter</item>
@@ -93,7 +93,7 @@
     <string name="time_setting_leading_zero_summary_on" translatable="false">09:00</string>
     <string name="time_setting_leading_zero_summary_off" translatable="false">9:00</string>
 
-    <string name="time_ampm_setting_preference_category_title">Uhrzeit / Sonnenaufgang und Sonnenuntergang Komplikation</string>
+    <string name="time_ampm_setting_preference_category_title">Allgemein</string>
     <string name="time_ampm_setting_title">24h Format</string>
     <string name="time_ampm_setting_on">AN / 24h</string>
     <string name="time_ampm_setting_off">AUS / 12h</string>
@@ -113,7 +113,7 @@
     </array>
     <string name="wc_comp_name_1">Weltuhr 1</string>
     <string name="wc_comp_name_2">Weltuhr 2</string>
-    <string name="wc_setting_preference_category_title">Weltuhr Komplikation</string>
+    <string name="wc_setting_preference_category_title">Weltuhr</string>
     <string name="wc_setting_leading_zero_title">Führende Null</string>
     <string name="wc_setting_leading_zero_summary_on" translatable="false">09:00</string>
     <string name="wc_setting_leading_zero_summary_off" translatable="false">9:00</string>
@@ -138,7 +138,7 @@
 
     <!-- Custom Text + Title -->
     <string name="custom_text_comp_name">Eigene Texte</string>
-    <string name="custom_text_comp_name_category">Eigene Texte Komplikation</string>
+    <string name="custom_text_comp_name_category">Eigener Text</string>
     <!--Custom Text + Title 2-->
     <string name="custom_text_p1">Text</string>
     <string name="custom_title_p1">Titel</string>
@@ -204,7 +204,7 @@
 
     <!-- Barometer -->
     <string name="barometer_comp_name">Barometer</string>
-    <string name="barometer_category">Barometer-Komplikation</string>
+    <string name="barometer_category">Barometer</string>
     <string name="barometer_use_hpa">Einheiten</string>
 
     <!-- Timer -->
@@ -228,7 +228,7 @@
     <string name="custom_goal_off">Aus</string>
 
     <!-- Crypto Complications -->
-    <string name="crypto_complications">Btc-Eth-Komplikationen</string>
+    <string name="crypto_complications">Kryptowährung</string>
     <string name="counter_currency">Gegenwährung</string>
 
     <!-- Activity Launcher Complication -->

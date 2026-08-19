@@ -34,7 +34,7 @@
     <!-- Date Complication Preferences -->
     <string name="date_comp_name">Tarih</string>
     <string name="date_custom_format">Özel Format</string>
-    <string name="date_setting_preference_category_title">Tarih Bileşeni</string>
+    <string name="date_setting_preference_category_title">Tarih</string>
     <string name="date_long_text_format">Uzun Yazı</string>
     <string name="date_long_title_format">Uzun Başlık</string>
     <string name="date_short_text_format">Kısa Yazı</string>
@@ -56,7 +56,7 @@
 
     <!-- Moon Phase Complication Preferences -->
     <string name="moon_comp_name">Ay Evresi</string>
-    <string name="moon_setting_preference_category_title">Ay / Güneş Bileşeni</string>
+    <string name="moon_setting_preference_category_title">Ay / Güneş</string>
 
     <array name="moon_phases">
         <item>İlk Dördün</item>
@@ -96,7 +96,7 @@
     <string name="time_setting_leading_zero_summary_on" translatable="false">09:00</string>
     <string name="time_setting_leading_zero_summary_off" translatable="false">9:00</string>
 
-    <string name="time_ampm_setting_preference_category_title">Saat / Güneş Bileşeni</string>
+    <string name="time_ampm_setting_preference_category_title">Genel</string>
     <string name="time_ampm_setting_title">Saat Formatı</string>
     <string name="time_ampm_setting_on">24s</string>
     <string name="time_ampm_setting_off">12s</string>
@@ -116,7 +116,7 @@
     </array>
     <string name="wc_comp_name_1">Dünya Saati 1</string>
     <string name="wc_comp_name_2">Dünya Saati 2</string>
-    <string name="wc_setting_preference_category_title">Dünya Saati Bileşeni</string>
+    <string name="wc_setting_preference_category_title">Dünya Saati</string>
     <string name="wc_setting_leading_zero_title">Baştaki Sıfır</string>
     <string name="wc_setting_leading_zero_summary_on" translatable="false">09:00</string>
     <string name="wc_setting_leading_zero_summary_off" translatable="false">9:00</string>
@@ -131,6 +131,8 @@
 
     <!-- WOY Complication Preferences -->
     <string name="week_complication_name">Yılın Haftası</string>
+    <string name="week_complication_icon_name">Yılın Haftası (Simge)</string>
+    <string name="woy_complication_text_short">H</string>
     <string name="woy_complication_text">Hafta</string>
     <string name="woy_complication_description">Yılın Haftası</string>
     <string name="woy_setting_preference_category_title">Yılın Haftası Bileşeni</string>
@@ -140,7 +142,7 @@
 
     <!-- Custom Text + Title -->
     <string name="custom_text_comp_name">Özel Metin</string>
-    <string name="custom_text_comp_name_category">Özel Metin Bileşeni</string>
+    <string name="custom_text_comp_name_category">Özel Metin</string>
 
     <!--Custom Text + Title 2-->
     <string name="custom_text_p1">Metin</string>
@@ -206,7 +208,7 @@
 
     <!-- Barometer -->
     <string name="barometer_comp_name">Barometre</string>
-    <string name="barometer_category">Barometre Bileşeni</string>
+    <string name="barometer_category">Barometre</string>
     <string name="barometer_use_hpa">Birimler</string>
     <string name="barometer_hpa" translatable="false">hPa</string>
     <string name="barometer_inHg" translatable="false">inHg</string>
@@ -232,7 +234,7 @@
     <string name="custom_goal_off">Kapalı</string>
 
     <!-- Crypto Complications -->
-    <string name="crypto_complications">Kripto Para Bileşenleri</string>
+    <string name="crypto_complications">Kripto Para</string>
     <string name="counter_currency">Karşıt Para Birimi</string>
 
     <!-- Activity Launcher Complication -->

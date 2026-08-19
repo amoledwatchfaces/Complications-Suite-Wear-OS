@@ -108,8 +108,8 @@ class SunriseSunsetComplicationService : SuspendingComplicationDataSourceService
             return NoDataComplication.getPlaceholder(request, this, tapAction = openScreen(false))
         }
 
-        val ismilitary = prefs.isMilitaryTime
-        val leadingzero = prefs.isLeadingZeroTime
+        val ismilitary = prefs.isMilitary
+        val leadingzero = prefs.isLeadingZero
 
         val mph = SunriseSunsetHelper.updateSun(context = this, prefs)
         val icon = if (mph.isSunrise) drawable.ic_sunrise_3 else drawable.ic_sunset_3

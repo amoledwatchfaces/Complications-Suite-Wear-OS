@@ -25,7 +25,7 @@
     <!-- Date Complication Preferences -->
     <string name="date_comp_name">Data (Suite)</string>
     <string name="date_custom_format">Format personalizat</string>
-    <string name="date_setting_preference_category_title">Data - Complicaţie</string>
+    <string name="date_setting_preference_category_title">Data</string>
     <string name="date_long_text_format">Format De Text Lung</string>
     <string name="date_long_title_format">Format De Titlu Lung</string>
     <string name="date_short_text_format">Format De Text Scurt</string>
@@ -46,7 +46,7 @@
 
     <!-- Moon Phase Complication Preferences -->
     <string name="moon_comp_name">Faza Lunară</string>
-    <string name="moon_setting_preference_category_title">Faza Lunară / Rasarit și apus - Complicaţie</string>
+    <string name="moon_setting_preference_category_title">Lună / Soare</string>
 
     <array name="moon_phases">
         <item>First Quarter</item>
@@ -91,7 +91,7 @@
     <string name="time_setting_leading_zero_summary_on" translatable="false">09:00</string>
     <string name="time_setting_leading_zero_summary_off" translatable="false">9:00</string>
 
-    <string name="time_ampm_setting_preference_category_title">Ora / Rasarit și apus - Complicaţie</string>
+    <string name="time_ampm_setting_preference_category_title">General</string>
     <string name="time_ampm_setting_title">Sistem De Timp</string>
     <string name="time_ampm_setting_on">ON / 24h</string>
     <string name="time_ampm_setting_off">OFF / 12h</string>
@@ -111,7 +111,7 @@
     </array>
     <string name="wc_comp_name_1">Ora Mondială 1</string>
     <string name="wc_comp_name_2">Ora Mondială 2</string>
-    <string name="wc_setting_preference_category_title">Ceas Mondial - Complicaţie</string>
+    <string name="wc_setting_preference_category_title">Ora Mondială</string>
     <string name="wc_setting_leading_zero_title">Afișați Zero Inițial</string>
     <string name="wc_setting_leading_zero_summary_on" translatable="false">09:00</string>
     <string name="wc_setting_leading_zero_summary_off" translatable="false">9:00</string>
@@ -125,6 +125,8 @@
 
     <!-- WOY Complication Preferences -->
     <string name="week_complication_name">Săptămâna Anului</string>
+    <string name="week_complication_icon_name">Săptămâna Anului (Pictogramă)</string>
+    <string name="woy_complication_text_short">S</string>
     <string name="woy_complication_text">Săptămâna</string>
     <string name="woy_complication_description">Săptămâna Anului</string>
     <string name="woy_setting_preference_category_title">Săptămâna Anului - Complicaţie</string>
@@ -134,7 +136,7 @@
 
     <!-- Custom Text + Title -->
     <string name="custom_text_comp_name">Text personalizat</string>
-    <string name="custom_text_comp_name_category">Text personalizat</string>
+    <string name="custom_text_comp_name_category">Text Personalizat</string>
     <!--Custom Text + Title 2-->
     <string name="custom_text_p1">Text</string>
     <string name="custom_title_p1">Titlu</string>
@@ -200,7 +202,7 @@
 
     <!-- Barometer -->
     <string name="barometer_comp_name">Barometru</string>
-    <string name="barometer_category">Barometru - Complicație</string>
+    <string name="barometer_category">Barometru</string>
     <string name="barometer_use_hpa">Unități</string>
 
     <!-- Timer -->
@@ -224,7 +226,7 @@
     <string name="custom_goal_off">Dezactivat</string>
 
     <!-- Crypto Complications -->
-    <string name="crypto_complications">Complicațiile criptomonedelor</string>
+    <string name="crypto_complications">Criptomonedă</string>
     <string name="counter_currency">Monedă de referință</string>
 
     <!-- Activity Launcher Complication -->

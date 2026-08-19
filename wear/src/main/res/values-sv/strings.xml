@@ -33,7 +33,7 @@
     <!-- Date Complication Preferences -->
     <string name="date_comp_name">Datum</string>
     <string name="date_custom_format">Anpassat format</string>
-    <string name="date_setting_preference_category_title">Datumkomplikation</string>
+    <string name="date_setting_preference_category_title">Datum</string>
     <string name="date_long_text_format">Långt Textformat</string>
     <string name="date_long_title_format">Långt Titelformat</string>
     <string name="date_short_text_format">Kort Textformat</string>
@@ -55,7 +55,7 @@
 
     <!-- Moon Phase Complication Preferences -->
     <string name="moon_comp_name">Månfas</string>
-    <string name="moon_setting_preference_category_title">Måne- / Solkomplikation</string>
+    <string name="moon_setting_preference_category_title">Måne / Sol</string>
 
     <array name="moon_phases">
         <item>Halvmåne (1:a kv.)</item>
@@ -95,7 +95,7 @@
     <string name="time_setting_leading_zero_summary_on" translatable="false">09:00</string>
     <string name="time_setting_leading_zero_summary_off" translatable="false">9:00</string>
 
-    <string name="time_ampm_setting_preference_category_title">Tid- / Solkomplikation</string>
+    <string name="time_ampm_setting_preference_category_title">Allmänt</string>
     <string name="time_ampm_setting_title">Timformat</string>
     <string name="time_ampm_setting_on">24tim</string>
     <string name="time_ampm_setting_off">12tim</string>
@@ -115,7 +115,7 @@
     </array>
     <string name="wc_comp_name_1">Världsklocka 1</string>
     <string name="wc_comp_name_2">Världsklocka 2</string>
-    <string name="wc_setting_preference_category_title">Världsklocka Komplikation</string>
+    <string name="wc_setting_preference_category_title">Världsklocka</string>
     <string name="wc_setting_leading_zero_title">Inledande Nolla</string>
     <string name="wc_setting_leading_zero_summary_on" translatable="false">09:00</string>
     <string name="wc_setting_leading_zero_summary_off" translatable="false">9:00</string>
@@ -130,6 +130,8 @@
 
     <!-- WOY Complication Preferences -->
     <string name="week_complication_name">årets vecka</string>
+    <string name="week_complication_icon_name">årets vecka (Ikon)</string>
+    <string name="woy_complication_text_short">V</string>
     <string name="woy_complication_text">Vecka</string>
     <string name="woy_complication_description">årets vecka</string>
     <string name="woy_setting_preference_category_title">Veckokomplikation</string>
@@ -139,7 +141,7 @@
 
     <!-- Custom Text + Title -->
     <string name="custom_text_comp_name">Anpassad text</string>
-    <string name="custom_text_comp_name_category">Textkomplication</string>
+    <string name="custom_text_comp_name_category">Anpassad text</string>
 
     <!--Custom Text + Title 2-->
     <string name="custom_text_p1">Text</string>
@@ -204,7 +206,7 @@
 
     <!-- Barometer -->
     <string name="barometer_comp_name">Barometer</string>
-    <string name="barometer_category">Barometerkomplication</string>
+    <string name="barometer_category">Barometer</string>
     <string name="barometer_use_hpa">Enheter</string>
     <string name="barometer_hpa" translatable="false">hPa</string>
     <string name="barometer_inHg" translatable="false">inHg</string>
@@ -230,7 +232,7 @@
     <string name="custom_goal_off">Av</string>
 
     <!-- Crypto Complications -->
-    <string name="crypto_complications">Kryptovaluta Komplikation</string>
+    <string name="crypto_complications">Kryptovaluta</string>
     <string name="counter_currency">Motvaluta</string>
 
     <!-- Activity Launcher Complication -->

@@ -177,8 +177,8 @@ class MoonriseMoonsetComplicationService : SuspendingComplicationDataSourceServi
 
             ComplicationType.SHORT_TEXT -> {
 
-                val ismilitary = prefs.isMilitaryTime
-                val leadingzero = prefs.isLeadingZeroTime
+                val ismilitary = prefs.isMilitary
+                val leadingzero = prefs.isLeadingZero
 
                 val fmt = if (ismilitary && leadingzero) "HH:mm"
                 else if (!ismilitary && !leadingzero) "h:mm"

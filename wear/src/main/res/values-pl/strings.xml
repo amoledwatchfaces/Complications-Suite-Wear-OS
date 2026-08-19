@@ -33,7 +33,7 @@
     <!-- Date Complication Preferences -->
     <string name="date_comp_name">Data</string>
     <string name="date_custom_format">Domyślny format</string>
-    <string name="date_setting_preference_category_title">Rodzaj daty</string>
+    <string name="date_setting_preference_category_title">Data</string>
     <string name="date_long_text_format">Format długiego tekstu</string>
     <string name="date_long_title_format">Długi tytuł</string>
     <string name="date_short_text_format">Format krótkiego tekstu</string>
@@ -55,7 +55,7 @@
 
     <!-- Moon Phase Complication Preferences -->
     <string name="moon_comp_name">Faza księżyca</string>
-    <string name="moon_setting_preference_category_title">Księżyc / Słońce - ustawienia</string>
+    <string name="moon_setting_preference_category_title">Księżyc / Słońce</string>
 
     <array name="moon_phases">
         <item>Kwadra piwrwsza</item>
@@ -95,7 +95,7 @@
     <string name="time_setting_leading_zero_summary_on" translatable="false">09:00</string>
     <string name="time_setting_leading_zero_summary_off" translatable="false">9:00</string>
 
-    <string name="time_ampm_setting_preference_category_title">Godzina / Słońce - ustawienia</string>
+    <string name="time_ampm_setting_preference_category_title">Ogólne</string>
     <string name="time_ampm_setting_title">Format godziny</string>
     <string name="time_ampm_setting_on">24h</string>
     <string name="time_ampm_setting_off">12h</string>
@@ -115,7 +115,7 @@
     </array>
     <string name="wc_comp_name_1">Zegar światowy 1</string>
     <string name="wc_comp_name_2">Zegar światowy 2</string>
-    <string name="wc_setting_preference_category_title">Zegar światowy - ustawienia</string>
+    <string name="wc_setting_preference_category_title">Zegar światowy</string>
     <string name="wc_setting_leading_zero_title">Zero na początku</string>
     <string name="wc_setting_leading_zero_summary_on" translatable="false">09:00</string>
     <string name="wc_setting_leading_zero_summary_off" translatable="false">9:00</string>
@@ -130,6 +130,8 @@
 
     <!-- WOY Complication Preferences -->
     <string name="week_complication_name">Tydzien roku</string>
+    <string name="week_complication_icon_name">Tydzień roku (Ikona)</string>
+    <string name="woy_complication_text_short">T</string>
     <string name="woy_complication_text">Tydzień</string>
     <string name="woy_complication_description">Tydzień roku</string>
     <string name="woy_setting_preference_category_title">Tydzień roku - ustawienia</string>
@@ -139,7 +141,7 @@
 
     <!-- Custom Text + Title -->
     <string name="custom_text_comp_name">Twój tekst</string>
-    <string name="custom_text_comp_name_category">Twój tekst - ustawienia</string>
+    <string name="custom_text_comp_name_category">Twój tekst</string>
 
     <!--Custom Text + Title 2-->
     <string name="custom_text_p1">Tekst</string>
@@ -204,7 +206,7 @@
 
     <!-- Barometer -->
     <string name="barometer_comp_name">Barometr</string>
-    <string name="barometer_category">Barometr - ustawienia</string>
+    <string name="barometer_category">Barometr</string>
     <string name="barometer_use_hpa">Jednostki</string>
 
     <!-- Timer -->
@@ -228,7 +230,7 @@
     <string name="custom_goal_off">Wyłącz</string>
 
     <!-- Crypto Complications -->
-    <string name="crypto_complications">Komplikacje kryptowalut</string>
+    <string name="crypto_complications">Kryptowaluta</string>
     <string name="counter_currency">Waluta odniesienia</string>
 
     <!-- Activity Launcher Complication -->

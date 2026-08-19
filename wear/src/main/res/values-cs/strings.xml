@@ -26,7 +26,7 @@
     <!-- Date Complication Preferences -->
     <string name="date_comp_name">Datum</string>
     <string name="date_custom_format">Vlastní formát</string>
-    <string name="date_setting_preference_category_title">Datum - Komplikace</string>
+    <string name="date_setting_preference_category_title">Datum</string>
     <string name="date_long_text_format">Long Text Formát</string>
     <string name="date_long_title_format">Long Title Formát</string>
     <string name="date_short_title_format">Short Title Formát</string>
@@ -47,7 +47,7 @@
 
     <!-- Moon Phase Complication Preferences -->
     <string name="moon_comp_name">Fáze měsíce</string>
-    <string name="moon_setting_preference_category_title">Měsíc / Východ a západ slunce - Komplikace</string>
+    <string name="moon_setting_preference_category_title">Měsíc / Slunce</string>
 
     <array name="moon_phases">
         <item>First Quarter</item>
@@ -89,7 +89,7 @@
     <string name="time_comp_name">Čas</string>
     <string name="time_comp_desc">Aktuální čas</string>
     <string name="time_setting_leading_zero_title">Předřazená nula</string>
-    <string name="time_ampm_setting_preference_category_title" translatable="false">Čas / Východ a západ slunce - Komplikace</string>
+    <string name="time_ampm_setting_preference_category_title">Obecné</string>
     <string name="time_ampm_setting_title">Formát</string>
     <string name="time_ampm_setting_on">24h</string>
     <string name="time_ampm_setting_off">12h</string>
@@ -109,7 +109,7 @@
     </array>
     <string name="wc_comp_name_1">Světový čas 1</string>
     <string name="wc_comp_name_2">Světový čas 2</string>
-    <string name="wc_setting_preference_category_title">Světový čas - Komplikace</string>
+    <string name="wc_setting_preference_category_title">Světový čas</string>
     <string name="wc_setting_leading_zero_title" translatable="false">Předřazená nula</string>
 
     <string name="wc_ampm_setting_title">Formát</string>
@@ -121,6 +121,8 @@
 
     <!-- WOY Complication Preferences -->
     <string name="week_complication_name">Týden v roce</string>
+    <string name="week_complication_icon_name">Týden v roce (Ikona)</string>
+    <string name="woy_complication_text_short">T</string>
     <string name="woy_setting_title">Formát</string>
     <string name="woy_complication_text">Týden</string>
     <string name="woy_complication_description">Týden v roce</string>
@@ -128,7 +130,7 @@
 
     <!-- Custom Text + Title -->
     <string name="custom_text_comp_name">Vlastní Text</string>
-    <string name="custom_text_comp_name_category">Vlastní text - Komplikace</string>
+    <string name="custom_text_comp_name_category">Vlastní Text</string>
     <!--Custom Text + Title 2-->
     <string name="custom_text_p1">Text</string>
     <string name="custom_title_p1">Titulek</string>
@@ -194,7 +196,7 @@
 
     <!-- Barometer -->
     <string name="barometer_comp_name">Barometr</string>
-    <string name="barometer_category">Barometr - Komplikace</string>
+    <string name="barometer_category">Barometr</string>
     <string name="barometer_use_hpa">Jednotky</string>
 
     <!-- Timer -->
@@ -218,7 +220,7 @@
     <string name="custom_goal_off">Vypnuto</string>
 
     <!-- Crypto Complications -->
-    <string name="crypto_complications">Komplikace kryptoměn</string>
+    <string name="crypto_complications">Kryptoměna</string>
     <string name="counter_currency">Kontraktivní měna</string>
 
     <!-- Activity Launcher Complication -->

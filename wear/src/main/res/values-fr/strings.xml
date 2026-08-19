@@ -33,7 +33,7 @@
     <!-- Date Complication Preferences -->
     <string name="date_comp_name">Date</string>
     <string name="date_custom_format">Format Personalisé</string>
-    <string name="date_setting_preference_category_title">Complication Pour La Date </string>
+    <string name="date_setting_preference_category_title">Date</string>
     <string name="date_long_text_format">Format Du Text Long</string>
     <string name="date_long_title_format">Format Du Titre Long</string>
     <string name="date_short_text_format">Short Text Format Du Text Court </string>
@@ -55,7 +55,7 @@
 
     <!-- Moon Phase Complication Preferences -->
     <string name="moon_comp_name">Phase De La Lune</string>
-    <string name="moon_setting_preference_category_title">Complication De La Lune Et Du Soleil</string>
+    <string name="moon_setting_preference_category_title">Lune / Soleil</string>
 
     <array name="moon_phases">
         <item>Premier Quartier</item>
@@ -94,7 +94,7 @@
     <string name="time_setting_leading_zero_summary_on" translatable="false">09:00</string>
     <string name="time_setting_leading_zero_summary_off" translatable="false">9:00</string>
 
-    <string name="time_ampm_setting_preference_category_title">Temps / Soleil Complication</string>
+    <string name="time_ampm_setting_preference_category_title">Général</string>
     <string name="time_ampm_setting_title">Hour Format</string>
     <string name="time_ampm_setting_on">24h</string>
     <string name="time_ampm_setting_off">12h</string>
@@ -114,7 +114,7 @@
     </array>
     <string name="wc_comp_name_1">Horloge Mondial n°1</string>
     <string name="wc_comp_name_2">Horloge Mondial n°2</string>
-    <string name="wc_setting_preference_category_title">Complication De L\'horloge Mondial</string>
+    <string name="wc_setting_preference_category_title">Horloge Mondiale</string>
     <string name="wc_setting_leading_zero_title">Zéro Non Significatif</string>
     <string name="wc_setting_leading_zero_summary_on" translatable="false">09:00</string>
     <string name="wc_setting_leading_zero_summary_off" translatable="false">9:00</string>
@@ -129,6 +129,8 @@
 
     <!-- WOY Complication Preferences -->
     <string name="week_complication_name">Semaine de L\'année</string>
+    <string name="week_complication_icon_name">Semaine de L\'année (Icône)</string>
+    <string name="woy_complication_text_short">S</string>
     <string name="woy_complication_text">Semaine</string>
     <string name="woy_complication_description">Semaine de l\'année</string>
     <string name="woy_setting_preference_category_title">Complication de la Semaine de l\'année </string>
@@ -138,7 +140,7 @@
 
     <!-- Custom Text + Title -->
     <string name="custom_text_comp_name">Texte Personalisé</string>
-    <string name="custom_text_comp_name_category">Complication de Texte Personalisé</string>
+    <string name="custom_text_comp_name_category">Texte Personnalisé</string>
 
     <!--Custom Text + Title 2-->
     <string name="custom_text_p1">Texte</string>
@@ -203,7 +205,7 @@
 
     <!-- Barometer -->
     <string name="barometer_comp_name">Baromètre</string>
-    <string name="barometer_category">Complication du Baromètre</string>
+    <string name="barometer_category">Baromètre</string>
     <string name="barometer_use_hpa">Unités De Mesure</string>
     <string name="barometer_hpa" translatable="false">hPa</string>
     <string name="barometer_inHg" translatable="false">inHg</string>
@@ -229,7 +231,7 @@
     <string name="custom_goal_off">Désactivé</string>
 
     <!-- Crypto Complications -->
-    <string name="crypto_complications">Complications des Cryptomonnaies</string>
+    <string name="crypto_complications">Cryptomonnaie</string>
     <string name="counter_currency">Devise de contrepartie</string>
 
     <!-- Activity Launcher Complication -->

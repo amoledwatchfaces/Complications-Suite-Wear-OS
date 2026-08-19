@@ -188,6 +188,47 @@ fun ComplicationsSuiteScreen(
             )
         } }
 
+        // Time Format (Common)
+        item { PreferenceCategory(
+            modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+            transformationSpec = SurfaceTransformation(transformationSpec),
+            title = stringResource(id = R.string.time_ampm_setting_preference_category_title)
+        )}
+        item {
+            SwitchButton(
+                modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                transformation = SurfaceTransformation(transformationSpec),
+                checked = preferences.isLeadingZero,
+                onCheckedChange = {
+                    viewModel.setLeadingZero(it,context)
+                },
+                label = { Text(stringResource(id = R.string.time_setting_leading_zero_title)) },
+                secondaryLabel = {
+                    if (preferences.isLeadingZero) {
+                        Text(text = stringResource(id = R.string.time_setting_leading_zero_summary_on), color = Color.LightGray)
+                    } else
+                        Text(text = stringResource(id = R.string.time_setting_leading_zero_summary_off), color = Color.LightGray)
+                }
+            )
+        }
+        item {
+            SwitchButton(
+                modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                transformation = SurfaceTransformation(transformationSpec),
+                checked = preferences.isMilitary,
+                onCheckedChange = {
+                    viewModel.setMilitary(it,context)
+                },
+                label = { Text(stringResource(id = R.string.time_ampm_setting_title)) },
+                secondaryLabel = {
+                    if (preferences.isMilitary) {
+                        Text(text = stringResource(id = R.string.time_ampm_setting_on), color = Color.LightGray)
+                    } else
+                        Text(text = stringResource(id = R.string.time_ampm_setting_off), color = Color.LightGray)
+                }
+            )
+        }
+
         // World Clock
         item { PreferenceCategory(
             modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
@@ -215,38 +256,6 @@ fun ComplicationsSuiteScreen(
                 title = "${preferences.worldClock2.cityName} (${preferences.worldClock2.cityId})",
                 onClick = {
                     isTImeZOnClick2 = isTImeZOnClick2.not()
-                }
-            )
-        }
-        item {
-            SwitchButton(
-                modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
-                transformation = SurfaceTransformation(transformationSpec),
-                checked = preferences.isLeadingZero,
-                onCheckedChange = {viewModel.setLeadingZero(it, context)},
-                label = { Text(stringResource(id = R.string.wc_setting_leading_zero_title)) },
-                secondaryLabel = {
-                    if (preferences.isLeadingZero) {
-                        Text(text = stringResource(id = R.string.wc_setting_leading_zero_summary_on), color = Color.LightGray)
-                    } else
-                        Text(text = stringResource(id = R.string.wc_setting_leading_zero_summary_off), color = Color.LightGray)
-                }
-            )
-        }
-        item {
-            SwitchButton(
-                modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
-                transformation = SurfaceTransformation(transformationSpec),
-                checked = preferences.isMilitary,
-                onCheckedChange = {
-                    viewModel.setMilitary(it,context)
-                                  },
-                label = { Text(stringResource(id = R.string.wc_ampm_setting_title)) },
-                secondaryLabel = {
-                    if (preferences.isMilitary) {
-                        Text(text = stringResource(id = R.string.time_ampm_setting_on), color = Color.LightGray)
-                    } else
-                        Text(text = stringResource(id = R.string.time_ampm_setting_off), color = Color.LightGray)
                 }
             )
         }
@@ -299,8 +308,6 @@ fun ComplicationsSuiteScreen(
                 )
             }
         }
-
-        // Location
         item {
             AppCard(
                 modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
@@ -324,54 +331,6 @@ fun ComplicationsSuiteScreen(
                 },
             ){}
         }
-
-        // Time
-        item { PreferenceCategory(
-            modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
-            transformationSpec = SurfaceTransformation(transformationSpec),
-            title = stringResource(id = R.string.time_ampm_setting_preference_category_title)
-        )}
-        item {
-            SwitchButton(
-                modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
-                transformation = SurfaceTransformation(transformationSpec),
-                checked = preferences.isLeadingZeroTime,
-                onCheckedChange = {
-                    viewModel.setLeadingZeroTime(it,context)
-                },
-                label = { Text(stringResource(id = R.string.time_setting_leading_zero_title)) },
-                secondaryLabel = {
-                    if (preferences.isLeadingZeroTime) {
-                        Text(text = stringResource(id = R.string.time_setting_leading_zero_summary_on), color = Color.LightGray)
-                    } else
-                        Text(text = stringResource(id = R.string.time_setting_leading_zero_summary_off), color = Color.LightGray)
-                }
-            )
-        }
-        item {
-            SwitchButton(
-                modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
-                transformation = SurfaceTransformation(transformationSpec),
-                checked = preferences.isMilitaryTime,
-                onCheckedChange = {
-                    viewModel.setMilitaryTime(it,context)
-                },
-                label = { Text(stringResource(id = R.string.time_ampm_setting_title)) },
-                secondaryLabel = {
-                    if (preferences.isMilitaryTime) {
-                        Text(text = stringResource(id = R.string.time_ampm_setting_on), color = Color.LightGray)
-                    } else
-                        Text(text = stringResource(id = R.string.time_ampm_setting_off), color = Color.LightGray)
-                }
-            )
-        }
-
-        // Sunrise Sunset
-        item { PreferenceCategory(
-            modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
-            transformationSpec = SurfaceTransformation(transformationSpec),
-            title = stringResource(id = R.string.sunrise_sunset_countdown_comp_name)
-        )}
         item {
             Card(
                 modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),

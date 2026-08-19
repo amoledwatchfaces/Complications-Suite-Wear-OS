@@ -26,7 +26,7 @@
     <!-- Date Complication Preferences -->
     <string name="date_comp_name">Data (Suite)</string>
     <string name="date_custom_format">Formato personalizado</string>
-    <string name="date_setting_preference_category_title">Complicação de data</string>
+    <string name="date_setting_preference_category_title">Data</string>
     <string name="date_long_text_format">Formato de texto longo</string>
     <string name="date_long_title_format">Formato de título longo</string>
     <string name="date_short_text_format">Formato de texto curto</string>
@@ -47,7 +47,7 @@
 
     <!-- Moon Phase Complication Preferences -->
     <string name="moon_comp_name">Fase da Lua</string>
-    <string name="moon_setting_preference_category_title">Complicação de Fase da Lua / Nascer e pôr do sol</string>
+    <string name="moon_setting_preference_category_title">Lua / Sol</string>
 
     <array name="moon_phases">
         <item>First Quarter</item>
@@ -92,7 +92,7 @@
     <string name="time_setting_leading_zero_summary_on" translatable="false">09:00</string>
     <string name="time_setting_leading_zero_summary_off" translatable="false">9:00</string>
 
-    <string name="time_ampm_setting_preference_category_title">Complicação de Hora / Nascer e pôr do sol</string>
+    <string name="time_ampm_setting_preference_category_title">Geral</string>
     <string name="time_ampm_setting_title">Formato de hora</string>
     <string name="time_ampm_setting_on">ON / 24h</string>
     <string name="time_ampm_setting_off">OFF / 12h</string>
@@ -112,7 +112,7 @@
     </array>
     <string name="wc_comp_name_1">Relógio Mundial 1</string>
     <string name="wc_comp_name_2">Relógio Mundial 2</string>
-    <string name="wc_setting_preference_category_title">Complicação de Relógio Mundial</string>
+    <string name="wc_setting_preference_category_title">Relógio Mundial</string>
     <string name="wc_setting_leading_zero_title">Mostrar zero à esquerda</string>
     <string name="wc_setting_leading_zero_summary_on" translatable="false">09:00</string>
     <string name="wc_setting_leading_zero_summary_off" translatable="false">9:00</string>
@@ -126,6 +126,8 @@
 
     <!-- WOY Complication Preferences -->
     <string name="week_complication_name">Semana do Ano</string>
+    <string name="week_complication_icon_name">Semana do Ano (Ícone)</string>
+    <string name="woy_complication_text_short">S</string>
     <string name="woy_complication_text">Semana</string>
     <string name="woy_complication_description">Semana do Ano</string>
     <string name="woy_setting_preference_category_title">Complicação de Semana do Ano</string>
@@ -201,7 +203,7 @@
 
     <!-- Barometer -->
     <string name="barometer_comp_name">Barómetro</string>
-    <string name="barometer_category">Complicação do barómetro</string>
+    <string name="barometer_category">Barómetro</string>
     <string name="barometer_use_hpa">Unidades</string>
 
     <!-- Timer -->
@@ -225,7 +227,7 @@
     <string name="custom_goal_off">Desligado</string>
 
     <!-- Crypto Complications -->
-    <string name="crypto_complications">Complicações das Criptomoedas</string>
+    <string name="crypto_complications">Criptomoeda</string>
     <string name="counter_currency">Moeda de referência</string>
 
     <!-- Activity Launcher Complication -->

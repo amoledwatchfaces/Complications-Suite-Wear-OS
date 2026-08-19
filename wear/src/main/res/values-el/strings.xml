@@ -26,7 +26,7 @@
     <!-- Προτημήσεις Complication Ημέρας -->
     <string name="date_comp_name">Ημέρα (Suite)</string>
     <string name="date_custom_format">Προσαρμοσμένη μορφή</string>
-    <string name="date_setting_preference_category_title">Complication Ημέρας</string>
+    <string name="date_setting_preference_category_title">Ημέρα</string>
     <string name="date_long_text_format">Long Text Format</string>
     <string name="date_long_title_format">Long Title Format</string>
     <string name="date_short_text_format">Short Text Format</string>
@@ -47,7 +47,7 @@
 
     <!-- Προτημήσεις Complication Φάση της Σελήνης -->
     <string name="moon_comp_name">Φάση της Σελήνης</string>
-    <string name="moon_setting_preference_category_title">Complication Φάση της Σελήνης / Ανατολή και ηλιοβασίλεμα</string>
+    <string name="moon_setting_preference_category_title">Σελήνη / Ήλιος</string>
 
     <array name="moon_phases">
         <item>Πρώτο τέταρτο</item>
@@ -92,7 +92,7 @@
     <string name="time_setting_leading_zero_summary_on" translatable="false">09:00</string>
     <string name="time_setting_leading_zero_summary_off" translatable="false">9:00</string>
 
-    <string name="time_ampm_setting_preference_category_title">Complication Ώρας / Ανατολή και ηλιοβασίλεμα</string>
+    <string name="time_ampm_setting_preference_category_title">Γενικά</string>
     <string name="time_ampm_setting_title">Μορφή Ώρας</string>
     <string name="time_ampm_setting_on">24h</string>
     <string name="time_ampm_setting_off">12h</string>
@@ -112,7 +112,7 @@
     </array>
     <string name="wc_comp_name_1">Παγκόσμιο ρολόι 1</string>
     <string name="wc_comp_name_2">Παγκόσμιο ρολόι 2</string>
-    <string name="wc_setting_preference_category_title">Complication Παγκόσμιο ρολόι</string>
+    <string name="wc_setting_preference_category_title">Παγκόσμιο ρολόι</string>
     <string name="wc_setting_leading_zero_title">Εμφάνιση Αρχικού 0</string>
     <string name="wc_setting_leading_zero_summary_on" translatable="false">09:00</string>
     <string name="wc_setting_leading_zero_summary_off" translatable="false">9:00</string>
@@ -126,6 +126,8 @@
 
     <!-- Προτημήσεις Complication Εβδομάδας του Χρόνου -->
     <string name="week_complication_name">Εβδομάδα του Χρόνου</string>
+    <string name="week_complication_icon_name">Εβδομάδα του Χρόνου (Εικονίδιο)</string>
+    <string name="woy_complication_text_short">Ε</string>
     <string name="woy_complication_text">Εβδομάδα</string>
     <string name="woy_complication_description">Εβδομάδα του Χρόνου</string>
     <string name="woy_setting_preference_category_title">Complication Εβδομάδα του Χρόνου</string>
@@ -201,7 +203,7 @@
 
     <!-- Barometer -->
     <string name="barometer_comp_name">Βαρόμετρο</string>
-    <string name="barometer_category">Complication βαρόμετρου</string>
+    <string name="barometer_category">Βαρόμετρο</string>
     <string name="barometer_use_hpa">Μονάδες</string>
 
     <!-- Timer -->
@@ -225,7 +227,7 @@
     <string name="custom_goal_off">Απενεργοποίηση</string>
 
     <!-- Crypto Complications -->
-    <string name="crypto_complications">Περιπλοκές Κρυπτονομισμάτων</string>
+    <string name="crypto_complications">Κρυπτονόμισμα</string>
     <string name="counter_currency">Αντιστροφή νομίσματος</string>
 
     <!-- Activity Launcher Complication -->
