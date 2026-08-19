@@ -92,7 +92,7 @@ class JalaliDateComplicationService : SuspendingComplicationDataSourceService() 
                 ShortTextComplicationData.Builder(
                     text = try {
                         PlainComplicationText.Builder(persianDayText.toString()).build()
-                    } catch (e: IllegalArgumentException) {
+                    } catch (_: IllegalArgumentException) {
                         // Inform the user that the format is invalid
                         Toast.makeText(this, "Text: Wrong format! Check SimpleDateFormat", Toast.LENGTH_LONG).show()
                         PlainComplicationText.Builder(text="?").build()
@@ -100,7 +100,7 @@ class JalaliDateComplicationService : SuspendingComplicationDataSourceService() 
                     contentDescription = PlainComplicationText.Builder(text = getString(R.string.date_comp_name)).build())
                     .setTitle(try {
                             PlainComplicationText.Builder(persianMonthText.toString()).build()
-                        } catch (e: IllegalArgumentException) {
+                        } catch (_: IllegalArgumentException) {
                             // Inform the user that the format is invalid
                             Toast.makeText(this, "Title: Wrong format! Check SimpleDateFormat patterns", Toast.LENGTH_LONG).show()
                             PlainComplicationText.Builder(text="?").build()
@@ -113,7 +113,7 @@ class JalaliDateComplicationService : SuspendingComplicationDataSourceService() 
                 LongTextComplicationData.Builder(
                     text = try {
                         PlainComplicationText.Builder(persianDayText.toString()).build()
-                    } catch (e: IllegalArgumentException) {
+                    } catch (_: IllegalArgumentException) {
                         // Inform the user that the format is invalid
                         Toast.makeText(this, "Text: Wrong format! Check SimpleDateFormat", Toast.LENGTH_LONG).show()
                         PlainComplicationText.Builder(text="?").build()
@@ -121,7 +121,7 @@ class JalaliDateComplicationService : SuspendingComplicationDataSourceService() 
                     contentDescription = PlainComplicationText.Builder(text = getString(R.string.date_comp_name)).build())
                     .setTitle(try {
                         PlainComplicationText.Builder(persianMonthText.toString()).build()
-                    } catch (e: IllegalArgumentException) {
+                    } catch (_: IllegalArgumentException) {
                         // Inform the user that the format is invalid
                         Toast.makeText(this, "Title: Wrong format! Check SimpleDateFormat patterns", Toast.LENGTH_LONG).show()
                         PlainComplicationText.Builder(text="?").build()

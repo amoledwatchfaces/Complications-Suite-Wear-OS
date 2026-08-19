@@ -127,6 +127,8 @@
 
     <!-- WOY Complication Preferences -->
     <string name="week_complication_name">Kalenderwoche</string>
+    <string name="week_complication_icon_name">Kalenderwoche (Symbol)</string>
+    <string name="woy_complication_text_short">KW</string>
     <string name="woy_complication_text">Woche</string>
     <string name="woy_complication_description">Woche des Jahres</string>
     <string name="woy_setting_preference_category_title">Kalenderwochen-Komplikation</string>

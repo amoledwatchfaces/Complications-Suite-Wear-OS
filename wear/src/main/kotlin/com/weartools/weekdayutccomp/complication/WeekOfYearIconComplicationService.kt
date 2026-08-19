@@ -30,24 +30,30 @@ package com.weartools.weekdayutccomp.complication
 import android.app.PendingIntent
 import android.content.ContentValues.TAG
 import android.content.Intent
-import android.graphics.drawable.Icon.createWithResource
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
+import android.graphics.Typeface
+import android.graphics.drawable.Icon.createWithBitmap
 import android.util.Log
+import androidx.core.graphics.createBitmap
 import androidx.wear.watchface.complications.data.ComplicationData
 import androidx.wear.watchface.complications.data.ComplicationText
 import androidx.wear.watchface.complications.data.ComplicationType
-import androidx.wear.watchface.complications.data.LongTextComplicationData
 import androidx.wear.watchface.complications.data.MonochromaticImage
+import androidx.wear.watchface.complications.data.MonochromaticImageComplicationData
 import androidx.wear.watchface.complications.data.PlainComplicationText
-import androidx.wear.watchface.complications.data.RangedValueComplicationData
-import androidx.wear.watchface.complications.data.ShortTextComplicationData
-import androidx.wear.watchface.complications.data.TimeFormatComplicationText
+import androidx.wear.watchface.complications.data.SmallImage
+import androidx.wear.watchface.complications.data.SmallImageComplicationData
+import androidx.wear.watchface.complications.data.SmallImageType
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
 import com.weartools.weekdayutccomp.R
-import com.weartools.weekdayutccomp.R.drawable
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
-import java.time.Year
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeFormatterBuilder
 import java.time.format.SignStyle
@@ -55,7 +61,53 @@ import java.time.temporal.WeekFields
 import java.util.Locale
 
 @AndroidEntryPoint
-class WeekOfYearComplicationService : SuspendingComplicationDataSourceService() {
+class WeekOfYearIconComplicationService : SuspendingComplicationDataSourceService() {
+
+    private fun createBitmapWithCircleAndNumber(number: Int): Bitmap {
+        // Define the bitmap size
+        val bitmapSize = 72
+
+        // Create a solid circle bitmap
+        val circleBitmap = createBitmap(bitmapSize, bitmapSize)
+        val circleCanvas = Canvas(circleBitmap)
+        val centerX = bitmapSize / 2f
+        val centerY = bitmapSize / 2f
+        val radius = bitmapSize / 2f
+        val paintCircle = Paint().apply {
+            color = Color.WHITE
+            style = Paint.Style.FILL
+        }
+        circleCanvas.drawCircle(centerX, centerY, radius, paintCircle)
+
+        // Create a text bitmap
+        val textBitmap = createBitmap(bitmapSize, bitmapSize)
+        val textCanvas = Canvas(textBitmap)
+        // ... (draw the number as in your original code, but with a white background)
+        // Draw the number in the center
+        val paintText = Paint().apply {
+            color = Color.BLACK
+            textAlign = Paint.Align.CENTER
+            textSize = if (number >= 10) 40f else 48f
+            typeface = Typeface.DEFAULT_BOLD
+        }
+
+        val textY = centerY + 1 - (paintText.descent() + paintText.ascent()) / 2
+        textCanvas.drawText(number.toString(), centerX, textY, paintText)
+
+        // Create a mask bitmap
+        val maskBitmap = createBitmap(bitmapSize, bitmapSize, Bitmap.Config.ALPHA_8)
+        val maskCanvas = Canvas(maskBitmap)
+        maskCanvas.drawBitmap(textBitmap, 0f, 0f, null)
+
+        // Create a paint to combine bitmaps
+        val paint = Paint()
+        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_OUT)
+
+        // Combine the circle and mask bitmaps
+        circleCanvas.drawBitmap(maskBitmap, 0f, 0f, paint)
+
+        return circleBitmap
+    }
 
     private fun openScreen(): PendingIntent? {
 
@@ -72,28 +124,18 @@ class WeekOfYearComplicationService : SuspendingComplicationDataSourceService() 
     override fun getPreviewData(type: ComplicationType): ComplicationData? {
         return when (type) {
 
-            ComplicationType.SHORT_TEXT -> {
-                ShortTextComplicationData.Builder(
-                    text = PlainComplicationText.Builder(text = "W:32").build(),
+            ComplicationType.MONOCHROMATIC_IMAGE -> {
+                MonochromaticImageComplicationData.Builder(
+                    monochromaticImage = MonochromaticImage.Builder(createWithBitmap(createBitmapWithCircleAndNumber(7))).build(),
                     contentDescription = ComplicationText.EMPTY)
-                    .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_week)).build())
                     .build()
             }
-            ComplicationType.LONG_TEXT -> {
-                LongTextComplicationData.Builder(
-                    text = PlainComplicationText.Builder(text = getString(R.string.woy_complication_text)+": 34").build(),
+            ComplicationType.SMALL_IMAGE -> {
+                SmallImageComplicationData.Builder(
+                    smallImage = SmallImage.Builder(
+                        image = createWithBitmap(createBitmapWithCircleAndNumber(7)),
+                        type = SmallImageType.ICON).build(),
                     contentDescription = ComplicationText.EMPTY)
-                    .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_week)).build())
-                    .build()
-            }
-            ComplicationType.RANGED_VALUE -> {
-                RangedValueComplicationData.Builder(
-                    value = 32f,
-                    min = 1f,
-                    max =  52f,
-                    contentDescription = ComplicationText.EMPTY)
-                    .setText(PlainComplicationText.Builder(text = "W:32").build())
-                    .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_week)).build())
                     .build()
             }
 
@@ -112,34 +154,21 @@ class WeekOfYearComplicationService : SuspendingComplicationDataSourceService() 
 
         val week = fmt.format(date).toInt()
 
-        val maxWeek = if (Year.isLeap(date.year.toLong())) 53F else 52F
-
         return when (request.complicationType) {
 
-            ComplicationType.SHORT_TEXT -> {
-                ShortTextComplicationData.Builder(
-                    text = TimeFormatComplicationText.Builder(format = "'${getString(R.string.woy_complication_text_short)}:'w").build(),
+            ComplicationType.MONOCHROMATIC_IMAGE -> {
+                MonochromaticImageComplicationData.Builder(
+                    monochromaticImage = MonochromaticImage.Builder(createWithBitmap(createBitmapWithCircleAndNumber(week))).build(),
                     contentDescription = PlainComplicationText.Builder(text = getString(R.string.woy_complication_description)).build())
-                    .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_week)).build())
                     .setTapAction(openScreen())
                     .build()
             }
-            ComplicationType.LONG_TEXT -> {
-                LongTextComplicationData.Builder(
-                    text = TimeFormatComplicationText.Builder(format = "'${getString(R.string.woy_complication_text)}: 'w").build(),
+            ComplicationType.SMALL_IMAGE -> {
+                SmallImageComplicationData.Builder(
+                    smallImage = SmallImage.Builder(
+                        image = createWithBitmap(createBitmapWithCircleAndNumber(week)),
+                        type = SmallImageType.ICON).build(),
                     contentDescription = PlainComplicationText.Builder(text = getString(R.string.woy_complication_description)).build())
-                    .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_week)).build())
-                    .setTapAction(openScreen())
-                    .build()
-            }
-            ComplicationType.RANGED_VALUE -> {
-                RangedValueComplicationData.Builder(
-                    value = week.toFloat(),
-                    min = 1f,
-                    max =  maxWeek,
-                    contentDescription = PlainComplicationText.Builder(text = getString(R.string.woy_complication_description)).build())
-                    .setMonochromaticImage(MonochromaticImage.Builder(image = createWithResource(this, drawable.ic_week)).build())
-                    .setText(TimeFormatComplicationText.Builder(format = "'${getString(R.string.woy_complication_text_short)}:'w").build())
                     .setTapAction(openScreen())
                     .build()
             }

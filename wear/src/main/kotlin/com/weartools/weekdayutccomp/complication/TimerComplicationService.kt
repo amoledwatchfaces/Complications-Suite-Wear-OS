@@ -77,7 +77,7 @@ class TimerComplicationService : SuspendingComplicationDataSourceService() {
     private val preferences by lazy { UserPreferencesRepository(dataStore).getPreferences() }
 
     private fun scheduleExactUpdate(context: Context, triggerAtMillis: Long) {
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, TimerUpdateReceiver::class.java).apply {
             action = "$packageName.UPDATE_TIMER"
         }

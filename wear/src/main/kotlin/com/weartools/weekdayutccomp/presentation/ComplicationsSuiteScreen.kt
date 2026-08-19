@@ -60,10 +60,10 @@ import androidx.wear.compose.foundation.lazy.TransformingLazyColumnState
 import androidx.wear.compose.foundation.lazy.rememberTransformingLazyColumnState
 import androidx.wear.compose.foundation.rotary.RotaryScrollableDefaults
 import androidx.wear.compose.foundation.rotary.rotaryScrollable
-import androidx.wear.compose.material3.Icon
 import androidx.wear.compose.material3.AppCard
 import androidx.wear.compose.material3.Card
 import androidx.wear.compose.material3.CheckboxButton
+import androidx.wear.compose.material3.Icon
 import androidx.wear.compose.material3.ListHeader
 import androidx.wear.compose.material3.MaterialTheme
 import androidx.wear.compose.material3.SurfaceTransformation
@@ -396,30 +396,6 @@ fun ComplicationsSuiteScreen(
                     }
                 }
             }
-        }
-
-        // Week of Year
-        item { PreferenceCategory(
-            modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
-            transformationSpec = SurfaceTransformation(transformationSpec),
-            title = stringResource(id = R.string.woy_setting_preference_category_title)
-        )}
-        item {
-            SwitchButton(
-                modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
-                transformation = SurfaceTransformation(transformationSpec),
-                checked = preferences.isISO,
-                onCheckedChange = {
-                    viewModel.setISO(it, context)
-                },
-                label = { Text(stringResource(id = R.string.woy_setting_title)) },
-                secondaryLabel = {
-                    if (preferences.isISO) {
-                        Text(text = stringResource(id = R.string.woy_setting_on), color = Color.LightGray)
-                    } else
-                        Text(text = stringResource(id = R.string.woy_setting_off), color = Color.LightGray)
-                }
-            )
         }
 
         // Date

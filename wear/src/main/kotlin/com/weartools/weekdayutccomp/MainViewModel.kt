@@ -76,7 +76,6 @@ import com.weartools.weekdayutccomp.complication.SunriseSunsetRVComplicationServ
 import com.weartools.weekdayutccomp.complication.TimeComplicationService
 import com.weartools.weekdayutccomp.complication.TimerComplicationService
 import com.weartools.weekdayutccomp.complication.WaterComplicationService
-import com.weartools.weekdayutccomp.complication.WeekOfYearComplicationService
 import com.weartools.weekdayutccomp.complication.WorldClock1ComplicationService
 import com.weartools.weekdayutccomp.complication.WorldClock2ComplicationService
 import com.weartools.weekdayutccomp.enums.DateFormat
@@ -336,10 +335,7 @@ class MainViewModel @Inject constructor(
         context.updateComplication(SunriseSunsetComplicationService::class.java)
         context.updateComplication(MoonriseMoonsetComplicationService::class.java)
     }}
-    fun setISO(value: Boolean, context: Context) { viewModelScope.launch {
-        dataStore.updateData { it.copy(isISO = value) }
-        context.updateComplication(WeekOfYearComplicationService::class.java)
-    }}
+
     fun setWorldClock1(worldClock: WorldClock, context: Context) { viewModelScope.launch {
         dataStore.updateData { it.copy(worldClock1 = worldClock) }
         context.updateComplication(WorldClock1ComplicationService::class.java)

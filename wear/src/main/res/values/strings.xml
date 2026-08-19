@@ -131,6 +131,8 @@
 
     <!-- WOY Complication Preferences -->
     <string name="week_complication_name">Week of Year</string>
+    <string name="week_complication_icon_name">Week of Year (Icon)</string>
+    <string name="woy_complication_text_short">W</string>
     <string name="woy_complication_text">Week</string>
     <string name="woy_complication_description">Week of Year</string>
     <string name="woy_setting_preference_category_title">Week of Year Complication</string>

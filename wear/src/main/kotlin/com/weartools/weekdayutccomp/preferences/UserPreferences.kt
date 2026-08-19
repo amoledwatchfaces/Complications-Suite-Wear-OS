@@ -35,9 +35,6 @@ data class UserPreferences(
     val isMilitaryTime: Boolean = true,
     val isLeadingZeroTime: Boolean = true,
 
-    // WEEK OF YEAR
-    val isISO: Boolean = true,
-
     //DATE
     val longText: String = "MMMM d, yyyy",
     val longTitle: String = "EEEE",
