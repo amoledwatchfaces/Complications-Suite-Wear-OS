@@ -33,8 +33,6 @@ import android.content.Intent
 import android.icu.util.IslamicCalendar
 import android.icu.util.ULocale
 import android.util.Log
-import android.widget.Toast
-import androidx.datastore.core.DataStore
 import androidx.wear.watchface.complications.data.ComplicationData
 import androidx.wear.watchface.complications.data.ComplicationText
 import androidx.wear.watchface.complications.data.ComplicationType
@@ -44,10 +42,7 @@ import androidx.wear.watchface.complications.data.ShortTextComplicationData
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
 import com.weartools.weekdayutccomp.R
-import com.weartools.weekdayutccomp.preferences.UserPreferences
-import dagger.hilt.android.AndroidEntryPoint
 import java.util.Calendar
-import javax.inject.Inject
 
 class HijriDateComplicationService : SuspendingComplicationDataSourceService() {
 
@@ -107,42 +102,18 @@ class HijriDateComplicationService : SuspendingComplicationDataSourceService() {
         return when (request.complicationType) {
             ComplicationType.SHORT_TEXT -> {
                 ShortTextComplicationData.Builder(
-                    text = try {
-                        PlainComplicationText.Builder(islamicDay.toString()).build()
-                    } catch (e: IllegalArgumentException) {
-                        // Inform the user that the format is invalid
-                        Toast.makeText(this, "Text: Wrong format! Check SimpleDateFormat", Toast.LENGTH_LONG).show()
-                        PlainComplicationText.Builder(text="?").build()
-                    },
+                    text = PlainComplicationText.Builder(text = islamicDay.toString()).build(),
                     contentDescription = PlainComplicationText.Builder(text = getString(R.string.date_comp_name)).build())
-                    .setTitle(try {
-                            PlainComplicationText.Builder(monthName).build()
-                        } catch (e: IllegalArgumentException) {
-                            // Inform the user that the format is invalid
-                            Toast.makeText(this, "Title: Wrong format! Check SimpleDateFormat", Toast.LENGTH_LONG).show()
-                            PlainComplicationText.Builder(text="?").build()
-                        })
+                    .setTitle(PlainComplicationText.Builder(text = monthName).build())
                     .setTapAction(openScreen())
                     .build()
             }
 
             ComplicationType.LONG_TEXT -> {
                 LongTextComplicationData.Builder(
-                    text = try {
-                        PlainComplicationText.Builder(islamicDay.toString()).build()
-                    } catch (e: IllegalArgumentException) {
-                        // Inform the user that the format is invalid
-                        Toast.makeText(this, "Text: Wrong format! Check SimpleDateFormat", Toast.LENGTH_LONG).show()
-                        PlainComplicationText.Builder(text="?").build()
-                    },
+                    text = PlainComplicationText.Builder(text = islamicDay.toString()).build(),
                     contentDescription = PlainComplicationText.Builder(text = getString(R.string.date_comp_name)).build())
-                    .setTitle(try {
-                        PlainComplicationText.Builder(monthName).build()
-                    } catch (e: IllegalArgumentException) {
-                        // Inform the user that the format is invalid
-                        Toast.makeText(this, "Title: Wrong format! Check SimpleDateFormat", Toast.LENGTH_LONG).show()
-                        PlainComplicationText.Builder(text="?").build()
-                    })
+                    .setTitle(PlainComplicationText.Builder(text = monthName).build())
                     .setTapAction(openScreen())
                     .build()
             }

@@ -30,8 +30,10 @@ package com.weartools.weekdayutccomp.complication
 import android.app.PendingIntent
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.icu.text.DateFormat
+import android.icu.util.Calendar
+import android.icu.util.ULocale
 import android.util.Log
-import android.widget.Toast
 import androidx.wear.watchface.complications.data.ComplicationData
 import androidx.wear.watchface.complications.data.ComplicationText
 import androidx.wear.watchface.complications.data.ComplicationType
@@ -41,8 +43,6 @@ import androidx.wear.watchface.complications.data.ShortTextComplicationData
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
 import com.weartools.weekdayutccomp.R
-import saman.zamani.persiandate.PersianDate
-import saman.zamani.persiandate.PersianDateFormat
 
 class JalaliDateComplicationService : SuspendingComplicationDataSourceService() {
 
@@ -82,50 +82,27 @@ class JalaliDateComplicationService : SuspendingComplicationDataSourceService() 
 
     override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
 
-        val persianDate = PersianDate()
-        val persianDayText = PersianDateFormat("d").format(persianDate)
-        val persianMonthText = persianDate.monthName
+        val uLocale = ULocale("fa_IR@calendar=persian")
+        val cal = Calendar.getInstance(uLocale)
+        val persianDayText = cal.get(Calendar.DAY_OF_MONTH).toString()
+        val persianMonthText = DateFormat.getInstanceForSkeleton("MMMM", uLocale).format(cal)
 
         return when (request.complicationType) {
 
             ComplicationType.SHORT_TEXT -> {
                 ShortTextComplicationData.Builder(
-                    text = try {
-                        PlainComplicationText.Builder(persianDayText.toString()).build()
-                    } catch (_: IllegalArgumentException) {
-                        // Inform the user that the format is invalid
-                        Toast.makeText(this, "Text: Wrong format! Check SimpleDateFormat", Toast.LENGTH_LONG).show()
-                        PlainComplicationText.Builder(text="?").build()
-                    },
+                    text = PlainComplicationText.Builder(text = persianDayText).build(),
                     contentDescription = PlainComplicationText.Builder(text = getString(R.string.date_comp_name)).build())
-                    .setTitle(try {
-                            PlainComplicationText.Builder(persianMonthText.toString()).build()
-                        } catch (_: IllegalArgumentException) {
-                            // Inform the user that the format is invalid
-                            Toast.makeText(this, "Title: Wrong format! Check SimpleDateFormat patterns", Toast.LENGTH_LONG).show()
-                            PlainComplicationText.Builder(text="?").build()
-                        })
+                    .setTitle(PlainComplicationText.Builder(text = persianMonthText).build())
                     .setTapAction(openScreen())
                     .build()
             }
 
             ComplicationType.LONG_TEXT -> {
                 LongTextComplicationData.Builder(
-                    text = try {
-                        PlainComplicationText.Builder(persianDayText.toString()).build()
-                    } catch (_: IllegalArgumentException) {
-                        // Inform the user that the format is invalid
-                        Toast.makeText(this, "Text: Wrong format! Check SimpleDateFormat", Toast.LENGTH_LONG).show()
-                        PlainComplicationText.Builder(text="?").build()
-                    },
+                    text = PlainComplicationText.Builder(text = persianDayText).build(),
                     contentDescription = PlainComplicationText.Builder(text = getString(R.string.date_comp_name)).build())
-                    .setTitle(try {
-                        PlainComplicationText.Builder(persianMonthText.toString()).build()
-                    } catch (_: IllegalArgumentException) {
-                        // Inform the user that the format is invalid
-                        Toast.makeText(this, "Title: Wrong format! Check SimpleDateFormat patterns", Toast.LENGTH_LONG).show()
-                        PlainComplicationText.Builder(text="?").build()
-                    })
+                    .setTitle(PlainComplicationText.Builder(text = persianMonthText).build())
                     .setTapAction(openScreen())
                     .build()
             }

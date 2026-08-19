@@ -141,9 +141,6 @@ dependencies {
     // Serialization
     implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
 
-    // Persian Date
-    implementation("com.github.samanzamani:persiandate:1.7.1")
-
     // Hilt
     implementation ("androidx.hilt:hilt-navigation-compose:1.4.0")
     implementation ("com.google.dagger:hilt-android:2.60.1")
