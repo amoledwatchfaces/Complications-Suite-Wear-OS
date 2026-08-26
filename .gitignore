@@ -30,3 +30,6 @@ ndkBuild/
 # OS-specific
 .DS_Store
 Thumbs.db
+
+# IDE artifacts
+.artifacts/

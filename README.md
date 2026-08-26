@@ -20,6 +20,36 @@ Add missing Custom Complications to your Wear OS Watch Face. Customize dates, ca
 
 ---
 
+## ⚙️ App Settings & Configuration
+
+The app settings screen on Wear OS allows you to customize each complication directly on your watch (e.g. date formats, world clocks, custom text, moon phase location, and custom goal targets).
+
+<p align="center">
+  <img src="screenshots/screenshot_14-00-10.png" width="18%" />
+  <img src="screenshots/screenshot_14-00-16.png" width="18%" />
+  <img src="screenshots/screenshot_14-01-20.png" width="18%" />
+  <img src="screenshots/screenshot_14-01-26.png" width="18%" />
+  <img src="screenshots/screenshot_14-01-32.png" width="18%" />
+</p>
+
+<details>
+<summary><b>Show more settings screenshots</b></summary>
+<br>
+<p align="center">
+  <img src="screenshots/screenshot_14-00-23.png" width="18%" />
+  <img src="screenshots/screenshot_14-00-26.png" width="18%" />
+  <img src="screenshots/screenshot_14-01-38.png" width="18%" />
+  <img src="screenshots/screenshot_14-01-41.png" width="18%" />
+  <img src="screenshots/screenshot_14-01-59.png" width="18%" />
+  <img src="screenshots/screenshot_14-02-22.png" width="18%" />
+  <img src="screenshots/screenshot_14-02-36.png" width="18%" />
+  <img src="screenshots/screenshot_14-02-47.png" width="18%" />
+  <img src="screenshots/screenshot_14-03-04.png" width="18%" />
+</p>
+</details>
+
+---
+
 ## 🚀 Installation & Releases
 
 ### Google Play Store
