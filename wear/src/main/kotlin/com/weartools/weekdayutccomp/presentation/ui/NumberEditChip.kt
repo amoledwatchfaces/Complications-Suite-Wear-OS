@@ -24,10 +24,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.sp
 import androidx.wear.compose.material3.Button
 import androidx.wear.compose.material3.ButtonDefaults
+import androidx.wear.compose.material3.MaterialTheme
 import androidx.wear.compose.material3.Text
 import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.activity.EditType
-import com.weartools.weekdayutccomp.theme.appColorScheme
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -72,7 +72,7 @@ fun NumberEditChip(
                     fontSize = 12.sp,
                     lineHeight = 16.sp,
                     letterSpacing = 0.1.sp,
-                    color =  appColorScheme.secondary
+                    color =  MaterialTheme.colorScheme.secondary
                 ),
                 singleLine = true,
                 cursorBrush = SolidColor(Color.Unspecified),
@@ -122,7 +122,7 @@ fun EditTextChip(
                     fontSize = 12.sp,
                     lineHeight = 16.sp,
                     letterSpacing = 0.1.sp,
-                    color =  appColorScheme.primary),
+                    color =  MaterialTheme.colorScheme.primary),
                 singleLine = true,
                 cursorBrush = SolidColor(Color.Unspecified),
                 keyboardOptions = KeyboardOptions(

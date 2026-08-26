@@ -73,7 +73,6 @@ import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.presentation.ui.ListItemsWidget
 import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme
-import com.weartools.weekdayutccomp.theme.appColorScheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -143,10 +142,10 @@ fun WaterIntakeScreen(
             },
             valueProgression = 0..100,
             colors = StepperDefaults.colors(
-                buttonIconColor = appColorScheme.primary,
+                buttonIconColor = MaterialTheme.colorScheme.primary,
             ),
-            decreaseIcon = { Icon(imageVector = Icons.Default.Remove, contentDescription = "Remove", tint = appColorScheme.primary) },
-            increaseIcon = { Icon(imageVector = Icons.Default.Add, contentDescription = "Add", tint = appColorScheme.primary) })
+            decreaseIcon = { Icon(imageVector = Icons.Default.Remove, contentDescription = "Remove", tint = MaterialTheme.colorScheme.primary) },
+            increaseIcon = { Icon(imageVector = Icons.Default.Add, contentDescription = "Add", tint = MaterialTheme.colorScheme.primary) })
         {
             //WaterChip(context = context, pref = pref, text = "Intake: $intake", title = "Goal: ${intakeGoal.toInt()}")
 
@@ -158,7 +157,7 @@ fun WaterIntakeScreen(
                 onClick = {
                     openGoalSetting = openGoalSetting.not()
                 },
-                icon = { Icon(imageVector = Icons.Default.WaterDrop, contentDescription = "Remove", tint = appColorScheme.primary) },
+                icon = { Icon(imageVector = Icons.Default.WaterDrop, contentDescription = "Remove", tint = MaterialTheme.colorScheme.primary) },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xff2c2c2d),
                 ),
@@ -171,7 +170,7 @@ fun WaterIntakeScreen(
                 },
                 secondaryLabel = {
                     Text(
-                        color = appColorScheme.primary,
+                        color = MaterialTheme.colorScheme.primary,
                         text = titleGoal,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
@@ -219,7 +218,7 @@ fun WaterIntakeScreen(
             startAngle = 135f,
             endAngle = 225f,
             colors = ProgressIndicatorDefaults.colors(
-                indicatorColor = appColorScheme.secondary,
+                indicatorColor = MaterialTheme.colorScheme.secondary,
                 trackColor = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.2f),
             ),
             strokeWidth = 5.dp

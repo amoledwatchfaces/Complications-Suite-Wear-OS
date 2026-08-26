@@ -127,7 +127,6 @@ import com.weartools.weekdayutccomp.presentation.ui.LoaderBox
 import com.weartools.weekdayutccomp.presentation.ui.NumberEditChip
 import com.weartools.weekdayutccomp.presentation.ui.ToggleChip
 import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme
-import com.weartools.weekdayutccomp.theme.appColorScheme
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.ByteArrayOutputStream
 import kotlin.math.roundToInt
@@ -209,10 +208,10 @@ fun CustomGoalScreen(
             },
             valueProgression = 0..1000000000,
             colors = StepperDefaults.colors(
-                buttonIconColor = appColorScheme.primary,
+                buttonIconColor = MaterialTheme.colorScheme.primary,
             ),
-            decreaseIcon = { Icon(imageVector = Icons.Default.Remove, contentDescription = "Remove", tint = appColorScheme.primary) },
-            increaseIcon = { Icon(imageVector = Icons.Default.Add, contentDescription = "Add", tint = appColorScheme.primary) })
+            decreaseIcon = { Icon(imageVector = Icons.Default.Remove, contentDescription = "Remove", tint = MaterialTheme.colorScheme.primary) },
+            increaseIcon = { Icon(imageVector = Icons.Default.Add, contentDescription = "Add", tint = MaterialTheme.colorScheme.primary) })
         {}
         Card(
             onClick = {
@@ -251,7 +250,7 @@ fun CustomGoalScreen(
                         modifier = Modifier.padding(top = 2.dp, bottom = 2.dp)
                     )
                     Text(
-                        color = appColorScheme.primary,
+                        color = MaterialTheme.colorScheme.primary,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         text = stringResource(
@@ -265,7 +264,7 @@ fun CustomGoalScreen(
                     Icon(
                         imageVector = ImageUtil.createImageVector(preferences.value.customGoalIconId)?:Icons.Default.Flag,
                         contentDescription = "Remove",
-                        tint = appColorScheme.primary)
+                        tint = MaterialTheme.colorScheme.primary)
                 }
             }
         }
@@ -287,7 +286,7 @@ fun CustomGoalScreen(
 
         CompactButton(
             colors = ButtonDefaults.buttonColors(
-                containerColor = appColorScheme.primary
+                containerColor = MaterialTheme.colorScheme.primary
             ),
             modifier = Modifier.padding(top = 80.dp, start = 80.dp),
             onClick = {
@@ -316,7 +315,7 @@ fun CustomGoalScreen(
             startAngle = 135f,
             endAngle = 225f,
             colors = ProgressIndicatorDefaults.colors(
-                indicatorColor = appColorScheme.secondary,
+                indicatorColor = MaterialTheme.colorScheme.secondary,
                 trackColor = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.2f),
             ),
             strokeWidth = 5.dp
@@ -383,7 +382,7 @@ fun GoalSettings(
                             Icon(
                                 imageVector = ImageUtil.createImageVector(preferences.value.customGoalIconId)?:Icons.Default.Flag,
                                 contentDescription = "Remove",
-                                tint = appColorScheme.primary) },
+                                tint = MaterialTheme.colorScheme.primary) },
                         label = {
                             Text(
                                 text = stringResource(R.string.activity_set_icon),
@@ -648,7 +647,7 @@ fun SearchTextField(
             search = it
             onSearchChanged(it)
         },
-        label = { Text(text = "Search", color = appColorScheme.primary) },
+        label = { Text(text = "Search", color = MaterialTheme.colorScheme.primary) },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Done, keyboardType = KeyboardType.Text
         ),
@@ -663,13 +662,13 @@ fun SearchTextField(
             .focusRequester(focusRequester),
         colors = //
         OutlinedTextFieldDefaults.colors(
-            unfocusedBorderColor = appColorScheme.primaryContainer.copy(alpha = 0.6f),
-            focusedBorderColor = appColorScheme.primaryContainer.copy(alpha = 1f),
+            unfocusedBorderColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.6f),
+            focusedBorderColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 1f),
             focusedTextColor = Color.White,
-            cursorColor = appColorScheme.primary,
+            cursorColor = MaterialTheme.colorScheme.primary,
             selectionColors = TextSelectionColors(
-                backgroundColor = appColorScheme.primary.copy(alpha = 0f),
-                handleColor = appColorScheme.primary,
+                backgroundColor = MaterialTheme.colorScheme.primary.copy(alpha = 0f),
+                handleColor = MaterialTheme.colorScheme.primary,
                 ),
             ),
     )

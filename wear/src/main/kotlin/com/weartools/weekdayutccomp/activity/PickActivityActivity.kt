@@ -90,7 +90,6 @@ import com.weartools.weekdayutccomp.presentation.ui.IconsViewModelImp
 import com.weartools.weekdayutccomp.presentation.ui.ImageUtil
 import com.weartools.weekdayutccomp.presentation.ui.LoaderBox
 import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme
-import com.weartools.weekdayutccomp.theme.appColorScheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -194,7 +193,7 @@ fun PickActivityScreen(
                                 Icon(
                                     imageVector = ImageUtil.createImageVector(preferences.value.activityIconId)?: Icons.AutoMirrored.Filled.OpenInNew,
                                     contentDescription = "Remove",
-                                    tint = appColorScheme.primary) },
+                                    tint = MaterialTheme.colorScheme.primary) },
                             label = {
                                 Text(
                                     text = stringResource(R.string.activity_set_icon),
@@ -225,7 +224,7 @@ fun PickActivityScreen(
                                 Text(
                                     text = preferences.value.activityClassName.split(".").last(),
                                     maxLines = 1,
-                                    color = appColorScheme.primary,
+                                    color = MaterialTheme.colorScheme.primary,
                                     overflow = TextOverflow.Ellipsis
                                 )
                             }

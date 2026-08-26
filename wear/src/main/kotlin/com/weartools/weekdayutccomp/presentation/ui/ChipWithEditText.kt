@@ -91,7 +91,7 @@ fun ChipWithEditText(
         /*colors = if (isCustomFormatUsed) {ChipDefaults.gradientBackgroundChipColors(
             startBackgroundColor = MaterialTheme.colors.surface.copy(alpha = 0f)
                 .compositeOver(MaterialTheme.colors.surface),
-            endBackgroundColor = appColorScheme.primary
+            endBackgroundColor = MaterialTheme.colorScheme.primary
         )}
         else {ChipDefaults.primaryChipColors(backgroundColor = Color(0xff2c2c2d))},
 
