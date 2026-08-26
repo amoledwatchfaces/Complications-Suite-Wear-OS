@@ -1,14 +1,12 @@
 package com.weartools.weekdayutccomp.presentation.ui
 
 import android.content.Context
-import android.graphics.Typeface
-import android.text.style.CharacterStyle
-import android.text.style.StyleSpan
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationCity
@@ -20,7 +18,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -31,12 +28,12 @@ import androidx.wear.compose.foundation.rotary.RotaryScrollableDefaults
 import androidx.wear.compose.foundation.rotary.rotaryScrollable
 import androidx.wear.compose.material3.Button
 import androidx.wear.compose.material3.ButtonDefaults
+import androidx.wear.compose.material3.Dialog
 import androidx.wear.compose.material3.Icon
 import androidx.wear.compose.material3.MaterialTheme
 import androidx.wear.compose.material3.ScreenScaffold
 import androidx.wear.compose.material3.SurfaceTransformation
 import androidx.wear.compose.material3.Text
-import androidx.wear.compose.material3.Dialog
 import androidx.wear.compose.material3.lazy.rememberTransformationSpec
 import androidx.wear.compose.material3.lazy.transformedHeight
 import com.google.android.libraries.places.api.model.AutocompletePrediction
@@ -56,14 +53,13 @@ fun LocationsList(
     val transformationSpec = rememberTransformationSpec()
 
     var showDialog by remember { mutableStateOf(true) }
-    val styleBold: CharacterStyle  = StyleSpan(Typeface.BOLD)
 
     Dialog(
         visible = showDialog,
         onDismissRequest = { callback.invoke(-1) }
     )
     {
-        ScreenScaffold(scrollState = listState) {
+        ScreenScaffold(scrollState = listState) { paddingValues ->
             TransformingLazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
@@ -72,7 +68,7 @@ fun LocationsList(
                         focusRequester = focusRequester
                     ),
                 state = listState,
-                contentPadding = PaddingValues(start = 10.dp, end = 10.dp, top = 24.dp, bottom = 32.dp),
+                contentPadding = paddingValues,
             ) {
 
                 item {
@@ -98,6 +94,7 @@ fun LocationsList(
                         }
                     )
                 }
+
                 item {
                     Box(modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec), contentAlignment = Alignment.Center) {
                         Image(
@@ -107,6 +104,11 @@ fun LocationsList(
                         )
                     }
                 }
+
+                item {
+                    Spacer(modifier = Modifier.height(30.dp))
+                }
+
             }
         }
     }
