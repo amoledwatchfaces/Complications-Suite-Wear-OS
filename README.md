@@ -12,10 +12,10 @@ Add missing Custom Complications to your Wear OS Watch Face. Customize dates, ca
 ## 📸 Previews
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/92080649/204494337-e3e877e7-44ad-4398-95c9-52a33e669b24.png" width="22%" />
-  <img src="https://user-images.githubusercontent.com/92080649/222391997-c4007c74-da41-42f4-8f16-af41a880943c.png" width="22%" />
-  <img src="https://user-images.githubusercontent.com/92080649/204494791-e9dd80ec-feb4-4b94-a9a2-5d5e140f2332.png" width="22%" />
-  <img src="https://github.com/amoledwatchfaces/Complications-Suite-Wear-OS/assets/92080649/9985e65e-29d6-4987-99de-8bade24bb8fa" width="22%" />
+  <img src="screenshots/screenshot_14-00-10.png" width="22%" />
+  <img src="screenshots/screenshot_14-00-16.png" width="22%" />
+  <img src="screenshots/screenshot_14-00-23.png" width="22%" />
+  <img src="screenshots/screenshot_14-00-26.png" width="22%" />
 </p>
 
 ---
@@ -25,21 +25,17 @@ Add missing Custom Complications to your Wear OS Watch Face. Customize dates, ca
 The app settings screen on Wear OS allows you to customize each complication directly on your watch (e.g. date formats, world clocks, custom text, moon phase location, and custom goal targets).
 
 <p align="center">
-  <img src="screenshots/screenshot_14-00-10.png" width="18%" />
-  <img src="screenshots/screenshot_14-00-16.png" width="18%" />
   <img src="screenshots/screenshot_14-01-20.png" width="18%" />
   <img src="screenshots/screenshot_14-01-26.png" width="18%" />
   <img src="screenshots/screenshot_14-01-32.png" width="18%" />
+  <img src="screenshots/screenshot_14-01-38.png" width="18%" />
+  <img src="screenshots/screenshot_14-01-41.png" width="18%" />
 </p>
 
 <details>
 <summary><b>Show more settings screenshots</b></summary>
 <br>
 <p align="center">
-  <img src="screenshots/screenshot_14-00-23.png" width="18%" />
-  <img src="screenshots/screenshot_14-00-26.png" width="18%" />
-  <img src="screenshots/screenshot_14-01-38.png" width="18%" />
-  <img src="screenshots/screenshot_14-01-41.png" width="18%" />
   <img src="screenshots/screenshot_14-01-59.png" width="18%" />
   <img src="screenshots/screenshot_14-02-22.png" width="18%" />
   <img src="screenshots/screenshot_14-02-36.png" width="18%" />
