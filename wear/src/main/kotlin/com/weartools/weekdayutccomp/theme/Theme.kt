@@ -23,17 +23,17 @@ val appColorScheme = ColorScheme(
     tertiaryContainer = tertiaryContainer,
     onTertiaryContainer = onTertiaryContainer,
 
-    background = background,
-    onBackground = onBackground,
-
-    outline = outline,
-    outlineVariant = outlineVariant,
-
     surfaceContainerHigh = surfaceContainerHigh,
     surfaceContainer = surfaceContainer,
     surfaceContainerLow = surfaceContainerLow,
     onSurface = onSurface,
     onSurfaceVariant = onSurfaceVariant,
+
+    outline = outline,
+    outlineVariant = outlineVariant,
+
+    background = background,
+    onBackground = onBackground,
 
     error = error,
     errorDim = errorDim,
