@@ -52,6 +52,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.wear.compose.material3.Button
 import androidx.wear.compose.material3.ButtonDefaults
 import androidx.wear.compose.material3.Icon
@@ -62,6 +64,7 @@ import androidx.wear.compose.material3.Stepper
 import androidx.wear.compose.material3.StepperDefaults
 import androidx.wear.compose.material3.Text
 import com.weartools.weekdayutccomp.R
+import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme
 import com.weartools.weekdayutccomp.viewmodel.VolumeState
 import com.weartools.weekdayutccomp.viewmodel.VolumeViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -69,16 +72,25 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlin.time.Duration.Companion.milliseconds
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 
 @AndroidEntryPoint
 class VolumeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val viewModel = ViewModelProvider(this)[VolumeViewModel::class.java]
+
         setContent {
-            VolumeScreen()
+
+            val useDynamicColor = viewModel.preferences.collectAsState().value.useDynamicColor
+
+            ComplicationsSuiteTheme(
+                useDynamicColor = useDynamicColor
+            ) {
+                VolumeScreen()
             }
         }
+    }
 }
 
 @Composable

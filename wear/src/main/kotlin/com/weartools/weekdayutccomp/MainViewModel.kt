@@ -132,16 +132,6 @@ class MainViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(),
             initialValue = UserPreferences()
         )
-/*
-        .catch { exception ->
-            if (exception is IOException) {
-                Log.e(TAG, "Error reading sort order preferences.", exception)
-                emit(UserPreferences.getDefaultInstance())
-            } else {
-                throw exception
-            }
-        }
- */
 
     @SuppressLint("MissingPermission")
     fun requestLocation(
