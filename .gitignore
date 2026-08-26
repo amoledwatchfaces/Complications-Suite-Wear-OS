@@ -1,22 +1,31 @@
-*.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
-local.properties
-/mobile/
+# Gradle files
+.gradle/
+build/
 
-# Project exclude paths
-/wear/release/
-/wear/build/
-/mobile
-/wear/google-services.json
+# Android Studio / IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Local configuration
+local.properties
+signing.properties
+
+# Built outputs & reports
+**/build/
+**/captures/
+**/release/
+
+# Firebase/Google services secrets
+google-services.json
+**/google-services.json
+
+# NDK / C++
+.externalNativeBuild/
+.cxx/
+ndkBuild/
+
+# OS-specific
+.DS_Store
+Thumbs.db

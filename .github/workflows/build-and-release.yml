@@ -1,0 +1,64 @@
+name: Build & Release
+
+on:
+  push:
+    branches: [ "master" ]
+    tags:
+      - 'v*'
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    name: Build APK & AAB
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '21'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Grant Execute Permission to Gradlew
+        run: chmod +x gradlew
+
+      - name: Build Release APK and AAB
+        env:
+          PLACES_API_KEY: ${{ secrets.PLACES_API_KEY }}
+        run: ./gradlew :wear:assembleRelease :wear:bundleRelease
+
+      - name: Locate Artifacts
+        run: |
+          echo "Finding APKs..."
+          find wear/build/outputs/apk/release -name "*.apk" || echo "No APKs found"
+          echo "Finding AABs..."
+          find wear/build/outputs/bundle/release -name "*.aab" || echo "No AABs found"
+
+      - name: Upload Build Artifacts (CI)
+        if: github.ref_type != 'tag'
+        uses: actions/upload-artifact@v4
+        with:
+          name: complications-suite-wear-release
+          path: |
+            wear/build/outputs/apk/release/*.apk
+            wear/build/outputs/bundle/release/*.aab
+
+      - name: Create GitHub Release and Upload Assets
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            wear/build/outputs/apk/release/*.apk
+            wear/build/outputs/bundle/release/*.aab
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -42,13 +42,28 @@ android {
         }
     }
     buildTypes {
-        val apis = Properties().apply{
-            load(FileInputStream(file("C:\\Users\\amoledwatchfaces\\workspace\\Projects\\apps\\(x) 4 - Complications Suite Wear OS APP\\APIs\\apis.properties")))
+        val placesApiKey: String = run {
+            val envKey = System.getenv("PLACES_API_KEY")
+            if (!envKey.isNullOrEmpty()) {
+                if (envKey.startsWith("\"") && envKey.endsWith("\"")) envKey else "\"$envKey\""
+            } else {
+                val apisFile = rootProject.file("../APIs/apis.properties")
+                if (apisFile.exists()) {
+                    val apis = Properties()
+                    FileInputStream(apisFile).use { apis.load(it) }
+                    val propKey = apis.getProperty("PLACES_API_KEY") ?: ""
+                    val cleanKey = propKey.replace("\\\"", "").replace("\"", "")
+                    "\"$cleanKey\""
+                } else {
+                    "\"\""
+                }
+            }
         }
+
         release {
             isMinifyEnabled = true
             isShrinkResources = true
-            buildConfigField(type ="String", name = "PLACES_API_KEY", value = apis.getProperty("PLACES_API_KEY"))
+            buildConfigField(type ="String", name = "PLACES_API_KEY", value = placesApiKey)
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
         getByName("debug")  {
@@ -56,7 +71,7 @@ android {
             //noinspection NotShrinkingResources
             isShrinkResources = false
             proguardFiles(getDefaultProguardFile(name = "proguard-android-optimize.txt"), "proguard-rules.pro")
-            buildConfigField(type ="String", name = "PLACES_API_KEY", value = apis.getProperty("PLACES_API_KEY"))
+            buildConfigField(type ="String", name = "PLACES_API_KEY", value = placesApiKey)
             signingConfig = signingConfigs.getByName("debug")
             isDebuggable = true
         }
