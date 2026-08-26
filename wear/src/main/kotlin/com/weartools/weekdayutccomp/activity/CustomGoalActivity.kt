@@ -479,18 +479,6 @@ fun GoalSettings(
     }
 }
 
-/*
-
-@Preview(widthDp = 300, heightDp = 300)
-@Composable
-fun SimpleComposablePreview(
-) {
-    val context: Context = LocalContext.current
-    val pref = Pref(context)
-    WaterIntakeTheme(pref = pref,context = context)
-}
- */
-
 @Composable
 fun IconsDialog(
     focusRequester: FocusRequester,
