@@ -2,9 +2,7 @@ package com.weartools.weekdayutccomp.presentation.ui
 
 import android.content.Context
 import androidx.compose.foundation.basicMarquee
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -29,13 +27,13 @@ import androidx.wear.compose.foundation.rotary.RotaryScrollableDefaults
 import androidx.wear.compose.foundation.rotary.rotaryScrollable
 import androidx.wear.compose.material3.Button
 import androidx.wear.compose.material3.ButtonDefaults
+import androidx.wear.compose.material3.Dialog
 import androidx.wear.compose.material3.Icon
 import androidx.wear.compose.material3.MaterialTheme
 import androidx.wear.compose.material3.PlaceholderState
 import androidx.wear.compose.material3.ScreenScaffold
 import androidx.wear.compose.material3.SurfaceTransformation
 import androidx.wear.compose.material3.Text
-import androidx.wear.compose.material3.Dialog
 import androidx.wear.compose.material3.lazy.rememberTransformationSpec
 import androidx.wear.compose.material3.lazy.transformedHeight
 import com.weartools.weekdayutccomp.MainViewModel
@@ -73,7 +71,7 @@ fun AppsListPicker(
         onDismissRequest = { callback.invoke(-1) }
     )
     {
-        ScreenScaffold(scrollState = listState) {
+        ScreenScaffold(scrollState = listState) { paddingValues ->
             TransformingLazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
@@ -82,12 +80,7 @@ fun AppsListPicker(
                         focusRequester = focusRequester
                     ),
                 state = listState,
-                contentPadding = PaddingValues(
-                    start = 10.dp,
-                    end = 10.dp,
-                    top = 24.dp,
-                    bottom = 52.dp
-                ),
+                contentPadding = paddingValues,
             ) {
 
                 item {
@@ -102,7 +95,7 @@ fun AppsListPicker(
 
                 if (!chipPlaceholderState.isVisible) {
                     item {
-                        Box(modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec), contentAlignment = Alignment.Center) {
+                        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
                             SearchTextField{ searchQuery.value = it }
                         }
                     }
@@ -126,9 +119,7 @@ fun AppsListPicker(
                                     tint = Color.Unspecified,
                                     contentDescription = "")
                             },
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Color(0xff2c2c2d),
-                            ),
+                            colors = ButtonDefaults.filledTonalButtonColors(),
                             label = {
                                 Text(
                                     text = it.activityName,

@@ -35,7 +35,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -53,7 +52,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
@@ -73,6 +71,8 @@ import androidx.wear.compose.material3.Button
 import androidx.wear.compose.material3.ButtonDefaults
 import androidx.wear.compose.material3.Dialog
 import androidx.wear.compose.material3.Icon
+import androidx.wear.compose.material3.IconButton
+import androidx.wear.compose.material3.IconButtonDefaults
 import androidx.wear.compose.material3.MaterialTheme
 import androidx.wear.compose.material3.ScreenScaffold
 import androidx.wear.compose.material3.SurfaceTransformation
@@ -147,88 +147,93 @@ fun PickActivityScreen(
             activity.finish()
         }
     ) {
-        TransformingLazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .rotaryScrollable(
-                    RotaryScrollableDefaults.behavior(scrollableState = listState),
-                    focusRequester = focusRequester
-                ),
-            state = listState,
-            contentPadding = PaddingValues(
-                start = 10.dp,
-                end = 10.dp,
-                top = 24.dp,
-                bottom = 52.dp
-            ),
-        ) {
-            item {
-                Text(
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp).transformedHeight(this, transformationSpec),
-                    text = stringResource(R.string.activity_setup),
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.primary
-                )
-            }
-            item {
-                Button(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .transformedHeight(this, transformationSpec),
-                    transformation = SurfaceTransformation(transformationSpec),
-                    onClick = {
-                        openIconsDialog=openIconsDialog.not()
-                    },
-                    colors = ButtonDefaults.filledTonalButtonColors(),
-                    icon = {
-                        Icon(
-                            imageVector = ImageUtil.createImageVector(preferences.value.activityIconId)?: Icons.AutoMirrored.Filled.OpenInNew,
-                            contentDescription = "Remove"
-                        ) },
-                    label = {
-                        Text(
-                            text = stringResource(R.string.activity_set_icon),
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                    }
-                )
-            }
-            item {
-                Button(
-                    modifier = Modifier.fillMaxWidth().padding(top = 4.dp).transformedHeight(this, transformationSpec),
-                    transformation = SurfaceTransformation(transformationSpec),
-                    onClick = {
-                        openAppListPicker=openAppListPicker.not()
-                    },
-                    colors = ButtonDefaults.filledTonalButtonColors(),
-                    label = {
-                        Text(
-                            text = stringResource(R.string.activity_pick_activity),
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                    },
-                    secondaryLabel = {
-                        Text(
-                            text = preferences.value.activityClassName.split(".").last(),
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                    }
-                )
-            }
-            item {
-                Box(modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec), contentAlignment = Alignment.Center) {
-                    Button(onClick = {
-                        activity.setResult(RESULT_OK)
-                        activity.finish()
-                    }) {
-                        Icon(imageVector = Icons.Default.Check, contentDescription = "OK", tint = Color.Black) }
+        ScreenScaffold(scrollState = listState)
+        { paddingValues ->
+            TransformingLazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .rotaryScrollable(
+                        RotaryScrollableDefaults.behavior(scrollableState = listState),
+                        focusRequester = focusRequester
+                    ),
+                state = listState,
+                contentPadding = paddingValues,
+            ) {
+                item {
+                    Text(
+                        modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp).transformedHeight(this, transformationSpec),
+                        text = stringResource(R.string.activity_setup),
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.primary
+                    )
                 }
-            }
+                item {
+                    Button(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .transformedHeight(this, transformationSpec),
+                        transformation = SurfaceTransformation(transformationSpec),
+                        onClick = {
+                            openIconsDialog=openIconsDialog.not()
+                        },
+                        colors = ButtonDefaults.filledTonalButtonColors(),
+                        icon = {
+                            Icon(
+                                imageVector = ImageUtil.createImageVector(preferences.value.activityIconId)?: Icons.AutoMirrored.Filled.OpenInNew,
+                                contentDescription = "Remove"
+                            ) },
+                        label = {
+                            Text(
+                                text = stringResource(R.string.activity_set_icon),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }
+                    )
+                }
+                item {
+                    Button(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .transformedHeight(this, transformationSpec),
+                        transformation = SurfaceTransformation(transformationSpec),
+                        onClick = {
+                            openAppListPicker=openAppListPicker.not()
+                        },
+                        colors = ButtonDefaults.filledTonalButtonColors(),
+                        label = {
+                            Text(
+                                text = stringResource(R.string.activity_pick_activity),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        },
+                        secondaryLabel = {
+                            Text(
+                                text = preferences.value.activityClassName.split(".").last(),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }
+                    )
+                }
+                item {
+                    IconButton(
+                        colors = IconButtonDefaults.filledIconButtonColors(),
+                        onClick = {
+                            activity.setResult(RESULT_OK)
+                            activity.finish()
+                        }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Check,
+                            contentDescription = "OK"
+                        )
+                    }
+                }
 
+            }
         }
         if (openIconsDialog){
             IconsDialog2(
@@ -259,7 +264,8 @@ fun PickActivityScreen(
                     }else{
                         openAppListPicker = openAppListPicker.not()
                     }
-                } )
+                }
+            )
         }
     }
 }
@@ -283,7 +289,7 @@ fun IconsDialog2(
         onDismissRequest = { callback.invoke(-1) }
     )
     {
-        ScreenScaffold(scrollState = listState) {
+        ScreenScaffold(scrollState = listState) { paddingValues ->
             TransformingLazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
@@ -292,12 +298,7 @@ fun IconsDialog2(
                         focusRequester = focusRequester
                     ),
                 state = listState,
-                contentPadding = PaddingValues(
-                    start = 10.dp,
-                    end = 10.dp,
-                    top = 24.dp,
-                    bottom = 52.dp
-                ),
+                contentPadding = paddingValues,
             ) {
 
                 item {
@@ -318,7 +319,7 @@ fun IconsDialog2(
                 else{
 
                     item {
-                        Box(modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec), contentAlignment = Alignment.Center) {
+                        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
                             SearchTextField{ viewModel.updateSearch(it) }
                         }
                     }
