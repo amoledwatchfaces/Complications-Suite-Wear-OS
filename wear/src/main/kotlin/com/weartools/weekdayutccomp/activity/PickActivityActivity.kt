@@ -86,6 +86,7 @@ import com.weartools.weekdayutccomp.presentation.ui.IconsViewModelImp
 import com.weartools.weekdayutccomp.presentation.ui.ImageUtil
 import com.weartools.weekdayutccomp.presentation.ui.LoaderBox
 import com.weartools.weekdayutccomp.presentation.ui.PreferenceCategory
+import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme
 import com.weartools.weekdayutccomp.theme.appColorScheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -96,13 +97,16 @@ class PickActivityActivity : ComponentActivity() {
 
         val viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         setContent {
-            PickActivityTheme(
-                viewModel,
-                this,
-                this,
-            )
+            val useDynamicColor = viewModel.preferences.collectAsState().value.useDynamicColor
+            ComplicationsSuiteTheme(useDynamicColor = useDynamicColor){
+                PickActivityScreen(
+                    viewModel,
+                    this,
+                    this
+                )
             }
         }
+    }
     override fun onPause(){
         super.onPause()
         setResult(RESULT_OK)
@@ -113,7 +117,7 @@ class PickActivityActivity : ComponentActivity() {
 @OptIn(ExperimentalWearMaterialApi::class)
 @SuppressLint("RestrictedApi")
 @Composable
-fun PickActivityTheme(
+fun PickActivityScreen(
     viewModel: MainViewModel,
     context: Context,
     activity: PickActivityActivity
