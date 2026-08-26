@@ -132,8 +132,8 @@ fun WaterIntakeScreen(
             }
             .focusRequester(focusRequester1)
             .focusable(),
-        contentAlignment = Alignment.Center) {
-        //
+        contentAlignment = Alignment.Center
+    ) {
 
         Stepper(
             value = intake,
@@ -146,72 +146,72 @@ fun WaterIntakeScreen(
             ),
             decreaseIcon = { Icon(imageVector = Icons.Default.Remove, contentDescription = "Remove", tint = MaterialTheme.colorScheme.primary) },
             increaseIcon = { Icon(imageVector = Icons.Default.Add, contentDescription = "Add", tint = MaterialTheme.colorScheme.primary) })
-        {
-            //WaterChip(context = context, pref = pref, text = "Intake: $intake", title = "Goal: ${intakeGoal.toInt()}")
+        {}
+        Button(
+            modifier = Modifier
+                .fillMaxWidth(0.8f)
+                .padding(horizontal = 10.dp)
+                .padding(bottom = 10.dp),
+            onClick = {
+                openGoalSetting = openGoalSetting.not()
+            },
+            icon = {
+                Icon(
+                    imageVector = Icons.Default.WaterDrop,
+                    contentDescription = "Remove"
+                ) },
+            colors = ButtonDefaults.filledTonalButtonColors(),
+            label = {
+                Text(
+                    text = "${stringResource(id = R.string.water_intake_text)}: $intake",
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            },
+            secondaryLabel = {
+                Text(
+                    text = titleGoal,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            },
+        )
 
-            Button(
-                modifier = Modifier
-                    .fillMaxWidth(0.8f)
-                    .padding(horizontal = 10.dp)
-                    .padding(bottom = 10.dp),
-                onClick = {
-                    openGoalSetting = openGoalSetting.not()
-                },
-                icon = { Icon(imageVector = Icons.Default.WaterDrop, contentDescription = "Remove", tint = MaterialTheme.colorScheme.primary) },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xff2c2c2d),
-                ),
-                label = {
-                    Text(
-                        text = "${stringResource(id = R.string.water_intake_text)}: $intake",
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                },
-                secondaryLabel = {
-                    Text(
-                        color = MaterialTheme.colorScheme.primary,
-                        text = titleGoal,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                },
-            )
+        if (openGoalSetting){
+            ListItemsWidget(
+                focusRequester = focusRequester1,
+                titles = stringResource(id = R.string.water_intake_goal_text),
+                items = list,
+                preValue = intakeGoal.toInt().toString() ,
+                callback ={
+                    if (it == -1) {
+                        openGoalSetting = false
+                        return@ListItemsWidget
+                    }else{
+                        viewModel.setWaterGoal(list[it].toFloat(), context)
+                        openGoalSetting = openGoalSetting.not()
+                    }
+                } )
 
-            if (openGoalSetting){
-                ListItemsWidget(
-                    focusRequester = focusRequester1,
-                    titles = stringResource(id = R.string.water_intake_goal_text),
-                    items = list,
-                    preValue = intakeGoal.toInt().toString() ,
-                    callback ={
-                        if (it == -1) {
-                            openGoalSetting = false
-                            return@ListItemsWidget
-                        }else{
-                            viewModel.setWaterGoal(list[it].toFloat(), context)
-                            openGoalSetting = openGoalSetting.not()
-                        }
-                    } )
-
-            }
         }
 
         CompactButton(
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Transparent,
-                contentColor = Color.Gray
+                containerColor = MaterialTheme.colorScheme.primary
             ),
-            modifier = Modifier.padding(top = 90.dp),
+            modifier = Modifier.padding(top = 60.dp, start = 80.dp),
             onClick = {
                 viewModel.setWater(0, context)
             }
         ) {
-            Icon(imageVector = Icons.Outlined.RestartAlt, contentDescription = "Reset Counter", tint = Color.Gray)
+            Icon(
+                imageVector = Icons.Outlined.RestartAlt,
+                contentDescription = "Reset Counter",
+                tint = Color.Black)
         }
 
         CircularProgressIndicator(
-            progress = { if (intakeGoal > 0) (intake / intakeGoal).coerceIn(0f, 1f) else 0f },
+            progress = { (preferences.value.water / preferences.value.waterGoal).coerceIn(0f, 1f) },
             modifier = Modifier
                 .fillMaxSize()
                 .padding(all = 10.dp),
@@ -226,15 +226,3 @@ fun WaterIntakeScreen(
     }
 
 }
-
-/*
-
-@Preview(widthDp = 300, heightDp = 300)
-@Composable
-fun SimpleComposablePreview(
-) {
-    val context: Context = LocalContext.current
-    val pref = Pref(context)
-    WaterIntakeTheme(pref = pref,context = context)
-}
- */

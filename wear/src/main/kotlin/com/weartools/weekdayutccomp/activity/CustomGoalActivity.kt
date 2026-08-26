@@ -209,77 +209,74 @@ fun CustomGoalScreen(
             ),
             decreaseIcon = { Icon(imageVector = Icons.Default.Remove, contentDescription = "Remove", tint = MaterialTheme.colorScheme.primary) },
             increaseIcon = { Icon(imageVector = Icons.Default.Add, contentDescription = "Add", tint = MaterialTheme.colorScheme.primary) })
-        {
-            Card(
-                onClick = {
-                    openGoalSetting = openGoalSetting.not()
-                },
-                modifier = Modifier
-                    .fillMaxWidth(0.8f)
-                    .padding(horizontal = 10.dp),
-                enabled = true,
-                colors = CardDefaults.cardColors(
-                    containerColor = Color(0xff2c2c2d),
-                ),
-            ){
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                ) {
-                    Column(modifier = Modifier.weight(0.85f)) {
-                        Text(
-                            text = "${preferences.value.customGoalTitle}: ${preferences.value.customGoalValue.formatValue()}",
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            color = Color(0xFFF1F1F1)
-                        )
-                        Text(
-                            color =  Color.LightGray,
-                            text = stringResource(
-                                R.string.custom_goal_start,
-                                preferences.value.customGoalMin.formatValue()
-                            ),
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            fontSize = 12.sp,
-                            lineHeight = 16.sp,
-                            modifier = Modifier.padding(top = 2.dp, bottom = 2.dp)
-                        )
-                        Text(
-                            color = MaterialTheme.colorScheme.primary,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            text = stringResource(
-                                R.string.custom_goal_target,
-                                preferences.value.customGoalMax.formatValue()
-                            ),
-                            lineHeight = 16.sp,
-                            fontSize = 12.sp)
-                    }
-                    Column(modifier = Modifier.weight(0.15f)) {
-                        Icon(
-                            imageVector = ImageUtil.createImageVector(preferences.value.customGoalIconId)?:Icons.Default.Flag,
-                            contentDescription = "Remove",
-                            tint = MaterialTheme.colorScheme.primary)
-                    }
+        {}
+        Card(
+            onClick = {
+                openGoalSetting = openGoalSetting.not()
+            },
+            modifier = Modifier
+                .fillMaxWidth(0.8f)
+                .padding(horizontal = 10.dp),
+            enabled = true,
+            colors = CardDefaults.cardColors(),
+        ){
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Column(modifier = Modifier.weight(0.85f)) {
+                    Text(
+                        text = "${preferences.value.customGoalTitle}: ${preferences.value.customGoalValue.formatValue()}",
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        color = Color(0xFFF1F1F1)
+                    )
+                    Text(
+                        color =  Color.LightGray,
+                        text = stringResource(
+                            R.string.custom_goal_start,
+                            preferences.value.customGoalMin.formatValue()
+                        ),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        fontSize = 12.sp,
+                        lineHeight = 16.sp,
+                        modifier = Modifier.padding(top = 2.dp, bottom = 2.dp)
+                    )
+                    Text(
+                        color = MaterialTheme.colorScheme.primary,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        text = stringResource(
+                            R.string.custom_goal_target,
+                            preferences.value.customGoalMax.formatValue()
+                        ),
+                        lineHeight = 16.sp,
+                        fontSize = 12.sp)
+                }
+                Column(modifier = Modifier.weight(0.15f)) {
+                    Icon(
+                        imageVector = ImageUtil.createImageVector(preferences.value.customGoalIconId)?:Icons.Default.Flag,
+                        contentDescription = "Remove",
+                        tint = MaterialTheme.colorScheme.primary)
                 }
             }
-            if (openGoalSetting){
-                GoalSettings(
-                    focusRequester = focusRequester,
-                    viewModel = viewModel,
-                    preferences = preferences,
-                    context = context,
-                    callback ={
-                        if (it == -1) {
-                            openGoalSetting = false
-                            return@GoalSettings
-                        }else{
-                            openGoalSetting = openGoalSetting.not()
-                        }
-                    } )
-            }
+        }
+        if (openGoalSetting){
+            GoalSettings(
+                focusRequester = focusRequester,
+                viewModel = viewModel,
+                preferences = preferences,
+                context = context,
+                callback ={
+                    if (it == -1) {
+                        openGoalSetting = false
+                        return@GoalSettings
+                    }else{
+                        openGoalSetting = openGoalSetting.not()
+                    }
+                } )
         }
 
         CompactButton(
