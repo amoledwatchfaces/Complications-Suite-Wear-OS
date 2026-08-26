@@ -35,6 +35,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -56,10 +57,10 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.wear.compose.material3.Button
 import androidx.wear.compose.material3.ButtonDefaults
+import androidx.wear.compose.material3.CircularProgressIndicator
 import androidx.wear.compose.material3.Icon
-import androidx.wear.compose.material3.LevelIndicator
-import androidx.wear.compose.material3.LevelIndicatorDefaults
 import androidx.wear.compose.material3.MaterialTheme
+import androidx.wear.compose.material3.ProgressIndicatorDefaults
 import androidx.wear.compose.material3.Stepper
 import androidx.wear.compose.material3.StepperDefaults
 import androidx.wear.compose.material3.Text
@@ -96,7 +97,6 @@ class VolumeActivity : ComponentActivity() {
 @Composable
 fun VolumeScreen(
     volumeViewModel: VolumeViewModel = hiltViewModel(),
-    showVolumeIndicator: Boolean = true,
 ) {
     val volumeState by volumeViewModel.volumeState.collectAsState()
     val context = LocalContext.current
@@ -121,8 +121,7 @@ fun VolumeScreen(
                     // Final fallback or show message
                 }
             }
-        },
-        showVolumeIndicator = showVolumeIndicator,
+        }
     )
 }
 
@@ -132,7 +131,6 @@ internal fun VolumeScreen(
     increaseVolume: () -> Unit,
     decreaseVolume: () -> Unit,
     onAudioOutputClick: () -> Unit,
-    showVolumeIndicator: Boolean = true,
     volumeColor: Color = MaterialTheme.colorScheme.primary,
 ) {
     Stepper(
@@ -186,12 +184,11 @@ internal fun VolumeScreen(
             }
         )
     }
-    if (showVolumeIndicator) {
-        VolumePositionIndicator(
-            volumeState = volumeState,
-            color = volumeColor,
-        )
-    }
+
+    VolumePositionIndicator(
+        volumeState = volumeState,
+        color = volumeColor,
+    )
 }
 
 @Composable
@@ -199,7 +196,7 @@ fun VolumePositionIndicator(
     volumeState: VolumeState,
     modifier: Modifier = Modifier,
     displayIndicatorEvents: Flow<Unit>? = null,
-    color: Color = MaterialTheme.colorScheme.primary,
+    color: Color = MaterialTheme.colorScheme.secondary,
 ) {
     @Suppress("ProduceStateDoesNotAssignValue")
     val visible by produceState(displayIndicatorEvents == null, displayIndicatorEvents) {
@@ -215,10 +212,18 @@ fun VolumePositionIndicator(
         enter = fadeIn(),
         exit = fadeOut(),
     ) {
-        LevelIndicator(
-            modifier = modifier,
-            value = { volumeState.current.toFloat() / volumeState.max.toFloat() },
-            colors = LevelIndicatorDefaults.colors(indicatorColor = color)
+        CircularProgressIndicator(
+            progress = { (volumeState.current.toFloat() / volumeState.max.toFloat()).coerceIn(0f, 1f) },
+            modifier = modifier
+                .fillMaxSize()
+                .padding(all = 10.dp),
+            startAngle = 135f,
+            endAngle = 225f,
+            colors = ProgressIndicatorDefaults.colors(
+                indicatorColor = color,
+                trackColor = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.2f),
+            ),
+            strokeWidth = 5.dp
         )
     }
 }

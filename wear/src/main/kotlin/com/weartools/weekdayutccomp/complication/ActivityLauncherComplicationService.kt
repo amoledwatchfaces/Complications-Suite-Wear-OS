@@ -30,7 +30,8 @@ package com.weartools.weekdayutccomp.complication
 import android.app.PendingIntent
 import android.content.ContentValues.TAG
 import android.content.Intent
-import android.graphics.drawable.Icon.createWithData
+import android.graphics.BitmapFactory
+import android.graphics.drawable.Icon.createWithBitmap
 import android.graphics.drawable.Icon.createWithResource
 import android.util.Log
 import androidx.datastore.core.DataStore
@@ -102,7 +103,8 @@ class ActivityLauncherComplicationService : SuspendingComplicationDataSourceServ
         val activityIcon = if (prefs.activityIconByteArray.isEmpty()){
             MonochromaticImage.Builder(createWithResource(this, drawable.ic_open_in_new_view)).build()
         } else {
-            MonochromaticImage.Builder(image = createWithData(prefs.activityIconByteArray,0,prefs.activityIconByteArray.size)).build()
+            val bitmap = BitmapFactory.decodeByteArray(prefs.activityIconByteArray, 0, prefs.activityIconByteArray.size)
+            MonochromaticImage.Builder(image = createWithBitmap(bitmap)).build()
         }
 
         return when (request.complicationType) {
