@@ -186,14 +186,12 @@ fun PickActivityScreen(
                             onClick = {
                                 openIconsDialog=openIconsDialog.not()
                             },
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Color(0xff2c2c2d),
-                            ),
+                            colors = ButtonDefaults.filledTonalButtonColors(),
                             icon = {
                                 Icon(
                                     imageVector = ImageUtil.createImageVector(preferences.value.activityIconId)?: Icons.AutoMirrored.Filled.OpenInNew,
-                                    contentDescription = "Remove",
-                                    tint = MaterialTheme.colorScheme.primary) },
+                                    contentDescription = "Remove"
+                                ) },
                             label = {
                                 Text(
                                     text = stringResource(R.string.activity_set_icon),
@@ -210,9 +208,7 @@ fun PickActivityScreen(
                             onClick = {
                                 openAppListPicker=openAppListPicker.not()
                             },
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Color(0xff2c2c2d),
-                            ),
+                            colors = ButtonDefaults.filledTonalButtonColors(),
                             label = {
                                 Text(
                                     text = stringResource(R.string.activity_pick_activity),
@@ -224,7 +220,6 @@ fun PickActivityScreen(
                                 Text(
                                     text = preferences.value.activityClassName.split(".").last(),
                                     maxLines = 1,
-                                    color = MaterialTheme.colorScheme.primary,
                                     overflow = TextOverflow.Ellipsis
                                 )
                             }
