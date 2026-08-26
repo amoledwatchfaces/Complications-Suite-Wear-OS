@@ -40,7 +40,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.enums.Request
-import com.weartools.weekdayutccomp.presentation.ComplicationsSuiteApp
+import com.weartools.weekdayutccomp.presentation.MainApp
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
 
         setContent {
             val open by viewModel.openRequestState.collectAsState()
-            ComplicationsSuiteApp(open = open)
+            MainApp(open = open)
         }
     }
 

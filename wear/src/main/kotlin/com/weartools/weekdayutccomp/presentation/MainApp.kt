@@ -9,7 +9,6 @@ import androidx.compose.ui.res.stringArrayResource
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.wear.compose.foundation.lazy.rememberTransformingLazyColumnState
 import androidx.wear.compose.material3.AppScaffold
-import androidx.wear.compose.material3.ScreenScaffold
 import androidx.wear.compose.material3.lazy.rememberTransformationSpec
 import androidx.wear.compose.navigation.SwipeDismissableNavHost
 import androidx.wear.compose.navigation.composable
@@ -21,7 +20,7 @@ import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme
 
 
 @Composable
-fun ComplicationsSuiteApp(
+fun MainApp(
     viewModel: MainViewModel = hiltViewModel(),
     open: Request
 ) {
@@ -46,39 +45,29 @@ fun ComplicationsSuiteApp(
                 startDestination = "main_screen"
             ) {
                 composable("main_screen") {
-
                     val index = localesShortList.indexOf(preferences.locale)
-
-                    ScreenScaffold(
-                        scrollState = scrollState
-                    ) {
-                        ComplicationsSuiteScreen(
-                            preferences = preferences,
-                            navController = navController,
-                            listState = scrollState,
-                            transformationSpec = transformationSpec,
-                            focusRequester = focusRequester,
-                            viewModel = viewModel,
-                            open = open,
-                            currentLocale = localesLongList[index]
-                        )
-                    }
+                    MainScreen(
+                        preferences = preferences,
+                        navController = navController,
+                        listState = scrollState,
+                        transformationSpec = transformationSpec,
+                        focusRequester = focusRequester,
+                        viewModel = viewModel,
+                        open = open,
+                        currentLocale = localesLongList[index]
+                    )
                 }
                 composable("language_screen") {
-                    ScreenScaffold(
-                        scrollState = scrollState
-                    ) {
-                        LanguageScreen(
-                            navController = navController,
-                            transformationSpec = transformationSpec,
-                            focusRequester = focusRequester,
-                            viewModel = viewModel,
-                            index = index,
-                            localesLongList = localesLongList,
-                            localesShortList = localesShortList,
-                            currentLocale = currentLocale,
-                        )
-                    }
+                    LanguageScreen(
+                        navController = navController,
+                        transformationSpec = transformationSpec,
+                        focusRequester = focusRequester,
+                        viewModel = viewModel,
+                        index = index,
+                        localesLongList = localesLongList,
+                        localesShortList = localesShortList,
+                        currentLocale = currentLocale,
+                    )
                 }
             }
         }

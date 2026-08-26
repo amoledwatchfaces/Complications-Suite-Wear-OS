@@ -32,6 +32,7 @@ import androidx.wear.compose.foundation.rotary.RotaryScrollableDefaults
 import androidx.wear.compose.foundation.rotary.rotaryScrollable
 import androidx.wear.compose.material3.RadioButton
 import androidx.wear.compose.material3.RadioButtonDefaults
+import androidx.wear.compose.material3.ScreenScaffold
 import androidx.wear.compose.material3.SurfaceTransformation
 import androidx.wear.compose.material3.Text
 import androidx.wear.compose.material3.lazy.TransformationSpec
@@ -59,31 +60,33 @@ fun LanguageScreen(
         initialAnchorItemIndex = index + 1,
     )
 
-    TransformingLazyColumn(
-        contentPadding = PaddingValues(top = 25.dp, bottom = 65.dp, start = 12.dp, end = 12.dp),
-        modifier = Modifier
-            .fillMaxSize()
-            .rotaryScrollable(
-                RotaryScrollableDefaults.behavior(scrollableState = scrollState),
-                focusRequester = focusRequester
-            ),
-        state = scrollState,
-    ){
-        item {
-            PreferenceCategory(title = stringResource(id = R.string.change_locale))
-        }
-        itemsIndexed(localesLongList) { index, i ->
-            RadioButton(
-                modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
-                transformation = SurfaceTransformation(transformationSpec),
-                selected = currentLocale == localesLongList[index],
-                onSelect = {
-                    viewModel.changeLocale(localesShortList[index], context)
-                    navController.popBackStack()
-                },
-                colors = RadioButtonDefaults.radioButtonColors(),
-                label = { Text(i) },
-            )
+    ScreenScaffold {
+        TransformingLazyColumn(
+            contentPadding = PaddingValues(top = 25.dp, bottom = 65.dp, start = 12.dp, end = 12.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .rotaryScrollable(
+                    RotaryScrollableDefaults.behavior(scrollableState = scrollState),
+                    focusRequester = focusRequester
+                ),
+            state = scrollState,
+        ){
+            item {
+                PreferenceCategory(title = stringResource(id = R.string.change_locale))
+            }
+            itemsIndexed(localesLongList) { index, i ->
+                RadioButton(
+                    modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                    transformation = SurfaceTransformation(transformationSpec),
+                    selected = currentLocale == localesLongList[index],
+                    onSelect = {
+                        viewModel.changeLocale(localesShortList[index], context)
+                        navController.popBackStack()
+                    },
+                    colors = RadioButtonDefaults.radioButtonColors(),
+                    label = { Text(i) },
+                )
+            }
         }
     }
 }

@@ -14,7 +14,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -63,7 +62,7 @@ fun DialogChip(
             )
         },
         secondaryLabel = {
-            Text(text = title, color = Color.LightGray)
+            Text(text = title)
         },
     )
 }
@@ -148,8 +147,8 @@ fun ToggleChip(
         label = { Text(label) },
         secondaryLabel = {
             if (checked) {
-                Text(text = secondaryLabelOn, color = Color.LightGray)
-            } else Text(text = secondaryLabelOff, color = Color.LightGray)
+                Text(text = secondaryLabelOn)
+            } else Text(text = secondaryLabelOff)
         },
     )
 }
