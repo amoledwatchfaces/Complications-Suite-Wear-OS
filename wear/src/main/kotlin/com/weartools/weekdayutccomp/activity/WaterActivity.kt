@@ -211,7 +211,7 @@ fun WaterIntakeScreen(
         }
 
         CircularProgressIndicator(
-            progress = { (intake / intakeGoal) },
+            progress = { if (intakeGoal > 0) (intake / intakeGoal).coerceIn(0f, 1f) else 0f },
             modifier = Modifier
                 .fillMaxSize()
                 .padding(all = 10.dp),

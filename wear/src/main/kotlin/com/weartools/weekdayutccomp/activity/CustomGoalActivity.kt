@@ -39,7 +39,6 @@ import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -169,20 +168,20 @@ fun CustomGoalScreen(
     val preferences = viewModel.preferences.collectAsState()
 
     val value = preferences.value.customGoalValue
-
-    // If user chooses to have target smaller than start value
-    val min = if (preferences.value.customGoalMin < preferences.value.customGoalMax) { preferences.value.customGoalMin } else { preferences.value.customGoalMax }
-    val max = if (preferences.value.customGoalMax > preferences.value.customGoalMin) { preferences.value.customGoalMax } else { preferences.value.customGoalMin }
-
     val changeBy = preferences.value.customGoalChangeBy
 
     var openGoalSetting by remember{ mutableStateOf(false) }
 
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
+
     fun onValueChangeByScroll(pixels: Float) {
+        if (pixels == 0f) return
         val newWaterIntake = when {
             pixels > 0 -> (value + changeBy)
             pixels < 0 -> (value - changeBy).coerceAtLeast(0f)
-            else -> {0f}
+            else -> value
         }
         viewModel.setCustomGoalValue(newWaterIntake, context)
     }
@@ -201,11 +200,8 @@ fun CustomGoalScreen(
         Stepper (
             value = preferences.value.customGoalValue.roundToInt(),
             onValueChange = {
-                viewModel.setCustomGoalValue(
-                    value =
-                    if (it > value) (value + changeBy) else (value - changeBy),
-                    context = context
-                )
+                val newValue = if (it > preferences.value.customGoalValue.roundToInt()) (value + changeBy) else (value - changeBy)
+                viewModel.setCustomGoalValue(newValue.coerceAtLeast(0f), context)
             },
             valueProgression = 0..1000000000,
             colors = StepperDefaults.colors(
@@ -213,76 +209,77 @@ fun CustomGoalScreen(
             ),
             decreaseIcon = { Icon(imageVector = Icons.Default.Remove, contentDescription = "Remove", tint = MaterialTheme.colorScheme.primary) },
             increaseIcon = { Icon(imageVector = Icons.Default.Add, contentDescription = "Add", tint = MaterialTheme.colorScheme.primary) })
-        {}
-        Card(
-            onClick = {
-                openGoalSetting = openGoalSetting.not()
-            },
-            modifier = Modifier
-                .fillMaxWidth(0.8f)
-                .padding(horizontal = 10.dp),
-            enabled = true,
-            colors = CardDefaults.cardColors(
-                containerColor = Color(0xff2c2c2d),
-            ),
-        ){
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-            ) {
-                Column(modifier = Modifier.weight(0.85f)) {
-                    Text(
-                        text = "${preferences.value.customGoalTitle}: ${preferences.value.customGoalValue.formatValue()}",
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        color = Color(0xFFF1F1F1)
-                    )
-                    Text(
-                        color =  Color.LightGray,
-                        text = stringResource(
-                            R.string.custom_goal_start,
-                            preferences.value.customGoalMin.formatValue()
-                        ),
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        fontSize = 12.sp,
-                        lineHeight = 16.sp,
-                        modifier = Modifier.padding(top = 2.dp, bottom = 2.dp)
-                    )
-                    Text(
-                        color = MaterialTheme.colorScheme.primary,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        text = stringResource(
-                            R.string.custom_goal_target,
-                            preferences.value.customGoalMax.formatValue()
-                        ),
-                        lineHeight = 16.sp,
-                        fontSize = 12.sp)
-                }
-                Column(modifier = Modifier.weight(0.15f)) {
-                    Icon(
-                        imageVector = ImageUtil.createImageVector(preferences.value.customGoalIconId)?:Icons.Default.Flag,
-                        contentDescription = "Remove",
-                        tint = MaterialTheme.colorScheme.primary)
+        {
+            Card(
+                onClick = {
+                    openGoalSetting = openGoalSetting.not()
+                },
+                modifier = Modifier
+                    .fillMaxWidth(0.8f)
+                    .padding(horizontal = 10.dp),
+                enabled = true,
+                colors = CardDefaults.cardColors(
+                    containerColor = Color(0xff2c2c2d),
+                ),
+            ){
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    Column(modifier = Modifier.weight(0.85f)) {
+                        Text(
+                            text = "${preferences.value.customGoalTitle}: ${preferences.value.customGoalValue.formatValue()}",
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            color = Color(0xFFF1F1F1)
+                        )
+                        Text(
+                            color =  Color.LightGray,
+                            text = stringResource(
+                                R.string.custom_goal_start,
+                                preferences.value.customGoalMin.formatValue()
+                            ),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            fontSize = 12.sp,
+                            lineHeight = 16.sp,
+                            modifier = Modifier.padding(top = 2.dp, bottom = 2.dp)
+                        )
+                        Text(
+                            color = MaterialTheme.colorScheme.primary,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            text = stringResource(
+                                R.string.custom_goal_target,
+                                preferences.value.customGoalMax.formatValue()
+                            ),
+                            lineHeight = 16.sp,
+                            fontSize = 12.sp)
+                    }
+                    Column(modifier = Modifier.weight(0.15f)) {
+                        Icon(
+                            imageVector = ImageUtil.createImageVector(preferences.value.customGoalIconId)?:Icons.Default.Flag,
+                            contentDescription = "Remove",
+                            tint = MaterialTheme.colorScheme.primary)
+                    }
                 }
             }
-        }
-        if (openGoalSetting){
-            GoalSettings(
-                focusRequester = focusRequester,
-                viewModel = viewModel,
-                preferences = preferences,
-                context = context,
-                callback ={
-                    if (it == -1) {
-                        openGoalSetting = false
-                        return@GoalSettings
-                    }else{
-                        openGoalSetting = openGoalSetting.not()
-                    }
-                } )
+            if (openGoalSetting){
+                GoalSettings(
+                    focusRequester = focusRequester,
+                    viewModel = viewModel,
+                    preferences = preferences,
+                    context = context,
+                    callback ={
+                        if (it == -1) {
+                            openGoalSetting = false
+                            return@GoalSettings
+                        }else{
+                            openGoalSetting = openGoalSetting.not()
+                        }
+                    } )
+            }
         }
 
         CompactButton(
@@ -302,14 +299,19 @@ fun CustomGoalScreen(
         }
 
         // If user chooses to have progress bar working in an opposite way
-        val progress = if (preferences.value.customGoalInverse){
-            (max - preferences.value.customGoalValue) / (max - min)
-        } else {
-            (preferences.value.customGoalValue - min) / (max - min)
+        val progress = {
+            val p = preferences.value
+            val v = p.customGoalValue
+            val mi = if (p.customGoalMin < p.customGoalMax) p.customGoalMin else p.customGoalMax
+            val ma = if (p.customGoalMax > p.customGoalMin) p.customGoalMax else p.customGoalMin
+            if (ma > mi) {
+                if (p.customGoalInverse) ((ma - v) / (ma - mi)).coerceIn(0f, 1f)
+                else ((v - mi) / (ma - mi)).coerceIn(0f, 1f)
+            } else 0f
         }
 
         CircularProgressIndicator(
-            progress = { progress },
+            progress = progress,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(all = 10.dp),
@@ -498,7 +500,7 @@ fun IconsDialog(
         onDismissRequest = { callback.invoke(-1) }
     )
     {
-        ScreenScaffold(scrollState = listState) {
+        ScreenScaffold(scrollState = listState) { paddingValues ->
             TransformingLazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
@@ -507,12 +509,7 @@ fun IconsDialog(
                         focusRequester = focusRequester
                     ),
                 state = listState,
-                contentPadding = PaddingValues(
-                    start = 10.dp,
-                    end = 10.dp,
-                    top = 24.dp,
-                    bottom = 52.dp
-                ),
+                contentPadding = paddingValues,
             ) {
 
                 item {
@@ -659,5 +656,3 @@ fun SearchTextField(
             ),
     )
 }
-
-
