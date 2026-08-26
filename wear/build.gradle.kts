@@ -149,10 +149,6 @@ dependencies {
     // Splash Screen
     implementation ("androidx.core:core-splashscreen:1.2.0")
 
-    // Horologist
-    implementation ("com.google.android.horologist:horologist-composables:0.7.15")
-    implementation ("com.google.android.horologist:horologist-audio-ui:0.7.15")
-
     // Serialization
     implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
 

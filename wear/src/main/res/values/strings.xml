@@ -191,6 +191,7 @@
 
     <!--VOLUME-->
     <string name="volume_comp_name">Volume Control</string>
+    <string name="volume_output">Output</string>
 
     <!--DICE-->
     <string name="dice_comp_name">Dice</string>
