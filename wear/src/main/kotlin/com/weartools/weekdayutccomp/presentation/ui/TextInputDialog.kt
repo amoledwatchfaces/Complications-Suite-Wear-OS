@@ -9,6 +9,7 @@ import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.twotone.Close
 import androidx.compose.material.icons.twotone.Search
+import androidx.wear.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.TextFieldDefaults
@@ -30,7 +31,6 @@ import androidx.wear.compose.material3.ButtonDefaults
 import androidx.wear.compose.material3.Icon
 import androidx.wear.compose.material3.OutlinedButton
 import androidx.wear.compose.material3.Text
-import com.weartools.weekdayutccomp.theme.appColorScheme
 
 @Composable
 fun TextInputDialog(
@@ -92,7 +92,7 @@ fun TextInputDialog(
                 onValueChange = {
                     text = it
                 },
-                label = { Text(text = inputLabel, color = appColorScheme.primary) },
+                label = { Text(text = inputLabel, color = MaterialTheme.colorScheme.primary) },
                 keyboardOptions = keyboardOptions,
                 keyboardActions = KeyboardActions(
                     onDone = {
@@ -105,13 +105,13 @@ fun TextInputDialog(
                     .fillMaxWidth(),
                 colors = //
                     OutlinedTextFieldDefaults.colors(
-                        unfocusedBorderColor = appColorScheme.primaryContainer.copy(alpha = 0.6f),
-                        focusedBorderColor = appColorScheme.primaryContainer.copy(alpha = 1f),
+                        unfocusedBorderColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.6f),
+                        focusedBorderColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 1f),
                         focusedTextColor = Color.White,
-                        cursorColor = appColorScheme.secondary,
+                        cursorColor = MaterialTheme.colorScheme.secondary,
                         selectionColors = TextSelectionColors(
-                            backgroundColor = appColorScheme.primary.copy(alpha = 0f),
-                            handleColor = appColorScheme.primary,
+                            backgroundColor = MaterialTheme.colorScheme.primary.copy(alpha = 0f),
+                            handleColor = MaterialTheme.colorScheme.primary,
                         ),
                         ),
             )

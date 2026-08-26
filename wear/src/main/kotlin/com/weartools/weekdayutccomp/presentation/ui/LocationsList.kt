@@ -18,22 +18,21 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
 import androidx.wear.compose.foundation.rotary.RotaryScrollableDefaults
 import androidx.wear.compose.foundation.rotary.rotaryScrollable
-import androidx.wear.compose.material.Chip
-import androidx.wear.compose.material.ChipDefaults
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.dialog.Alert
 import androidx.wear.compose.material.dialog.Dialog
+import androidx.wear.compose.material3.Button
+import androidx.wear.compose.material3.ButtonDefaults
+import androidx.wear.compose.material3.Icon
 import com.google.android.libraries.places.api.model.AutocompletePrediction
 import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.R
-import com.weartools.weekdayutccomp.theme.appColorScheme
 
 @Composable
 fun LocationsList(
@@ -69,8 +68,8 @@ fun LocationsList(
             content = {
                 items(predictions!!.size) {
                     LocationChip(
-                        primaryText = predictions[it].getPrimaryText(styleBold).toString(),
-                        secondaryText = predictions[it].getSecondaryText(styleBold).toString(),
+                        primaryText = predictions[it].getPrimaryText(null).toString(),
+                        secondaryText = predictions[it].getSecondaryText(null).toString(),
                         onClick = {
                                 viewModel.getLocationCoordinates(predictions[it], context)
                                 callback.invoke(1)
@@ -93,18 +92,15 @@ fun LocationChip(
     secondaryText: String,
     onClick: () -> Unit
 ) {
-    Chip(
+    Button(
+        colors = ButtonDefaults.filledTonalButtonColors(),
         modifier = Modifier
             .fillMaxWidth(),
         onClick = onClick,
-        colors = ChipDefaults.gradientBackgroundChipColors(
-            startBackgroundColor = Color(0xff2c2c2d),
-            endBackgroundColor = appColorScheme.primaryContainer
-        ),
-        icon = { Image(
+        icon = { Icon(
             imageVector = Icons.Default.LocationCity,
-            contentDescription = "Location Icon",
-            colorFilter = ColorFilter.tint(appColorScheme.primary),) },
+            contentDescription = "Location Icon"
+        ) },
         label = { Text(text = primaryText)},
         secondaryLabel = { Text(text = secondaryText)},
     )

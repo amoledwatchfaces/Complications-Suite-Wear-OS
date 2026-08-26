@@ -172,15 +172,4 @@ fun PreferenceCategory(
     }
 }
 
-@Composable
-fun SectionText(modifier: Modifier = Modifier, text: String) {
-    Text(
-        modifier = modifier,
-        textAlign = TextAlign.Center,
-        color = MaterialTheme.colorScheme.outlineVariant,
-        text = text,
-        style = MaterialTheme.typography.bodySmall
-    )
-}
-
 

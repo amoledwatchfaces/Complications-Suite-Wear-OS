@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.provider.Settings
 import android.widget.Toast
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -27,7 +26,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -39,6 +37,7 @@ import androidx.wear.compose.foundation.rotary.rotaryScrollable
 import androidx.wear.compose.material3.ButtonDefaults
 import androidx.wear.compose.material3.CircularProgressIndicator
 import androidx.wear.compose.material3.Dialog
+import androidx.wear.compose.material3.Icon
 import androidx.wear.compose.material3.MaterialTheme
 import androidx.wear.compose.material3.OutlinedButton
 import androidx.wear.compose.material3.ProgressIndicatorDefaults
@@ -52,7 +51,6 @@ import com.google.accompanist.permissions.PermissionState
 import com.google.android.libraries.places.api.model.AutocompletePrediction
 import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.R
-import com.weartools.weekdayutccomp.theme.appColorScheme
 import com.weartools.weekdayutccomp.utils.arePermissionsGranted
 import com.weartools.weekdayutccomp.utils.isLocationEnabled
 import com.weartools.weekdayutccomp.utils.isOnline
@@ -114,8 +112,7 @@ fun LocationChooseDialog(
                             }
                         },
                         icon = {
-                            Image(
-                                colorFilter = ColorFilter.tint(appColorScheme.primary),
+                            Icon(
                                 imageVector = Icons.Default.Search,
                                 contentDescription = "Search"
                             )
@@ -150,8 +147,7 @@ fun LocationChooseDialog(
                             }
                         },
                         icon = {
-                            Image(
-                                colorFilter = ColorFilter.tint(appColorScheme.primary),
+                            Icon(
                                 imageVector = Icons.Default.MyLocation,
                                 contentDescription = "Current location"
                             )
@@ -177,7 +173,7 @@ fun LocationChooseDialog(
                 ) {
                     CircularProgressIndicator(
                         colors = ProgressIndicatorDefaults.colors(
-                            indicatorColor = appColorScheme.primary,
+                            indicatorColor = MaterialTheme.colorScheme.primary,
                             trackColor = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.1f),
                         ),
                         strokeWidth = 4.dp
