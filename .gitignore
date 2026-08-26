@@ -4,6 +4,7 @@ build/
 
 # Android Studio / IntelliJ IDEA
 .idea/
+.kotlin/
 *.iml
 *.ipr
 *.iws
