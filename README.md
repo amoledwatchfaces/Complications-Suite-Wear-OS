@@ -4,6 +4,7 @@
 [![Wear OS](https://img.shields.io/badge/Platform-Wear%20OS-brightgreen?logo=android&logoColor=white)](https://developer.android.com/wear)
 [![Latest Release](https://img.shields.io/github/v/release/amoledwatchfaces/Complications-Suite-Wear-OS?logo=github&color=blue)](https://github.com/amoledwatchfaces/Complications-Suite-Wear-OS/releases)
 [![License](https://img.shields.io/badge/License-Apache_2.0_with_Commons_Clause-orange.svg)](https://github.com/amoledwatchfaces/Complications-Suite-Wear-OS/blob/master/LICENSE.md)
+[![Privacy Policy](https://img.shields.io/badge/Privacy--Policy-Read-blue?logo=googleplay&logoColor=white)](https://amoledwatchfaces.github.io/apps/privacy/complicationssuite.html)
 
 Add missing Custom Complications to your Wear OS Watch Face. Customize dates, calendars, settings shortcuts, battery metrics, seconds, location-based moon/sun phases, and more.
 
@@ -52,6 +53,8 @@ The app settings screen on Wear OS allows you to customize each complication dir
 You can install the app directly on your Wear OS watch via the Play Store:
 <br>
 <a href='https://play.google.com/store/apps/details?id=com.weartools.weekdayutccomp'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' width='220'/></a>
+
+For more information, see our [Privacy Policy](https://amoledwatchfaces.github.io/apps/privacy/complicationssuite.html).
 
 ### Sideload / Manual Install
 Download the compiled package (`.apk`) directly from our [Releases Page](https://github.com/amoledwatchfaces/Complications-Suite-Wear-OS/releases) and sideload it onto your watch.
