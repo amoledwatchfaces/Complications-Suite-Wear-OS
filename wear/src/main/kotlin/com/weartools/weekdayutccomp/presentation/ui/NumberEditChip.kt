@@ -22,9 +22,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.sp
-import androidx.wear.compose.material.Chip
-import androidx.wear.compose.material.ChipDefaults
-import androidx.wear.compose.material.Text
+import androidx.wear.compose.material3.Button
+import androidx.wear.compose.material3.ButtonDefaults
+import androidx.wear.compose.material3.Text
 import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.activity.EditType
 import com.weartools.weekdayutccomp.theme.appColorScheme
@@ -42,11 +42,11 @@ fun NumberEditChip(
     val focusManager = LocalFocusManager.current
     var text by remember { mutableStateOf(goal) }
 
-    Chip(
+    Button(
         onClick = {},
         modifier = Modifier
             .fillMaxWidth(),
-        colors = ChipDefaults.primaryChipColors(backgroundColor = Color(0xff2c2c2d)),
+        colors = ButtonDefaults.buttonColors(containerColor = Color(0xff2c2c2d)),
         label = { Text(label) },
         secondaryLabel = {
             BasicTextField(
@@ -98,11 +98,11 @@ fun EditTextChip(
     val focusManager = LocalFocusManager.current
     var text by remember { mutableStateOf(row2) }
 
-    Chip(
+    Button(
         onClick = {},
         modifier = Modifier
             .fillMaxWidth(),
-        colors = ChipDefaults.primaryChipColors(backgroundColor = Color(0xff2c2c2d)),
+        colors = ButtonDefaults.buttonColors(containerColor = Color(0xff2c2c2d)),
         label = { Text(row1) },
         secondaryLabel = {
             BasicTextField(

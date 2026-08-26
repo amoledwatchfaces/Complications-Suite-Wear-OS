@@ -9,17 +9,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.wear.compose.material.Chip
-import androidx.wear.compose.material.ChipDefaults
-import androidx.wear.compose.material.ExperimentalWearMaterialApi
-import androidx.wear.compose.material.PlaceholderState
-import androidx.wear.compose.material.placeholder
-import androidx.wear.compose.material.placeholderShimmer
+import androidx.wear.compose.material3.Button
+import androidx.wear.compose.material3.ButtonDefaults
+import androidx.wear.compose.material3.PlaceholderState
+import androidx.wear.compose.material3.placeholder
+import androidx.wear.compose.material3.placeholderShimmer
 
-@OptIn(ExperimentalWearMaterialApi::class)
 @Composable
 fun PlaceHolderChip(chipPlaceholderState: PlaceholderState) {
-    Chip(
+    Button(
         enabled = false,
         modifier = Modifier
             .fillMaxWidth()
@@ -28,13 +26,12 @@ fun PlaceHolderChip(chipPlaceholderState: PlaceholderState) {
         icon = {
             Box(
                 modifier = Modifier
-                    .size(ChipDefaults.IconSize)
+                    .size(ButtonDefaults.IconSize)
                     .placeholder(chipPlaceholderState)
             )
         },
-        colors = ChipDefaults.gradientBackgroundChipColors(
-            startBackgroundColor = Color(0xff2c2c2d),
-            endBackgroundColor = Color(0xff2c2c2d)
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color(0xff2c2c2d),
         ),
         label = {
             Box(

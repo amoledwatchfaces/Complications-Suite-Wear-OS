@@ -59,24 +59,28 @@ import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
+import androidx.wear.compose.foundation.lazy.TransformingLazyColumn
 import androidx.wear.compose.foundation.lazy.items
-import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
+import androidx.wear.compose.foundation.lazy.rememberTransformingLazyColumnState
 import androidx.wear.compose.foundation.rotary.RotaryScrollableDefaults
 import androidx.wear.compose.foundation.rotary.rotaryScrollable
-import androidx.wear.compose.material.Button
-import androidx.wear.compose.material.Chip
-import androidx.wear.compose.material.ChipDefaults
-import androidx.wear.compose.material.ExperimentalWearMaterialApi
-import androidx.wear.compose.material.Icon
-import androidx.wear.compose.material.Text
-import androidx.wear.compose.material.dialog.Alert
-import androidx.wear.compose.material.dialog.Dialog
-import androidx.wear.compose.material.rememberPlaceholderState
+import androidx.wear.compose.material3.Button
+import androidx.wear.compose.material3.ButtonDefaults
+import androidx.wear.compose.material3.Dialog
+import androidx.wear.compose.material3.Icon
+import androidx.wear.compose.material3.MaterialTheme
+import androidx.wear.compose.material3.ScreenScaffold
+import androidx.wear.compose.material3.SurfaceTransformation
+import androidx.wear.compose.material3.Text
+import androidx.wear.compose.material3.lazy.rememberTransformationSpec
+import androidx.wear.compose.material3.lazy.transformedHeight
+import androidx.wear.compose.material3.rememberPlaceholderState
 import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.presentation.ui.AppsListPicker
@@ -85,7 +89,6 @@ import com.weartools.weekdayutccomp.presentation.ui.IconsViewModel
 import com.weartools.weekdayutccomp.presentation.ui.IconsViewModelImp
 import com.weartools.weekdayutccomp.presentation.ui.ImageUtil
 import com.weartools.weekdayutccomp.presentation.ui.LoaderBox
-import com.weartools.weekdayutccomp.presentation.ui.PreferenceCategory
 import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme
 import com.weartools.weekdayutccomp.theme.appColorScheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -114,7 +117,6 @@ class PickActivityActivity : ComponentActivity() {
     }
 }
 
-@OptIn(ExperimentalWearMaterialApi::class)
 @SuppressLint("RestrictedApi")
 @Composable
 fun PickActivityScreen(
@@ -124,15 +126,16 @@ fun PickActivityScreen(
 ) {
     val loaderState by viewModel.isLoading.collectAsState()
     val activityList = viewModel.installedPackages.collectAsState()
-    val chipPlaceholderState = rememberPlaceholderState {
-        activityList.value.isNotEmpty()
-    }
+    val chipPlaceholderState = rememberPlaceholderState(
+        isVisible = activityList.value.isEmpty()
+    )
 
     val focusRequester = remember { FocusRequester() }
     val preferences = viewModel.preferences.collectAsState()
 
     val state = remember { mutableStateOf(true) }
-    val listState = rememberScalingLazyListState(initialCenterItemIndex = 0)
+    val listState = rememberTransformingLazyColumnState()
+    val transformationSpec = rememberTransformationSpec()
     var openIconsDialog by remember{ mutableStateOf(false) }
     var openAppListPicker by remember{ mutableStateOf(false) }
 
@@ -144,87 +147,102 @@ fun PickActivityScreen(
             .fillMaxSize()
     ){
         Dialog(
-            showDialog = state.value,
-            scrollState = listState,
+            visible = state.value,
             onDismissRequest = {
                 activity.setResult(RESULT_OK)
                 activity.finish()
             }
         ) {
-            Alert(
-                modifier = Modifier
-                    .rotaryScrollable(
-                        RotaryScrollableDefaults.behavior(scrollableState = listState),
-                        focusRequester = focusRequester
+            ScreenScaffold(scrollState = listState) {
+                TransformingLazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .rotaryScrollable(
+                            RotaryScrollableDefaults.behavior(scrollableState = listState),
+                            focusRequester = focusRequester
+                        ),
+                    state = listState,
+                    contentPadding = PaddingValues(
+                        start = 10.dp,
+                        end = 10.dp,
+                        top = 24.dp,
+                        bottom = 52.dp
                     ),
-                negativeButton = {},
-                positiveButton = {
-                    Button(onClick = {
-                        activity.setResult(RESULT_OK)
-                        activity.finish()
-                    }) {
-                        Icon(imageVector = Icons.Default.Check, contentDescription = "OK", tint = Color.Black) } },
-                backgroundColor = Color.Black,
-                scrollState = listState,
-                title = { PreferenceCategory(title = stringResource(R.string.activity_setup)) },
-                contentPadding = PaddingValues(
-                    start = 10.dp,
-                    end = 10.dp,
-                    top = 24.dp,
-                    bottom = 52.dp
-                ),
-                content = {
-                    Chip(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        onClick = {
-                            openIconsDialog=openIconsDialog.not()
-                        },
-                        colors = ChipDefaults.gradientBackgroundChipColors(
-                            startBackgroundColor = Color(0xff2c2c2d),
-                            endBackgroundColor = Color(0xff2c2c2d)
-                        ),
-                        icon = {
-                            Icon(
-                                imageVector = ImageUtil.createImageVector(preferences.value.activityIconId)?: Icons.AutoMirrored.Filled.OpenInNew,
-                                contentDescription = "Remove",
-                                tint = appColorScheme.primary) },
-                        label = {
-                            Text(
-                                text = stringResource(R.string.activity_set_icon),
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
-                            )
+                ) {
+                    item {
+                        Text(
+                            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp).transformedHeight(this, transformationSpec),
+                            text = stringResource(R.string.activity_setup),
+                            textAlign = TextAlign.Center,
+                            style = MaterialTheme.typography.titleMedium,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                    item {
+                        Button(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .transformedHeight(this, transformationSpec),
+                            transformation = SurfaceTransformation(transformationSpec),
+                            onClick = {
+                                openIconsDialog=openIconsDialog.not()
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0xff2c2c2d),
+                            ),
+                            icon = {
+                                Icon(
+                                    imageVector = ImageUtil.createImageVector(preferences.value.activityIconId)?: Icons.AutoMirrored.Filled.OpenInNew,
+                                    contentDescription = "Remove",
+                                    tint = appColorScheme.primary) },
+                            label = {
+                                Text(
+                                    text = stringResource(R.string.activity_set_icon),
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+                            }
+                        )
+                    }
+                    item {
+                        Button(
+                            modifier = Modifier.fillMaxWidth().padding(top = 4.dp).transformedHeight(this, transformationSpec),
+                            transformation = SurfaceTransformation(transformationSpec),
+                            onClick = {
+                                openAppListPicker=openAppListPicker.not()
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0xff2c2c2d),
+                            ),
+                            label = {
+                                Text(
+                                    text = stringResource(R.string.activity_pick_activity),
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+                            },
+                            secondaryLabel = {
+                                Text(
+                                    text = preferences.value.activityClassName.split(".").last(),
+                                    maxLines = 1,
+                                    color = appColorScheme.primary,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+                            }
+                        )
+                    }
+                    item {
+                        Box(modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec), contentAlignment = Alignment.Center) {
+                            Button(onClick = {
+                                activity.setResult(RESULT_OK)
+                                activity.finish()
+                            }) {
+                                Icon(imageVector = Icons.Default.Check, contentDescription = "OK", tint = Color.Black) }
                         }
-                    )
-                    Chip(
-                        modifier = Modifier.fillMaxWidth().padding(top = 4.dp),
-                        onClick = {
-                            openAppListPicker=openAppListPicker.not()
-                        },
-                        colors = ChipDefaults.gradientBackgroundChipColors(
-                            startBackgroundColor = Color(0xff2c2c2d),
-                            endBackgroundColor = Color(0xff2c2c2d)
-                        ),
-                        label = {
-                            Text(
-                                text = stringResource(R.string.activity_pick_activity),
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
-                            )
-                        },
-                        secondaryLabel = {
-                            Text(
-                                text = preferences.value.activityClassName.split(".").last(),
-                                maxLines = 1,
-                                color = appColorScheme.primary,
-                                overflow = TextOverflow.Ellipsis
-                            )
-                        }
-                    )
+                    }
 
                 }
-            )
+            }
             if (openIconsDialog){
                 IconsDialog2(
                     focusRequester = focusRequester,
@@ -277,31 +295,40 @@ fun IconsDialog2(
     val state by viewModel.state.collectAsState()
     val dialogState = remember { mutableStateOf(true) }
 
-    val listState = rememberScalingLazyListState(initialCenterItemIndex = 0)
+    val listState = rememberTransformingLazyColumnState()
+    val transformationSpec = rememberTransformationSpec()
 
     Dialog(
-        showDialog = dialogState.value,
-        scrollState = listState,
+        visible = dialogState.value,
         onDismissRequest = { callback.invoke(-1) }
     )
     {
-        Alert(
-            modifier = Modifier
-                .rotaryScrollable(
-                    RotaryScrollableDefaults.behavior(scrollableState = listState),
-                    focusRequester = focusRequester
+        ScreenScaffold(scrollState = listState) {
+            TransformingLazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .rotaryScrollable(
+                        RotaryScrollableDefaults.behavior(scrollableState = listState),
+                        focusRequester = focusRequester
+                    ),
+                state = listState,
+                contentPadding = PaddingValues(
+                    start = 10.dp,
+                    end = 10.dp,
+                    top = 24.dp,
+                    bottom = 52.dp
                 ),
-            backgroundColor = Color.Black,
-            scrollState = listState,
-            title = { PreferenceCategory(title = stringResource(R.string.custom_goal_pick_icon)) },
-            verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.Top),
-            contentPadding = PaddingValues(
-                start = 10.dp,
-                end = 10.dp,
-                top = 24.dp,
-                bottom = 52.dp
-            ),
-            content = {
+            ) {
+
+                item {
+                    Text(
+                        modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp).transformedHeight(this, transformationSpec),
+                        text = stringResource(R.string.custom_goal_pick_icon),
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
 
                 if (state.loading) {
                     item {
@@ -310,14 +337,19 @@ fun IconsDialog2(
                 }
                 else{
 
-                    item { SearchTextField{ viewModel.updateSearch(it) } }
+                    item {
+                        Box(modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec), contentAlignment = Alignment.Center) {
+                            SearchTextField{ viewModel.updateSearch(it) }
+                        }
+                    }
 
                     val iconRows = state.icons.chunked(4)
-                    items(iconRows) { rowIcons ->
+                    this.items(iconRows) { rowIcons ->
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(8.dp),
+                                .padding(8.dp)
+                                .transformedHeight(this, transformationSpec),
                             horizontalArrangement = Arrangement.SpaceEvenly,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -339,7 +371,7 @@ fun IconsDialog2(
                     }
                 }
             }
-        )
+        }
 
     }
 }

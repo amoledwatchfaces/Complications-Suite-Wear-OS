@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.wear.compose.material.Icon
+import androidx.wear.compose.material3.Icon
 import com.weartools.weekdayutccomp.activity.Icon
 import com.weartools.weekdayutccomp.theme.appColorScheme
 import kotlinx.coroutines.Job

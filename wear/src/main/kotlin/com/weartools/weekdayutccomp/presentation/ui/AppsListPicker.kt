@@ -3,12 +3,14 @@ package com.weartools.weekdayutccomp.presentation.ui
 import android.content.Context
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -17,29 +19,31 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.wear.compose.foundation.lazy.TransformingLazyColumn
 import androidx.wear.compose.foundation.lazy.items
-import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
+import androidx.wear.compose.foundation.lazy.rememberTransformingLazyColumnState
 import androidx.wear.compose.foundation.rotary.RotaryScrollableDefaults
 import androidx.wear.compose.foundation.rotary.rotaryScrollable
-import androidx.wear.compose.material.Chip
-import androidx.wear.compose.material.ChipDefaults
-import androidx.wear.compose.material.ExperimentalWearMaterialApi
-import androidx.wear.compose.material.Icon
-import androidx.wear.compose.material.PlaceholderState
-import androidx.wear.compose.material.Text
-import androidx.wear.compose.material.ToggleChipDefaults
-import androidx.wear.compose.material.dialog.Alert
-import androidx.wear.compose.material.dialog.Dialog
+import androidx.wear.compose.material3.Button
+import androidx.wear.compose.material3.ButtonDefaults
+import androidx.wear.compose.material3.Icon
+import androidx.wear.compose.material3.MaterialTheme
+import androidx.wear.compose.material3.PlaceholderState
+import androidx.wear.compose.material3.ScreenScaffold
+import androidx.wear.compose.material3.SurfaceTransformation
+import androidx.wear.compose.material3.Text
+import androidx.wear.compose.material3.Dialog
+import androidx.wear.compose.material3.lazy.rememberTransformationSpec
+import androidx.wear.compose.material3.lazy.transformedHeight
 import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.activity.SearchTextField
 import com.weartools.weekdayutccomp.preferences.ActivityInfo
 import com.weartools.weekdayutccomp.utils.stringToBitmap
 
-@OptIn(ExperimentalWearMaterialApi::class
-)
 @Composable
 fun AppsListPicker(
     activityList: List<ActivityInfo>,
@@ -51,7 +55,8 @@ fun AppsListPicker(
     focusRequester: FocusRequester
 ) {
     val state = remember { mutableStateOf(true) }
-    val listState = rememberScalingLazyListState()
+    val listState = rememberTransformingLazyColumnState()
+    val transformationSpec = rememberTransformationSpec()
 
     // State for the search query
     val searchQuery = remember { mutableStateOf("") }
@@ -64,37 +69,48 @@ fun AppsListPicker(
     }
 
     Dialog(
-        showDialog = state.value,
-        scrollState = listState,
+        visible = state.value,
         onDismissRequest = { callback.invoke(-1) }
     )
     {
-        Alert(
-            modifier = Modifier
-                .rotaryScrollable(
-                    RotaryScrollableDefaults.behavior(scrollableState = listState),
-                    focusRequester = focusRequester
+        ScreenScaffold(scrollState = listState) {
+            TransformingLazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .rotaryScrollable(
+                        RotaryScrollableDefaults.behavior(scrollableState = listState),
+                        focusRequester = focusRequester
+                    ),
+                state = listState,
+                contentPadding = PaddingValues(
+                    start = 10.dp,
+                    end = 10.dp,
+                    top = 24.dp,
+                    bottom = 52.dp
                 ),
-            backgroundColor = Color.Black,
-            scrollState = listState,
-            title = { PreferenceCategory(title = stringResource(R.string.activity_pick_activity)) },
-            verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.Top),
-            contentPadding = PaddingValues(
-                start = 10.dp,
-                end = 10.dp,
-                top = 24.dp,
-                bottom = 52.dp
-            ),
-            content = {
+            ) {
 
-                if (chipPlaceholderState.isShowContent ||
-                    chipPlaceholderState.isWipeOff
-                ) {
-                    item { SearchTextField{ searchQuery.value = it } }
+                item {
+                    Text(
+                        modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp).transformedHeight(this, transformationSpec),
+                        text = stringResource(R.string.activity_pick_activity),
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
+
+                if (!chipPlaceholderState.isVisible) {
+                    item {
+                        Box(modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec), contentAlignment = Alignment.Center) {
+                            SearchTextField{ searchQuery.value = it }
+                        }
+                    }
                     item { VerticalDivider() }
-                    items(filteredActivities.sortedBy { it.packageName }){
-                        Chip(
-                            modifier = Modifier.fillMaxWidth(),
+                    this.items(filteredActivities.sortedBy { it.packageName }){
+                        Button(
+                            modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                            transformation = SurfaceTransformation(transformationSpec),
                             onClick = {
                                 viewModel.storeActivityInfo(
                                     it.packageName,
@@ -105,14 +121,13 @@ fun AppsListPicker(
                             },
                             icon = {
                                 Icon(
-                                    modifier = Modifier.size(ToggleChipDefaults.IconSize),
+                                    modifier = Modifier.size(ButtonDefaults.IconSize),
                                     bitmap = stringToBitmap(it.packageIcon).asImageBitmap(),
                                     tint = Color.Unspecified,
                                     contentDescription = "")
                             },
-                            colors = ChipDefaults.gradientBackgroundChipColors(
-                                startBackgroundColor = Color(0xff2c2c2d),
-                                endBackgroundColor = Color(0xff2c2c2d)
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0xff2c2c2d),
                             ),
                             label = {
                                 Text(
@@ -127,14 +142,13 @@ fun AppsListPicker(
                     }
                 }
 
-                if (!chipPlaceholderState.isShowContent && loaderState ){items(10){
-                    LaunchedEffect(chipPlaceholderState) {
-                        chipPlaceholderState.startPlaceholderAnimation()
+                if (chipPlaceholderState.isVisible && loaderState ){
+                    this.items(10){
+                        PlaceHolderChip(chipPlaceholderState = chipPlaceholderState)
                     }
-                    PlaceHolderChip(chipPlaceholderState = chipPlaceholderState)
-                }}
+                }
             }
-        )
+        }
 
     }
 }

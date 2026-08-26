@@ -36,13 +36,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.wear.compose.foundation.ExperimentalWearFoundationApi
-import androidx.wear.compose.material.Icon
-import androidx.wear.compose.material.InlineSlider
-import androidx.wear.compose.material.LocalContentAlpha
-import androidx.wear.compose.material.LocalContentColor
-import androidx.wear.compose.material.MaterialTheme
-import androidx.wear.compose.material.PositionIndicator
-import androidx.wear.compose.material.Stepper
+import androidx.wear.compose.material3.Icon
+import androidx.wear.compose.material3.LevelIndicator
+import androidx.wear.compose.material3.LevelIndicatorDefaults
+import androidx.wear.compose.material3.LocalContentColor
+import androidx.wear.compose.material3.MaterialTheme
+import androidx.wear.compose.material3.Stepper
+import androidx.wear.compose.material3.StepperDefaults
 import com.google.android.horologist.annotations.ExperimentalHorologistApi
 import com.google.android.horologist.audio.AudioOutput
 import com.google.android.horologist.audio.ui.VolumeUiState
@@ -57,6 +57,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlin.math.roundToInt
+import kotlin.time.Duration.Companion.milliseconds
 
 /**
  * Volume Screen with an [InlineSlider] and Increase/Decrease buttons for the Audio Stream Volume.
@@ -73,7 +74,7 @@ import kotlin.math.roundToInt
 @Composable
 @ExperimentalHorologistApi
 fun VolumeScreen(
-    volumeViewModel: VolumeViewModel = viewModel(factory = VolumeViewModel.Companion.Factory),
+    volumeViewModel: VolumeViewModel = viewModel(factory = VolumeViewModel.Factory),
     showVolumeIndicator: Boolean = true,
     increaseIcon: @Composable () -> Unit = { VolumeScreenDefaults.IncreaseIcon() },
     decreaseIcon: @Composable () -> Unit = { VolumeScreenDefaults.DecreaseIcon() },
@@ -94,7 +95,7 @@ fun VolumeScreen(
 }
 
 /**
- * Volume Screen with a Output Device chip.
+ * Volume Screen with an Output Device chip.
  */
 @Composable
 fun VolumeScreen(
@@ -122,7 +123,7 @@ fun VolumeScreen(
                     Icon2(
                         paintable = audioOutputUi.imageVector.asPaintable(),
                         contentDescription = "DECORATIVE_ELEMENT_CONTENT_DESCRIPTION",
-                        tint = MaterialTheme.colors.onSurfaceVariant,
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 },
                 onAudioOutputClick = onAudioOutputClick,
@@ -150,18 +151,18 @@ internal fun VolumeScreen(
     val volumeState = volume()
     (100f * volumeState.current / volumeState.max).roundToInt()
     Stepper(
-        contentColor = Color(0xFFC0B4A9),
-        value = volumeState.current.toFloat(),
+        colors = StepperDefaults.colors(
+            buttonIconColor = appColorScheme.primary,
+        ),
+        value = volumeState.current,
         onValueChange = { if (it > volumeState.current) increaseVolume() else decreaseVolume() },
-        steps = volumeState.max - 1,
-        valueRange = (0f..volumeState.max.toFloat()),
+        valueProgression = 0..volumeState.max,
         increaseIcon = {
             increaseIcon()
         },
         decreaseIcon = {
             decreaseIcon()
         },
-        enableRangeSemantics = false,
     ) {
         contentSlot()
     }
@@ -197,7 +198,7 @@ fun Icon2(
     paintable: PaintableIcon,
     contentDescription: String?,
     modifier: Modifier = Modifier,
-    tint: Color = LocalContentColor.current.copy(alpha = LocalContentAlpha.current),
+    tint: Color = LocalContentColor.current,
 ) {
     Icon(
         painter = paintable.rememberPainter(),
@@ -218,7 +219,7 @@ fun VolumePositionIndicator(
     val visible by produceState(displayIndicatorEvents == null, displayIndicatorEvents) {
         displayIndicatorEvents?.collectLatest {
             value = true
-            delay(2000)
+            delay(2000.milliseconds)
             value = false
         }
     }
@@ -229,16 +230,10 @@ fun VolumePositionIndicator(
         enter = fadeIn(),
         exit = fadeOut(),
     ) {
-        PositionIndicator(
+        LevelIndicator(
             modifier = modifier,
-            // RSB indicator uses secondary colors (surface/onSurface)
-            color = color,
-            value = {
-                uiState.current.toFloat()
-            },
-            range = uiState.min.toFloat().rangeTo(
-                uiState.max.toFloat(),
-            ),
+            value = { uiState.current.toFloat() / uiState.max.toFloat() },
+            colors = LevelIndicatorDefaults.colors(indicatorColor = color)
         )
     }
 }

@@ -86,29 +86,35 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
+import androidx.wear.compose.foundation.lazy.TransformingLazyColumn
 import androidx.wear.compose.foundation.lazy.items
-import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
+import androidx.wear.compose.foundation.lazy.rememberTransformingLazyColumnState
 import androidx.wear.compose.foundation.rotary.RotaryScrollableDefaults
 import androidx.wear.compose.foundation.rotary.rotaryScrollable
-import androidx.wear.compose.material.ButtonDefaults
-import androidx.wear.compose.material.Card
-import androidx.wear.compose.material.CardDefaults
-import androidx.wear.compose.material.Chip
-import androidx.wear.compose.material.ChipDefaults
-import androidx.wear.compose.material.CircularProgressIndicator
-import androidx.wear.compose.material.Icon
-import androidx.wear.compose.material.MaterialTheme
-import androidx.wear.compose.material.OutlinedCompactButton
-import androidx.wear.compose.material.Stepper
-import androidx.wear.compose.material.Text
-import androidx.wear.compose.material.dialog.Alert
-import androidx.wear.compose.material.dialog.Dialog
+import androidx.wear.compose.material3.Button
+import androidx.wear.compose.material3.ButtonDefaults
+import androidx.wear.compose.material3.Card
+import androidx.wear.compose.material3.CardDefaults
+import androidx.wear.compose.material3.CircularProgressIndicator
+import androidx.wear.compose.material3.CompactButton
+import androidx.wear.compose.material3.Dialog
+import androidx.wear.compose.material3.Icon
+import androidx.wear.compose.material3.MaterialTheme
+import androidx.wear.compose.material3.ProgressIndicatorDefaults
+import androidx.wear.compose.material3.ScreenScaffold
+import androidx.wear.compose.material3.Stepper
+import androidx.wear.compose.material3.StepperDefaults
+import androidx.wear.compose.material3.SurfaceTransformation
+import androidx.wear.compose.material3.Text
+import androidx.wear.compose.material3.lazy.rememberTransformationSpec
+import androidx.wear.compose.material3.lazy.transformedHeight
 import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.preferences.UserPreferences
@@ -119,8 +125,8 @@ import com.weartools.weekdayutccomp.presentation.ui.IconsViewModelImp
 import com.weartools.weekdayutccomp.presentation.ui.ImageUtil
 import com.weartools.weekdayutccomp.presentation.ui.LoaderBox
 import com.weartools.weekdayutccomp.presentation.ui.NumberEditChip
-import com.weartools.weekdayutccomp.presentation.ui.PreferenceCategory
 import com.weartools.weekdayutccomp.presentation.ui.ToggleChip
+import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme
 import com.weartools.weekdayutccomp.theme.appColorScheme
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.ByteArrayOutputStream
@@ -133,13 +139,17 @@ class CustomGoalActivity : ComponentActivity() {
 
         val viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         setContent {
-            CustomGoalTheme(
-                viewModel,
-                this,
-                this
-            )
+            val useDynamicColor = viewModel.preferences.collectAsState().value.useDynamicColor
+
+            ComplicationsSuiteTheme(useDynamicColor = useDynamicColor) {
+                CustomGoalScreen(
+                    viewModel,
+                    this,
+                    this
+                )
             }
         }
+    }
     override fun onPause(){
         super.onPause()
         setResult(RESULT_OK)
@@ -149,7 +159,7 @@ class CustomGoalActivity : ComponentActivity() {
 
 @SuppressLint("RestrictedApi")
 @Composable
-fun CustomGoalTheme(
+fun CustomGoalScreen(
     viewModel: MainViewModel,
     context: Context,
     activity: CustomGoalActivity
@@ -197,22 +207,24 @@ fun CustomGoalTheme(
                     context = context
                 )
             },
-            valueProgression = IntProgression.fromClosedRange(0, 1000000000, 1),
+            valueProgression = 0..1000000000,
+            colors = StepperDefaults.colors(
+                buttonIconColor = appColorScheme.primary,
+            ),
             decreaseIcon = { Icon(imageVector = Icons.Default.Remove, contentDescription = "Remove", tint = appColorScheme.primary) },
             increaseIcon = { Icon(imageVector = Icons.Default.Add, contentDescription = "Add", tint = appColorScheme.primary) })
         {}
         Card(
-            backgroundPainter = CardDefaults.cardBackgroundPainter(
-                startBackgroundColor = Color(0xff2c2c2d),
-                endBackgroundColor = appColorScheme.primaryContainer
-            ),
+            onClick = {
+                openGoalSetting = openGoalSetting.not()
+            },
             modifier = Modifier
                 .fillMaxWidth(0.8f)
                 .padding(horizontal = 10.dp),
             enabled = true,
-            onClick = {
-                openGoalSetting = openGoalSetting.not()
-            },
+            colors = CardDefaults.cardColors(
+                containerColor = Color(0xff2c2c2d),
+            ),
         ){
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -273,11 +285,10 @@ fun CustomGoalTheme(
                 } )
         }
 
-        OutlinedCompactButton(
+        CompactButton(
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = appColorScheme.primary
+                containerColor = appColorScheme.primary
             ),
-            border = ButtonDefaults.buttonBorder(null, null),
             modifier = Modifier.padding(top = 80.dp, start = 80.dp),
             onClick = {
                 activity.setResult(RESULT_OK)
@@ -298,14 +309,16 @@ fun CustomGoalTheme(
         }
 
         CircularProgressIndicator(
-            progress = progress,
+            progress = { progress },
             modifier = Modifier
                 .fillMaxSize()
                 .padding(all = 10.dp),
             startAngle = 135f,
             endAngle = 225f,
-            indicatorColor = appColorScheme.secondary,
-            trackColor = MaterialTheme.colors.onBackground.copy(alpha = 0.2f),
+            colors = ProgressIndicatorDefaults.colors(
+                indicatorColor = appColorScheme.secondary,
+                trackColor = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.2f),
+            ),
             strokeWidth = 5.dp
         )
     }
@@ -320,42 +333,51 @@ fun GoalSettings(
     context: Context
 ) {
     val state = remember { mutableStateOf(true) }
-    val listState = rememberScalingLazyListState(initialCenterItemIndex = 0)
+    val listState = rememberTransformingLazyColumnState()
+    val transformationSpec = rememberTransformationSpec()
     var openIconsDialog by remember{ mutableStateOf(false) }
 
     Dialog(
-        showDialog = state.value,
-        scrollState = listState,
+        visible = state.value,
         onDismissRequest = { callback.invoke(-1) }
     )
     {
-        Alert(
-            modifier = Modifier
-                .rotaryScrollable(
-                    RotaryScrollableDefaults.behavior(scrollableState = listState),
-                    focusRequester = focusRequester
+        ScreenScaffold(scrollState = listState) {
+            TransformingLazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .rotaryScrollable(
+                        RotaryScrollableDefaults.behavior(scrollableState = listState),
+                        focusRequester = focusRequester
+                    ),
+                state = listState,
+                contentPadding = PaddingValues(
+                    start = 10.dp,
+                    end = 10.dp,
+                    top = 24.dp,
+                    bottom = 52.dp
                 ),
-            backgroundColor = Color.Black,
-            scrollState = listState,
-            title = { PreferenceCategory(title = stringResource(R.string.goal_settings)) },
-            verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.Top),
-            contentPadding = PaddingValues(
-                start = 10.dp,
-                end = 10.dp,
-                top = 24.dp,
-                bottom = 52.dp
-            ),
-            content = {
+            ) {
                 item {
-                    Chip(
+                    Text(
+                        modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp).transformedHeight(this, transformationSpec),
+                        text = stringResource(R.string.goal_settings),
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
+                item {
+                    Button(
                         modifier = Modifier
-                            .fillMaxWidth(),
+                            .fillMaxWidth()
+                            .transformedHeight(this, transformationSpec),
+                        transformation = SurfaceTransformation(transformationSpec),
                         onClick = {
                             openIconsDialog=openIconsDialog.not()
                         },
-                        colors = ChipDefaults.gradientBackgroundChipColors(
-                            startBackgroundColor = Color(0xff2c2c2d),
-                            endBackgroundColor = Color(0xff2c2c2d)
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xff2c2c2d),
                         ),
                         icon = {
                             Icon(
@@ -441,7 +463,7 @@ fun GoalSettings(
                     )
                 }
             }
-        )
+        }
         if (openIconsDialog){
             IconsDialog(
                 focusRequester = focusRequester,
@@ -483,31 +505,40 @@ fun IconsDialog(
     val state by viewModel.state.collectAsState()
     val dialogState = remember { mutableStateOf(true) }
 
-    val listState = rememberScalingLazyListState(initialCenterItemIndex = 0)
+    val listState = rememberTransformingLazyColumnState()
+    val transformationSpec = rememberTransformationSpec()
 
     Dialog(
-        showDialog = dialogState.value,
-        scrollState = listState,
+        visible = dialogState.value,
         onDismissRequest = { callback.invoke(-1) }
     )
     {
-        Alert(
-            modifier = Modifier
-                .rotaryScrollable(
-                    RotaryScrollableDefaults.behavior(scrollableState = listState),
-                    focusRequester = focusRequester
+        ScreenScaffold(scrollState = listState) {
+            TransformingLazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .rotaryScrollable(
+                        RotaryScrollableDefaults.behavior(scrollableState = listState),
+                        focusRequester = focusRequester
+                    ),
+                state = listState,
+                contentPadding = PaddingValues(
+                    start = 10.dp,
+                    end = 10.dp,
+                    top = 24.dp,
+                    bottom = 52.dp
                 ),
-            backgroundColor = Color.Black,
-            scrollState = listState,
-            title = { PreferenceCategory(title = stringResource(R.string.custom_goal_pick_icon)) },
-            verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.Top),
-            contentPadding = PaddingValues(
-                start = 10.dp,
-                end = 10.dp,
-                top = 24.dp,
-                bottom = 52.dp
-            ),
-            content = {
+            ) {
+
+                item {
+                    Text(
+                        modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp).transformedHeight(this, transformationSpec),
+                        text = stringResource(R.string.custom_goal_pick_icon),
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
 
                 if (state.loading) {
                     item {
@@ -516,17 +547,21 @@ fun IconsDialog(
                 }
                 else{
 
-                    item { SearchTextField{
-                        viewModel.updateSearch(it)
-                    }
+                    item {
+                        Box(modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec), contentAlignment = Alignment.Center) {
+                            SearchTextField{
+                                viewModel.updateSearch(it)
+                            }
+                        }
                     }
 
                     val iconRows = state.icons.chunked(4)
-                    items(iconRows) { rowIcons ->
+                    this.items(iconRows) { rowIcons ->
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(8.dp),
+                                .padding(8.dp)
+                                .transformedHeight(this, transformationSpec),
                             horizontalArrangement = Arrangement.SpaceEvenly,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -548,7 +583,7 @@ fun IconsDialog(
                     }
                 }
             }
-        )
+        }
 
     }
 }

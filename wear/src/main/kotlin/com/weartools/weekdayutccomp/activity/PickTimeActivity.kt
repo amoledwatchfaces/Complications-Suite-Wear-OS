@@ -31,12 +31,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModelProvider
 import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.presentation.ui.TimePicker
+import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalTime
 import java.util.concurrent.TimeUnit
@@ -45,57 +47,36 @@ import java.util.concurrent.TimeUnit
 @AndroidEntryPoint
 class PickTimeActivity : ComponentActivity(){
 
-    /*
-    private fun checkPermission(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            val alarmManager = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            if (alarmManager.canScheduleExactAlarms().not()) {
-
-                Toast.makeText(this, "Timer Complication needs a permission to schedule alarms", Toast.LENGTH_LONG).show()
-
-                val intent = Intent()
-                intent.setAction(ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
-                intent.setData(Uri.parse("package:$packageName"))
-                startActivity(intent)
-            }
-        }
-    }
-
-     */
-
-    /*
-    override fun onResume() {
-        super.onResume()
-        checkPermission()
-    }
-
-     */
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         setContent {
             val context = LocalContext.current
+            val useDynamicColor = viewModel.preferences.collectAsState().value.useDynamicColor
 
-            TimePicker(
-                time = LocalTime.of(0, 0, 0),
-                modifier = Modifier.background(color = Color.Black),
-                showSeconds = true,
-                onTimeConfirm = {
-                    val currentTime = System.currentTimeMillis()
-                    viewModel.setTimePicked(
-                        currentTime = currentTime,
-                        targetTime = currentTime
-                            .plus(TimeUnit.HOURS.toMillis(it.hour.toLong()))
-                            .plus(TimeUnit.MINUTES.toMillis(it.minute.toLong()))
-                            .plus(TimeUnit.SECONDS.toMillis(it.second.toLong())), context
-                    )
-                    setResult(RESULT_OK) // OK! (use whatever code you want)
-                    finish()
-                }
-            )
+            ComplicationsSuiteTheme(
+                useDynamicColor = useDynamicColor
+            ){
+                TimePicker(
+                    time = LocalTime.of(0, 0, 0),
+                    modifier = Modifier.background(color = Color.Black),
+                    showSeconds = true,
+                    onTimeConfirm = {
+                        val currentTime = System.currentTimeMillis()
+                        viewModel.setTimePicked(
+                            currentTime = currentTime,
+                            targetTime = currentTime
+                                .plus(TimeUnit.HOURS.toMillis(it.hour.toLong()))
+                                .plus(TimeUnit.MINUTES.toMillis(it.minute.toLong()))
+                                .plus(TimeUnit.SECONDS.toMillis(it.second.toLong())), context
+                        )
+                        setResult(RESULT_OK) // OK! (use whatever code you want)
+                        finish()
+                    }
+                )
             }
         }
+    }
 
 }

@@ -59,18 +59,20 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
-import androidx.wear.compose.material.ButtonDefaults
-import androidx.wear.compose.material.Chip
-import androidx.wear.compose.material.ChipDefaults
-import androidx.wear.compose.material.CircularProgressIndicator
-import androidx.wear.compose.material.Icon
-import androidx.wear.compose.material.MaterialTheme
-import androidx.wear.compose.material.OutlinedCompactButton
-import androidx.wear.compose.material.Stepper
-import androidx.wear.compose.material.Text
+import androidx.wear.compose.material3.Button
+import androidx.wear.compose.material3.ButtonDefaults
+import androidx.wear.compose.material3.CircularProgressIndicator
+import androidx.wear.compose.material3.CompactButton
+import androidx.wear.compose.material3.Icon
+import androidx.wear.compose.material3.MaterialTheme
+import androidx.wear.compose.material3.ProgressIndicatorDefaults
+import androidx.wear.compose.material3.Stepper
+import androidx.wear.compose.material3.StepperDefaults
+import androidx.wear.compose.material3.Text
 import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.R
 import com.weartools.weekdayutccomp.presentation.ui.ListItemsWidget
+import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme
 import com.weartools.weekdayutccomp.theme.appColorScheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -82,16 +84,22 @@ class WaterActivity : ComponentActivity() {
         val viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         setContent {
             val context = LocalContext.current
-            WaterIntakeTheme(
-                viewModel,
-                context
-            )
+            val useDynamicColor = viewModel.preferences.collectAsState().value.useDynamicColor
+
+            ComplicationsSuiteTheme(
+                useDynamicColor = useDynamicColor
+            ) {
+                WaterIntakeScreen(
+                    viewModel,
+                    context
+                )
             }
         }
+    }
 }
 
 @Composable
-fun WaterIntakeTheme(
+fun WaterIntakeScreen(
     viewModel: MainViewModel,
     context: Context,
 ) {
@@ -133,13 +141,16 @@ fun WaterIntakeTheme(
             onValueChange = {
                 viewModel.setWater(it, context)
             },
-            valueProgression = IntProgression.fromClosedRange(0, 100, 1),
+            valueProgression = 0..100,
+            colors = StepperDefaults.colors(
+                buttonIconColor = appColorScheme.primary,
+            ),
             decreaseIcon = { Icon(imageVector = Icons.Default.Remove, contentDescription = "Remove", tint = appColorScheme.primary) },
             increaseIcon = { Icon(imageVector = Icons.Default.Add, contentDescription = "Add", tint = appColorScheme.primary) })
         {
             //WaterChip(context = context, pref = pref, text = "Intake: $intake", title = "Goal: ${intakeGoal.toInt()}")
 
-            Chip(
+            Button(
                 modifier = Modifier
                     .fillMaxWidth(0.8f)
                     .padding(horizontal = 10.dp)
@@ -148,9 +159,8 @@ fun WaterIntakeTheme(
                     openGoalSetting = openGoalSetting.not()
                 },
                 icon = { Icon(imageVector = Icons.Default.WaterDrop, contentDescription = "Remove", tint = appColorScheme.primary) },
-                colors = ChipDefaults.gradientBackgroundChipColors(
-                    startBackgroundColor = Color(0xff2c2c2d),
-                    endBackgroundColor = appColorScheme.primaryContainer
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xff2c2c2d),
                 ),
                 label = {
                     Text(
@@ -188,8 +198,11 @@ fun WaterIntakeTheme(
             }
         }
 
-        OutlinedCompactButton(
-            border = ButtonDefaults.buttonBorder(null, null),
+        CompactButton(
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Transparent,
+                contentColor = Color.Gray
+            ),
             modifier = Modifier.padding(top = 90.dp),
             onClick = {
                 viewModel.setWater(0, context)
@@ -199,14 +212,16 @@ fun WaterIntakeTheme(
         }
 
         CircularProgressIndicator(
-            progress = (intake / intakeGoal),
+            progress = { (intake / intakeGoal) },
             modifier = Modifier
                 .fillMaxSize()
                 .padding(all = 10.dp),
             startAngle = 135f,
             endAngle = 225f,
-            indicatorColor = appColorScheme.secondary,
-            trackColor = MaterialTheme.colors.onBackground.copy(alpha = 0.2f),
+            colors = ProgressIndicatorDefaults.colors(
+                indicatorColor = appColorScheme.secondary,
+                trackColor = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.2f),
+            ),
             strokeWidth = 5.dp
         )
     }

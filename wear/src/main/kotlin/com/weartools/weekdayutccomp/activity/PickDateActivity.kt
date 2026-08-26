@@ -38,6 +38,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModelProvider
 import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.presentation.ui.DatePicker
+import com.weartools.weekdayutccomp.theme.ComplicationsSuiteTheme
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.Instant
 import java.time.LocalDate
@@ -52,26 +53,29 @@ class PickDateActivity : ComponentActivity(){
         setContent {
             val context = LocalContext.current
             val preferences = viewModel.preferences.collectAsState()
+            val useDynamicColor = viewModel.preferences.collectAsState().value.useDynamicColor
             val storedDate = preferences.value.datePicked
 
-            DatePicker(
-                modifier = Modifier.background(color = Color.Black),
-                fromDate = LocalDate.now().plusDays(1),
-                onDateConfirm = {
-                    viewModel.setDatePicked(it.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli(), context)
-                    setResult(RESULT_OK) // OK! (use whatever code you want)
-                    finish()
-                },
-                date =
-                    if (storedDate <= System.currentTimeMillis()){
-                        LocalDate.now().plusDays(1)
-                    }
-                    else {
-                        Instant.ofEpochMilli(storedDate)
-                            .atZone(ZoneId.systemDefault())
-                            .toLocalDate()
-                    }
-            )
+            ComplicationsSuiteTheme(useDynamicColor = useDynamicColor) {
+                DatePicker(
+                    modifier = Modifier.background(color = Color.Black),
+                    fromDate = LocalDate.now().plusDays(1),
+                    onDateConfirm = {
+                        viewModel.setDatePicked(it.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli(), context)
+                        setResult(RESULT_OK) // OK! (use whatever code you want)
+                        finish()
+                    },
+                    date =
+                        if (storedDate <= System.currentTimeMillis()){
+                            LocalDate.now().plusDays(1)
+                        }
+                        else {
+                            Instant.ofEpochMilli(storedDate)
+                                .atZone(ZoneId.systemDefault())
+                                .toLocalDate()
+                        }
+                )
+            }
         }
     }
 }
