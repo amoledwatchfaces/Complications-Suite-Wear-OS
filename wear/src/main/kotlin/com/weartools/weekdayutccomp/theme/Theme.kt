@@ -1,8 +1,11 @@
 package com.weartools.weekdayutccomp.theme
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.wear.compose.material3.ColorScheme
+import androidx.wear.compose.material3.MaterialTheme
 import androidx.wear.compose.material3.Typography
+import androidx.wear.compose.material3.dynamicColorScheme
 
 val appColorScheme = ColorScheme(
     primary = primary,
@@ -44,10 +47,12 @@ val appColorScheme = ColorScheme(
 
 @Composable
 fun ComplicationsSuiteTheme(
+    useDynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
-    androidx.wear.compose.material3.MaterialTheme(
-        colorScheme = appColorScheme,
+    val context = LocalContext.current
+    MaterialTheme(
+        colorScheme = if (useDynamicColor) dynamicColorScheme(context) ?: appColorScheme else appColorScheme,
         typography = appTypography,
         content = content
     )

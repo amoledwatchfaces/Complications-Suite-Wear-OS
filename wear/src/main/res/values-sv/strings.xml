@@ -259,4 +259,6 @@
     <string name="current_gps">Aktuell (GPS)</string>
     <string name="no_connection">Ingen anslutning</string>
     <string name="locations">Platser</string>
+
+    <string name="dynamic_color">Dynamiska färger</string>
 </resources>

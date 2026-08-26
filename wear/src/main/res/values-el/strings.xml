@@ -254,4 +254,6 @@
     <string name="current_gps">Τρέχουσα (GPS)</string>
     <string name="no_connection">Χωρίς σύνδεση</string>
     <string name="locations">Τοποθεσίες</string>
+
+    <string name="dynamic_color">Δυναμικά χρώματα</string>
 </resources>

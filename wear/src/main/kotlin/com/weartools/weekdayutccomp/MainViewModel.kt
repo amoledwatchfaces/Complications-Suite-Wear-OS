@@ -376,6 +376,10 @@ class MainViewModel @Inject constructor(
         context.updateComplication(CustomTextComplicationService::class.java)
     }}
 
+    fun setUseDynamicColor(value: Boolean) { viewModelScope.launch {
+        dataStore.updateData { it.copy(useDynamicColor = value) }
+    }}
+
 
 
     fun setCustomGoalMin(value: Float, context: Context) { viewModelScope.launch {

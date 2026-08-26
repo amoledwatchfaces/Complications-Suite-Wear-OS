@@ -253,4 +253,6 @@
     <string name="current_gps">Actual (GPS)</string>
     <string name="no_connection">Fără conexiune</string>
     <string name="locations">Locații</string>
+
+    <string name="dynamic_color">Culori dinamice</string>
 </resources>

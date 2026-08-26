@@ -3,14 +3,10 @@ package com.weartools.weekdayutccomp.presentation
 
 import android.os.Build
 import android.widget.Toast
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddLocation
-import androidx.compose.material.icons.filled.EditLocation
 import androidx.compose.material.icons.filled.LocationCity
 import androidx.compose.material.icons.outlined.AttachMoney
 import androidx.compose.material.icons.outlined.Euro
@@ -24,7 +20,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
@@ -43,7 +38,6 @@ import androidx.wear.compose.foundation.lazy.rememberTransformingLazyColumnState
 import androidx.wear.compose.foundation.rotary.RotaryScrollableDefaults
 import androidx.wear.compose.foundation.rotary.rotaryScrollable
 import androidx.wear.compose.material3.AppCard
-import androidx.wear.compose.material3.Card
 import androidx.wear.compose.material3.CheckboxButton
 import androidx.wear.compose.material3.Icon
 import androidx.wear.compose.material3.ListHeader
@@ -53,6 +47,7 @@ import androidx.wear.compose.material3.ScreenScaffold
 import androidx.wear.compose.material3.SurfaceTransformation
 import androidx.wear.compose.material3.SwitchButton
 import androidx.wear.compose.material3.Text
+import androidx.wear.compose.material3.TitleCard
 import androidx.wear.compose.material3.lazy.TransformationSpec
 import androidx.wear.compose.material3.lazy.transformedHeight
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -72,7 +67,6 @@ import com.weartools.weekdayutccomp.presentation.ui.LoaderBox
 import com.weartools.weekdayutccomp.presentation.ui.LocationChooseDialog
 import com.weartools.weekdayutccomp.presentation.ui.PermissionAskDialog
 import com.weartools.weekdayutccomp.presentation.ui.WorldClockWidget
-import com.weartools.weekdayutccomp.theme.appColorScheme
 import com.weartools.weekdayutccomp.utils.CounterCurrency
 import com.weartools.weekdayutccomp.utils.openPlayStore
 import kotlinx.coroutines.launch
@@ -218,6 +212,17 @@ fun MainScreen(
                     }
                 )
             }
+            item {
+                SwitchButton(
+                    modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                    transformation = SurfaceTransformation(transformationSpec),
+                    checked = preferences.useDynamicColor,
+                    onCheckedChange = {
+                        viewModel.setUseDynamicColor(it)
+                    },
+                    label = { Text(stringResource(id = R.string.dynamic_color)) },
+                )
+            }
 
             // World Clock
             item { ListSubHeader(
@@ -321,45 +326,37 @@ fun MainScreen(
                     enabled = true,
                     time = {
                         Icon(
-                            imageVector = if (preferences.locationName == stringResource(R.string.no_location_set)) Icons.Default.AddLocation else Icons.Default.EditLocation,
-                            contentDescription = "Refresh Icon",
-                            tint = appColorScheme.secondary,
+                            imageVector = if (preferences.locationName == stringResource(R.string.no_location_set)) Icons.Default.AddLocation else Icons.Default.LocationCity,
+                            contentDescription = "Refresh Icon"
                         )},
-                    appImage = { Icon(
-                        imageVector = Icons.Default.LocationCity,
-                        contentDescription = "Refresh Icon",
-                        tint = appColorScheme.secondary,
-                    )},
-                    title = {Text(text = preferences.locationName, color =  appColorScheme.primary, fontSize = 12.sp)},
-                    appName = {Text(stringResource(id = R.string.location), color = Color(0xFFF1F1F1))},
+                    title = {Text(text = preferences.locationName)},
+                    appName = {Text(stringResource(id = R.string.location))},
                     onClick = {
                         openLocationChoose = openLocationChoose.not()
                     },
                 ){}
             }
             item {
-                Card(
+                TitleCard(
                     modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                    title = {
+                        Text(stringResource(id = R.string.countdown_style))
+                    },
+                    subtitle = {
+                        Text(
+                            when (preferences.timeDiffStyle) {
+                                "SHORT_DUAL_UNIT" -> "${stringResource(id = R.string.e_g_)} 5h 45m"
+                                "SHORT_SINGLE_UNIT" -> "${stringResource(id = R.string.e_g_)} 6h"
+                                else -> "${stringResource(id = R.string.e_g_)} 5:45"
+                            })
+
+                    },
                     transformation = SurfaceTransformation(transformationSpec),
                     onClick = {
                         timeDiffs = timeDiffs.not()
                     },
                 ){
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                    ) {
-                        Column {
-                            Text(stringResource(id = R.string.countdown_style), color = Color(0xFFF1F1F1))
-                            Text(preferences.timeDiffStyle, color =  appColorScheme.primary, fontSize = 12.sp)
-                            Text(
-                                when (preferences.timeDiffStyle) {
-                                    "SHORT_DUAL_UNIT" -> "${stringResource(id = R.string.e_g_)} 5h 45m"
-                                    "SHORT_SINGLE_UNIT" -> "${stringResource(id = R.string.e_g_)} 6h"
-                                    else -> "${stringResource(id = R.string.e_g_)} 5:45"
-                                }, color =  Color.LightGray, fontSize = 12.sp)
-                        }
-                    }
+                    Text(preferences.timeDiffStyle, fontSize = 12.sp)
                 }
             }
 
@@ -435,8 +432,8 @@ fun MainScreen(
                     },
                     label = { Text(stringResource(id = R.string.date_show_icon)) },
                     icon = { Icon(painterResource(R.drawable.ic_calendar_today),
-                        contentDescription = "Calendar Today",
-                        tint = appColorScheme.secondary)
+                        contentDescription = "Calendar Today"
+                    )
                     }
                 )
             }
@@ -555,7 +552,7 @@ fun MainScreen(
                             CounterCurrency.USD -> Icons.Outlined.AttachMoney
                             CounterCurrency.EUR -> Icons.Outlined.Euro
                             else -> Icons.Outlined.AttachMoney
-                        }, contentDescription = "Counter Currency Icon", tint = appColorScheme.secondary)},
+                        }, contentDescription = "Counter Currency Icon")},
                     title = preferences.counterCurrency.name,
                     onClick = {
                         changeCryptoCounterCurrency = changeCryptoCounterCurrency.not()
@@ -582,7 +579,7 @@ fun MainScreen(
                     modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
                     transformation = SurfaceTransformation(transformationSpec),
                     text = stringResource(id = R.string.language),
-                    icon = { Icon(imageVector = Icons.Outlined.Language, contentDescription = "Play Store Icon", tint = appColorScheme.secondary)},
+                    icon = { Icon(imageVector = Icons.Outlined.Language, contentDescription = "Play Store Icon")},
                     title = currentLocale,
                     onClick = { navController.navigate("language_screen")}
                 )
@@ -592,7 +589,7 @@ fun MainScreen(
                     modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
                     transformation = SurfaceTransformation(transformationSpec),
                     text = stringResource(id = R.string.version),
-                    icon = { Icon(imageVector = Icons.Outlined.Info, contentDescription = "Play Store Icon", tint = appColorScheme.secondary)},
+                    icon = { Icon(imageVector = Icons.Outlined.Info, contentDescription = "Play Store Icon")},
                     title = BuildConfig.VERSION_NAME,
                     onClick = {context.openPlayStore()}
                 )

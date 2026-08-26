@@ -247,4 +247,6 @@
     <string name="current_gps">Aktuální (GPS)</string>
     <string name="no_connection">Žádné připojení</string>
     <string name="locations">Místa</string>
+
+    <string name="dynamic_color">Dynamické barvy</string>
 </resources>

@@ -253,4 +253,6 @@
     <string name="current_gps">Attuale (GPS)</string>
     <string name="no_connection">Nessuna connessione</string>
     <string name="locations">Posizioni</string>
+
+    <string name="dynamic_color">Colori dinamici</string>
 </resources>

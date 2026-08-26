@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.wear.compose.foundation.lazy.TransformingLazyColumn
@@ -30,6 +31,8 @@ import androidx.wear.compose.foundation.lazy.itemsIndexed
 import androidx.wear.compose.foundation.lazy.rememberTransformingLazyColumnState
 import androidx.wear.compose.foundation.rotary.RotaryScrollableDefaults
 import androidx.wear.compose.foundation.rotary.rotaryScrollable
+import androidx.wear.compose.material3.ListHeader
+import androidx.wear.compose.material3.MaterialTheme
 import androidx.wear.compose.material3.RadioButton
 import androidx.wear.compose.material3.RadioButtonDefaults
 import androidx.wear.compose.material3.ScreenScaffold
@@ -40,7 +43,6 @@ import androidx.wear.compose.material3.lazy.transformedHeight
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.weartools.weekdayutccomp.MainViewModel
 import com.weartools.weekdayutccomp.R
-import com.weartools.weekdayutccomp.presentation.ui.PreferenceCategory
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -60,7 +62,9 @@ fun LanguageScreen(
         initialAnchorItemIndex = index + 1,
     )
 
-    ScreenScaffold {
+    ScreenScaffold(
+        scrollState = scrollState
+    ) {
         TransformingLazyColumn(
             contentPadding = PaddingValues(top = 25.dp, bottom = 65.dp, start = 12.dp, end = 12.dp),
             modifier = Modifier
@@ -71,9 +75,14 @@ fun LanguageScreen(
                 ),
             state = scrollState,
         ){
-            item {
-                PreferenceCategory(title = stringResource(id = R.string.change_locale))
-            }
+            item { ListHeader{
+                Text(
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colorScheme.secondary,
+                    text = stringResource(id = R.string.change_locale),
+                    style = MaterialTheme.typography.titleMedium
+                )
+            } }
             itemsIndexed(localesLongList) { index, i ->
                 RadioButton(
                     modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),

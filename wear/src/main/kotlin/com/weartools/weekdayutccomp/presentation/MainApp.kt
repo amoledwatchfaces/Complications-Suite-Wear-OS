@@ -24,14 +24,14 @@ fun MainApp(
     viewModel: MainViewModel = hiltViewModel(),
     open: Request
 ) {
-    ComplicationsSuiteTheme {
+    val preferences by viewModel.preferences.collectAsState()
+
+    ComplicationsSuiteTheme(useDynamicColor = preferences.useDynamicColor) {
 
         val scrollState = rememberTransformingLazyColumnState()
         val transformationSpec = rememberTransformationSpec()
         val focusRequester = remember { FocusRequester() }
         val navController = rememberSwipeDismissableNavController()
-
-        val preferences by viewModel.preferences.collectAsState()
 
         /** LOCALE **/
         val localesShortList = stringArrayResource(id = R.array.locales_short).toList()

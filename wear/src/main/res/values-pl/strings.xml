@@ -257,4 +257,6 @@
     <string name="current_gps">Bieżąca (GPS)</string>
     <string name="no_connection">Brak połączenia</string>
     <string name="locations">Lokalizacje</string>
+
+    <string name="dynamic_color">Dynamiczne kolory</string>
 </resources>

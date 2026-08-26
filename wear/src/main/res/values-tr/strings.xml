@@ -259,4 +259,6 @@
     <string name="current_gps">Geçerli (GPS)</string>
     <string name="no_connection">Bağlantı Yok</string>
     <string name="locations">Konumlar</string>
+
+    <string name="dynamic_color">Dinamik Renkler</string>
 </resources>

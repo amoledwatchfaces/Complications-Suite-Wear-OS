@@ -101,7 +101,10 @@ data class UserPreferences(
     val activityIconByteArray: ByteArray = ByteArray(0),
     val activityIconId: String = "",
     val activityPackageName: String = "com.weartools.weekdayutccomp",
-    val activityClassName: String = "com.weartools.weekdayutccomp.activity.MainActivity"
+    val activityClassName: String = "com.weartools.weekdayutccomp.activity.MainActivity",
+
+    // Common
+    val useDynamicColor: Boolean = false
 )
 
 @Serializable

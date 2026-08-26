@@ -246,4 +246,6 @@
     <string name="current_gps">当前 (GPS)</string>
     <string name="no_connection">无连接</string>
     <string name="locations">位置</string>
+
+    <string name="dynamic_color">动态颜色</string>
 </resources>

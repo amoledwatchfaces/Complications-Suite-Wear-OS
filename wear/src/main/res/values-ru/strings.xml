@@ -257,4 +257,6 @@
     <string name="current_gps">Текущее (GPS)</string>
     <string name="no_connection">Нет соединения</string>
     <string name="locations">Местоположения</string>
+
+    <string name="dynamic_color">Динамические цвета</string>
 </resources>
