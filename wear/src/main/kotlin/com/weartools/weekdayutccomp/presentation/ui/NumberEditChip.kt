@@ -46,7 +46,7 @@ fun NumberEditChip(
         onClick = {},
         modifier = Modifier
             .fillMaxWidth(),
-        colors = ButtonDefaults.buttonColors(containerColor = Color(0xff2c2c2d)),
+        colors = ButtonDefaults.filledTonalButtonColors(),
         label = { Text(label) },
         secondaryLabel = {
             BasicTextField(
@@ -102,7 +102,7 @@ fun EditTextChip(
         onClick = {},
         modifier = Modifier
             .fillMaxWidth(),
-        colors = ButtonDefaults.buttonColors(containerColor = Color(0xff2c2c2d)),
+        colors = ButtonDefaults.filledTonalButtonColors(),
         label = { Text(row1) },
         secondaryLabel = {
             BasicTextField(
@@ -122,7 +122,7 @@ fun EditTextChip(
                     fontSize = 12.sp,
                     lineHeight = 16.sp,
                     letterSpacing = 0.1.sp,
-                    color =  MaterialTheme.colorScheme.primary),
+                    color =  MaterialTheme.colorScheme.secondary),
                 singleLine = true,
                 cursorBrush = SolidColor(Color.Unspecified),
                 keyboardOptions = KeyboardOptions(

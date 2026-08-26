@@ -41,8 +41,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -341,7 +343,7 @@ fun GoalSettings(
         onDismissRequest = { callback.invoke(-1) }
     )
     {
-        ScreenScaffold(scrollState = listState) {
+        ScreenScaffold(scrollState = listState) { paddingValues ->
             TransformingLazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
@@ -350,12 +352,7 @@ fun GoalSettings(
                         focusRequester = focusRequester
                     ),
                 state = listState,
-                contentPadding = PaddingValues(
-                    start = 10.dp,
-                    end = 10.dp,
-                    top = 24.dp,
-                    bottom = 52.dp
-                ),
+                contentPadding = paddingValues,
             ) {
                 item {
                     Text(
@@ -375,14 +372,12 @@ fun GoalSettings(
                         onClick = {
                             openIconsDialog=openIconsDialog.not()
                         },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xff2c2c2d),
-                        ),
+                        colors = ButtonDefaults.filledTonalButtonColors(),
                         icon = {
                             Icon(
                                 imageVector = ImageUtil.createImageVector(preferences.value.customGoalIconId)?:Icons.Default.Flag,
-                                contentDescription = "Remove",
-                                tint = MaterialTheme.colorScheme.primary) },
+                                contentDescription = "Remove"
+                            ) },
                         label = {
                             Text(
                                 text = stringResource(R.string.activity_set_icon),
@@ -460,6 +455,10 @@ fun GoalSettings(
                             viewModel.setCustomGoalInverse(it, context)
                         }
                     )
+                }
+
+                item {
+                    Spacer(modifier = Modifier.height(30.dp))
                 }
             }
         }
