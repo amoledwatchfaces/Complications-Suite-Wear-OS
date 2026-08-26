@@ -197,7 +197,6 @@ fun CustomGoalScreen(
             .focusRequester(focusRequester)
             .focusable(),
         contentAlignment = Alignment.Center) {
-        //
 
         Stepper (
             value = preferences.value.customGoalValue.roundToInt(),
