@@ -10,6 +10,57 @@ Add missing Custom Complications to your Wear OS Watch Face. Customize dates, ca
 
 ---
 
+## 🧩 Included Complication Services
+
+This suite provides 42 custom complications for your watch faces:
+
+| Complication Service | Supported Wear OS Complication Types | Description |
+|:---|:---|:---|
+| **Activity launcher** | `ICON` | Launches a custom user-selected app or activity. |
+| **Alarm** | `ICON`, `SMALL_IMAGE` | Displays the status or shortcut for the next set alarm. |
+| **Amoled Logo** | `ICON`, `SMALL_IMAGE` | Displays the amoledwatchfaces™ branding logo. |
+| **Assistant (Monochrome)** | `ICON`, `SMALL_IMAGE` | Fast launcher shortcut for Google Assistant. |
+| **Barometer** | `SHORT_TEXT` | Displays current atmospheric pressure in hPa or inHg. |
+| **Battery Saver settings** | `ICON` | Quick access shortcut to system battery saver settings. |
+| **Bluetooth settings** | `ICON` | Quick access shortcut to system Bluetooth settings. |
+| **BTC (Bitcoin) price** | `SHORT_TEXT`, `LONG_TEXT`, `RANGED_VALUE` | Tracks current Bitcoin (BTC) market price in USD. |
+| **Countdown to date** | `SHORT_TEXT`, `LONG_TEXT`, `RANGED_VALUE` | Displays countdown in days/hours to a user-defined date. |
+| **Custom goal** | `SHORT_TEXT`, `LONG_TEXT`, `RANGED_VALUE` | Tracks progress towards custom targets with increment/decrement buttons. |
+| **Custom text** | `SHORT_TEXT`, `LONG_TEXT` | Displays static custom text or title configured by the user. |
+| **Date** | `SHORT_TEXT`, `LONG_TEXT` | Displays today's date with customizable formatting options. |
+| **Date Hijri** | `SHORT_TEXT`, `LONG_TEXT` | Displays the current date in Islamic Hijri format. |
+| **Date Jalali** | `SHORT_TEXT`, `LONG_TEXT` | Displays the current date in Persian Jalali format. |
+| **Day and Week** | `SHORT_TEXT`, `LONG_TEXT` | Shows the current day of the year and week of the year. |
+| **Day of Year** | `SHORT_TEXT`, `LONG_TEXT`, `RANGED_VALUE` | Shows the current day number out of 365/366 with progress. |
+| **Developer Options** | `ICON`, `SMALL_IMAGE` | Quick access shortcut to developer options settings. |
+| **Dice** | `ICON`, `SMALL_IMAGE` | Tap to roll a virtual 6-sided dice and see the result. |
+| **Display settings** | `ICON` | Quick access shortcut to display brightness settings. |
+| **Dynamic calendar icon** | `ICON`, `SMALL_IMAGE` | Displays a calendar icon showing the current day of the month dynamically. |
+| **ETH (Ethereum) price** | `SHORT_TEXT`, `LONG_TEXT`, `RANGED_VALUE` | Tracks current Ethereum (ETH) market price in USD. |
+| **Flashlight** | `ICON`, `SMALL_IMAGE` | Opens a white screen utility for emergency lighting. |
+| **Kanji day of week** | `ICON`, `SMALL_IMAGE` | Displays the current day of the week in Japanese Kanji characters. |
+| **Moon Phase** | `SHORT_TEXT`, `LONG_TEXT`, `RANGED_VALUE`, `ICON`, `SMALL_IMAGE` | Shows the current moon phase name, illustration, and percent illumination. |
+| **Moonrise & Moonset** | `SHORT_TEXT`, `LONG_TEXT`, `RANGED_VALUE` | Displays the estimated moonrise and moonset times. |
+| **NFC settings** | `ICON` | Quick access shortcut to system NFC settings. |
+| **Pay** | `ICON`, `SMALL_IMAGE` | Quick shortcut to launch Google Pay / Samsung Pay. |
+| **Seconds** | `SHORT_TEXT`, `LONG_TEXT`, `RANGED_VALUE` | Displays live ticking seconds on the watch face. |
+| **Settings** | `ICON` | Quick access shortcut to primary system settings. |
+| **Sunrise & Sunset** | `SHORT_TEXT`, `LONG_TEXT` | Displays the local sunrise and sunset times based on location. |
+| **Sunrise & Sunset countdown** | `SHORT_TEXT`, `LONG_TEXT`, `RANGED_VALUE` | Shows time remaining until the next sunrise or sunset. |
+| **Swatch Internet Time** | `SHORT_TEXT`, `LONG_TEXT`, `RANGED_VALUE` | Displays the current Swatch Internet Time (.beats). |
+| **Time** | `SHORT_TEXT`, `LONG_TEXT`, `RANGED_VALUE` | Displays customizable digital time format (12h/24h). |
+| **Time zone** | `SHORT_TEXT`, `LONG_TEXT` | Displays name or offset of the current timezone. |
+| **Timer** | `SHORT_TEXT`, `RANGED_VALUE` | Custom countdown timer with pick-time configuration. |
+| **Volume control** | `ICON`, `SMALL_IMAGE` | Quick shortcut to system volume settings. |
+| **Water intake** | `SHORT_TEXT`, `LONG_TEXT`, `RANGED_VALUE`, `ICON`, `SMALL_IMAGE` | Tracks daily water intake logging and progress. |
+| **Wear OS logo** | `ICON`, `SMALL_IMAGE` | Displays a Wear OS brand icon decoration. |
+| **Week of Year** | `SHORT_TEXT`, `LONG_TEXT`, `RANGED_VALUE`, `ICON`, `SMALL_IMAGE` | Shows the week of the year in US or ISO format with progress. |
+| **Wi-Fi settings** | `ICON` | Quick access shortcut to system Wi-Fi settings. |
+| **World Clock 1** | `SHORT_TEXT`, `LONG_TEXT` | Shows current time in a configured alternative timezone. |
+| **World Clock 2** | `SHORT_TEXT`, `LONG_TEXT` | Shows current time in another configured alternative timezone. |
+
+---
+
 ## 📸 Previews
 
 <p align="center">
@@ -82,58 +133,6 @@ To compile the application locally using Android Studio:
    ```bash
    ./gradlew assembleDebug
    ```
-
----
-
-## 🌟 Supported Complications & Types
-
-<details>
-<summary><b>Click to expand full list of complications and supported types</b></summary>
-
-Here is the complete list of complications provided by the app and their supported types:
-
-* **Activity launcher** - `ICON`
-* **Alarm** - `ICON, SMALL_IMAGE`
-* **Amoled Logo** - `ICON, SMALL_IMAGE`
-* **Assistant (Monochrome)** - `ICON, SMALL_IMAGE`
-* **Barometer** - `SHORT_TEXT`
-* **Battery Saver settings** - `ICON`
-* **BTC (Bitcoin) price** - `SHORT_TEXT, LONG_TEXT, RANGED_VALUE`
-* **Bluetooth settings** - `ICON`
-* **Custom text** - `SHORT_TEXT, LONG_TEXT`
-* **Date** - `SHORT_TEXT, LONG_TEXT`
-* **Countdown to date** - `SHORT_TEXT, LONG_TEXT, RANGED_VALUE`
-* **Day and Week** - `SHORT_TEXT, LONG_TEXT`
-* **Day of Year** - `SHORT_TEXT, LONG_TEXT, RANGED_VALUE`
-* **Developer Options** - `ICON, SMALL_IMAGE`
-* **Dice** - `ICON, SMALL_IMAGE`
-* **Display settings** - `ICON`
-* **Dynamic calendar icon** - `ICON, SMALL_IMAGE`
-* **ETH (Ethereum) price** - `SHORT_TEXT, LONG_TEXT, RANGED_VALUE`
-* **Flashlight** - `ICON, SMALL_IMAGE`
-* **Custom goal** - `SHORT_TEXT, LONG_TEXT, RANGED_VALUE`
-* **Date Hijri** - `SHORT_TEXT, LONG_TEXT` (optional) *by [@hamedsh](https://github.com/hamedsh)*
-* **Date Jalali** - `SHORT_TEXT, LONG_TEXT` (optional) *by [@hamedsh](https://github.com/hamedsh)*
-* **Wear OS logo** - `ICON, SMALL_IMAGE`
-* **Moon Phase** - `SHORT_TEXT, LONG_TEXT, RANGED_VALUE, ICON, SMALL_IMAGE`
-* **Moonrise & Moonset** - `SHORT_TEXT, LONG_TEXT, RANGED_VALUE`
-* **NFC settings** - `ICON`
-* **Pay** - `ICON, SMALL_IMAGE`
-* **Seconds** - `SHORT_TEXT, LONG_TEXT, RANGED_VALUE`
-* **Settings** - `ICON`
-* **Sunrise & Sunset** - `SHORT_TEXT, LONG_TEXT`
-* **Sunrise & Sunset countdown** - `SHORT_TEXT, LONG_TEXT, RANGED_VALUE`
-* **Time** - `SHORT_TEXT, LONG_TEXT, RANGED_VALUE`
-* **Timer** - `SHORT_TEXT, RANGED_VALUE`
-* **Time zone** - `SHORT_TEXT, LONG_TEXT`
-* **Volume control** - `ICON, SMALL_IMAGE`
-* **Water intake** - `SHORT_TEXT, LONG_TEXT, RANGED_VALUE, ICON, SMALL_IMAGE`
-* **Week of Year** - `SHORT_TEXT, LONG_TEXT, RANGED_VALUE, ICON, SMALL_IMAGE`
-* **Wi-Fi settings** - `ICON`
-* **World Clock 1** - `SHORT_TEXT, LONG_TEXT`
-* **World Clock 2** - `SHORT_TEXT, LONG_TEXT`
-
-</details>
 
 ---
 
