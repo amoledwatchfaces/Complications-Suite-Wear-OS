@@ -1,4 +1,4 @@
-# <img src="https://github.com/amoledwatchfaces/Complications-Suite-Wear-OS/assets/92080649/8661c436-be4d-438e-bde0-c6275f229702" width="48" align="center" alt="Icon"> Complications Suite - Wear OS
+# <img src="app_icon.png" width="48" style="border-radius: 25%;" align="center" alt="Icon"> Complications Suite - Wear OS
 
 [![Build & Release](https://github.com/amoledwatchfaces/Complications-Suite-Wear-OS/actions/workflows/build-and-release.yml/badge.svg)](https://github.com/amoledwatchfaces/Complications-Suite-Wear-OS/actions/workflows/build-and-release.yml)
 [![Wear OS](https://img.shields.io/badge/Platform-Wear%20OS-brightgreen?logo=android&logoColor=white)](https://developer.android.com/wear)
