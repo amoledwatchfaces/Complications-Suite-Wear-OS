@@ -3,7 +3,7 @@
 [![Build & Release](https://github.com/amoledwatchfaces/Complications-Suite-Wear-OS/actions/workflows/build-and-release.yml/badge.svg)](https://github.com/amoledwatchfaces/Complications-Suite-Wear-OS/actions/workflows/build-and-release.yml)
 [![Wear OS](https://img.shields.io/badge/Platform-Wear%20OS-brightgreen?logo=android&logoColor=white)](https://developer.android.com/wear)
 [![Latest Release](https://img.shields.io/github/v/release/amoledwatchfaces/Complications-Suite-Wear-OS?logo=github&color=blue)](https://github.com/amoledwatchfaces/Complications-Suite-Wear-OS/releases)
-[![License](https://img.shields.io/badge/License-Apache_2.0_with_Commons_Clause-orange.svg)](https://github.com/amoledwatchfaces/Complications-Suite-Wear-OS/blob/master/LICENSE.md)
+[![License](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/amoledwatchfaces/Complications-Suite-Wear-OS/blob/master/LICENSE.md)
 [![Privacy Policy](https://img.shields.io/badge/Privacy--Policy-Read-blue?logo=googleplay&logoColor=white)](https://amoledwatchfaces.github.io/apps/privacy/complicationssuite.html)
 
 Add missing Custom Complications to your Wear OS Watch Face. Customize dates, calendars, settings shortcuts, battery metrics, seconds, location-based moon/sun phases, and more.
@@ -139,23 +139,8 @@ Here is the complete list of complications provided by the app and their support
 
 ## 📄 License
 
-```text
-“Commons Clause” License Condition v1.0
-
-The Software is provided to you by the Licensor under the License, as defined below, subject to the following condition.
-
-Without limiting other conditions in the License, the grant of rights under the License will not include, and the License does not grant to you, right to Sell the Software.
-
-For purposes of the foregoing, “Sell” means practicing any or all of the rights granted to you under the License to provide to third parties, for a fee or other consideration (including without limitation fees for hosting or consulting/ support services related to the Software), a product or service whose value derives, entirely or substantially, from the functionality of the Software. Any license notice or attribution required by the License must also include this Commons Cause License Condition notice.
-
-Software: Complications Suite - Wear OS
-License: Apache-2.0
-Licensor: amoledwatchfaces™
+This project is licensed under the **GNU General Public License v3.0 (GPLv3)**. 
 
 Copyright (c) 2024 - 2026 amoledwatchfaces™
-```
 
-Licensed under the Apache License, Version 2.0 (the "License"); you may obtain a copy of the License at:
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the [LICENSE.md](LICENSE.md) file for the full license text.
