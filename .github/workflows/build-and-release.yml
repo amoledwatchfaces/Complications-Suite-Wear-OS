@@ -33,9 +33,20 @@ jobs:
         run: |
           echo '{"project_info":{"project_number":"1234567890","project_id":"dummy-id","storage_bucket":"dummy-id.appspot.com"},"client":[{"client_info":{"mobilesdk_app_id":"1:1234567890:android:abc123def456","android_client_info":{"package_name":"com.weartools.weekdayutccomp"}},"oauth_client":[],"api_key":[{"current_key":"dummy"}],"services":{"appinvite_service":{"status":1}}}],"configuration_version":"1"}' > wear/google-services.json
 
+      - name: Decode Keystore
+        if: ${{ secrets.SIGNING_KEY_BASE64 != '' }}
+        env:
+          SIGNING_KEY_BASE64: ${{ secrets.SIGNING_KEY_BASE64 }}
+        run: |
+          echo "$SIGNING_KEY_BASE64" | base64 -d > wear/release.jks
+
       - name: Build Release APK and AAB
         env:
           PLACES_API_KEY: ${{ secrets.PLACES_API_KEY }}
+          KEYSTORE_FILE_PATH: "release.jks"
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: ./gradlew :wear:assembleRelease :wear:bundleRelease
 
       - name: Locate Artifacts

@@ -41,6 +41,19 @@ android {
             localeFilters.addAll(listOf("en", "cs", "de", "el", "es", "fr", "it", "pt", "pl", "ro", "sk","zh","ru","sv","tr"))
         }
     }
+
+    signingConfigs {
+        create("release") {
+            val keystoreFilePath = System.getenv("KEYSTORE_FILE_PATH")
+            if (!keystoreFilePath.isNullOrEmpty()) {
+                storeFile = file(keystoreFilePath)
+                storePassword = System.getenv("KEYSTORE_PASSWORD")
+                keyAlias = System.getenv("KEY_ALIAS")
+                keyPassword = System.getenv("KEY_PASSWORD")
+            }
+        }
+    }
+
     buildTypes {
         val placesApiKey: String = run {
             val envKey = System.getenv("PLACES_API_KEY")
@@ -65,6 +78,11 @@ android {
             isShrinkResources = true
             buildConfigField(type ="String", name = "PLACES_API_KEY", value = placesApiKey)
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+
+            val keystoreFilePath = System.getenv("KEYSTORE_FILE_PATH")
+            if (!keystoreFilePath.isNullOrEmpty()) {
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
         getByName("debug")  {
             isMinifyEnabled = false
