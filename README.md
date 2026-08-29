@@ -17,7 +17,7 @@ This suite provides 42 custom complications for your watch faces:
 | Complication Service | Supported Wear OS Complication Types | Description |
 |:---|:---|:---|
 | **Activity launcher** | `ICON` | Launches a custom user-selected app or activity. |
-| **Alarm** | `ICON`, `SMALL_IMAGE` | Displays the status or shortcut for the next set alarm. |
+| **Alarm** | `ICON`, `SMALL_IMAGE` | Displays the shortcut for alarm clock app. |
 | **Amoled Logo** | `ICON`, `SMALL_IMAGE` | Displays the amoledwatchfaces™ branding logo. |
 | **Assistant (Monochrome)** | `ICON`, `SMALL_IMAGE` | Fast launcher shortcut for Google Assistant. |
 | **Barometer** | `SHORT_TEXT` | Displays current atmospheric pressure in hPa or inHg. |
