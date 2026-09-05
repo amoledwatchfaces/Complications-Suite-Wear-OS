@@ -62,14 +62,15 @@
         <item>es</item>
         <item>fr</item>
         <item>it</item>
-        <item>pt</item>
         <item>pl</item>
+        <item>pt</item>
         <item>ro</item>
-        <item>sk</item>
-        <item>zh</item>
         <item>ru</item>
+        <item>sk</item>
         <item>sv</item>
         <item>tr</item>
+        <item>uk</item>
+        <item>zh</item>
     </string-array>
 
     <string-array name="locales_long">
@@ -80,13 +81,14 @@
         <item>Spanish</item>
         <item>French</item>
         <item>Italian</item>
-        <item>Portuguese</item>
         <item>Polish</item>
+        <item>Portuguese</item>
         <item>Romanian</item>
-        <item>Slovak</item>
-        <item>Chinese (Simplified)</item>
         <item>Russian</item>
+        <item>Slovak</item>
         <item>Swedish</item>
         <item>Turkish</item>
+        <item>Ukrainian</item>
+        <item>Chinese (Generic)</item>
     </string-array>
 </resources>

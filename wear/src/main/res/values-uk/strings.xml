@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Complications Suite</string> <!-- Does not need to be translated, but it's recommended -->
+    <string name="app_info">Про застосунок</string>
+    <string name="version">Версія</string>
+    <string name="settings">Налаштування</string>
+    <string name="language">Мова</string>
+    <string name="change_locale">Змінити мову</string>
+
+    <string name="icon_type">Тип іконки</string>
+    <string name="icon_type_0">Проста</string>
+    <string name="icon_type_1">За замовчуванням RGB</string>
+    <string name="icon_type_2">За замовчуванням ARGB</string>
+
+    <string name="compose_toggle" translatable="false">Toggle</string>
+
+    <string name="awf_comp_name" translatable="false">Amoled Logo</string>
+    <!-- Crypto Complication -->
+    <string name="crypto_name_1" translatable="true">Курс BTC $</string>
+    <string name="crypto_name_2" translatable="true">Курс ETH $</string>
+
+    <!-- Flashlight Complication -->
+    <string name="flashlight_comp_name">Ліхтарик</string>
+
+    <!-- Alarm Complication Preferences -->
+    <string name="alarm_comp_name">Будильник</string>
+
+    <!-- Assist Complication Preferences -->
+    <string name="assist_comp_name">Асистент (монохромний)</string>
+    <string name="assist_missing">Асистент не встановлено</string>
+
+    <!-- Date Complication Preferences -->
+    <string name="date_comp_name">Дата</string>
+    <string name="date_custom_format">Власний формат</string>
+    <string name="date_setting_preference_category_title">Дата</string>
+    <string name="date_long_text_format">Довгий формат тексту</string>
+    <string name="date_long_title_format">Довгий формат заголовка</string>
+    <string name="date_short_text_format">Короткий формат тексту</string>
+    <string name="date_short_title_format">Короткий формат заголовка</string>
+    <string name="date_show_icon">Іконка календаря</string>
+
+    <!-- Persian Date -->
+    <string name="persian_date_complications">Перська дата</string>
+    <string name="date_comp_jalali_hijri_settings" translatable="false">Jalali / Hijri</string>
+    <string name="date_comp_jalali_name">Дата (Джалалі)</string>
+    <string name="date_comp_hijri_name">Дата (Хіджра)</string>
+
+    <!-- Day of Year Complication Preferences -->
+    <string name="doy_comp_name">День року</string>
+    <string name="doy_short_title">День</string>
+
+    <!-- Logo Complication Preferences -->
+    <string name="logo_comp_name">Логотип Wear OS</string>
+
+    <!-- Moon Phase Complication Preferences -->
+    <string name="moon_comp_name">Фази Місяця</string>
+    <string name="moon_setting_preference_category_title">Місяць / Сонце</string>
+
+    <array name="moon_phases">
+        <item>Перша чверть</item>
+        <item>Повний Місяць</item>
+        <item>Остання чверть</item>
+        <item>Новий Місяць</item>
+        <item>Старий Місяць</item>
+        <item>Щербатий Місяць</item>
+        <item>Молодий Місяць</item>
+        <item>Зростаючий Місяць</item>
+    </array>
+
+    <string name="moon_setting_hemi_title">Півкуля</string>
+    <string name="moon_setting_hemi_on">Північна</string>
+    <string name="moon_setting_hemi_off">Південна</string>
+    <string name="moon_setting_simple_icon_title">Іконка Місяця</string>
+    <string name="moon_setting_simple_icon_on">Проста</string>
+    <string name="moon_setting_simple_icon_off">Деталізована</string>
+
+    <string name="moonrise_moonset">Схід і захід Місяця</string>
+    <string name="moonrise">Схід Місяця</string>
+    <string name="moonset">Захід Місяця</string>
+    <string name="moonrise_in">Схід Місяця через</string>
+    <string name="moonset_in">Захід Місяця через</string>
+
+    <!-- Pay Complication -->
+    <string name="pay_comp_name">Оплата</string>
+
+    <!-- Sec Complication -->
+    <string name="sec_comp_name">Секунди</string>
+    <string name="sec_short_title">Сек</string>
+
+    <!-- Time Complication Preferences -->
+    <string name="time_comp_name">Час</string>
+    <string name="time_comp_desc">Поточний час</string>
+    <string name="time_setting_leading_zero_title">Провідний нуль</string>
+    <string name="time_setting_leading_zero_summary_on" translatable="false">09:00</string>
+    <string name="time_setting_leading_zero_summary_off" translatable="false">9:00</string>
+
+    <string name="time_ampm_setting_preference_category_title">Загальні</string>
+    <string name="time_ampm_setting_title">Формат часу</string>
+    <string name="time_ampm_setting_on">24 год</string>
+    <string name="time_ampm_setting_off">12 год</string>
+
+    <!-- World Clock Complication Preferences -->
+    <string name="wc_name">Світовий час</string>
+    <array name="wc_regions">
+        <item>Африка</item>
+        <item>Азія</item>
+        <item>Атлантика</item>
+        <item>Австралія</item>
+        <item>Європа</item>
+        <item>Північна Америка</item>
+        <item>Тихий океан</item>
+        <item>Південна Америка</item>
+        <item>Універсальний</item>
+    </array>
+    <string name="wc_comp_name_1">Світовий час 1</string>
+    <string name="wc_comp_name_2">Світовий час 2</string>
+    <string name="wc_setting_preference_category_title">Світовий час</string>
+    <string name="wc_setting_leading_zero_title">Провідний нуль</string>
+    <string name="wc_setting_leading_zero_summary_on" translatable="false">09:00</string>
+    <string name="wc_setting_leading_zero_summary_off" translatable="false">9:00</string>
+
+    <string name="wc_ampm_setting_title">Формат часу</string>
+    <string name="wc_ampm_setting_on">24 год</string>
+    <string name="wc_ampm_setting_off">12 год</string>
+
+
+    <string name="wc_setting_title">ID часового поясу 1</string>
+    <string name="wc2_setting_title">ID часового поясу 2</string>
+
+    <!-- WOY Complication Preferences -->
+    <string name="week_complication_name">Тиждень року</string>
+    <string name="week_complication_icon_name">Тиждень року (Іконка)</string>
+    <string name="woy_complication_text_short">Т</string>
+    <string name="woy_complication_text">Тиждень</string>
+    <string name="woy_complication_description">Тиждень року</string>
+    <string name="woy_setting_preference_category_title">Віджет «Тиждень року»</string>
+    <string name="woy_setting_title">Формат</string>
+    <string name="woy_setting_on" translatable="false">ISO</string>
+    <string name="woy_setting_off" translatable="false">US</string>
+
+    <!-- Custom Text + Title -->
+    <string name="custom_text_comp_name">Власний текст</string>
+    <string name="custom_text_comp_name_category">Власний текст</string>
+
+    <!--Custom Text + Title 2-->
+    <string name="custom_text_p1">Текст</string>
+    <string name="custom_title_p1">Заголовок</string>
+
+    <!--translate-->
+    <string name="coarse_location_toggle_title">Приблизне геоположення</string>
+    <string name="coarse_secondary_enabled">Увімкнено</string>
+    <string name="coarse_secondary_disabled">Вимкнено</string>
+    <string name="coarse_toggle_description">Перемикач дозволу на приблизне геоположення</string>
+
+    <!--translate-->
+    <string name="sunrise_sunset_comp_name">Схід і захід Сонця</string>
+    <string name="sunrise_sunset_countdown_comp_name">Схід і захід Сонця</string>
+    <string name="sunrise">Схід Сонця</string>
+    <string name="sunset">Захід Сонця</string>
+    <string name="sunrise_in">Схід Сонця через</string>
+    <string name="sunset_in">Захід Сонця через</string>
+    <string name="enable_permission_toast">Потрібне приблизне геоположення (інтерфейс)</string>
+    <string name="enable_permission_toast_consider">Вкажіть геоположення для точного обертання Місяця</string>
+    <string name="location">Геоположення</string>
+    <string name="checking">Визначення геоположення…</string>
+    <string name="no_location">Не вдалося отримати геоположення. Перевірте GPS</string>
+    <string name="no_location_set">Геоположення не задано</string>
+
+    <string name="countdown_style">Формат зворотного відліку</string>
+    <string name="countdown_style_style">Формат</string>
+    <string name="e_g_">напр.</string>
+
+    <!-- translate -->
+    <string name="day_and_week_comp_name">День і тиждень</string>
+    <string name="dayD">Д:</string>
+    <string name="weekW">Т:</string>
+    <string name="dayDlong">День</string>
+    <string name="weekWlong">Тиждень</string>
+
+    <!-- Developer Options -->
+    <string name="developer_options_comp_name">Параметри розробника</string>
+
+    <!--Date Countdown-->
+    <string name="date_countdown_comp_name">Зворотний відлік до дати</string>
+    <string name="countdown_text">Залишилося часу</string>
+
+    <!--NOTIFICATIONS-->
+    <string name="notification_permission_info">Деяким віджетам потрібно показувати вспливаючі сповіщення на Android 13+. Застосунок запрацює дозвіл на їх показ.</string>
+
+    <!--VOLUME-->
+    <string name="volume_comp_name">Керування гучністю</string>
+    <string name="volume_output">Вихід</string>
+
+    <!--DICE-->
+    <string name="dice_comp_name">Гральний кубик</string>
+
+    <!--WATER-->
+    <string name="water_comp_name">Споживання води</string>
+    <string name="water_intake_text">Випито</string>
+    <string name="water_intake_goal_text">Ціль</string>
+
+    <!--Time zone-->
+    <string name="time_zone_comp_name">Часовий пояс</string>
+
+    <!-- Dynamic Calendar Icon -->
+    <string name="dynamic_calendar_icon_comp_name">Динамічна іконка календаря</string>
+
+    <!-- Barometer -->
+    <string name="barometer_comp_name">Барометр</string>
+    <string name="barometer_category">Барометр</string>
+    <string name="barometer_use_hpa">Одиниці вимірювання</string>
+    <string name="barometer_hpa" translatable="false">гПа</string>
+    <string name="barometer_inHg" translatable="false">дюйм рт. ст.</string>
+
+    <!-- Timer -->
+    <string name="timer_comp_name">Таймер</string>
+
+    <!-- Custom Goal -->
+    <string name="custom_goal_comp_name">Власна ціль</string>
+    <string name="custom_goal_title_preview">Бали</string>
+    <string name="custom_goal_start">Старт: %1$s</string>
+    <string name="custom_goal_target">Ціль: %1$s</string>
+    <string name="goal_settings">Налаштування цілі</string>
+    <string name="custom_goal_title">Заголовок</string>
+    <string name="custom_goal_start_value">Початкове значення</string>
+    <string name="custom_goal_target_value">Цільове значення</string>
+    <string name="custom_goal_current_value">Поточне значення</string>
+    <string name="custom_goal_change_by_value">Значення зміни</string>
+    <string name="custom_goal_midnight_reset">Скидання о півночі</string>
+    <string name="custom_goal_pick_icon">Обрати іконку</string>
+    <string name="custom_goal_inverse">Інвертувати прогрес</string>
+    <string name="custom_goal_on">Увімк.</string>
+    <string name="custom_goal_off">Вимк.</string>
+
+    <!-- Crypto Complications -->
+    <string name="crypto_complications">Криптовалюта</string>
+    <string name="counter_currency">Валюта котирування</string>
+
+    <!-- Activity Launcher Complication -->
+    <string name="activity_launcher_comp_name">Запуск дій</string>
+    <string name="activity_setup">Налаштування</string>
+    <string name="activity_pick_activity">Обрати дію</string>
+    <string name="activity_set_icon">Встановити іконку</string>
+
+    <!-- Settings -->
+    <string name="wifi_settings_comp_name">Налаштування Wi-Fi</string>
+    <string name="settings_comp_name">Налаштування</string>
+    <string name="display_settings_comp_name">Налаштування екрана</string>
+    <string name="nfc_settings_comp_name">Налаштування NFC</string>
+    <string name="bluetooth_settings_comp_name">Налаштування Bluetooth</string>
+    <string name="battery_saver_settings_comp_name">Заощадження батареї</string>
+
+    <!-- Kanji -->
+    <string name="kanji_day_of_week">Дні тижня (Кандзі)</string>
+
+    <string name="set_location">Вказати геоположення</string>
+    <string name="search">Пошук</string>
+    <string name="current_gps">Поточне (GPS)</string>
+    <string name="no_connection">Немає з\'єднання</string>
+    <string name="locations">Локації</string>
+
+    <string name="dynamic_color">Динамічні кольори</string>
+</resources>

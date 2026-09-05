@@ -38,7 +38,7 @@ android {
             enableSplit = false // TO HAVE ALL LANGUAGES AVAILABLE
         }
         androidResources { // <-- Add this block
-            localeFilters.addAll(listOf("en", "cs", "de", "el", "es", "fr", "it", "pt", "pl", "ro", "sk","zh","ru","sv","tr"))
+            localeFilters.addAll(listOf("en","cs","de","el","es","fr","it","pl","pt","ro","ru","sk","sv","tr","uk","zh"))
         }
     }
 
