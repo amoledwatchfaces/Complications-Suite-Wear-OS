@@ -27,8 +27,8 @@ android {
         applicationId = "com.weartools.weekdayutccomp"
         minSdk = 27
         targetSdk = 36
-        versionCode = 10000410
-        versionName = "4.1.0"
+        versionCode = 10000411
+        versionName = "4.1.1"
 
         versionNameSuffix = "-wear"
         versionCode = 20000 + (versionCode ?: 0)
@@ -123,23 +123,23 @@ dependencies {
     // General compose dependencies
     implementation (composeBom)
     implementation ("androidx.activity:activity-compose:1.13.0")
-    implementation ("androidx.compose.ui:ui:1.12.0")
-    implementation ("androidx.compose.ui:ui-tooling-preview:1.12.0")
+    implementation ("androidx.compose.ui:ui:1.12.1")
+    implementation ("androidx.compose.ui:ui-tooling-preview:1.12.1")
     implementation ("androidx.compose.material:material-icons-extended:1.7.8")
 
     // Compose for Wear OS dependencies
-    implementation ("androidx.core:core-ktx:1.19.0")
-    implementation ("androidx.wear.compose:compose-material3:1.6.2")
-    implementation ("androidx.wear.compose:compose-navigation:1.6.2")
+    implementation ("androidx.core:core-ktx:1.19.1")
+    implementation ("androidx.wear.compose:compose-material3:1.7.1")
+    implementation ("androidx.wear.compose:compose-navigation:1.7.1")
 
     // Mobile
     implementation("androidx.compose.material3:material3:1.4.0")
 
     // Foundation is additive, so you can use the mobile version in your Wear OS app.
-    implementation ("androidx.wear.compose:compose-foundation:1.6.2")
+    implementation ("androidx.wear.compose:compose-foundation:1.7.1")
 
     // Wear OS preview annotations
-    implementation ("androidx.wear.compose:compose-ui-tooling:1.6.2")
+    implementation ("androidx.wear.compose:compose-ui-tooling:1.7.1")
 
     // Permissions
     implementation ("com.google.accompanist:accompanist-permissions:0.37.3")
@@ -148,15 +148,15 @@ dependencies {
     implementation ("com.google.android.gms:play-services-location:21.4.0")
 
     // Used for WorkManager
-    implementation ("androidx.work:work-runtime-ktx:2.11.2")
+    implementation ("androidx.work:work-runtime-ktx:2.12.0")
 
     // Moon Phase Helper
     implementation ("org.shredzone.commons:commons-suncalc:3.11")
 
     // Testing
-    androidTestImplementation ("androidx.compose.ui:ui-test-junit4:1.12.0")
-    debugImplementation ("androidx.compose.ui:ui-tooling:1.12.0")
-    debugImplementation ("androidx.compose.ui:ui-test-manifest:1.12.0")
+    androidTestImplementation ("androidx.compose.ui:ui-test-junit4:1.12.1")
+    debugImplementation ("androidx.compose.ui:ui-tooling:1.12.1")
+    debugImplementation ("androidx.compose.ui:ui-test-manifest:1.12.1")
 
     // DataStore
     implementation ("androidx.datastore:datastore:1.2.1")
@@ -179,7 +179,7 @@ dependencies {
     ksp ("com.google.dagger:hilt-compiler:2.60.1")
 
     // Google Places
-    implementation ("com.google.android.libraries.places:places:5.3.0") // 4.2.0 and later causing some issues, use 4.1.0!
+    implementation ("com.google.android.libraries.places:places:6.0.2") // 4.2.0 and later causing some issues, use 4.1.0!
 
     // Firebase
     //implementation (platform("com.google.firebase:firebase-bom:34.13.0"))
