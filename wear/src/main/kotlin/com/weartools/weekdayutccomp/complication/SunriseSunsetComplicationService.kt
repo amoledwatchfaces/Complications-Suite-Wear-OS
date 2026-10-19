@@ -97,10 +97,12 @@ class SunriseSunsetComplicationService : SuspendingComplicationDataSourceService
         val icon = if (mph.isSunrise) drawable.ic_sunrise_3 else drawable.ic_sunset_3
         val text = if (mph.isSunrise) getString(R.string.sunrise) else getString(R.string.sunset)
 
+        val amPm: String = if (request.complicationType == ComplicationType.LONG_TEXT) "a" else ""
+
         val fmt = if (ismilitary && leadingzero) "HH:mm"
-        else if (!ismilitary && !leadingzero) "h:mm"
+        else if (!ismilitary && !leadingzero) "h:mm+$amPm"
         else if (ismilitary) "H:mm"
-        else "hh:mm"
+        else "hh:mm+$amPm"
         val dateTimeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern(fmt)
 
         val time = Instant.ofEpochMilli(mph.changeTime).atZone(ZoneId.systemDefault()).format(dateTimeFormatter)
