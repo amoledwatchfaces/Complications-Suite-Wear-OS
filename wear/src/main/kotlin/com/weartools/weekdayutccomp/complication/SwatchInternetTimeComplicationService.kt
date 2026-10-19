@@ -17,8 +17,8 @@ import android.os.Build
 import android.provider.AlarmClock
 import android.util.Log
 import androidx.wear.protolayout.expression.DynamicBuilders.DynamicFloat
-import androidx.wear.protolayout.expression.DynamicBuilders.DynamicInt32
 import androidx.wear.protolayout.expression.DynamicBuilders.DynamicInstant
+import androidx.wear.protolayout.expression.DynamicBuilders.DynamicInt32
 import androidx.wear.protolayout.expression.DynamicBuilders.DynamicString
 import androidx.wear.watchface.complications.data.ComplicationData
 import androidx.wear.watchface.complications.data.ComplicationText
@@ -81,7 +81,9 @@ class SwatchInternetTimeComplicationService : SuspendingComplicationDataSourceSe
 
     override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return null
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return NoDataComplication.getPlaceholder(
+            request,this, placeHolderIcon = createWithResource(this,R.drawable.local_hospital_24px)
+        )
 
         val instant = DynamicInstant.platformTimeWithSecondsPrecision()
         val bmt = ZoneId.of("UTC+01:00")
