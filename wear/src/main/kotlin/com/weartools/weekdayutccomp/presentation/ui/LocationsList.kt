@@ -99,7 +99,7 @@ fun LocationsList(
                     Box(modifier = Modifier.fillMaxWidth().transformedHeight(this, transformationSpec), contentAlignment = Alignment.Center) {
                         Image(
                             modifier = Modifier.padding(top = 10.dp),
-                            painter = painterResource(id = com.google.android.libraries.places.R.drawable.places_powered_by_google_dark),
+                            painter = painterResource(id = com.google.android.libraries.places.R.drawable.google_maps_attribution_image),
                             contentDescription = "powered by google"
                         )
                     }
