@@ -100,9 +100,9 @@ class SunriseSunsetComplicationService : SuspendingComplicationDataSourceService
         val amPm: String = if (request.complicationType == ComplicationType.LONG_TEXT) " a" else ""
 
         val fmt = if (ismilitary && leadingzero) "HH:mm"
-        else if (!ismilitary && !leadingzero) "h:mm+$amPm"
+        else if (!ismilitary && !leadingzero) "h:mm$amPm"
         else if (ismilitary) "H:mm"
-        else "hh:mm+$amPm"
+        else "hh:mm$amPm"
         val dateTimeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern(fmt)
 
         val time = Instant.ofEpochMilli(mph.changeTime).atZone(ZoneId.systemDefault()).format(dateTimeFormatter)
